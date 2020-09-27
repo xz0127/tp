@@ -8,7 +8,7 @@ title: Nuudle :ramen:
 
 ![Ui](images/Ui.png)
 
-**Nuudle is a desktop application that empowers clinic nurses, allowing them to handle patient's appointment quickly and efficiently.** 
+**Nuudle is a desktop application that empowers clinic nurses, allowing them to handle patient's appointment quickly and efficiently.**
 While it has a GUI, most of the user interactions happen using a CLI (Command Line Interface).
 
 * If you are interested in using Nuudle, head over to the [_Quick Start_ section of the **User Guide**](UserGuide.html#quick-start).
