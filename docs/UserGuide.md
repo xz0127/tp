@@ -67,7 +67,7 @@ Shows a message explaning how to access the help page.
 Format: `help`
 
 
-### Adding a person: `add`
+### Adding a patient: `add`
 
 Adds a patient to the patient book.
 
