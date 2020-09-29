@@ -265,14 +265,29 @@ Help nurses **handle and schedule dental appointments for patients** faster than
 
 Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unlikely to have) - `*`
 
-| Priority | As a …​                                    | I want to …​                     | So that I can…​                                                        |
-| -------- | ------------------------------------------ | ------------------------------ | ---------------------------------------------------------------------- |
-| `* * *`  | new user                                   | see usage instructions         | refer to instructions when I forget how to use the App                 |
-| `* * *`  | user                                       | add a new person               |                                                                        |
-| `* * *`  | user                                       | delete a person                | remove entries that I no longer need                                   |
-| `* * *`  | user                                       | find a person by name          | locate details of persons without having to go through the entire list |
-| `* *`    | user                                       | hide private contact details   | minimize chance of someone else seeing them by accident                |
-| `*`      | user with many persons in the address book | sort persons by name           | locate a person easily                                                 |
+| Priority | As a …​          | I want to …​                      | So that I can…​                                                      |
+| -------- | --------------------| -------------------------------------| ------------------------------------------------------------------------|
+| `* *`    | new user            | See an overview of the commands that are available to me | Familiarise myself with using the app command       |
+| `* * *`  | nurse               | View the entire patient list         | Assign them to their appointments                                       |
+| `* * *`  | Administrative nurse| Add new patient into the system      |                                                                         |
+| `* * *`  | Administrative nurse| Delete the patient information       | Manage the patient list easily when it is needed.                       |
+| `* * *`  | Administrative nurse| Search for patient by IC             | locate a patient easily.                                                |
+| `* * *`  | nurse               | Create patient appointment           | Assign patient to a time slot for their appointment                     |
+| `* * *`  | nurse               | Delete an appointment                | cancel an appointment                                                   |
+| `* * *`  | nurse               | View the entire appointment list for the certain day| Update my dentists of the itinerary for the day          |
+| `* * *`  | nurse               | Mark the appointment as complete if the patient completes his/her appointment| Have an accurate representation of the remaining appointments.|
+| `* *`    | nurse               | Add diagnosis to a completed appointment| Have a record of the patient’s visit.                                |
+| `* *`    | nurse               | Check the record of the patient      | View the appointment history of the patient easily                      |
+| `* *`    | Administrative nurse| Search for patient by phone number   | Locate a patient easily                                                 |
+| `* *`    | Administrative nurse| Search for patient by name           | Locate a patient easily                                                 |
+| `* *`    | Administrative nurse| Change the patient’s appointment if they call to postpone their appointment| Update the appointment easily     |
+| `* *`    | Administrative nurse| Update patient’s details             | Keep the information of patients up-to-date                             |
+| `* *`    | nurse               | Add an event slot to indicate that the doctor is not available at that time period| Avoid arranging an appointment to that time slot|
+| `* *`    | nurse               | Get the available time slots of a day| Inform my patient of the available times for that day                   |
+| `*`      | nurse               | Get the next available time slot     | Inform my patient of the next available timing should their original preferred choice be filled.|
+| `*`      | nurse               | Check the earliest available slot for the clinic| Automatically assign patient who does not have any preference for a specific doctor.|
+| `* *`    | nurse handling multiple patient records| Archive records of past appointments| Review them in the future                             |
+| `*`      | nurse               | Check the patient’s drug allergy     | Confirm if the medicines prescribed are not in the list                 |
 
 *{More to be added}*
 
