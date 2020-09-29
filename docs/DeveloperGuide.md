@@ -278,33 +278,137 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 ### Use cases
 
-(For all use cases below, the **System** is the `AddressBook` and the **Actor** is the `user`, unless specified otherwise)
+(For all use cases below, the **System** is the `Nuudle` and the **Actor** is the `user`, unless specified otherwise)
 
-**Use case: Delete a person**
+**Use case: UC01 - Add a patient**
 
 **MSS**
 
-1.  User requests to list persons
-2.  AddressBook shows a list of persons
-3.  User requests to delete a specific person in the list
-4.  AddressBook deletes the person
+1.  User requests to add a patient to the list
+2.  Nuudle adds the patient
 
     Use case ends.
 
 **Extensions**
 
-* 2a. The list is empty.
+* 1a. The input keywords are invalid.
 
-  Use case ends.
+    * 1a1. Nuudle shows an error message.
+           
+      Use case ends.
 
-* 3a. The given index is invalid.
+**Use case: UC03 - Edit a patient**
 
-    * 3a1. AddressBook shows an error message.
+**MSS**
+
+1.  User requests to find a specific patient 
+2.  Nuudle shows the patient information
+3.  User requests to edit the patient information
+4.  Nuudle changes the patient information
+
+    Use case ends.
+
+**Extensions**
+
+* 1a. The input keywords are invalid.
+
+    * 1a1. Nuudle shows an error message.
+
+      Use case ends.
+
+* 3a. The information provided for editing is invalid (including empty input).
+
+    * 3a1. Nuudle shows an error message.
 
       Use case resumes at step 2.
+      
+**Use case: UC05 - Add an appointment**
 
-*{More to be added}*
+**MSS**
 
+1.  User requests to find an available time slot
+2.  Nuudle shows a list of available time slot 
+3.  User requests to add an appointment 
+4.  Nuudle adds the appointment to the list of appointment record
+
+    Use case ends.
+
+**Extensions**
+
+* 1a. The input keywords are invalid.
+
+    * 1a1. Nuudle shows an error message.
+
+      Use case ends.
+      
+* 3a. The input time slot is invalid (including empty input).
+
+    * 3a1. Nuudle shows an error message.
+
+      Use case resumes at step 2.
+      
+**Use case: UC07 - Change an appointment**
+
+**MSS**
+
+1.  User requests to list all appointments
+2.  Nuudle shows a list of appointments
+3.  User requests to find an available time slot
+4.  Nuudle shows a list of available time slots
+5.  User requests to change a specific appointment to another time
+6.  Nuudle changes a specific appointment
+
+    Use case ends.
+
+**Extensions**
+
+* 1a. The input keywords are invalid.
+
+    * 1a1. Nuudle shows an error message.
+
+      Use case ends.
+      
+* 2a. User has no current appointments.
+
+    * 2a1. Nuudle shows an error message.
+
+      Use case ends.
+      
+* 5a. The input time slot is invalid (including empty input).
+
+    * 5a1. Nuudle shows an error message.
+
+      Use case resumes at step 4.
+    
+* 5b. The input keywords are invalid.
+      
+     * 5b1. Nuudle shows an error message.
+      
+       Use case ends.
+
+**Use case: UC09 - View appointments for today**
+
+**MSS**
+
+1.  User requests for the appointments scheduled for today
+2.  Nuudle shows a list of appointments scheduled for today
+
+    Use case ends.
+
+**Extensions**
+
+* 1a. The input keywords are invalid.
+
+    * 1a1. Nuudle shows an error message.
+    
+      Use case ends.
+
+* 1b. The input date  is invalid.
+
+    * 1b1. Nuudle shows an error message.
+    
+      Use case ends.
+      
 ### Non-Functional Requirements
 
 1.  Should work on any _mainstream OS_ as long as it has Java `11` or above installed.
