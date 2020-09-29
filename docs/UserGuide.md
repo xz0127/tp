@@ -142,9 +142,9 @@ Assign the specified patient into the specified appointment date and time.
 
 Format: `assign INDEX d/DATE t/TIME`
 
-* Puts the person at the specified INDEX into an appointment time slot.
+* Puts the patient at the specified INDEX into an appointment time slot.
 * The INDEX refers to the index number indicated in the patient list.
-* The IC **must be a positive integer** 1, 2, 3, …​
+* The INDEX **must be a positive integer** 1, 2, 3, …​
 * The `DATE` and `TIME` of the appointment must be included.
 * The timeslot indicated by `DATE` and `TIME` must be available.
 * The specified `DATE` and `TIME` must be in the future.
