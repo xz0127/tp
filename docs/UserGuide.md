@@ -193,6 +193,21 @@ Upon starting up the app, past appointments will be automatically archived and s
 **Q**: How do I transfer my data to another Computer?<br>
 **A**: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Nuudle home folder.
 
+**Q**: What are the acceptable date time format?<br>
+**A**: Nuudle supports multiple date time formats as well as natural date time language:
+
+Date Formats | Time Formats | Natural Date | Natural Time
+:---------------:|:----------------:|:----------------:|:----------------:
+02/12/2020 | 2300 | Today | Morning (8AM)
+02-12-2020 | 11:00PM | Tomorrow | Noon (12PM)
+12/02/2020 | 11PM | Yesterday | Evening (7PM)
+12-02-2020 | | Upcoming day<br>of the week | Night (10PM)
+2020/12/02 | | | Midnight (11:59PM)
+2020-12-02 |
+02-Dec-2020 | 
+02-December-2020 | 
+
+
 --------------------------------------------------------------------------------------------------------------------
 
 ## Command summary
