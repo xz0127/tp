@@ -5,7 +5,8 @@ title: About Us
 
 We are a team based in the [School of Computing, National University of Singapore](http://www.comp.nus.edu.sg).
 
-You can reach us at the email `seer[at]comp.nus.edu.sg`
+You can reach us at the following emails:
+ * Zhang Wanlin | `zhangwanlin@u.nus.edu`
 
 ## Project team
 
@@ -48,12 +49,12 @@ You can reach us at the email `seer[at]comp.nus.edu.sg`
 * Role: Developer
 * Responsibilities: Dev Ops + Threading
 
-### James Doe
+### Zhang Wanlin
 
-<img src="images/johndoe.png" width="200px">
+<img src="images/ZhangWanlin98.png" width="200px">
 
-[[github](http://github.com/johndoe)]
-[[portfolio](team/johndoe.md)]
+[[github](http://github.com/ZhangWanlin98)]
+[[portfolio](team/ZhangWanlin.md)]
 
-* Role: Developer
+* Role: Developer & Testing
 * Responsibilities: UI
