@@ -278,16 +278,16 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 ### Use cases
 
-(For all use cases below, the **System** is the `AddressBook` and the **Actor** is the `user`, unless specified otherwise)
+(For all use cases below, the **System** is the `Nuudle` and the **Actor** is the `user`, unless specified otherwise)
 
-**Use case: Delete a person**
+**Use case: UC02 - Delete a patient**
 
 **MSS**
 
-1.  User requests to list persons
-2.  AddressBook shows a list of persons
-3.  User requests to delete a specific person in the list
-4.  AddressBook deletes the person
+1.  User requests to list patients.
+2.  Nuudle shows a list of patients.
+3.  User requests to delete a specific patient in the list.
+4.  Nuudle deletes the patient.
 
     Use case ends.
 
@@ -299,11 +299,107 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 * 3a. The given index is invalid.
 
-    * 3a1. AddressBook shows an error message.
+    * 3a1. Nuudle shows an error message.
 
       Use case resumes at step 2.
 
-*{More to be added}*
+**Use case: UC04 - View patient record**
+
+**MSS**
+
+1. User requests to find a patient by name.
+2. Nuudle shows the list of patients with the requested name.
+3. User request to view patient record of a specific patient in the list.
+4. Nuudle shows the list of records for that patient.
+    
+   Use case ends.
+
+**Extensions**
+
+* 1a. The given keywords are invalid.
+    
+    * 1a1. Nuudle shows an error message.
+
+      Use case ends.
+
+* 2a. The list is empty.
+
+  Use case ends.
+  
+**Use case: UC06 - Delete an appointment**
+
+**MSS**
+
+1. User requests to list appointments.
+2. Nuudle shows the list of appointments.
+3. User requests to delete a specific appointment in the list.
+4. Nuudle deletes the appointment.
+    
+   Use case ends.
+
+**Extensions**
+
+* 1a. The given index is invalid.
+    
+    * 1a1. Nuudle shows an error message.
+
+      Use case ends.
+
+* 2a. The list is empty.
+
+  Use case ends.
+  
+**Use case: UC08 - Mark an appointment as complete**
+
+**MSS**
+
+1. User requests to list appointments.
+2. Nuudle shows the list of appointments.
+3. User requests to mark an appointment as done.
+4. Nuudle marks the appointment as done.
+
+   Use case ends.
+
+**Extensions**
+
+* 3a. The given index is invalid.
+    
+    * 3a1. Nuudle shows an error message.
+
+      Use case resumes at step 2.
+      
+**Use case: UC10 - Create an appointment for a new patient**
+
+**MSS**
+
+1. User requests to create a new patient (UC01).
+2. Nuudle creates the new patient.
+3. User requests for an available time slot on a preferred day.
+4. Nuudle shows the list of available time slots.
+5. User requests to add an appointment for the new patient.
+6. Nuudle creates the appointment.
+    
+   Use case ends.
+
+**Extensions**
+
+* 3a. The given date is invalid.
+    
+    * 3a1. Nuudle shows an error message.
+
+      Use case resumes at step 2.
+
+* 4a. No more time slot is available for that day.
+
+    * 4a1. Nuudle shows the next available time slot on the nearest day.
+    
+        * 4a1a. User uses the suggested time slot.
+
+          Use case resumes at step 5.
+
+        * 4a1b. User does not use the suggested time slot.
+        
+          Use case resumes at step 3.
 
 ### Non-Functional Requirements
 
