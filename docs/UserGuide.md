@@ -14,7 +14,7 @@ Nuudle is a **desktop app for managing patient records and clinic appointments, 
 
 1. Ensure you have Java `11` or above installed in your Computer.
 
-1. Download the latest `nuudle.jar` from **here** ( Coming Soon ) .
+1. Download the latest `nuudle.jar` from **here** ( Coming Soon ).
 
 1. Copy the file to the folder you want to use as the _home folder_ for Nuddle.
 
@@ -22,13 +22,17 @@ Nuudle is a **desktop app for managing patient records and clinic appointments, 
    ![Ui](images/Ui.png)
 
 1. Type the command in the command box and press Enter to execute it. e.g. typing **`help`** and pressing Enter will open the help window.<br>
-   Some example commands you can try:
+   Some example commands you can try :
 
    * **`list`** : Lists all patients.
 
    * **`add`**`add n/John Doe i/S9730284G p/98765432 a/John street, block 123, #01-01` : Adds a patient named `John Doe` to the Patient Book.
 
    * **`delete`**`3` : Deletes the 3rd patient shown in the current list.
+
+   * **`edit`**`1 n/Betsy Crower p/91234567 a/College Avenue 8` : Edits the name, phone number, and address of the 1st patient in the list to be `Betsy`, `91234567`, and `College Avenue 8` respectively.
+      
+   * **`find`**`alex david` : Returns `Alex Yeoh`, `David Li` if the two names are found in the list.
 
    * **`clear`** : Deletes all patients.
 
@@ -60,14 +64,13 @@ Nuudle is a **desktop app for managing patient records and clinic appointments, 
 
 ### Viewing help : `help`
 
-Shows a message explaining how to access the help page.
+Shows a message explaining how to access the help page of Nuudle.
 
 ![help message](images/helpMessage.png)
 
 Format: `help`
 
-
-### Adding a patient: `add`
+### Adding a patient : `add`
 
 Adds a patient to the patient book.
 
@@ -81,32 +84,31 @@ Examples:
 * `add n/John Doe i/S9730284G p/98765432 a/John street, block 123, #01-01`
 * `add n/Betsy Crowe i/S9123456G t/friend a/NUS Utown p/1234567 t/asthma`
 
-### Listing all persons : `list`
+### Listing all patients : `list`
 
-Shows a list of all persons in the address book.
+Shows a list of all patients in the patient book.
 
 Format: `list`
 
-### Editing a person : `edit`
+### Editing a patient : `edit`
 
-Edits an existing person in the address book.
+Edits an existing patient in the patient book.
 
-Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]…​`
+Format: `edit INDEX [n/NAME] [i/NRIC] [p/PHONE_NUMBER] [a/ADDRESS] [t/TAG]…​`
 
-* Edits the person at the specified `INDEX`. The index refers to the index number shown in the displayed person list. The index **must be a positive integer** 1, 2, 3, …​
+* Edits the patient at the specified `INDEX`. The index refers to the index number shown in the displayed patient list. The index **must be a positive integer** 1, 2, 3, …​
 * At least one of the optional fields must be provided.
 * Existing values will be updated to the input values.
-* When editing tags, the existing tags of the person will be removed i.e adding of tags is not cumulative.
-* You can remove all the person’s tags by typing `t/` without
-    specifying any tags after it.
+* When editing tags, the existing tags of the patient will be removed i.e adding of tags is not cumulative.
+* You can remove all the patients' tags by typing `t/` without specifying any tags after it.
 
 Examples:
-*  `edit 1 p/91234567 e/johndoe@example.com` Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
-*  `edit 2 n/Betsy Crower t/` Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
+*  `edit 1 p/91234567 a/College Avenue 8` Edits the phone number and email address of the 1st patient to be `91234567` and `College Avenue 8` respectively.
+*  `edit 2 n/Betsy Crower t/` Edits the name of the 2nd patient to be `Betsy Crower` and clears all existing tags.
 
-### Locating persons by name: `find`
+### Locating patients by name : `find`
 
-Finds persons whose names contain any of the given keywords.
+Finds patients whose names contain any of the given keywords.
 
 Format: `find KEYWORD [MORE_KEYWORDS]`
 
@@ -114,7 +116,7 @@ Format: `find KEYWORD [MORE_KEYWORDS]`
 * The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
 * Only the name is searched.
 * Only full words will be matched e.g. `Han` will not match `Hans`
-* Persons matching at least one keyword will be returned (i.e. `OR` search).
+* Patients matching at least one keyword will be returned (i.e. `OR` search).
   e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
 
 Examples:
@@ -122,9 +124,9 @@ Examples:
 * `find alex david` returns `Alex Yeoh`, `David Li`<br>
   ![result for 'find alex david'](images/findAlexDavidResult.png)
 
-### Deleting a patient: : `delete`
+### Deleting a patient : `delete`
 
-Deletes the specified patient from the address book.
+Deletes the specified patient from the patient book.
 
 Format: `delete INDEX`
 
@@ -133,10 +135,10 @@ Format: `delete INDEX`
 * The index **must be a positive integer** 1, 2, 3, …​
 
 Examples:
-* `list` followed by `delete 2` deletes the 2nd patient in the address book.
+* `list` followed by `delete 2` deletes the 2nd patient in the patient book.
 * `find Betsy` followed by `delete 1` deletes the 1st patient in the results of the `find` command.
 
-### Adding an appointment: `assign`
+### Adding an appointment : `assign`
 
 Assign the specified patient into the specified appointment date and time.
 
@@ -153,7 +155,7 @@ Examples:
 * `assign 1 d/Sunday t/2am` books an appointment at the upcoming Sunday, 2am for the 1st patient in the list.
 * `assign 3 d/02-03-2021 t/1130` books an appointment on 02/03/2021, 11:30am for the 3rd patient in the list.
 
-### Canceling an appointment: `cancel`
+### Canceling an appointment : `cancel`
 
 Delete the specified appointment from the appointment book.
 
@@ -166,15 +168,42 @@ Format `cancel APPT_ID`
 Example:
 * `cancel 202003081000` deletes the appointment happening on 08/03/2020 10am.
 
-### Clearing all entries : `clear`
+### Listing upcoming appointments by date : `view`
 
-Clears all entries from the address book.
+Shows a list of all upcoming appointments entries or only the list of upcoming appointments happening on the specified date.
+
+Format `view [d/DATE]`
+
+* Outputs the list of all upcoming appointments happening on the specified date according to their `APPT_ID` order.
+* `DATE` must be in the future.
+* If `DATE` is not included, outputs the list of all upcoming appointments according to their `APPT_ID` order.
+
+Example:
+* `view` shows the list of all upcoming appointments in chronological order.
+* `view d/4-Aug-2020` shows the list of appointments happening on 04/08/2020.
+
+### Mark an appointment as done : `done`
+
+Marks a specific appointment in the patient book as done.
+
+Format: `done APPT_ID`
+
+* Marks the appointment with the specified `APPT_ID` as done.
+* The `APPT_ID` must be a positive integer.
+* The `APPT_ID` is a unique id containing information on the appointment date and time.
+
+Example:
+* `done 202010101300` marks the appointment happening on 10/10/2020 1pm as done.
+
+### Clearing all appointment entries : `clear`
+
+Clears all appointment entries from the appointment book.
 
 Format: `clear`
 
 ### Exiting the program : `exit`
 
-Exits the program.
+Exits Nuudle.
 
 Format: `exit`
 
@@ -193,6 +222,21 @@ Upon starting up the app, past appointments will be automatically archived and s
 **Q**: How do I transfer my data to another Computer?<br>
 **A**: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Nuudle home folder.
 
+**Q**: What are the acceptable date time format?<br>
+**A**: Nuudle supports multiple date time formats as well as natural date time language :
+
+Date Formats | Time Formats | Natural Date | Natural Time
+:---------------:|:----------------:|:----------------:|:----------------:
+02/12/2020 | 2300 | Today | Morning (8AM)
+02-12-2020 | 11:00PM | Tomorrow | Noon (12PM)
+12/02/2020 | 11PM | Yesterday | Evening (7PM)
+12-02-2020 | | Upcoming day<br>of the week | Night (10PM)
+2020/12/02 | | | Midnight (11:59PM)
+2020-12-02 |
+02-Dec-2020 | 
+02-December-2020 | 
+
+
 --------------------------------------------------------------------------------------------------------------------
 
 ## Command summary
@@ -201,7 +245,7 @@ Action | Format, Examples
 --------|------------------
 **Add** | `add n/NAME i/NRIC p/PHONE_NUMBER a/ADDRESS [t/TAG]…​` <br> e.g., `add n/James Ho i/S9712345G p/22224444 a/123, Clementi Rd, 1234665 t/asthma t/`
 **Delete** | `delete INDEX`<br> e.g., `delete 3`
-**Edit** | `edit INDEX [n/NAME] [p/PHONE_NUMBER] [a/ADDRESS] [t/TAG]…​`<br> e.g.,`edit 2 n/James Lee a/College Avenue 8`
+**Edit** | `edit INDEX [n/NAME] [p/PHONE_NUMBER] [i/NRIC] [a/ADDRESS] [t/TAG]…`<br> e.g.,`edit 2 n/James Lee a/College Avenue 8`
 **Find** | `find KEYWORD [MORE_KEYWORDS]`<br> e.g., `find James Jake`
 **List** | `list`
 **Assign** | `assign INDEX d/DATE t/TIME`<br> e.g., `assign 3 d/tomorrow t/3pm`
