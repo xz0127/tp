@@ -285,7 +285,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 * 3a. The given index is invalid.
 
-    * 3a1. Nuudle  shows an error message.
+    * 3a1. Nuudle shows an error message.
 
       Use case resumes at step 2.
 
@@ -318,7 +318,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 1. User requests to list appointments
 2. Nuudle shows the list of appointments
-3. User requests to delete a certain appointments
+3. User requests to delete an appointments
 4. Nuudle deletes the appointment
     
    Use case ends.
@@ -341,7 +341,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 1. User requests to list appointments
 2. Nuudle shows the list of appointments
-3. User requests to mark the certain appointment as done
+3. User requests to mark an appointment as done
 4. Nuudle marks the appointment as done
 
    Use case ends.
