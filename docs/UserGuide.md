@@ -169,6 +169,33 @@ Format `cancel APPT_ID`
 Example:
 * `cancel 202003081000` deletes the appointment happening on 08/03/2020 10am.
 
+### Listing upcoming appointments by date: `view`
+
+Shows a list of all upcoming appointments entries or only the list of upcoming appointments happening on the specified date.
+
+Format `view [d/DATE]`
+
+* Outputs the list of all upcoming appointments happening on the specified date according to their `APPT_ID` order.
+* `DATE` must be in the future.
+* If `DATE` is not included, outputs the list of all upcoming appointments in the address book according to their `APPT_ID` order.
+
+Example:
+* `view` shows the list of all upcoming appointments in chronological order.
+* `view d/4-Aug-2020` shows the list of appointments happening on 04/08/2020.
+
+### Mark an appointment as done: `done`
+
+Marks a specific appointment in the address book as done.
+
+Format: `done APPT_ID`
+
+* Marks the appointment with the specified `APPT_ID` as done.
+* The `APPT_ID` must be a positive integer.
+* The `APPT_ID` is a unique id containing information on the appointment date and time.
+
+Example:
+* `done 202010101300` marks the appointment happening on 10/10/2020 1pm as done.
+
 ### Clearing all entries : `clear`
 
 Clears all entries from the address book.
