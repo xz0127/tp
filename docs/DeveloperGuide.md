@@ -327,9 +327,9 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 **MSS**
 
 1.  User requests to find an available time slot.
-2.  Nuudle shows a list of available time slot.
+2.  Nuudle shows a list of available time slots.
 3.  User requests to add an appointment.
-4.  Nuudle adds the appointment to the list of appointment record.
+4.  Nuudle adds the appointment to the list of appointment records.
 
     Use case ends.
 
