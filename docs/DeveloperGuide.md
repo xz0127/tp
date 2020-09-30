@@ -262,9 +262,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 ### Use cases
 
-(For all use cases below, the **System** is the `AddressBook` and the **Actor** is the `user`, unless specified otherwise)
-
-**System:**
+(For all use cases below, the **System** is the `Nuudle` and the **Actor** is the `user`, unless specified otherwise)
 
 **Use case: UC02 - Delete a patient**
 
