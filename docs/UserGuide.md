@@ -60,14 +60,11 @@ Nuudle is a **desktop app for managing patient records and clinic appointments, 
 
 ### Viewing help : `help`
 
-Shows a message explaining how to access Nuudle's help page.
+Shows a message explaining how to access the help page of Nuudle.
 
 ![help message](images/helpMessage.png)
 
 Format: `help`
-
-Example:
-* `help`
 
 ### Adding a patient: `add`
 
@@ -88,9 +85,6 @@ Examples:
 Shows a list of all persons in the address book.
 
 Format: `list`
-
-Example:
-* `list`
 
 ### Editing a person : `edit`
 
@@ -177,17 +171,11 @@ Clears all patient entries from the patient book.
 
 Format: `clear`
 
-Example:
-* `clear`
-
 ### Exiting the program : `exit`
 
 Exits Nuudle.
 
 Format: `exit`
-
-Example: 
-* `exit`
 
 ### Saving the data
 
