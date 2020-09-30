@@ -284,14 +284,14 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 **MSS**
 
-1.  User requests to add a patient to the list
-2.  Nuudle adds the patient
+1.  User requests to add a patient to the list.
+2.  Nuudle adds the patient.
 
     Use case ends.
 
 **Extensions**
 
-* 1a. The input keywords are invalid.
+* 1a. The given keywords are invalid.
 
     * 1a1. Nuudle shows an error message.
            
@@ -301,22 +301,22 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 **MSS**
 
-1.  User requests to find a specific patient 
-2.  Nuudle shows the patient information
-3.  User requests to edit the patient information
-4.  Nuudle changes the patient information
+1.  User requests to find a specific patient.
+2.  Nuudle shows the list of patients with the given name.
+3.  User requests to edit the patient information.
+4.  Nuudle changes the patient information.
 
     Use case ends.
 
 **Extensions**
 
-* 1a. The input keywords are invalid.
+* 1a. The given keywords are invalid.
 
     * 1a1. Nuudle shows an error message.
 
       Use case ends.
 
-* 3a. The information provided for editing is invalid (including empty input).
+* 3a. The given information for editing is invalid (including empty input).
 
     * 3a1. Nuudle shows an error message.
 
@@ -326,22 +326,22 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 **MSS**
 
-1.  User requests to find an available time slot
-2.  Nuudle shows a list of available time slot 
-3.  User requests to add an appointment 
-4.  Nuudle adds the appointment to the list of appointment record
+1.  User requests to find an available time slot.
+2.  Nuudle shows a list of available time slot.
+3.  User requests to add an appointment.
+4.  Nuudle adds the appointment to the list of appointment record.
 
     Use case ends.
 
 **Extensions**
 
-* 1a. The input keywords are invalid.
+* 1a. The given keywords are invalid.
 
     * 1a1. Nuudle shows an error message.
 
       Use case ends.
       
-* 3a. The input time slot is invalid (including empty input).
+* 3a. The given time slot is invalid (including empty input).
 
     * 3a1. Nuudle shows an error message.
 
@@ -351,18 +351,18 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 **MSS**
 
-1.  User requests to list all appointments
-2.  Nuudle shows a list of appointments
-3.  User requests to find an available time slot
-4.  Nuudle shows a list of available time slots
-5.  User requests to change a specific appointment to another time
-6.  Nuudle changes a specific appointment
+1.  User requests to list all appointments.
+2.  Nuudle shows a list of appointments.
+3.  User requests to find an available time slot.
+4.  Nuudle shows a list of available time slots.
+5.  User requests to change a specific appointment to another time.
+6.  Nuudle changes the appointment.
 
     Use case ends.
 
 **Extensions**
 
-* 1a. The input keywords are invalid.
+* 1a. The given keywords are invalid.
 
     * 1a1. Nuudle shows an error message.
 
@@ -374,13 +374,13 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
       Use case ends.
       
-* 5a. The input time slot is invalid (including empty input).
+* 5a. The given time slot is invalid (including empty input).
 
     * 5a1. Nuudle shows an error message.
 
       Use case resumes at step 4.
     
-* 5b. The input keywords are invalid.
+* 5b. The given keywords are invalid.
       
      * 5b1. Nuudle shows an error message.
       
@@ -390,20 +390,20 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 **MSS**
 
-1.  User requests for the appointments scheduled for today
-2.  Nuudle shows a list of appointments scheduled for today
+1.  User requests for the appointments scheduled for today.
+2.  Nuudle shows a list of appointments scheduled for today.
 
     Use case ends.
 
 **Extensions**
 
-* 1a. The input keywords are invalid.
+* 1a. The given keywords are invalid.
 
     * 1a1. Nuudle shows an error message.
     
       Use case ends.
 
-* 1b. The input date  is invalid.
+* 1b. The given date is invalid.
 
     * 1b1. Nuudle shows an error message.
     
