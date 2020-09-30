@@ -270,7 +270,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 1.  User requests to list patients.
 2.  Nuudle shows a list of patients.
-3.  User requests to delete a patient in the list.
+3.  User requests to delete a specific patient in the list.
 4.  Nuudle deletes the patient.
 
     Use case ends.
@@ -293,7 +293,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 1. User requests to find a patient by name.
 2. Nuudle shows the list of patients with the requested name.
-3. User request to view patient record of a patient in the list.
+3. User request to view patient record of a specific patient in the list.
 4. Nuudle shows the list of records for that patient.
     
    Use case ends.
@@ -316,7 +316,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 1. User requests to list appointments.
 2. Nuudle shows the list of appointments.
-3. User requests to delete an appointment.
+3. User requests to delete a specific appointment in the list.
 4. Nuudle deletes the appointment.
     
    Use case ends.
@@ -356,8 +356,8 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 **MSS**
 
-1. User requests to create new patient (UC01).
-2. Nuudle creates new patient.
+1. User requests to create a new patient (UC01).
+2. Nuudle creates the new patient.
 3. User requests for an available time slot on a preferred day.
 4. Nuudle shows the list of available time slots.
 5. User requests to add an appointment for the new patient.
@@ -367,7 +367,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 **Extensions**
 
-* 3a. The given index is invalid.
+* 3a. The given date is invalid.
     
     * 3a1. Nuudle shows an error message.
 
