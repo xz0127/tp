@@ -11,6 +11,7 @@ You can reach us at the following emails:
 * Zhang Wanlin | `zhangwanlin@u.nus.edu`
 * Xin Zhe | `xinzhe0127@gmail.com`
 
+
 ## Project team
 
 ### Lim Jin Hao
@@ -54,12 +55,12 @@ You can reach us at the following emails:
 * Responsibilities: Documentation + Integration
 * In-charge of: Patient Models
 
-### James Doe
+### Zhang Wanlin
 
-<img src="images/johndoe.png" width="200px">
+<img src="images/zhangwanlin.png" width="200px">
 
-[[github](http://github.com/johndoe)]
-[[portfolio](team/johndoe.md)]
+[[github](http://github.com/ZhangWanlin98)]
+[[portfolio](team/zhangwanlin.md)]
 
-* Role: Developer
+* Role: Developer & Testing
 * Responsibilities: UI
