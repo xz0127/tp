@@ -295,6 +295,21 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 (For all use cases below, the **System** is the `Nuudle` and the **Actor** is the `user`, unless specified otherwise)
 
+**Use case: UC01 - Add a patient**
+
+**MSS**
+
+1.  User requests to add a patient to the list.
+2.  Nuudle adds the patient.
+
+**Extensions**
+
+* 1a. The given keywords are invalid.
+
+    * 1a1. Nuudle shows an error message.
+           
+      Use case ends.
+
 **Use case: UC02 - Delete a patient**
 
 **MSS**
@@ -308,11 +323,42 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 **Extensions**
 
+* 1a. The given keywords are invalid.
+
+    * 1a1. Nuudle shows an error message.
+           
+      Use case ends.
+
 * 2a. The list is empty.
-
+           
   Use case ends.
-
+  
 * 3a. The given index is invalid.
+
+    * 3a1. Nuudle shows an error message.
+           
+      Use case resumes at step 2.
+
+**Use case: UC03 - Edit a patient**
+
+**MSS**
+
+1.  User requests to find a specific patient.
+2.  Nuudle shows the list of patients with the given name.
+3.  User requests to edit the patient information.
+4.  Nuudle changes the patient information.
+
+    Use case ends.
+
+**Extensions**
+
+* 1a. The given keywords are invalid.
+
+    * 1a1. Nuudle shows an error message.
+
+      Use case ends.
+
+* 3a. The given information for editing is invalid (including empty input).
 
     * 3a1. Nuudle shows an error message.
 
@@ -332,14 +378,40 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 **Extensions**
 
 * 1a. The given keywords are invalid.
-    
+
     * 1a1. Nuudle shows an error message.
 
       Use case ends.
 
 * 2a. The list is empty.
-
+      
   Use case ends.
+
+      
+**Use case: UC05 - Add an appointment**
+
+**MSS**
+
+1.  User requests to find an available time slot.
+2.  Nuudle shows a list of available time slots.
+3.  User requests to add an appointment to a specific time slot.
+4.  Nuudle adds the appointment to the list of appointment records.
+
+    Use case ends.
+    
+**Extensions**
+
+* 1a. The given keywords are invalid.
+
+    * 1a1. Nuudle shows an error message.
+
+      Use case ends.
+      
+* 3a. The given time slot is invalid (including empty input).
+
+    * 3a1. Nuudle shows an error message.
+
+      Use case resumes at step 2.
   
 **Use case: UC06 - Delete an appointment**
 
@@ -363,6 +435,45 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 * 2a. The list is empty.
 
   Use case ends.
+      
+**Use case: UC07 - Change an appointment**
+
+**MSS**
+
+1.  User requests to list all appointments.
+2.  Nuudle shows a list of appointments.
+3.  User requests to find an available time slot.
+4.  Nuudle shows a list of available time slots.
+5.  User requests to change a specific appointment to another time.
+6.  Nuudle changes the appointment.
+
+    Use case ends.
+
+**Extensions**
+
+* 1a. The given keywords are invalid.
+
+    * 1a1. Nuudle shows an error message.
+
+      Use case ends.
+      
+* 2a. User has no current appointments.
+
+    * 2a1. Nuudle shows an error message.
+
+      Use case ends.
+      
+* 5a. The given time slot is invalid (including empty input).
+
+    * 5a1. Nuudle shows an error message.
+
+      Use case resumes at step 4.
+    
+* 5b. The given keywords are invalid.
+      
+     * 5b1. Nuudle shows an error message.
+      
+       Use case ends.
   
 **Use case: UC08 - Mark an appointment as complete**
 
@@ -382,7 +493,34 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
     * 3a1. Nuudle shows an error message.
 
       Use case resumes at step 2.
-      
+
+**Use case: UC09 - View appointments for today**
+
+**MSS**
+
+1.  User requests for the appointments scheduled for today.
+2.  Nuudle shows a list of appointments scheduled for today.
+
+    Use case ends.
+
+**Extensions**
+
+* 1a. The given keywords are invalid.
+
+    * 1a1. Nuudle shows an error message.
+    
+      Use case ends.
+
+* 1b. The given date is invalid.
+    
+    * 1b1. Nuudle shows an error message.
+
+      Use case ends.
+
+* 2a. The list is empty.
+
+  Use case ends.
+
 **Use case: UC10 - Create an appointment for a new patient**
 
 **MSS**
@@ -415,7 +553,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
         * 4a1b. User does not use the suggested time slot.
         
           Use case resumes at step 3.
-
+      
 ### Non-Functional Requirements
 
 1.  Should work on any _mainstream OS_ as long as it has Java `11` or above installed.
