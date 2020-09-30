@@ -64,12 +64,11 @@ Nuudle is a **desktop app for managing patient records and clinic appointments, 
 
 ### Viewing help : `help`
 
-Shows a message explaining how to access the help page.
+Shows a message explaining how to access the help page of Nuudle.
 
 ![help message](images/helpMessage.png)
 
 Format: `help`
-
 
 ### Adding a patient: `add`
 
@@ -196,15 +195,15 @@ Format: `done APPT_ID`
 Example:
 * `done 202010101300` marks the appointment happening on 10/10/2020 1pm as done.
 
-### Clearing all entries : `clear`
+### Clearing all appointment entries : `clear`
 
-Clears all entries from the address book.
+Clears all appointment entries from the appointment book.
 
 Format: `clear`
 
 ### Exiting the program : `exit`
 
-Exits the program.
+Exits Nuudle.
 
 Format: `exit`
 
