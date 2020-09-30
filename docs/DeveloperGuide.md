@@ -356,7 +356,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 3.  User requests to find an available time slot
 4.  Nuudle shows a list of available time slots
 5.  User requests to change a specific appointment to another time
-6.  Nuudle changes a specific appointment
+6.  Nuudle changes the specified appointment
 
     Use case ends.
 
