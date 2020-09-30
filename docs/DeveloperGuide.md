@@ -1,4 +1,4 @@
----
+﻿---
 layout: page
 title: Developer Guide
 ---
@@ -233,16 +233,32 @@ _{Explain here how the data archiving feature will be implemented}_
 ## **Appendix: Requirements**
 
 ### Product scope
+**Target user profile story**:
 
-**Target user profile**:
+Namise is a hard working nurse working at a popular dental clinic situated in town and gets appointment calls on an hourly basis. Swarmed with incoming calls, Namise has to make new appointments for new and existing patients while keeping track of the doctor’s schedule at the same time😞. With the need to juggle multiple tasks at once, Namise is also prone to making careless mistakes in his work due to fatigue.
 
-* has a need to manage a significant number of contacts
-* prefer desktop apps over other types
-* can type fast
-* prefers typing to mouse interactions
-* is reasonably comfortable using CLI apps
+  
 
-**Value proposition**: manage contacts faster than a typical mouse/GUI driven app
+Being a tech-savvy person armed with a commendable experience in unix, Namise prefers to scribble down appointment schedules on paper while on call with his patients to maximise efficiency. This task is further exacerbated with the need to transfer these notes into an excel table manually later in the day.
+ 
+**Target user profile summary**:
+*   nurse working in a highly popular, small scale dental clinic
+*   responsible for scheduling a large number of appointments daily
+*   add new patients to the clinic records  
+*   do not entertain walk-ins and only operate on an appointment-basis
+*   required to multi-task (create appointment arrangements with patients over the phone)
+*   prone to carelessness due to the sheer number of appointments to handle  
+*   tech-savvy  
+*   prefers typing & wants to get things done quickly
+*   tired of transferring appointment details from paper notes to excel
+*   prefers desktop apps over other types
+*   types fast
+*   prefers typing to mouse interactions
+*   reasonably comfortable using CLI apps
+
+**Value proposition**: 
+
+Help nurses **handle and schedule dental appointments for patients** faster than a typical mouse/GUI driven app or excel scheduling
 
 
 ### User stories
