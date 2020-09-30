@@ -14,7 +14,7 @@ Nuudle is a **desktop app for managing patient records and clinic appointments, 
 
 1. Ensure you have Java `11` or above installed in your Computer.
 
-1. Download the latest `nuudle.jar` from **here** ( Coming Soon ) .
+1. Download the latest `nuudle.jar` from **here** ( Coming Soon ).
 
 1. Copy the file to the folder you want to use as the _home folder_ for Nuddle.
 
@@ -22,7 +22,7 @@ Nuudle is a **desktop app for managing patient records and clinic appointments, 
    ![Ui](images/Ui.png)
 
 1. Type the command in the command box and press Enter to execute it. e.g. typing **`help`** and pressing Enter will open the help window.<br>
-   Some example commands you can try:
+   Some example commands you can try :
 
    * **`list`** : Lists all patients.
 
@@ -70,7 +70,7 @@ Shows a message explaining how to access the help page of Nuudle.
 
 Format: `help`
 
-### Adding a patient: `add`
+### Adding a patient : `add`
 
 Adds a patient to the patient book.
 
@@ -106,7 +106,7 @@ Examples:
 *  `edit 1 p/91234567 a/College Avenue 8` Edits the phone number and email address of the 1st patient to be `91234567` and `College Avenue 8` respectively.
 *  `edit 2 n/Betsy Crower t/` Edits the name of the 2nd patient to be `Betsy Crower` and clears all existing tags.
 
-### Locating persons by name: `find`
+### Locating patients by name : `find`
 
 Finds patients whose names contain any of the given keywords.
 
@@ -124,9 +124,9 @@ Examples:
 * `find alex david` returns `Alex Yeoh`, `David Li`<br>
   ![result for 'find alex david'](images/findAlexDavidResult.png)
 
-### Deleting a patient: : `delete`
+### Deleting a patient : `delete`
 
-Deletes the specified patient from the address book.
+Deletes the specified patient from the patient book.
 
 Format: `delete INDEX`
 
@@ -135,10 +135,10 @@ Format: `delete INDEX`
 * The index **must be a positive integer** 1, 2, 3, …​
 
 Examples:
-* `list` followed by `delete 2` deletes the 2nd patient in the address book.
+* `list` followed by `delete 2` deletes the 2nd patient in the patient book.
 * `find Betsy` followed by `delete 1` deletes the 1st patient in the results of the `find` command.
 
-### Adding an appointment: `assign`
+### Adding an appointment : `assign`
 
 Assign the specified patient into the specified appointment date and time.
 
@@ -155,7 +155,7 @@ Examples:
 * `assign 1 d/Sunday t/2am` books an appointment at the upcoming Sunday, 2am for the 1st patient in the list.
 * `assign 3 d/02-03-2021 t/1130` books an appointment on 02/03/2021, 11:30am for the 3rd patient in the list.
 
-### Canceling an appointment: `cancel`
+### Canceling an appointment : `cancel`
 
 Delete the specified appointment from the appointment book.
 
@@ -168,7 +168,7 @@ Format `cancel APPT_ID`
 Example:
 * `cancel 202003081000` deletes the appointment happening on 08/03/2020 10am.
 
-### Listing upcoming appointments by date: `view`
+### Listing upcoming appointments by date : `view`
 
 Shows a list of all upcoming appointments entries or only the list of upcoming appointments happening on the specified date.
 
@@ -176,15 +176,15 @@ Format `view [d/DATE]`
 
 * Outputs the list of all upcoming appointments happening on the specified date according to their `APPT_ID` order.
 * `DATE` must be in the future.
-* If `DATE` is not included, outputs the list of all upcoming appointments in the address book according to their `APPT_ID` order.
+* If `DATE` is not included, outputs the list of all upcoming appointments according to their `APPT_ID` order.
 
 Example:
 * `view` shows the list of all upcoming appointments in chronological order.
 * `view d/4-Aug-2020` shows the list of appointments happening on 04/08/2020.
 
-### Mark an appointment as done: `done`
+### Mark an appointment as done : `done`
 
-Marks a specific appointment in the address book as done.
+Marks a specific appointment in the patient book as done.
 
 Format: `done APPT_ID`
 
@@ -223,7 +223,7 @@ Upon starting up the app, past appointments will be automatically archived and s
 **A**: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Nuudle home folder.
 
 **Q**: What are the acceptable date time format?<br>
-**A**: Nuudle supports multiple date time formats as well as natural date time language:
+**A**: Nuudle supports multiple date time formats as well as natural date time language :
 
 Date Formats | Time Formats | Natural Date | Natural Time
 :---------------:|:----------------:|:----------------:|:----------------:
