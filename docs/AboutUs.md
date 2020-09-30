@@ -51,10 +51,10 @@ You can reach us at the following emails:
 
 ### Zhang Wanlin
 
-<img src="images/ZhangWanlin98.png" width="200px">
+<img src="images/zhangwanlin.png" width="200px">
 
 [[github](http://github.com/ZhangWanlin98)]
-[[portfolio](team/ZhangWanlin.md)]
+[[portfolio](team/zhangwanlin.md)]
 
 * Role: Developer & Testing
 * Responsibilities: UI
