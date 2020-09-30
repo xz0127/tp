@@ -270,7 +270,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 1.  User requests to list patients.
 2.  Nuudle shows a list of patients.
-3.  User requests to delete a specific patient in the list.
+3.  User requests to delete a patient in the list.
 4.  Nuudle deletes the patient.
 
     Use case ends.
@@ -293,7 +293,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 1. User requests to find a patient by name.
 2. Nuudle shows the list of patients with the requested name.
-3. User request to view patient record of a specific patient.
+3. User request to view patient record of a patient in the list.
 4. Nuudle shows the list of records for that patient.
     
    Use case ends.
@@ -316,7 +316,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 1. User requests to list appointments.
 2. Nuudle shows the list of appointments.
-3. User requests to delete an appointments.
+3. User requests to delete an appointment.
 4. Nuudle deletes the appointment.
     
    Use case ends.
@@ -357,9 +357,9 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 **MSS**
 
 1. User requests to create new patient (UC01).
-2. Nuudle create new patient.
+2. Nuudle creates new patient.
 3. User requests for an available time slot on a preferred day.
-4. Nuudle shows the list of available time slot.
+4. Nuudle shows the list of available time slots.
 5. User requests to add an appointment for the new patient.
 6. Nuudle creates the appointment.
     
@@ -374,12 +374,14 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
       Use case resumes at step 2.
 
 * 4a. No more time slot is available for that day.
+
     * 4a1. Nuudle shows the next available time slot on the nearest day.
+    
         * 4a1a. User uses the suggested time slot.
 
-          Use case proceed to step 5.
+          Use case resumes at step 5.
 
-        * 4a1b. User do not use the suggested time slot.
+        * 4a1b. User does not use the suggested time slot.
         
           Use case resumes at step 3.
 
