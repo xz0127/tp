@@ -5,7 +5,8 @@ title: About Us
 
 We are a team based in the [School of Computing, National University of Singapore](http://www.comp.nus.edu.sg).
 
-You can reach us at the email `seer[at]comp.nus.edu.sg`
+You can reach us at the following emails:
+ * Low Ming Lim | `m._.m@u.nus.edu.sg`
 
 ## Project team
 
@@ -19,15 +20,16 @@ You can reach us at the email `seer[at]comp.nus.edu.sg`
 
 * Role: Project Advisor
 
-### Jane Doe
+### Low Ming Lim
 
-<img src="images/johndoe.png" width="200px">
+<img src="images/avalionnet.png" width="200px">
 
-[[github](http://github.com/johndoe)]
-[[portfolio](team/johndoe.md)]
+[[github](https://github.com/Avalionnet)]
+[[portfolio](team/avalionnet.md)]
 
-* Role: Team Lead
-* Responsibilities: UI
+* Role: Software Engineer
+* Responsibilities: Testing + Scheduling and Tracking
+* In-charge of: Logic and Parsers 
 
 ### Johnny Doe
 
