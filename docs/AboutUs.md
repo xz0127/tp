@@ -9,6 +9,7 @@ You can reach us at the following emails:
 * Lim Jin Hao | `jinhao_lim@u.nus.edu`
 * Low Ming Lim | `m._.m@u.nus.edu`
 * Zhang Wanlin | `zhangwanlin@u.nus.edu`
+* Xin Zhe | `xinzhe0127@gmail.com`
 
 ## Project team
 
@@ -42,15 +43,16 @@ You can reach us at the following emails:
 * Role: Developer
 * Responsibilities: Data
 
-### Jean Doe
+### Xin Zhe
 
-<img src="images/johndoe.png" width="200px">
+<img src="images/xz0127.png" width="200px">
 
-[[github](http://github.com/johndoe)]
-[[portfolio](team/johndoe.md)]
+[[github](http://github.com/xz0127)]
+[[portfolio](team/xz0127.md)]
 
-* Role: Developer
-* Responsibilities: Dev Ops + Threading
+* Role: Software Engineer
+* Responsibilities: Documentation + Integration
+* In-charge of: Patient Models
 
 ### James Doe
 
