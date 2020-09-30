@@ -22,15 +22,16 @@ You can reach us at the following emails:
 * Role: Team Lead 
 * Responsibilities: Storage
 
-### Jane Doe
+### Low Ming Lim
 
-<img src="images/johndoe.png" width="200px">
+<img src="images/avalionnet.png" width="200px">
 
-[[github](http://github.com/johndoe)]
-[[portfolio](team/johndoe.md)]
+[[github](https://github.com/Avalionnet)]
+[[portfolio](team/avalionnet.md)]
 
-* Role: Team Lead
-* Responsibilities: UI
+* Role: Software Engineer
+* Responsibilities: Testing + Scheduling and Tracking
+* In-charge of: Logic and Parsers 
 
 ### Johnny Doe
 
