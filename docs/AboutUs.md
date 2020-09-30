@@ -7,6 +7,8 @@ We are a team based in the [School of Computing, National University of Singapor
 
 You can reach us at the following emails:
 * Lim Jin Hao | `jinhao_lim@u.nus.edu`
+* Low Ming Lim | `m._.m@u.nus.edu`
+* Zhang Wanlin | `zhangwanlin@u.nus.edu`
 
 ## Project team
 
