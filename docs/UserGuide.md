@@ -165,7 +165,7 @@ Format `cancel APPT_ID`
 Example:
 * `cancel 202003081000` deletes the appointment happening on 08/03/2020 10am.
 
-### Clearing all patient entries : `clear`
+### Clearing all appointment entries : `clear`
 
 Clears all patient entries from the patient book.
 
