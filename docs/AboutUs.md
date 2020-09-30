@@ -6,19 +6,21 @@ title: About Us
 We are a team based in the [School of Computing, National University of Singapore](http://www.comp.nus.edu.sg).
 
 You can reach us at the following emails:
- * Low Ming Lim | `m._.m@u.nus.edu.sg`
+* Lim Jin Hao | `jinhao_lim@u.nus.edu`
+* Low Ming Lim | `m._.m@u.nus.edu`
+* Zhang Wanlin | `zhangwanlin@u.nus.edu`
 
 ## Project team
 
-### John Doe
+### Lim Jin Hao
 
-<img src="images/johndoe.png" width="200px">
+<img src="images/jinhao-l.png" width="200">
 
-[[homepage](http://www.comp.nus.edu.sg/~damithch)]
-[[github](https://github.com/johndoe)]
-[[portfolio](team/johndoe.md)]
+[[github](http://github.com/jinhao-l)]
+[[portfolio](team/jinhao-l.md)]
 
-* Role: Project Advisor
+* Role: Team Lead 
+* Responsibilities: Storage
 
 ### Low Ming Lim
 
