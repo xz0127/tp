@@ -10,7 +10,7 @@ You can reach us at the following emails:
 * Low Ming Lim ： `m._.m@u.nus.edu`
 * Zhang Wanlin ： `zhangwanlin@u.nus.edu`
 * Xin Zhe ： `xinzhe0127@gmail.com`
-
+* Yang Yue : `e0376999@u.nus.edu`
 
 ## Project team
 
@@ -35,14 +35,16 @@ You can reach us at the following emails:
 * Responsibilities: Testing + Scheduling and Tracking
 * In-charge of: Logic and Parsers 
 
-### Johnny Doe
 
-<img src="images/johndoe.png" width="200px">
+### Yang Yue
 
-[[github](http://github.com/johndoe)] [[portfolio](team/johndoe.md)]
+<img src="images/yangyue128-helen.png" width="200px">
 
-* Role: Developer
-* Responsibilities: Data
+[[github](https://github.com/YangYue128-helen)]
+[[portfolio](team/yangyue128-helen.md)]
+
+* Role: Developer & Code quality
+* Responsibilities: Model - appointment
 
 ### Xin Zhe
 

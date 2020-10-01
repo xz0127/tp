@@ -242,19 +242,19 @@ Namise is a hard working nurse working at a popular dental clinic situated in to
 Being a tech-savvy person armed with a commendable experience in unix, Namise prefers to scribble down appointment schedules on paper while on call with his patients to maximise efficiency. This task is further exacerbated with the need to transfer these notes into an excel table manually later in the day.
  
 **Target user profile summary**:
-*   nurse working in a highly popular, small scale dental clinic
-*   responsible for scheduling a large number of appointments daily
-*   add new patients to the clinic records  
-*   do not entertain walk-ins and only operate on an appointment-basis
-*   required to multi-task (create appointment arrangements with patients over the phone)
-*   prone to carelessness due to the sheer number of appointments to handle  
-*   tech-savvy  
-*   prefers typing & wants to get things done quickly
-*   tired of transferring appointment details from paper notes to excel
-*   prefers desktop apps over other types
-*   types fast
-*   prefers typing to mouse interactions
-*   reasonably comfortable using CLI apps
+*   Nurse working in a highly popular, small scale dental clinic
+*   Responsible for scheduling a large number of appointments daily
+*   Add new patients to the clinic records  
+*   Do not entertain walk-ins and only operate on an appointment-basis
+*   Required to multi-task (create appointment arrangements with patients over the phone)
+*   Prone to carelessness due to the sheer number of appointments to handle  
+*   Tech-savvy  
+*   Prefers typing & wants to get things done quickly
+*   Tired of transferring appointment details from paper notes to excel
+*   Prefers desktop apps over other types
+*   Types fast
+*   Prefers typing to mouse interactions
+*   Reasonably comfortable using CLI apps
 
 **Value proposition**: 
 
@@ -267,33 +267,49 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 | Priority | As a …​          | I want to …​                      | So that I can…​                                                      |
 | -------- | --------------------| -------------------------------------| ------------------------------------------------------------------------|
-| `* *`    | new user            | See an overview of the commands that are available to me | Familiarise myself with using the app command       |
-| `* * *`  | nurse               | View the entire patient list         | Assign them to their appointments                                       |
-| `* * *`  | Administrative nurse| Add new patient into the system      |                                                                         |
-| `* * *`  | Administrative nurse| Delete the patient information       | Manage the patient list easily when it is needed.                       |
-| `* * *`  | Administrative nurse| Search for patient by IC             | locate a patient easily.                                                |
-| `* * *`  | nurse               | Create patient appointment           | Assign patient to a time slot for their appointment                     |
-| `* * *`  | nurse               | Delete an appointment                | cancel an appointment                                                   |
-| `* * *`  | nurse               | View the entire appointment list for the certain day| Update my dentists of the itinerary for the day          |
-| `* * *`  | nurse               | Mark the appointment as complete if the patient completes his/her appointment| Have an accurate representation of the remaining appointments.|
-| `* *`    | nurse               | Add diagnosis to a completed appointment| Have a record of the patient’s visit.                                |
-| `* *`    | nurse               | Check the record of the patient      | View the appointment history of the patient easily                      |
-| `* *`    | Administrative nurse| Search for patient by phone number   | Locate a patient easily                                                 |
-| `* *`    | Administrative nurse| Search for patient by name           | Locate a patient easily                                                 |
-| `* *`    | Administrative nurse| Change the patient’s appointment if they call to postpone their appointment| Update the appointment easily     |
-| `* *`    | Administrative nurse| Update patient’s details             | Keep the information of patients up-to-date                             |
-| `* *`    | nurse               | Add an event slot to indicate that the doctor is not available at that time period| Avoid arranging an appointment to that time slot|
-| `* *`    | nurse               | Get the available time slots of a day| Inform my patient of the available times for that day                   |
-| `*`      | nurse               | Get the next available time slot     | Inform my patient of the next available timing should their original preferred choice be filled.|
-| `*`      | nurse               | Check the earliest available slot for the clinic| Automatically assign patient who does not have any preference for a specific doctor.|
-| `* *`    | nurse handling multiple patient records| Archive records of past appointments| Review them in the future                             |
-| `*`      | nurse               | Check the patient’s drug allergy     | Confirm if the medicines prescribed are not in the list                 |
+| `* *`    | new user            | see an overview of the commands that are available to me | familiarise myself with using the app command       |
+| `* * *`  | nurse               | view the entire patient list         | assign them to their appointments                                       |
+| `* * *`  | administrative nurse| add new patient into the system      | assign an appointment to them                                           |
+| `* * *`  | administrative nurse| delete the patient information       | manage the patient list easily when it is needed                        |
+| `* * *`  | administrative nurse| search for patient by IC             | locate a patient easily                                                 |
+| `* * *`  | nurse               | create patient appointment           | assign patient to a time slot for their appointment                     |
+| `* * *`  | nurse               | delete an appointment                | cancel an appointment                                                   |
+| `* * *`  | nurse               | view the entire appointment list for the certain day| update my dentists of the itinerary for the day          |
+| `* * *`  | nurse               | mark the appointment as complete if the patient completes his/her appointment| have an accurate representation of the remaining appointments|
+| `* *`    | nurse               | add diagnosis to a completed appointment| have a record of the patient’s visit                                 |
+| `* *`    | nurse               | check the record of the patient      | view the appointment history of the patient easily                      |
+| `* *`    | administrative nurse| search for patient by phone number   | locate a patient easily                                                 |
+| `* *`    | administrative nurse| search for patient by name           | locate a patient easily                                                 |
+| `* *`    | administrative nurse| change the patient’s appointment if they call to postpone their appointment| update the appointment easily     |
+| `* *`    | administrative nurse| update patient’s details             | keep the information of patients up-to-date                             |
+| `* *`    | nurse               | add an event slot to indicate that the doctor is not available at that time period| avoid arranging an appointment to that time slot|
+| `* *`    | nurse               | get the available time slots of a day| inform my patient of the available times for that day                   |
+| `*`      | nurse               | get the next available time slot     | inform my patient of the next available timing should their original preferred choice be filled|
+| `*`      | nurse               | check the earliest available slot for the clinic| automatically assign patient who does not have any preference for a specific doctor|
+| `* *`    | nurse handling multiple patient records| archive records of past appointments| review them in the future                             |
+| `*`      | nurse               | check the patient’s drug allergy     | confirm if the medicines prescribed are not in the list                 |
 
-*{More to be added}*
 
 ### Use cases
 
 (For all use cases below, the **System** is the `Nuudle` and the **Actor** is the `user`, unless specified otherwise)
+
+**Use case: UC01 - Add a patient**
+
+**MSS**
+
+1.  User requests to add a patient to the list.
+2.  Nuudle adds the patient.
+
+**Extensions**
+
+* 1a. The given keywords are invalid.
+
+    * 1a1. Nuudle shows an error message.
+           
+      Use case ends.
+
+&nbsp;
 
 **Use case: UC02 - Delete a patient**
 
@@ -308,15 +324,50 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 **Extensions**
 
+* 1a. The given keywords are invalid.
+
+    * 1a1. Nuudle shows an error message.
+           
+      Use case ends.
+
 * 2a. The list is empty.
-
+           
   Use case ends.
-
+  
 * 3a. The given index is invalid.
+
+    * 3a1. Nuudle shows an error message.
+           
+      Use case resumes at step 2.
+
+&nbsp;
+
+**Use case: UC03 - Edit a patient**
+
+**MSS**
+
+1.  User requests to find a specific patient.
+2.  Nuudle shows the list of patients with the given name.
+3.  User requests to edit the patient information.
+4.  Nuudle changes the patient information.
+
+    Use case ends.
+
+**Extensions**
+
+* 1a. The given keywords are invalid.
+
+    * 1a1. Nuudle shows an error message.
+
+      Use case ends.
+
+* 3a. The given information for editing is invalid (including empty input).
 
     * 3a1. Nuudle shows an error message.
 
       Use case resumes at step 2.
+
+&nbsp;
 
 **Use case: UC04 - View patient record**
 
@@ -332,15 +383,44 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 **Extensions**
 
 * 1a. The given keywords are invalid.
-    
+
     * 1a1. Nuudle shows an error message.
 
       Use case ends.
 
 * 2a. The list is empty.
-
+      
   Use case ends.
-  
+
+&nbsp;
+
+**Use case: UC05 - Add an appointment**
+
+**MSS**
+
+1.  User requests to find an available time slot.
+2.  Nuudle shows a list of available time slots.
+3.  User requests to add an appointment to a specific time slot.
+4.  Nuudle adds the appointment to the list of appointment records.
+
+    Use case ends.
+    
+**Extensions**
+
+* 1a. The given keywords are invalid.
+
+    * 1a1. Nuudle shows an error message.
+
+      Use case ends.
+      
+* 3a. The given time slot is invalid (including empty input).
+
+    * 3a1. Nuudle shows an error message.
+
+      Use case resumes at step 2.
+
+&nbsp;
+ 
 **Use case: UC06 - Delete an appointment**
 
 **MSS**
@@ -363,7 +443,50 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 * 2a. The list is empty.
 
   Use case ends.
-  
+
+&nbsp;
+
+**Use case: UC07 - Change an appointment**
+
+**MSS**
+
+1.  User requests to list all appointments.
+2.  Nuudle shows a list of appointments.
+3.  User requests to find an available time slot.
+4.  Nuudle shows a list of available time slots.
+5.  User requests to change a specific appointment to another time.
+6.  Nuudle changes the appointment.
+
+    Use case ends.
+
+**Extensions**
+
+* 1a. The given keywords are invalid.
+
+    * 1a1. Nuudle shows an error message.
+
+      Use case ends.
+      
+* 2a. User has no current appointments.
+
+    * 2a1. Nuudle shows an error message.
+
+      Use case ends.
+      
+* 5a. The given time slot is invalid (including empty input).
+
+    * 5a1. Nuudle shows an error message.
+
+      Use case resumes at step 4.
+    
+* 5b. The given keywords are invalid.
+      
+     * 5b1. Nuudle shows an error message.
+      
+       Use case ends.
+
+&nbsp;
+
 **Use case: UC08 - Mark an appointment as complete**
 
 **MSS**
@@ -382,12 +505,41 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
     * 3a1. Nuudle shows an error message.
 
       Use case resumes at step 2.
-      
+
+**Use case: UC09 - View appointments for today**
+
+**MSS**
+
+1.  User requests for the appointments scheduled for today.
+2.  Nuudle shows a list of appointments scheduled for today.
+
+    Use case ends.
+
+**Extensions**
+
+* 1a. The given keywords are invalid.
+
+    * 1a1. Nuudle shows an error message.
+    
+      Use case ends.
+
+* 1b. The given date is invalid.
+    
+    * 1b1. Nuudle shows an error message.
+
+      Use case ends.
+
+* 2a. The list is empty.
+
+  Use case ends.
+
+&nbsp;
+
 **Use case: UC10 - Create an appointment for a new patient**
 
 **MSS**
 
-1. User requests to create a new patient (UC01).
+1. User requests to create a <u>new patient (UC01)</u>.
 2. Nuudle creates the new patient.
 3. User requests for an available time slot on a preferred day.
 4. Nuudle shows the list of available time slots.
@@ -415,7 +567,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
         * 4a1b. User does not use the suggested time slot.
         
           Use case resumes at step 3.
-
+      
 ### Non-Functional Requirements
 
 1.  Should work on any _mainstream OS_ as long as it has Java `11` or above installed.
