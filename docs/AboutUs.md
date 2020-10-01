@@ -6,10 +6,10 @@ title: About Us
 We are a team based in the [School of Computing, National University of Singapore](http://www.comp.nus.edu.sg).
 
 You can reach us at the following emails:
-* Lim Jin Hao | `jinhao_lim@u.nus.edu`
-* Low Ming Lim | `m._.m@u.nus.edu`
-* Zhang Wanlin | `zhangwanlin@u.nus.edu`
-* Xin Zhe | `xinzhe0127@gmail.com`
+* Lim Jin Hao ： `jinhao_lim@u.nus.edu`
+* Low Ming Lim ： `m._.m@u.nus.edu`
+* Zhang Wanlin ： `zhangwanlin@u.nus.edu`
+* Xin Zhe ： `xinzhe0127@gmail.com`
 
 
 ## Project team
@@ -57,10 +57,10 @@ You can reach us at the following emails:
 
 ### Zhang Wanlin
 
-<img src="images/zhangwanlin.png" width="200px">
+<img src="images/zhangwanlin98.png" width="200px">
 
 [[github](http://github.com/ZhangWanlin98)]
-[[portfolio](team/zhangwanlin.md)]
+[[portfolio](team/zhangwanlin98.md)]
 
-* Role: Developer & Testing
+* Role: Developer + Testing
 * Responsibilities: UI
