@@ -6,10 +6,10 @@ title: About Us
 We are a team based in the [School of Computing, National University of Singapore](http://www.comp.nus.edu.sg).
 
 You can reach us at the following emails:
-* Lim Jin Hao ： `jinhao_lim@u.nus.edu`
-* Low Ming Lim ： `m._.m@u.nus.edu`
-* Zhang Wanlin ： `zhangwanlin@u.nus.edu`
-* Xin Zhe ： `xinzhe0127@gmail.com`
+* Lim Jin Hao : `jinhao_lim@u.nus.edu`
+* Low Ming Lim : `m._.m@u.nus.edu`
+* Zhang Wanlin : `zhangwanlin@u.nus.edu`
+* Xin Zhe : `xinzhe0127@gmail.com`
 * Yang Yue : `e0376999@u.nus.edu`
 
 ## Project team
