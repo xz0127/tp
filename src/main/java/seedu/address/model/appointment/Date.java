@@ -22,12 +22,22 @@ public class Date {
     /**
      * Create a {@code Date} that represents the date of an appointment.
      *
-     * @param date the LocalDate containing the date.
+     * @param date the {@code LocalDate} containing the date.
      */
     public Date(LocalDate date) {
+        this(date, LocalDate.now());
+    }
+
+    /**
+     * Create a {@code Date} that represents the date of an appointment.
+     *
+     * @param date the {@code LocalDate} containing the date.
+     * @param now  the current {@code LocalDate}
+     */
+    public Date(LocalDate date, LocalDate now) {
         requireNonNull(date);
 
-        checkArgument(isValidDate(date, LocalDate.now()), MESSAGE_CONSTRAINTS);
+        checkArgument(isValidDate(date, now), MESSAGE_CONSTRAINTS);
         value = date;
     }
 

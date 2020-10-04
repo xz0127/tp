@@ -10,6 +10,8 @@ import java.time.LocalDate;
 import org.junit.jupiter.api.Test;
 
 public class DateTest {
+    private final LocalDate currDate = LocalDate.of(2020, 5, 5);
+
     @Test
     public void constructor_null_throwsNullPointerException() {
         assertThrows(NullPointerException.class, () -> new Date(null));
@@ -17,13 +19,11 @@ public class DateTest {
 
     @Test
     public void constructor_invalidDate_throwsIllegalArgumentException() {
-        assertThrows(IllegalArgumentException.class, () -> new Date(LocalDate.of(2010, 1, 1)));
+        assertThrows(IllegalArgumentException.class, () -> new Date(LocalDate.of(2010, 1, 1), currDate));
     }
 
     @Test
     public void isValidDate() {
-        LocalDate currDate = LocalDate.of(2020, 5, 5);
-
         // null date
         assertThrows(NullPointerException.class, () -> Date.isValidDate(null, currDate));
 
@@ -42,19 +42,18 @@ public class DateTest {
 
     @Test
     public void toStringBasedOn() {
-        LocalDate testDate = LocalDate.of(2020, 1, 1);
-        LocalDate currDate = LocalDate.of(2020, 5, 5);
+        LocalDate testDate = LocalDate.of(2020, 6, 6);
 
-        assertEquals("", new Date(testDate).toStringBasedOn(currDate));
-        assertEquals("Today", new Date(testDate).toStringBasedOn(testDate));
+        assertEquals("Saturday, Jun 06 2020", new Date(testDate, currDate).toStringBasedOn(currDate));
+        assertEquals("Today", new Date(testDate, testDate).toStringBasedOn(testDate));
     }
 
     @Test
     public void equals() {
-        Date dateTest = new Date(LocalDate.of(2020, 1, 1));
+        Date dateTest = new Date(LocalDate.of(2020, 10, 10), currDate);
 
         // same values -> returns true
-        Date dateTestCopy = new Date(LocalDate.of(2020, 1, 1));
+        Date dateTestCopy = new Date(LocalDate.of(2020, 10, 10), currDate);
         assertTrue(dateTest.equals(dateTestCopy));
 
         // same object -> returns true
@@ -67,6 +66,6 @@ public class DateTest {
         assertFalse(dateTest.equals(5));
 
         // different dates -> returns false
-        assertFalse(dateTest.equals(new Date(LocalDate.of(2020, 2, 2))));
+        assertFalse(dateTest.equals(new Date(LocalDate.of(2020, 6, 6), currDate)));
     }
 }
