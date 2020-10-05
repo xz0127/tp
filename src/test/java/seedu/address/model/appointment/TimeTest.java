@@ -54,12 +54,14 @@ public class TimeTest {
         // null time check
         assertThrows(NullPointerException.class, () -> testTime.isBefore(null));
 
-        // time is before input
+        // time is before input --> true
         assertTrue(testTime.isBefore(new Time(LocalTime.of(15, 0))));
         assertTrue(testTime.isBefore(new Time(timeBeforeClosing)));
 
-        // time is after input
+        // time is equal to input --> false
         assertFalse(testTime.isBefore(new Time(LocalTime.NOON)));
+
+        // time is after input --> false
         assertFalse(testTime.isBefore(new Time(LocalTime.of(11, 0))));
         assertFalse(testTime.isBefore(new Time(timeAfterOpening)));
     }
@@ -71,12 +73,14 @@ public class TimeTest {
         // null time check
         assertThrows(NullPointerException.class, () -> testTime.isAfter(null));
 
-        // time is before input
+        // time is after input --> true
         assertTrue(testTime.isAfter(new Time(LocalTime.of(11, 0))));
         assertTrue(testTime.isAfter(new Time(timeAfterOpening)));
 
-        // time is after input
+        // time is equal to input --> false
         assertFalse(testTime.isAfter(new Time(LocalTime.NOON)));
+
+        // time is before input --> false
         assertFalse(testTime.isAfter(new Time(LocalTime.of(15, 0))));
         assertFalse(testTime.isAfter(new Time(timeBeforeClosing)));
     }

@@ -18,42 +18,59 @@ public class DateTest {
     }
 
     @Test
-    public void constructor_invalidDate_throwsIllegalArgumentException() {
-        assertThrows(IllegalArgumentException.class, () -> new Date(LocalDate.of(2010, 1, 1), currDate));
-    }
-
-    @Test
-    public void isValidDate() {
-        // null date
-        assertThrows(NullPointerException.class, () -> Date.isValidDate(null, currDate));
-
-        // invalid dates
-        assertFalse(Date.isValidDate(LocalDate.of(2019, 5, 5), currDate));
-        assertFalse(Date.isValidDate(LocalDate.of(2020, 1, 5), currDate));
-        assertFalse(Date.isValidDate(LocalDate.of(2020, 5, 4), currDate));
-        assertFalse(Date.isValidDate(LocalDate.of(2019, 4, 4), currDate));
-
-        // valid dates
-        assertTrue(Date.isValidDate(LocalDate.of(2021, 5, 5), currDate));
-        assertTrue(Date.isValidDate(LocalDate.of(2020, 6, 5), currDate));
-        assertTrue(Date.isValidDate(LocalDate.of(2020, 5, 6), currDate));
-        assertTrue(Date.isValidDate(LocalDate.of(2020, 5, 5), currDate));
-    }
-
-    @Test
     public void toStringBasedOn() {
         LocalDate testDate = LocalDate.of(2020, 6, 6);
 
-        assertEquals("Saturday, Jun 06 2020", new Date(testDate, currDate).toStringBasedOn(currDate));
-        assertEquals("Today", new Date(testDate, testDate).toStringBasedOn(testDate));
+        assertEquals("Saturday, Jun 06 2020", new Date(testDate).toStringBasedOn(currDate));
+        assertEquals("Today", new Date(testDate).toStringBasedOn(testDate));
+    }
+
+    @Test
+    public void isBefore() {
+        Date testDate = new Date(LocalDate.of(2020, 6, 6));
+
+        // null date check
+        assertThrows(NullPointerException.class, () -> testDate.isBefore(null));
+
+        // date is before input --> true
+        assertTrue(testDate.isBefore(new Date(LocalDate.of(2020, 7, 6))));
+        assertTrue(testDate.isBefore(new Date(LocalDate.of(2020, 6, 7))));
+
+        // date is same as input --> false
+        assertFalse(testDate.isBefore(testDate));
+        assertFalse(testDate.isBefore(new Date(LocalDate.of(2020, 6, 6))));
+
+        // date is after input --> false
+        assertFalse(testDate.isBefore(new Date(LocalDate.of(2020, 5, 6))));
+        assertFalse(testDate.isBefore(new Date(LocalDate.of(2020, 6, 5))));
+    }
+
+    @Test
+    public void isAfter() {
+        Date testDate = new Date(LocalDate.of(2020, 6, 6));
+
+        // null date check
+        assertThrows(NullPointerException.class, () -> testDate.isAfter(null));
+
+        // date is after input --> true
+        assertTrue(testDate.isAfter(new Date(LocalDate.of(2020, 5, 6))));
+        assertTrue(testDate.isAfter(new Date(LocalDate.of(2020, 6, 5))));
+
+        // date is same as input --> false
+        assertFalse(testDate.isAfter(testDate));
+        assertFalse(testDate.isAfter(new Date(LocalDate.of(2020, 6, 6))));
+
+        // date is before input --> false
+        assertFalse(testDate.isAfter(new Date(LocalDate.of(2020, 7, 6))));
+        assertFalse(testDate.isAfter(new Date(LocalDate.of(2020, 6, 7))));
     }
 
     @Test
     public void equals() {
-        Date dateTest = new Date(LocalDate.of(2020, 10, 10), currDate);
+        Date dateTest = new Date(LocalDate.of(2020, 10, 10));
 
         // same values -> returns true
-        Date dateTestCopy = new Date(LocalDate.of(2020, 10, 10), currDate);
+        Date dateTestCopy = new Date(LocalDate.of(2020, 10, 10));
         assertTrue(dateTest.equals(dateTestCopy));
 
         // same object -> returns true
@@ -66,6 +83,6 @@ public class DateTest {
         assertFalse(dateTest.equals(5));
 
         // different dates -> returns false
-        assertFalse(dateTest.equals(new Date(LocalDate.of(2020, 6, 6), currDate)));
+        assertFalse(dateTest.equals(new Date(LocalDate.of(2020, 6, 6))));
     }
 }

@@ -48,6 +48,10 @@ public class Time {
         return !(test.isBefore(OPENING_TIME) || test.isAfter(CLOSING_TIME));
     }
 
+    public LocalTime getTime() {
+        return value;
+    }
+
     /**
      * Check if the appointment time comes before the input {@code Time}.
      *

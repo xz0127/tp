@@ -1,7 +1,6 @@
 package seedu.address.model.appointment;
 
 import static java.util.Objects.requireNonNull;
-import static seedu.address.commons.util.AppUtil.checkArgument;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -14,8 +13,6 @@ public class Date {
      * The formatter to convert the Date into the desired form for presentation
      **/
     public static final DateTimeFormatter DATE_FORMAT = DateTimeFormatter.ofPattern("EEEE, MMM dd uuuu");
-    public static final String MESSAGE_CONSTRAINTS = "The date be an upcoming date. "
-            + "It cannot be a date that is already passed.";
 
     private final LocalDate value;
 
@@ -25,32 +22,33 @@ public class Date {
      * @param date the {@code LocalDate} containing the date.
      */
     public Date(LocalDate date) {
-        this(date, LocalDate.now());
-    }
-
-    /**
-     * Create a {@code Date} that represents the date of an appointment.
-     *
-     * @param date the {@code LocalDate} containing the date.
-     * @param now  the current {@code LocalDate}
-     */
-    public Date(LocalDate date, LocalDate now) {
         requireNonNull(date);
 
-        checkArgument(isValidDate(date, now), MESSAGE_CONSTRAINTS);
         value = date;
     }
 
+    public LocalDate getDate() {
+        return value;
+    }
+
     /**
-     * Checks if the given {@code LocalDate} is valid.
-     * The {@code LocalDate} is valid if it is a Date that is not passed yet.
+     * Check if the appointment date comes before the input {@code Date}.
      *
-     * @param test     the {@code LocalDate} to test.
-     * @param currDate the current {@code LocalDate}.
-     * @return true if it is vald, false otherwise.
+     * @param inputDate the input date to be checked against
+     * @return true if the appointment date comes before the input date, false otherwise
      */
-    public static boolean isValidDate(LocalDate test, LocalDate currDate) {
-        return !test.isBefore(currDate);
+    public boolean isBefore(Date inputDate) {
+        return value.isBefore(inputDate.value);
+    }
+
+    /**
+     * Check if the appointment date comes after the input {@code Date}.
+     *
+     * @param inputDate the input date to be checked against
+     * @return true if the appointment date comes after the input date, false otherwise
+     */
+    public boolean isAfter(Date inputDate) {
+        return value.isAfter(inputDate.value);
     }
 
     /**
