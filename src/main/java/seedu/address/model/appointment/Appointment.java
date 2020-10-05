@@ -1,5 +1,6 @@
 package seedu.address.model.appointment;
 
+import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.time.Duration;
@@ -17,7 +18,7 @@ public class Appointment {
     private final Date date;
     private final Time startTime;
     private final Time endTime;
-    // todo: add more support for appointmentid
+    // todo: add more support for appointmentId
     private final AppointmentId appointmentId;
 
     // Data field
@@ -64,6 +65,8 @@ public class Appointment {
      * This defines a weaker notion of equality between two appointments
      */
     public boolean isOverlapping(Appointment otherAppointment) {
+        requireNonNull(otherAppointment);
+
         if (otherAppointment == this) {
             return true;
         }
@@ -85,9 +88,11 @@ public class Appointment {
      * @return true if this appointment comes before, false otherwise.
      */
     public boolean isBefore(Appointment otherAppointment) {
+        requireNonNull(otherAppointment);
+
         return getDate().isBefore(otherAppointment.getDate())
                 || (getDate().equals(otherAppointment.getDate())
-                && !(getEndTime().isAfter(otherAppointment.getStartTime()))); // End1 <= Start2
+                    && !(getEndTime().isAfter(otherAppointment.getStartTime()))); // End1 <= Start2
     }
 
     /**
@@ -97,9 +102,11 @@ public class Appointment {
      * @return true if this appointment comes after, false otherwise.
      */
     public boolean isAfter(Appointment otherAppointment) {
-        return date.isAfter(otherAppointment.getDate())
-                || (date.equals(otherAppointment.getDate())
-                && !(otherAppointment.getEndTime().isAfter(getStartTime()))); // End2 <= Start1
+        requireNonNull(otherAppointment);
+
+        return getDate().isAfter(otherAppointment.getDate())
+                || (getDate().equals(otherAppointment.getDate())
+                    && !(otherAppointment.getEndTime().isAfter(getStartTime()))); // End2 <= Start1
     }
 
     /**

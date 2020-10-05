@@ -6,7 +6,6 @@ import java.util.Comparator;
 
 /**
  * Represents the {@code Comparator} class for Appointment.
- * Guarantees: Does not compare overlapping appointments.
  */
 public class AppointmentComparator implements Comparator<Appointment> {
     @Override
@@ -17,12 +16,11 @@ public class AppointmentComparator implements Comparator<Appointment> {
             return -1;
         }
 
-        if (a2.isAfter(a2)) {
+        if (a1.isAfter(a2)) {
             return 1;
         }
 
-        // Does not handle overlapping appointments
-        assert a1.equals(a2);
+        assert a1.isOverlapping(a2);
         return 0;
     }
 }
