@@ -1,12 +1,13 @@
 package seedu.address.model.appointment;
 
+import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
+
+import java.util.List;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import seedu.address.model.appointment.exceptions.OverlappingAppointmentException;
 
-import java.util.List;
-
-import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 /**
  * A list of appointments that enforces uniqueness between its elements and does not allow nulls.

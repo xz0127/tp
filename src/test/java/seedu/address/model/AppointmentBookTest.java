@@ -33,13 +33,13 @@ public class AppointmentBookTest {
     }
 
 
-//  Wait for assign command
-//    @Test
-//    public void resetData_withValidReadOnlyAddressBook_replacesData() {
-//        AppointmentBook newData = getTypicalAppointmentBook();
-//        appointmentBook.resetData(newData);
-//        assertEquals(newData, appointmentBook);
-//    }
+    //  Wait for assign command
+    //    @Test
+    //    public void resetData_withValidReadOnlyAddressBook_replacesData() {
+    //        AppointmentBook newData = getTypicalAppointmentBook();
+    //        appointmentBook.resetData(newData);
+    //        assertEquals(newData, appointmentBook);
+    //    }
 
     @Test
     public void resetData_withOverlappingAppointments_throwsOverlappingAppointmentException() {
@@ -52,29 +52,29 @@ public class AppointmentBookTest {
         assertThrows(OverlappingAppointmentException.class, () -> appointmentBook.resetData(newData));
     }
 
-//    @Test
-//    public void hasPerson_nullPerson_throwsNullPointerException() {
-//        assertThrows(NullPointerException.class, () -> appointmentBook.hasPerson(null));
-//    }
-//
-//    @Test
-//    public void hasPerson_personNotInAddressBook_returnsFalse() {
-//        assertFalse(addressBook.hasPerson(ALICE));
-//    }
-//
-//    @Test
-//    public void hasPerson_personInAddressBook_returnsTrue() {
-//        addressBook.addPerson(ALICE);
-//        assertTrue(addressBook.hasPerson(ALICE));
-//    }
-//
-//    @Test
-//    public void hasPerson_personWithSameIdentityFieldsInAddressBook_returnsTrue() {
-//        addressBook.addPerson(ALICE);
-//        Person editedAlice = new PersonBuilder(ALICE).withAddress(VALID_ADDRESS_BOB).withTags(VALID_TAG_HUSBAND)
-//                .build();
-//        assertTrue(addressBook.hasPerson(editedAlice));
-//    }
+    //    @Test
+    //    public void hasPerson_nullPerson_throwsNullPointerException() {
+    //        assertThrows(NullPointerException.class, () -> appointmentBook.hasPerson(null));
+    //    }
+    //
+    //    @Test
+    //    public void hasPerson_personNotInAddressBook_returnsFalse() {
+    //        assertFalse(addressBook.hasPerson(ALICE));
+    //    }
+    //
+    //    @Test
+    //    public void hasPerson_personInAddressBook_returnsTrue() {
+    //        addressBook.addPerson(ALICE);
+    //        assertTrue(addressBook.hasPerson(ALICE));
+    //    }
+    //
+    //    @Test
+    //    public void hasPerson_personWithSameIdentityFieldsInAddressBook_returnsTrue() {
+    //        addressBook.addPerson(ALICE);
+    //        Person editedAlice = new PersonBuilder(ALICE).withAddress(VALID_ADDRESS_BOB).withTags(VALID_TAG_HUSBAND)
+    //                .build();
+    //        assertTrue(addressBook.hasPerson(editedAlice));
+    //    }
 
     @Test
     public void getAppointmentList_modifyList_throwsUnsupportedOperationException() {
