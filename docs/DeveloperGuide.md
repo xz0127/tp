@@ -1,4 +1,4 @@
----
+﻿---
 layout: page
 title: Developer Guide
 ---
@@ -233,74 +233,352 @@ _{Explain here how the data archiving feature will be implemented}_
 ## **Appendix: Requirements**
 
 ### Product scope
+**Target user profile story**:
 
-**Target user profile**:
+Namise is a hard working nurse working at a popular dental clinic situated in town and gets appointment calls on an hourly basis. Swarmed with incoming calls, Namise has to make new appointments for new and existing patients while keeping track of the doctor’s schedule at the same time😞. With the need to juggle multiple tasks at once, Namise is also prone to making careless mistakes in his work due to fatigue.
 
-* has a need to manage a significant number of contacts
-* prefer desktop apps over other types
-* can type fast
-* prefers typing to mouse interactions
-* is reasonably comfortable using CLI apps
+  
 
-**Value proposition**: manage contacts faster than a typical mouse/GUI driven app
+Being a tech-savvy person armed with a commendable experience in unix, Namise prefers to scribble down appointment schedules on paper while on call with his patients to maximise efficiency. This task is further exacerbated with the need to transfer these notes into an excel table manually later in the day.
+ 
+**Target user profile summary**:
+*   Nurse working in a highly popular, small scale dental clinic
+*   Responsible for scheduling a large number of appointments daily
+*   Add new patients to the clinic records  
+*   Do not entertain walk-ins and only operate on an appointment-basis
+*   Required to multi-task (create appointment arrangements with patients over the phone)
+*   Prone to carelessness due to the sheer number of appointments to handle  
+*   Tech-savvy  
+*   Prefers typing & wants to get things done quickly
+*   Tired of transferring appointment details from paper notes to excel
+*   Prefers desktop apps over other types
+*   Types fast
+*   Prefers typing to mouse interactions
+*   Reasonably comfortable using CLI apps
+
+**Value proposition**: 
+
+Help nurses **handle and schedule dental appointments for patients** faster than a typical mouse/GUI driven app or excel scheduling
 
 
 ### User stories
 
 Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unlikely to have) - `*`
 
-| Priority | As a …​                                    | I want to …​                     | So that I can…​                                                        |
-| -------- | ------------------------------------------ | ------------------------------ | ---------------------------------------------------------------------- |
-| `* * *`  | new user                                   | see usage instructions         | refer to instructions when I forget how to use the App                 |
-| `* * *`  | user                                       | add a new person               |                                                                        |
-| `* * *`  | user                                       | delete a person                | remove entries that I no longer need                                   |
-| `* * *`  | user                                       | find a person by name          | locate details of persons without having to go through the entire list |
-| `* *`    | user                                       | hide private contact details   | minimize chance of someone else seeing them by accident                |
-| `*`      | user with many persons in the address book | sort persons by name           | locate a person easily                                                 |
+| Priority | As a …​          | I want to …​                      | So that I can…​                                                      |
+| -------- | --------------------| -------------------------------------| ------------------------------------------------------------------------|
+| `* *`    | new user            | see an overview of the commands that are available to me | familiarise myself with using the app command       |
+| `* * *`  | nurse               | view the entire patient list         | assign them to their appointments                                       |
+| `* * *`  | administrative nurse| add new patient into the system      | assign an appointment to them                                           |
+| `* * *`  | administrative nurse| delete the patient information       | manage the patient list easily when it is needed                        |
+| `* * *`  | administrative nurse| search for patient by IC             | locate a patient easily                                                 |
+| `* * *`  | nurse               | create patient appointment           | assign patient to a time slot for their appointment                     |
+| `* * *`  | nurse               | delete an appointment                | cancel an appointment                                                   |
+| `* * *`  | nurse               | view the entire appointment list for the certain day| update my dentists of the itinerary for the day          |
+| `* * *`  | nurse               | mark the appointment as complete if the patient completes his/her appointment| have an accurate representation of the remaining appointments|
+| `* *`    | nurse               | add diagnosis to a completed appointment| have a record of the patient’s visit                                 |
+| `* *`    | nurse               | check the record of the patient      | view the appointment history of the patient easily                      |
+| `* *`    | administrative nurse| search for patient by phone number   | locate a patient easily                                                 |
+| `* *`    | administrative nurse| search for patient by name           | locate a patient easily                                                 |
+| `* *`    | administrative nurse| change the patient’s appointment if they call to postpone their appointment| update the appointment easily     |
+| `* *`    | administrative nurse| update patient’s details             | keep the information of patients up-to-date                             |
+| `* *`    | nurse               | add an event slot to indicate that the doctor is not available at that time period| avoid arranging an appointment to that time slot|
+| `* *`    | nurse               | get the available time slots of a day| inform my patient of the available times for that day                   |
+| `*`      | nurse               | get the next available time slot     | inform my patient of the next available timing should their original preferred choice be filled|
+| `*`      | nurse               | check the earliest available slot for the clinic| automatically assign patient who does not have any preference for a specific doctor|
+| `* *`    | nurse handling multiple patient records| archive records of past appointments| review them in the future                             |
+| `*`      | nurse               | check the patient’s drug allergy     | confirm if the medicines prescribed are not in the list                 |
 
-*{More to be added}*
 
 ### Use cases
 
-(For all use cases below, the **System** is the `AddressBook` and the **Actor** is the `user`, unless specified otherwise)
+(For all use cases below, the **System** is the `Nuudle` and the **Actor** is the `user`, unless specified otherwise)
 
-**Use case: Delete a person**
+**Use case: UC01 - Add a patient**
 
 **MSS**
 
-1.  User requests to list persons
-2.  AddressBook shows a list of persons
-3.  User requests to delete a specific person in the list
-4.  AddressBook deletes the person
+1.  User requests to add a patient to the list.
+2.  Nuudle adds the patient.
+
+**Extensions**
+
+* 1a. The given keywords are invalid.
+
+    * 1a1. Nuudle shows an error message.
+           
+      Use case ends.
+
+&nbsp;
+
+**Use case: UC02 - Delete a patient**
+
+**MSS**
+
+1.  User requests to list patients.
+2.  Nuudle shows a list of patients.
+3.  User requests to delete a specific patient in the list.
+4.  Nuudle deletes the patient.
 
     Use case ends.
 
 **Extensions**
 
+* 1a. The given keywords are invalid.
+
+    * 1a1. Nuudle shows an error message.
+           
+      Use case ends.
+
+* 2a. The list is empty.
+           
+  Use case ends.
+  
+* 3a. The given index is invalid.
+
+    * 3a1. Nuudle shows an error message.
+           
+      Use case resumes at step 2.
+
+&nbsp;
+
+**Use case: UC03 - Edit a patient**
+
+**MSS**
+
+1.  User requests to find a specific patient.
+2.  Nuudle shows the list of patients with the given name.
+3.  User requests to edit the patient information.
+4.  Nuudle changes the patient information.
+
+    Use case ends.
+
+**Extensions**
+
+* 1a. The given keywords are invalid.
+
+    * 1a1. Nuudle shows an error message.
+
+      Use case ends.
+
+* 3a. The given information for editing is invalid (including empty input).
+
+    * 3a1. Nuudle shows an error message.
+
+      Use case resumes at step 2.
+
+&nbsp;
+
+**Use case: UC04 - View patient record**
+
+**MSS**
+
+1. User requests to find a patient by name.
+2. Nuudle shows the list of patients with the requested name.
+3. User request to view patient record of a specific patient in the list.
+4. Nuudle shows the list of records for that patient.
+    
+   Use case ends.
+
+**Extensions**
+
+* 1a. The given keywords are invalid.
+
+    * 1a1. Nuudle shows an error message.
+
+      Use case ends.
+
+* 2a. The list is empty.
+      
+  Use case ends.
+
+&nbsp;
+
+**Use case: UC05 - Add an appointment**
+
+**MSS**
+
+1.  User requests to find an available time slot.
+2.  Nuudle shows a list of available time slots.
+3.  User requests to add an appointment to a specific time slot.
+4.  Nuudle adds the appointment to the list of appointment records.
+
+    Use case ends.
+    
+**Extensions**
+
+* 1a. The given keywords are invalid.
+
+    * 1a1. Nuudle shows an error message.
+
+      Use case ends.
+      
+* 3a. The given time slot is invalid (including empty input).
+
+    * 3a1. Nuudle shows an error message.
+
+      Use case resumes at step 2.
+
+&nbsp;
+ 
+**Use case: UC06 - Delete an appointment**
+
+**MSS**
+
+1. User requests to list appointments.
+2. Nuudle shows the list of appointments.
+3. User requests to delete a specific appointment in the list.
+4. Nuudle deletes the appointment.
+    
+   Use case ends.
+
+**Extensions**
+
+* 1a. The given index is invalid.
+    
+    * 1a1. Nuudle shows an error message.
+
+      Use case ends.
+
 * 2a. The list is empty.
 
   Use case ends.
 
-* 3a. The given index is invalid.
+&nbsp;
 
-    * 3a1. AddressBook shows an error message.
+**Use case: UC07 - Change an appointment**
+
+**MSS**
+
+1.  User requests to list all appointments.
+2.  Nuudle shows a list of appointments.
+3.  User requests to find an available time slot.
+4.  Nuudle shows a list of available time slots.
+5.  User requests to change a specific appointment to another time.
+6.  Nuudle changes the appointment.
+
+    Use case ends.
+
+**Extensions**
+
+* 1a. The given keywords are invalid.
+
+    * 1a1. Nuudle shows an error message.
+
+      Use case ends.
+      
+* 2a. User has no current appointments.
+
+    * 2a1. Nuudle shows an error message.
+
+      Use case ends.
+      
+* 5a. The given time slot is invalid (including empty input).
+
+    * 5a1. Nuudle shows an error message.
+
+      Use case resumes at step 4.
+    
+* 5b. The given keywords are invalid.
+      
+     * 5b1. Nuudle shows an error message.
+      
+       Use case ends.
+
+&nbsp;
+
+**Use case: UC08 - Mark an appointment as complete**
+
+**MSS**
+
+1. User requests to list appointments.
+2. Nuudle shows the list of appointments.
+3. User requests to mark an appointment as done.
+4. Nuudle marks the appointment as done.
+
+   Use case ends.
+
+**Extensions**
+
+* 3a. The given index is invalid.
+    
+    * 3a1. Nuudle shows an error message.
 
       Use case resumes at step 2.
 
-*{More to be added}*
+**Use case: UC09 - View appointments for today**
 
+**MSS**
+
+1.  User requests for the appointments scheduled for today.
+2.  Nuudle shows a list of appointments scheduled for today.
+
+    Use case ends.
+
+**Extensions**
+
+* 1a. The given keywords are invalid.
+
+    * 1a1. Nuudle shows an error message.
+    
+      Use case ends.
+
+* 1b. The given date is invalid.
+    
+    * 1b1. Nuudle shows an error message.
+
+      Use case ends.
+
+* 2a. The list is empty.
+
+  Use case ends.
+
+&nbsp;
+
+**Use case: UC10 - Create an appointment for a new patient**
+
+**MSS**
+
+1. User requests to create a <u>new patient (UC01)</u>.
+2. Nuudle creates the new patient.
+3. User requests for an available time slot on a preferred day.
+4. Nuudle shows the list of available time slots.
+5. User requests to add an appointment for the new patient.
+6. Nuudle creates the appointment.
+    
+   Use case ends.
+
+**Extensions**
+
+* 3a. The given date is invalid.
+    
+    * 3a1. Nuudle shows an error message.
+
+      Use case resumes at step 2.
+
+* 4a. No more time slot is available for that day.
+
+    * 4a1. Nuudle shows the next available time slot on the nearest day.
+    
+        * 4a1a. User uses the suggested time slot.
+
+          Use case resumes at step 5.
+
+        * 4a1b. User does not use the suggested time slot.
+        
+          Use case resumes at step 3.
+      
 ### Non-Functional Requirements
 
 1.  Should work on any _mainstream OS_ as long as it has Java `11` or above installed.
-2.  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
-3.  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
-
-*{More to be added}*
+2.  Should be able to hold up to 500 patients without a noticeable sluggishness in performance for typical usage.
+3.  Should be able to hold up to 1000 upcoming appointments without a noticeable sluggishness in performance for typical usage.
+4.  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
 
 ### Glossary
 
 * **Mainstream OS**: Windows, Linux, Unix, OS-X
-* **Private contact detail**: A contact detail that is not meant to be shared with others
+* **Patient records**: The past records of the patient's visit to the clinic. May contain doctor's diagnosis (if any).
 
 --------------------------------------------------------------------------------------------------------------------
 
