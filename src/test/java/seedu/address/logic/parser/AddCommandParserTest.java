@@ -104,7 +104,7 @@ public class AddCommandParserTest {
                 expectedMessage);
 
         // missing nric prefix
-        assertParseFailure(parser, NAME_DESC_BOB + VALID_NRIC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB + ADDRESS_DESC_BOB,
+        assertParseFailure(parser, NAME_DESC_BOB + VALID_NRIC_BOB + PHONE_DESC_BOB + ADDRESS_DESC_BOB,
                 expectedMessage);
     }
 
