@@ -19,6 +19,7 @@ public class Person {
     private final Name name;
     private final Phone phone;
     private final Email email;
+    private final Nric nric;
 
     // Data fields
     private final Address address;
@@ -27,13 +28,14 @@ public class Person {
     /**
      * Every field must be present and not null.
      */
-    public Person(Name name, Phone phone, Email email, Address address, Set<Tag> tags) {
-        requireAllNonNull(name, phone, email, address, tags);
+    public Person(Name name, Phone phone, Email email, Address address, Set<Tag> tags, Nric nric) {
+        requireAllNonNull(name, phone, email, address, tags, nric);
         this.name = name;
         this.phone = phone;
         this.email = email;
         this.address = address;
         this.tags.addAll(tags);
+        this.nric = nric;
     }
 
     public Name getName() {
@@ -50,6 +52,10 @@ public class Person {
 
     public Address getAddress() {
         return address;
+    }
+
+    public Nric getNric() {
+        return nric;
     }
 
     /**
@@ -71,6 +77,7 @@ public class Person {
 
         return otherPerson != null
                 && otherPerson.getName().equals(getName())
+                && otherPerson.getNric().equals(getNric())
                 && (otherPerson.getPhone().equals(getPhone()) || otherPerson.getEmail().equals(getEmail()));
     }
 
@@ -93,13 +100,14 @@ public class Person {
                 && otherPerson.getPhone().equals(getPhone())
                 && otherPerson.getEmail().equals(getEmail())
                 && otherPerson.getAddress().equals(getAddress())
-                && otherPerson.getTags().equals(getTags());
+                && otherPerson.getTags().equals(getTags())
+                && otherPerson.getNric().equals(getNric());
     }
 
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, phone, email, address, tags);
+        return Objects.hash(name, phone, email, address, tags, nric);
     }
 
     @Override
@@ -108,6 +116,8 @@ public class Person {
         builder.append(getName())
                 .append(" Phone: ")
                 .append(getPhone())
+                .append(" NRIC: ")
+                .append(getNric())
                 .append(" Email: ")
                 .append(getEmail())
                 .append(" Address: ")
