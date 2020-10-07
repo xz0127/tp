@@ -5,6 +5,7 @@ import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
 import seedu.address.commons.core.GuiSettings;
+import seedu.address.model.appointment.Appointment;
 import seedu.address.model.person.Person;
 
 /**
@@ -84,4 +85,15 @@ public interface Model {
      * @throws NullPointerException if {@code predicate} is null.
      */
     void updateFilteredPersonList(Predicate<Person> predicate);
+
+    /**
+     * Replaces appointment book data with the data in {@code appointmentBook}.
+     */
+    void setAppointmentBook(ReadOnlyAppointmentBook appointmentBook);
+
+    /** Returns the AppointmentBook */
+    ReadOnlyAppointmentBook getAppointmentBook();
+
+    /** Returns an unmodifiable view of the filtered appointment list */
+    ObservableList<Appointment> getFilteredAppointmentList();
 }
