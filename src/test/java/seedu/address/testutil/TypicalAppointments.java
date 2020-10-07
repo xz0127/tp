@@ -41,16 +41,16 @@ public class TypicalAppointments {
     private TypicalAppointments() {
     } // prevents instantiation
 
-    // /**
-    //  * Returns an {@code AppointmentBook} with all the typical Appointments.
-    //  */
-    // public static AddressBook getTypicalAppointmentBook() {
-    //     AddressBook ab = new AddressBook();
-    //     for (Appointment Appointment : getTypicalAppointments()) {
-    //         ab.addAppointment(Appointment);
+    //     /**
+    //      * Returns an {@code AppointmentBook} with all the typical Appointments.
+    //      */
+    //     public static AppointmentBook getTypicalAppointmentBook() {
+    //         AppointmentBook ab = new AppointmentBook();
+    //         for (Appointment Appointment : getTypicalAppointments()) {
+    //             ab.addAppointment(Appointment);
+    //         }
+    //         return ab;
     //     }
-    //     return ab;
-    // }
 
     public static List<Appointment> getTypicalAppointments() {
         return new ArrayList<>(Arrays.asList(
