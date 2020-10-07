@@ -56,6 +56,15 @@ public class AppointmentBook implements ReadOnlyAppointmentBook {
         setAppointments(newData.getAppointmentList());
     }
 
+    //// appointment-level operations
+
+    /**
+     * Adds an appointment to the address book.
+     * The appointment must not overlap with appointments in the appointment book.
+     */
+    public void addAppointment(Appointment a) {
+        appointments.add(a);
+    }
 
     //// util methods
 
