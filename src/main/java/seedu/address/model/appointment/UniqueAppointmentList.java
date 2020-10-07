@@ -55,6 +55,10 @@ public class UniqueAppointmentList {
         return internalUnmodifiableList;
     }
 
+    /**
+     * Replaces the contents of this list with {@code appointments}.
+     * {@code appointments} must not contain overlapping appointments.
+     */
     public void setAppointments(List<Appointment> appointments) {
         requireAllNonNull(appointments);
         if (!appointmentsAreNotOverlapping(appointments)) {
