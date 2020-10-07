@@ -5,15 +5,16 @@ import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DATE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TIME;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
+
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.AssignCommand;
-import seedu.address.logic.commands.EditCommand;
+import seedu.address.logic.commands.AssignCommand.AssignAppointmentBuilder;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.appointment.Date;
 import seedu.address.model.appointment.Time;
 
-import java.time.LocalDate;
-import java.time.LocalTime;
 
 /**
  * Parses input arguments and creates a new AssignCommand object
@@ -35,7 +36,7 @@ public class AssignCommandParser implements Parser<AssignCommand> {
         try {
             index = ParserUtil.parseIndex(argMultimap.getPreamble());
         } catch (ParseException pe) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE), pe);
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AssignCommand.MESSAGE_USAGE), pe);
         }
 
         if (argMultimap.getValue(PREFIX_DATE).isEmpty()) {
@@ -45,11 +46,12 @@ public class AssignCommandParser implements Parser<AssignCommand> {
             throw new ParseException(AssignCommand.TIME_MISSING);
         }
 
+        AssignAppointmentBuilder assignAppointmentBuilder = new AssignAppointmentBuilder();
         Date date = argMultimap.getValue(PREFIX_DATE).map(x -> new Date(LocalDate.parse(x))).get();
         Time time = argMultimap.getValue(PREFIX_TIME).map(x -> new Time(LocalTime.parse(x))).get();
+        assignAppointmentBuilder.setAppointmentDate(date);
+        assignAppointmentBuilder.setAppointmentTime(time);
 
-        // todo: add time check for validity of the date and time when storage is available.
-
-        return new AssignCommand(index, date, time);
+        return new AssignCommand(index, assignAppointmentBuilder);
     }
 }

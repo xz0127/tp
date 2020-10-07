@@ -121,6 +121,17 @@ public class ModelManager implements Model {
 
     //=========== AppointmentBook ================================================================================
     @Override
+    public boolean hasAppointment(Appointment appointment) {
+        return appointmentBook.isAppointmentOverlapped(appointment);
+    }
+
+    @Override
+    public void addAppointment(Appointment appointment) {
+        appointmentBook.addAppointment(appointment);
+        updateFilteredAppointmentList(PREDICATE_SHOW_ALL_APPOINTMENTS);
+    }
+
+    @Override
     public void setAppointmentBook(ReadOnlyAppointmentBook appointmentBook) {
         this.addressBook.resetData(addressBook);
     }
@@ -139,6 +150,12 @@ public class ModelManager implements Model {
     @Override
     public ObservableList<Appointment> getFilteredAppointmentList() {
         return filteredAppointments;
+    }
+
+    @Override
+    public void updateFilteredAppointmentList(Predicate<Appointment> predicate) {
+        requireNonNull(predicate);
+        filteredAppointments.setPredicate(predicate);
     }
 
     //=========== Filtered Person List Accessors =============================================================
