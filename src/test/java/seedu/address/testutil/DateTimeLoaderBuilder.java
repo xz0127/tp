@@ -11,21 +11,21 @@ import seedu.address.model.appointment.Time;
 /**
  * A utility class to help with building AssignLoader objects.
  */
-public class AssignLoaderBuilder {
+public class DateTimeLoaderBuilder {
     private DateTimeLoader loader;
 
-    public AssignLoaderBuilder() {
+    public DateTimeLoaderBuilder() {
         loader = new DateTimeLoader();
     }
 
-    public AssignLoaderBuilder(DateTimeLoader loader) {
+    public DateTimeLoaderBuilder(DateTimeLoader loader) {
         this.loader = new DateTimeLoader(loader);
     }
 
     /**
-     * Returns an {@code AssignLoaderBuilder} with fields containing {@code appointment}'s details
+     * Returns an {@code DateTimeLoaderBuilder} with fields containing {@code appointment}'s details
      */
-    public AssignLoaderBuilder(Appointment appointment) {
+    public DateTimeLoaderBuilder(Appointment appointment) {
         loader = new DateTimeLoader();
         loader.setAppointmentDate(appointment.getDate());
         loader.setAppointmentTime(appointment.getStartTime());
@@ -34,7 +34,7 @@ public class AssignLoaderBuilder {
     /**
      * Sets the {@code date} of the {@code AssignLoader} that we are building.
      */
-    public AssignLoaderBuilder withDate(String date) {
+    public DateTimeLoaderBuilder withDate(String date) {
         loader.setAppointmentDate(new Date(LocalDate.parse(date)));
         return this;
     }
@@ -42,7 +42,7 @@ public class AssignLoaderBuilder {
     /**
      * Sets the {@code time} of the {@code AssignLoader} that we are building.
      */
-    public AssignLoaderBuilder withTime(String time) {
+    public DateTimeLoaderBuilder withTime(String time) {
         loader.setAppointmentTime(new Time(LocalTime.parse(time)));
         return this;
     }

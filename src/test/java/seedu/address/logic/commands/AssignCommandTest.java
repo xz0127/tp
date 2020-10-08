@@ -29,7 +29,7 @@ import seedu.address.model.appointment.Appointment;
 import seedu.address.model.appointment.Date;
 import seedu.address.model.appointment.Time;
 import seedu.address.testutil.AppointmentBookBuilder;
-import seedu.address.testutil.AssignLoaderBuilder;
+import seedu.address.testutil.DateTimeLoaderBuilder;
 
 
 public class AssignCommandTest {
@@ -55,7 +55,7 @@ public class AssignCommandTest {
 
     @Test
     public void execute_appointmentAcceptedByModel_assignSuccessful() {
-        DateTimeLoader loader = new AssignLoaderBuilder().withDate(VALID_DATE).withTime(VALID_TIME).build();
+        DateTimeLoader loader = new DateTimeLoaderBuilder().withDate(VALID_DATE).withTime(VALID_TIME).build();
         AssignCommand assignCommand = new AssignCommand(INDEX_FIRST_APPOINTMENT, loader);
         Appointment appointment = new Appointment(
                 new Date(LocalDate.parse(VALID_DATE)), new Time(LocalTime.parse(VALID_TIME)), (ALICE.getNric())
@@ -73,7 +73,7 @@ public class AssignCommandTest {
     @Test
     public void execute_appointmentRejectedDueToOverSizedIndex_failure() {
         Index overSizedIndex = Index.fromOneBased(getTypicalPatients().size() + 1);
-        DateTimeLoader loader = new AssignLoaderBuilder().withDate(VALID_DATE).withTime(VALID_TIME).build();
+        DateTimeLoader loader = new DateTimeLoaderBuilder().withDate(VALID_DATE).withTime(VALID_TIME).build();
         AssignCommand assignCommand = new AssignCommand(overSizedIndex, loader);
 
         assertCommandFailure(assignCommand, model, MESSAGE_INVALID_PATIENT_DISPLAYED_INDEX);
@@ -81,7 +81,7 @@ public class AssignCommandTest {
 
     @Test
     public void execute_appointmentRejectedDueToOverlap_failure1() {
-        DateTimeLoader loader = new AssignLoaderBuilder().withDate(VALID_DATE).withTime(VALID_TIME).build();
+        DateTimeLoader loader = new DateTimeLoaderBuilder().withDate(VALID_DATE).withTime(VALID_TIME).build();
         AssignCommand assignCommand = new AssignCommand(INDEX_FIRST_APPOINTMENT, loader);
         Appointment appointment = new Appointment(
                 new Date(LocalDate.parse(VALID_DATE)), new Time(LocalTime.parse(SAME_TIME)), (ALICE.getNric())
@@ -94,7 +94,7 @@ public class AssignCommandTest {
 
     @Test
     public void execute_appointmentRejectedDueToOverlap_failure2() {
-        DateTimeLoader loader = new AssignLoaderBuilder().withDate(VALID_DATE).withTime(VALID_TIME).build();
+        DateTimeLoader loader = new DateTimeLoaderBuilder().withDate(VALID_DATE).withTime(VALID_TIME).build();
         AssignCommand assignCommand = new AssignCommand(INDEX_FIRST_APPOINTMENT, loader);
         Appointment appointment = new Appointment(
                 new Date(LocalDate.parse(VALID_DATE)), new Time(LocalTime.parse(OVERLAP_TIME)), (ALICE.getNric())

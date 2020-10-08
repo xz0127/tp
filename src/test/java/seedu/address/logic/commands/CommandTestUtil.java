@@ -21,7 +21,7 @@ import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.patient.NameContainsKeywordsPredicate;
 import seedu.address.model.patient.Patient;
-import seedu.address.testutil.AssignLoaderBuilder;
+import seedu.address.testutil.DateTimeLoaderBuilder;
 import seedu.address.testutil.EditPatientDescriptorBuilder;
 
 /**
@@ -87,9 +87,9 @@ public class CommandTestUtil {
     }
 
     static {
-        LOADER = new AssignLoaderBuilder().withDate(VALID_DATE).withTime(VALID_TIME).build();
-        LOADER_TIME = new AssignLoaderBuilder().withDate(VALID_DATE).withTime(OVERLAP_TIME).build();
-        LOADER_DATE = new AssignLoaderBuilder().withDate(DIFF_DATE).withTime(OVERLAP_TIME).build();
+        LOADER = new DateTimeLoaderBuilder().withDate(VALID_DATE).withTime(VALID_TIME).build();
+        LOADER_TIME = new DateTimeLoaderBuilder().withDate(VALID_DATE).withTime(OVERLAP_TIME).build();
+        LOADER_DATE = new DateTimeLoaderBuilder().withDate(DIFF_DATE).withTime(OVERLAP_TIME).build();
     }
 
     /**
