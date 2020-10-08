@@ -10,7 +10,7 @@ import java.time.LocalTime;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.AssignCommand;
-import seedu.address.logic.commands.AssignCommand.AssignLoader;
+import seedu.address.logic.commands.AssignCommand.DateTimeLoader;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.appointment.Date;
 import seedu.address.model.appointment.Time;
@@ -46,12 +46,12 @@ public class AssignCommandParser implements Parser<AssignCommand> {
             throw new ParseException(AssignCommand.TIME_MISSING);
         }
 
-        AssignLoader assignLoader = new AssignLoader();
+        DateTimeLoader dateTimeLoader = new DateTimeLoader();
         Date date = argMultimap.getValue(PREFIX_DATE).map(x -> new Date(LocalDate.parse(x))).get();
         Time time = argMultimap.getValue(PREFIX_TIME).map(x -> new Time(LocalTime.parse(x))).get();
-        assignLoader.setAppointmentDate(date);
-        assignLoader.setAppointmentTime(time);
+        dateTimeLoader.setAppointmentDate(date);
+        dateTimeLoader.setAppointmentTime(time);
 
-        return new AssignCommand(index, assignLoader);
+        return new AssignCommand(index, dateTimeLoader);
     }
 }
