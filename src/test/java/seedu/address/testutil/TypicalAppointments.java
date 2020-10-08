@@ -7,6 +7,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import seedu.address.model.appointment.Appointment;
+import seedu.address.model.person.Nric;
 
 /**
  * A utility class containing a list of {@code Appointment} objects to be used in tests.
@@ -16,27 +17,27 @@ public class TypicalAppointments {
     public static final Appointment APPOINTMENT_ONE = new AppointmentBuilder()
             .withDate(LocalDate.of(2020, 1, 1))
             .withStartTime(LocalTime.of(9, 0))
-            .withPatientId("S9234567A").build();
+            .withPatientId(new Nric("S9234567A")).build();
     public static final Appointment APPOINTMENT_TWO = new AppointmentBuilder()
             .withDate(LocalDate.of(2020, 5, 12))
             .withStartTime(LocalTime.of(11, 30))
-            .withPatientId("T0034567B").build();
+            .withPatientId(new Nric("T0034567B")).build();
     public static final Appointment APPOINTMENT_THREE = new AppointmentBuilder()
             .withDate(LocalDate.of(2020, 1, 1))
             .withStartTime(LocalTime.of(20, 0))
-            .withPatientId("S9734567H").build();
+            .withPatientId(new Nric("S9734567H")).build();
     public static final Appointment APPOINTMENT_FOUR = new AppointmentBuilder()
             .withDate(LocalDate.of(2020, 5, 22))
             .withStartTime(LocalTime.of(14, 0))
-            .withPatientId("T0234567K").build();
+            .withPatientId(new Nric("T0234567K")).build();
     public static final Appointment APPOINTMENT_FIVE = new AppointmentBuilder()
             .withDate(LocalDate.of(2020, 5, 22))
             .withStartTime(LocalTime.of(15, 0))
-            .withPatientId("S9234567A").build();
+            .withPatientId(new Nric("S9234567A")).build();
     public static final Appointment APPOINTMENT_SIX = new AppointmentBuilder()
             .withDate(LocalDate.of(2020, 4, 1))
             .withStartTime(LocalTime.of(11, 30))
-            .withPatientId("T0034567B").build();
+            .withPatientId(new Nric("T0034567B")).build();
 
     private TypicalAppointments() {
     } // prevents instantiation

@@ -116,6 +116,11 @@ public class AddCommandTest {
         }
 
         @Override
+        public void addAppointment(Appointment appointment) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
         public void setAddressBook(ReadOnlyAddressBook newData) {
             throw new AssertionError("This method should not be called.");
         }
@@ -127,6 +132,11 @@ public class AddCommandTest {
 
         @Override
         public boolean hasPerson(Person person) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public boolean hasAppointment(Appointment appointment) {
             throw new AssertionError("This method should not be called.");
         }
 
@@ -151,8 +161,13 @@ public class AddCommandTest {
         }
 
         @Override
-        public void setAppointmentBook(ReadOnlyAppointmentBook appointmentBook) {
+        public void updateFilteredAppointmentList(Predicate<Appointment> predicate) {
+            throw new AssertionError("This method should not be called.");
+        }
 
+        @Override
+        public void setAppointmentBook(ReadOnlyAppointmentBook appointmentBook) {
+            throw new AssertionError("This method should not be called.");
         }
 
         @Override

@@ -1,6 +1,7 @@
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DATE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TIME;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_APPOINTMENTS;
@@ -16,6 +17,7 @@ import seedu.address.model.Model;
 import seedu.address.model.appointment.Appointment;
 import seedu.address.model.appointment.Date;
 import seedu.address.model.appointment.Time;
+import seedu.address.model.person.Nric;
 import seedu.address.model.person.Person;
 
 /**
@@ -32,8 +34,8 @@ public class AssignCommand extends Command {
             + PREFIX_TIME + "TIME \n"
             + "Example: " + COMMAND_WORD + " "
             + "1 "
-            + PREFIX_DATE + "Sunday "
-            + PREFIX_TIME + "2am";
+            + PREFIX_DATE + "2018-12-12 "
+            + PREFIX_TIME + "16:00:00";
 
     public static final String MESSAGE_SUCCESS = "New Appointment added: %1$s";
     public static final String ASSIGNMENT_OVERLAP = "This time slot is occupied";
@@ -41,18 +43,17 @@ public class AssignCommand extends Command {
     public static final String TIME_MISSING = "The time of appointment is missing";
 
     private final Index targetIndex;
-    private final AssignAppointmentBuilder assignAppointmentBuilder;
+    private final AssignLoader assignLoader;
     /**
      * Creates an AssignCommand to add a new {@code Appointment}
      * @param targetIndex index of the patient in the list.
-     * @param assignAppointmentBuilder details of an appointment.
+     * @param assignLoader details of an appointment.
      */
-    public AssignCommand(Index targetIndex, AssignAppointmentBuilder assignAppointmentBuilder) {
-        requireNonNull(targetIndex);
-        requireNonNull(assignAppointmentBuilder);
+    public AssignCommand(Index targetIndex, AssignLoader assignLoader) {
+        requireAllNonNull(targetIndex, assignLoader);
 
         this.targetIndex = targetIndex;
-        this.assignAppointmentBuilder = assignAppointmentBuilder;
+        this.assignLoader = new AssignLoader(assignLoader);
     }
 
     // todo
@@ -66,7 +67,7 @@ public class AssignCommand extends Command {
         }
 
         Person patient = lastShownPatientList.get(targetIndex.getZeroBased());
-        Appointment appointment = createAppointment(patient, assignAppointmentBuilder);
+        Appointment appointment = createAppointment(patient, assignLoader);
 
         if (model.hasAppointment(appointment)) {
             throw new CommandException(ASSIGNMENT_OVERLAP);
@@ -82,17 +83,16 @@ public class AssignCommand extends Command {
      * and {@code assignAppointmentBuilder}
      */
     private static Appointment createAppointment(Person patient,
-            AssignAppointmentBuilder assignAppointmentBuilder) {
+            AssignLoader assignLoader) {
         assert patient != null;
-        assert assignAppointmentBuilder.getDate().isPresent();
-        assert assignAppointmentBuilder.getTime().isPresent();
+        assert assignLoader.getDate().isPresent();
+        assert assignLoader.getTime().isPresent();
 
-        Date assignedDate = assignAppointmentBuilder.getDate().get();
-        Time assignedTime = assignAppointmentBuilder.getTime().get();
+        Date assignedDate = assignLoader.getDate().get();
+        Time assignedTime = assignLoader.getTime().get();
 
         // Id is currently the name of patient.
-        // modify when Nric class is finished.
-        String assignedPatientId = patient.getName().toString();
+        Nric assignedPatientId = patient.getNric();
 
         return new Appointment(assignedDate, assignedTime, assignedPatientId);
     }
@@ -108,18 +108,18 @@ public class AssignCommand extends Command {
      * Stores the details to the appointment to be assigned.
      * Each non=empty field value will replace the corresponding field value of the Appointment.
      */
-    public static class AssignAppointmentBuilder {
+    public static class AssignLoader {
         private Date date;
         private Time time;
-        private String patientId; //todo: modify when Nric class is out
+        private Nric patientId; //todo: modify when Nric class is out
 
-        public AssignAppointmentBuilder() {}
+        public AssignLoader() {}
 
         /**
          * Copy constructor.
          * A defensive copy of {@code patientId} is used internally.
          */
-        public AssignAppointmentBuilder(AssignAppointmentBuilder toCopy) {
+        public AssignLoader(AssignLoader toCopy) {
             setAppointmentDate(toCopy.date);
             setAppointmentTime(toCopy.time);
             setPatientId(toCopy.patientId);
@@ -163,14 +163,14 @@ public class AssignCommand extends Command {
         /**
          * Sets {@code patientId} of this AssignAppointmentBuilder object.
          */
-        public void setPatientId(String patientId) {
+        public void setPatientId(Nric patientId) {
             this.patientId = patientId;
         }
 
         /**
          * Gets the {@code patientId} of this AssignAppointmentBuilder object.
          */
-        public Optional<String> getPatientId() {
+        public Optional<Nric> getPatientId() {
             return Optional.ofNullable(patientId);
         }
     }
