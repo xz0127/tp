@@ -14,7 +14,7 @@ import seedu.address.model.patient.Nric;
  */
 public class Appointment {
     // Duration of an appointment in hours
-    private static final Duration DEFAULT_DURATION = Duration.ofHours(1);
+    public static final Duration DEFAULT_DURATION = Duration.ofHours(1);
 
     // Identity fields
     private final Date date;

@@ -2,6 +2,7 @@ package seedu.address.model.appointment;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.AppUtil.checkArgument;
+import static seedu.address.model.appointment.Appointment.DEFAULT_DURATION;
 
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
@@ -20,8 +21,10 @@ public class Time {
     // Closes at 10pm
     public static final LocalTime CLOSING_TIME = LocalTime.of(22, 0);
 
-    public static final String MESSAGE_CONSTRAINTS = "The time should fall within the opening hours: "
-            + "from " + OPENING_TIME.format(TIME_FORMAT) + " to " + CLOSING_TIME.format(TIME_FORMAT);
+    public static final String MESSAGE_CONSTRAINTS = "The appointment time period should fall within "
+            + "the opening hours: from " + OPENING_TIME.format(TIME_FORMAT)
+            + " to " + CLOSING_TIME.format(TIME_FORMAT)
+            + "\nThe appointment duration of " + DEFAULT_DURATION.toHours() + "hours should also be considered.";
 
     private final LocalTime value;
 
@@ -46,6 +49,19 @@ public class Time {
      */
     public static boolean isValidTime(LocalTime test) {
         return !(test.isBefore(OPENING_TIME) || test.isAfter(CLOSING_TIME));
+    }
+
+    /**
+     * Checks if the given {@code LocalTime} is a valid start time.
+     * The {@code LocalTime} is valid if it falls within the opening and closing time.
+     * The {@link Appointment#DEFAULT_DURATION} is also considered
+     *
+     * @param test the LocalTime to test.
+     * @return true if is valid start time, false otherwise.
+     */
+    public static boolean isValidStartTime(LocalTime test) {
+        return !(test.isBefore(OPENING_TIME)
+                || test.isAfter(CLOSING_TIME.minus(DEFAULT_DURATION)));
     }
 
     public LocalTime getTime() {

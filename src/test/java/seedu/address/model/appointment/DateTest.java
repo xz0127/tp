@@ -18,6 +18,21 @@ public class DateTest {
     }
 
     @Test
+    public void isValidAppointmentDate() {
+        // null date
+        assertThrows(NullPointerException.class, () -> Date.isValidAppointmentDate(null));
+
+        // invalid dates
+        assertFalse(Date.isValidAppointmentDate(currDate.minusDays(5), currDate));
+        assertFalse(Date.isValidAppointmentDate(currDate.minusMonths(1), currDate));
+
+        // valid dates
+        assertTrue(Date.isValidAppointmentDate(currDate, currDate));
+        assertTrue(Date.isValidAppointmentDate(currDate.plusDays(5), currDate));
+        assertTrue(Date.isValidAppointmentDate(currDate.plusMonths(1), currDate));
+    }
+
+    @Test
     public void toStringBasedOn() {
         LocalDate testDate = LocalDate.of(2020, 6, 6);
 

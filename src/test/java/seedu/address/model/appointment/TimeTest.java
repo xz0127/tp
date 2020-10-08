@@ -10,12 +10,12 @@ import org.junit.jupiter.api.Test;
 
 public class TimeTest {
     // valid local times
-    private final LocalTime timeBeforeOpening = Time.OPENING_TIME.minusHours(1);
-    private final LocalTime timeAfterClosing = Time.CLOSING_TIME.plusHours(1);
+    private final LocalTime oneHourBeforeOpening = Time.OPENING_TIME.minusHours(1);
+    private final LocalTime oneHourAfterClosing = Time.CLOSING_TIME.plusHours(1);
 
     // invalid local times
-    private final LocalTime timeAfterOpening = Time.OPENING_TIME.plusHours(1);
-    private final LocalTime timeBeforeClosing = Time.CLOSING_TIME.minusHours(1);
+    private final LocalTime oneHourAfterOpening = Time.OPENING_TIME.plusHours(1);
+    private final LocalTime oneHourBeforeClosing = Time.CLOSING_TIME.minusHours(1);
 
     @Test
     public void constructor_null_throwsNullPointerException() {
@@ -24,11 +24,8 @@ public class TimeTest {
 
     @Test
     public void constructor_invalidTime_throwsIllegalArgumentException() {
-        LocalTime timeBeforeOpening = Time.OPENING_TIME.minusHours(1);
-        assertThrows(IllegalArgumentException.class, () -> new Time(timeBeforeOpening));
-
-        LocalTime timeAfterClosing = Time.CLOSING_TIME.plusHours(1);
-        assertThrows(IllegalArgumentException.class, () -> new Time(timeAfterClosing));
+        assertThrows(IllegalArgumentException.class, () -> new Time(oneHourBeforeOpening));
+        assertThrows(IllegalArgumentException.class, () -> new Time(oneHourAfterClosing));
     }
 
     @Test
@@ -37,14 +34,31 @@ public class TimeTest {
         assertThrows(NullPointerException.class, () -> Time.isValidTime(null));
 
         // invalid times
-        assertFalse(Time.isValidTime(timeBeforeOpening));
-        assertFalse(Time.isValidTime(timeAfterClosing));
+        assertFalse(Time.isValidTime(oneHourBeforeOpening));
+        assertFalse(Time.isValidTime(oneHourAfterClosing));
         assertFalse(Time.isValidTime(LocalTime.MIDNIGHT));
 
         // valid times
         assertTrue(Time.isValidTime(LocalTime.NOON));
-        assertTrue(Time.isValidTime(timeAfterOpening));
-        assertTrue(Time.isValidTime(timeBeforeClosing));
+        assertTrue(Time.isValidTime(oneHourAfterOpening));
+        assertTrue(Time.isValidTime(oneHourBeforeClosing));
+    }
+
+    @Test
+    public void isValidStartTime() {
+        // null time
+        assertThrows(NullPointerException.class, () -> Time.isValidStartTime(null));
+
+        // invalid times
+        assertFalse(Time.isValidStartTime(oneHourBeforeOpening));
+        assertFalse(Time.isValidStartTime(oneHourAfterClosing));
+        assertFalse(Time.isValidStartTime(Time.CLOSING_TIME));
+        assertFalse(Time.isValidStartTime(LocalTime.MIDNIGHT));
+
+        // valid times
+        assertTrue(Time.isValidStartTime(LocalTime.NOON));
+        assertTrue(Time.isValidStartTime(oneHourAfterOpening));
+        assertTrue(Time.isValidStartTime(oneHourBeforeClosing));
     }
 
     @Test
@@ -56,14 +70,14 @@ public class TimeTest {
 
         // time is before input --> true
         assertTrue(testTime.isBefore(new Time(LocalTime.of(15, 0))));
-        assertTrue(testTime.isBefore(new Time(timeBeforeClosing)));
+        assertTrue(testTime.isBefore(new Time(oneHourBeforeClosing)));
 
         // time is equal to input --> false
         assertFalse(testTime.isBefore(new Time(LocalTime.NOON)));
 
         // time is after input --> false
         assertFalse(testTime.isBefore(new Time(LocalTime.of(11, 0))));
-        assertFalse(testTime.isBefore(new Time(timeAfterOpening)));
+        assertFalse(testTime.isBefore(new Time(oneHourAfterOpening)));
     }
 
     @Test
@@ -75,14 +89,14 @@ public class TimeTest {
 
         // time is after input --> true
         assertTrue(testTime.isAfter(new Time(LocalTime.of(11, 0))));
-        assertTrue(testTime.isAfter(new Time(timeAfterOpening)));
+        assertTrue(testTime.isAfter(new Time(oneHourAfterOpening)));
 
         // time is equal to input --> false
         assertFalse(testTime.isAfter(new Time(LocalTime.NOON)));
 
         // time is before input --> false
         assertFalse(testTime.isAfter(new Time(LocalTime.of(15, 0))));
-        assertFalse(testTime.isAfter(new Time(timeBeforeClosing)));
+        assertFalse(testTime.isAfter(new Time(oneHourBeforeClosing)));
     }
 
     @Test
