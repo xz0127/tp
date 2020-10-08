@@ -239,7 +239,7 @@ Namise is a hard working nurse working at a popular dental clinic situated in to
 
   
 
-Being a tech-savvy patient armed with a commendable experience in unix, Namise prefers to scribble down appointment schedules on paper while on call with his patients to maximise efficiency. This task is further exacerbated with the need to transfer these notes into an excel table manually later in the day.
+Being a tech-savvy nurse armed with a commendable experience in unix, Namise prefers to scribble down appointment schedules on paper while on call with his patients to maximise efficiency. This task is further exacerbated with the need to transfer these notes into an excel table manually later in the day.
  
 **Target user profile summary**:
 *   Nurse working in a highly popular, small scale dental clinic
