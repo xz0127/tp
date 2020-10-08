@@ -15,7 +15,7 @@ import seedu.address.model.appointment.exceptions.OverlappingAppointmentExceptio
  * An appointment is considered unique by comparing using {@code Appointment#isOverlapping(Appointment)}.
  * As such, adding and updating of appointment uses Appointment#isOverlapping(Appointment) for equality so as
  * to ensure that the appointment being added or updated is unique in terms of identity in the UniqueAppointmentList.
- * However, the removal of a person uses Appointment#equals(Object) so as to ensure that the person with
+ * However, the removal of a patient uses Appointment#equals(Object) so as to ensure that the patient with
  * exactly the same fields will be removed.
  * <p>
  * Supports a minimal set of list operations.
