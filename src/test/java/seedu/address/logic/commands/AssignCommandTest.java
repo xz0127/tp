@@ -1,6 +1,6 @@
 package seedu.address.logic.commands;
 
-import static seedu.address.commons.core.Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX;
+import static seedu.address.commons.core.Messages.MESSAGE_INVALID_PATIENT_DISPLAYED_INDEX;
 import static seedu.address.logic.commands.CommandTestUtil.OVERLAP_TIME;
 import static seedu.address.logic.commands.CommandTestUtil.SAME_TIME;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_DATE;
@@ -76,7 +76,7 @@ public class AssignCommandTest {
         DateTimeLoader loader = new AssignLoaderBuilder().withDate(VALID_DATE).withTime(VALID_TIME).build();
         AssignCommand assignCommand = new AssignCommand(overSizedIndex, loader);
 
-        assertCommandFailure(assignCommand, model, MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        assertCommandFailure(assignCommand, model, MESSAGE_INVALID_PATIENT_DISPLAYED_INDEX);
     }
 
     @Test

@@ -15,7 +15,7 @@ public class AppointmentBuilder {
 
     public static final LocalDate DEFAULT_DATE = LocalDate.of(2020, 12, 23);
     public static final LocalTime DEFAULT_TIME = LocalTime.of(13, 30);
-    public static final Nric DEFAULT_PERSON_IC = new Nric("S1234567A");
+    public static final Nric DEFAULT_PATIENT_IC = new Nric("S1234567A");
 
     private Date date;
     private Time startTime;
@@ -27,7 +27,7 @@ public class AppointmentBuilder {
     public AppointmentBuilder() {
         date = new Date(DEFAULT_DATE);
         startTime = new Time(DEFAULT_TIME);
-        patientId = DEFAULT_PERSON_IC;
+        patientId = DEFAULT_PATIENT_IC;
     }
 
     /**

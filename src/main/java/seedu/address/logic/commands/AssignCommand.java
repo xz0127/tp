@@ -62,7 +62,7 @@ public class AssignCommand extends Command {
         List<Person> lastShownPatientList = model.getFilteredPersonList();
 
         if (targetIndex.getZeroBased() >= lastShownPatientList.size()) {
-            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+            throw new CommandException(Messages.MESSAGE_INVALID_PATIENT_DISPLAYED_INDEX);
         }
 
         Person patient = lastShownPatientList.get(targetIndex.getZeroBased());
