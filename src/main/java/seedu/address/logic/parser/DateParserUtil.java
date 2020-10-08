@@ -5,7 +5,6 @@ import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeFormatterBuilder;
 import java.time.format.DateTimeParseException;
@@ -47,7 +46,7 @@ public class DateParserUtil {
                 "d[-][ ]MMMM[[-][ ]uuuu]"
         );
 
-        LocalDateTime currTime = LocalDateTime.now();
+        LocalDate currTime = LocalDate.now();
         List<DateTimeFormatter> knownFormats = new ArrayList<>();
         // Create a formatter for each known patterns to be used for parsing dates
         for (int i = 0; i < knownDatePatterns.size(); i++) {

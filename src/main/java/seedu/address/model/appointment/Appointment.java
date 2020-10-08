@@ -140,8 +140,8 @@ public class Appointment {
 
     @Override
     public String toString() {
-        return getAppointmentId() + " Date: " + getDate()
+        return getAppointmentId() + "\nDate: " + getDate()
                 + " Time: from " + getStartTime() + " to " + getEndTime()
-                + " Patient IC: " + getPatientId();
+                + "\nPatient IC: " + getPatientId();
     }
 }

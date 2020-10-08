@@ -13,20 +13,17 @@ import static seedu.address.testutil.TypicalPatients.ALICE;
 import static seedu.address.testutil.TypicalPatients.getTypicalAddressBook;
 import static seedu.address.testutil.TypicalPatients.getTypicalPatients;
 
-import java.time.LocalDate;
-import java.time.LocalTime;
-
 import org.junit.jupiter.api.Test;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.AssignCommand.DateTimeLoader;
+import seedu.address.logic.parser.TimeParserUtil;
 import seedu.address.model.AddressBook;
 import seedu.address.model.AppointmentBook;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.appointment.Appointment;
-import seedu.address.model.appointment.Date;
 import seedu.address.model.appointment.Time;
 import seedu.address.testutil.AppointmentBookBuilder;
 import seedu.address.testutil.DateTimeLoaderBuilder;
@@ -34,7 +31,7 @@ import seedu.address.testutil.DateTimeLoaderBuilder;
 
 public class AssignCommandTest {
 
-    private Model model = new ModelManager(getTypicalAddressBook(), new AppointmentBook(), new UserPrefs());
+    private final Model model = new ModelManager(getTypicalAddressBook(), new AppointmentBook(), new UserPrefs());
 
     @Test
     public void constructor_nullIndex_throwsNullPointerException() {
@@ -57,9 +54,7 @@ public class AssignCommandTest {
     public void execute_appointmentAcceptedByModel_assignSuccessful() {
         DateTimeLoader loader = new DateTimeLoaderBuilder().withDate(VALID_DATE).withTime(VALID_TIME).build();
         AssignCommand assignCommand = new AssignCommand(INDEX_FIRST_APPOINTMENT, loader);
-        Appointment appointment = new Appointment(
-                new Date(LocalDate.parse(VALID_DATE)), new Time(LocalTime.parse(VALID_TIME)), (ALICE.getNric())
-        );
+        Appointment appointment = new Appointment(loader.getDate().get(), loader.getTime().get(), ALICE.getNric());
 
         String expectedMessage = String.format(AssignCommand.MESSAGE_SUCCESS, appointment);
         AppointmentBook expectedAppointmentBook = new AppointmentBookBuilder().withAppointment(appointment).build();
@@ -80,11 +75,11 @@ public class AssignCommandTest {
     }
 
     @Test
-    public void execute_appointmentRejectedDueToOverlap_failure1() {
+    public void execute_sameAppointmentRejectedDueToOverlap_failure() throws Exception {
         DateTimeLoader loader = new DateTimeLoaderBuilder().withDate(VALID_DATE).withTime(VALID_TIME).build();
         AssignCommand assignCommand = new AssignCommand(INDEX_FIRST_APPOINTMENT, loader);
         Appointment appointment = new Appointment(
-                new Date(LocalDate.parse(VALID_DATE)), new Time(LocalTime.parse(SAME_TIME)), (ALICE.getNric())
+                loader.getDate().get(), new Time(TimeParserUtil.parse(SAME_TIME)), ALICE.getNric()
         );
 
         model.addAppointment(appointment);
@@ -93,11 +88,11 @@ public class AssignCommandTest {
     }
 
     @Test
-    public void execute_appointmentRejectedDueToOverlap_failure2() {
+    public void execute_differentAppointmentRejectedDueToOverlap_failure() throws Exception {
         DateTimeLoader loader = new DateTimeLoaderBuilder().withDate(VALID_DATE).withTime(VALID_TIME).build();
         AssignCommand assignCommand = new AssignCommand(INDEX_FIRST_APPOINTMENT, loader);
         Appointment appointment = new Appointment(
-                new Date(LocalDate.parse(VALID_DATE)), new Time(LocalTime.parse(OVERLAP_TIME)), (ALICE.getNric())
+                loader.getDate().get(), new Time(TimeParserUtil.parse(OVERLAP_TIME)), ALICE.getNric()
         );
 
         model.addAppointment(appointment);

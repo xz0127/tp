@@ -22,7 +22,7 @@ public class TimeParserUtil {
     public static final String MESSAGE_CONSTRAINTS = "Time should contains a properly formatted time "
             + "or a recognised natural time language.\n"
             + "An example of a properly formatted time includes (but not limited to): 2 PM\n"
-            + "An example of a natural time language is 'morning'(8am) or 'evening'(7pm)";
+            + "An example of a natural time language is 'morning' (8am) or 'evening' (7pm)";
 
     /**
      * List of known time formats that parser accepts.
