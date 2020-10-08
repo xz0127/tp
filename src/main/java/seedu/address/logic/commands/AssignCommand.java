@@ -16,8 +16,8 @@ import seedu.address.model.Model;
 import seedu.address.model.appointment.Appointment;
 import seedu.address.model.appointment.Date;
 import seedu.address.model.appointment.Time;
-import seedu.address.model.person.Nric;
-import seedu.address.model.person.Person;
+import seedu.address.model.patient.Nric;
+import seedu.address.model.patient.Patient;
 
 /**
  * Assigns an appointment to an existing patient.
@@ -59,13 +59,13 @@ public class AssignCommand extends Command {
     @Override
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
-        List<Person> lastShownPatientList = model.getFilteredPersonList();
+        List<Patient> lastShownPatientList = model.getFilteredPatientList();
 
         if (targetIndex.getZeroBased() >= lastShownPatientList.size()) {
             throw new CommandException(Messages.MESSAGE_INVALID_PATIENT_DISPLAYED_INDEX);
         }
 
-        Person patient = lastShownPatientList.get(targetIndex.getZeroBased());
+        Patient patient = lastShownPatientList.get(targetIndex.getZeroBased());
         Appointment appointment = createAppointment(patient, dateTimeLoader);
 
         if (model.hasAppointment(appointment)) {
@@ -81,7 +81,7 @@ public class AssignCommand extends Command {
      * Creates and returns an {@code Appointment} with merged details of {@code patient}
      * and {@code assignAppointmentBuilder}
      */
-    private static Appointment createAppointment(Person patient,
+    private static Appointment createAppointment(Patient patient,
             DateTimeLoader dateTimeLoader) {
         assert patient != null;
         assert dateTimeLoader.getDate().isPresent();
