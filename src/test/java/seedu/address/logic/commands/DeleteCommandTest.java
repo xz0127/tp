@@ -53,6 +53,7 @@ public class DeleteCommandTest {
         showPatientAtIndex(model, INDEX_FIRST_PATIENT);
 
         Patient patientToDelete = model.getFilteredPatientList().get(INDEX_FIRST_PATIENT.getZeroBased());
+
         DeleteCommand deleteCommand = new DeleteCommand(INDEX_FIRST_PATIENT);
 
         String expectedMessage = String.format(DeleteCommand.MESSAGE_DELETE_PATIENT_SUCCESS, patientToDelete);

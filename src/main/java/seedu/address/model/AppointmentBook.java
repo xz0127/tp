@@ -66,6 +66,13 @@ public class AppointmentBook implements ReadOnlyAppointmentBook {
         appointments.add(a);
     }
 
+    /**
+     * Checks if an appointment overlaps with {@code appointments}.
+     */
+    public boolean isAppointmentOverlapped(Appointment a) {
+        return appointments.overlaps(a);
+    }
+
     //// util methods
 
     @Override

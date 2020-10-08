@@ -6,6 +6,8 @@ import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 import java.time.Duration;
 import java.util.Objects;
 
+import seedu.address.model.patient.Nric;
+
 /**
  * Represents an Appointment in the appointment book.
  * Guarantees: details are present and not null, field values are validated, immutable.
@@ -22,13 +24,13 @@ public class Appointment {
     private final AppointmentId appointmentId;
 
     // Data field
-    // todo: Change String object to IC object
-    private final String patientId;
+
+    private final Nric patientId;
 
     /**
      * Every field must be present and not null.
      */
-    public Appointment(Date date, Time startTime, String patientId) {
+    public Appointment(Date date, Time startTime, Nric patientId) {
         requireAllNonNull(date, startTime, patientId);
         this.date = date;
         this.startTime = startTime;
@@ -56,7 +58,7 @@ public class Appointment {
         return appointmentId;
     }
 
-    public String getPatientId() {
+    public Nric getPatientId() {
         return patientId;
     }
 

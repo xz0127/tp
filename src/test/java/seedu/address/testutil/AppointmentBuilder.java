@@ -6,6 +6,7 @@ import java.time.LocalTime;
 import seedu.address.model.appointment.Appointment;
 import seedu.address.model.appointment.Date;
 import seedu.address.model.appointment.Time;
+import seedu.address.model.patient.Nric;
 
 /**
  * A utility class to help with building Appointment objects.
@@ -14,11 +15,11 @@ public class AppointmentBuilder {
 
     public static final LocalDate DEFAULT_DATE = LocalDate.of(2020, 12, 23);
     public static final LocalTime DEFAULT_TIME = LocalTime.of(13, 30);
-    public static final String DEFAULT_PATIENT_IC = "S1234567A";
+    public static final Nric DEFAULT_PATIENT_IC = new Nric("S1234567A");
 
     private Date date;
     private Time startTime;
-    private String patientId;
+    private Nric patientId;
 
     /**
      * Creates an {@code AppointmentBuilder} with the default details.
@@ -57,7 +58,7 @@ public class AppointmentBuilder {
     /**
      * Sets the patient's {@code IC} for the {@code Appointment} that we are building.
      */
-    public AppointmentBuilder withPatientId(String patientId) {
+    public AppointmentBuilder withPatientId(Nric patientId) {
         this.patientId = patientId;
         return this;
     }
