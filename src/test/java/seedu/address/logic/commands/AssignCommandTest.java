@@ -9,9 +9,9 @@ import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.testutil.Assert.assertThrows;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_APPOINTMENT;
-import static seedu.address.testutil.TypicalPersons.ALICE;
-import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
-import static seedu.address.testutil.TypicalPersons.getTypicalPersons;
+import static seedu.address.testutil.TypicalPatients.ALICE;
+import static seedu.address.testutil.TypicalPatients.getTypicalAddressBook;
+import static seedu.address.testutil.TypicalPatients.getTypicalPatients;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -72,7 +72,7 @@ public class AssignCommandTest {
 
     @Test
     public void execute_appointmentRejectedDueToOverSizedIndex_failure() {
-        Index overSizedIndex = Index.fromOneBased(getTypicalPersons().size() + 1);
+        Index overSizedIndex = Index.fromOneBased(getTypicalPatients().size() + 1);
         DateTimeLoader loader = new AssignLoaderBuilder().withDate(VALID_DATE).withTime(VALID_TIME).build();
         AssignCommand assignCommand = new AssignCommand(overSizedIndex, loader);
 

@@ -11,7 +11,7 @@ import java.time.LocalTime;
 
 import org.junit.jupiter.api.Test;
 
-import seedu.address.model.person.Nric;
+import seedu.address.model.patient.Nric;
 import seedu.address.testutil.AppointmentBuilder;
 
 public class AppointmentTest {

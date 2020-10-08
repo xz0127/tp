@@ -7,7 +7,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import seedu.address.model.appointment.Appointment;
-import seedu.address.model.person.Nric;
+import seedu.address.model.patient.Nric;
 
 /**
  * A utility class containing a list of {@code Appointment} objects to be used in tests.
