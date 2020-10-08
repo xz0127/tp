@@ -3,10 +3,12 @@ package seedu.address.logic.commands;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_DATE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NRIC;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_TIME;
 import static seedu.address.testutil.Assert.assertThrows;
 
 import java.util.ArrayList;
@@ -19,6 +21,7 @@ import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.patient.NameContainsKeywordsPredicate;
 import seedu.address.model.patient.Patient;
+import seedu.address.testutil.DateTimeLoaderBuilder;
 import seedu.address.testutil.EditPatientDescriptorBuilder;
 
 /**
@@ -36,6 +39,11 @@ public class CommandTestUtil {
     public static final String VALID_ADDRESS_BOB = "Block 123, Bobby Street 3";
     public static final String VALID_TAG_HUSBAND = "husband";
     public static final String VALID_TAG_FRIEND = "friend";
+    public static final String VALID_DATE = "2020-01-01";
+    public static final String DIFF_DATE = "2020-11-01";
+    public static final String VALID_TIME = "20:00:00";
+    public static final String SAME_TIME = "20:00:00";
+    public static final String OVERLAP_TIME = "20:00:01";
 
     public static final String NAME_DESC_AMY = " " + PREFIX_NAME + VALID_NAME_AMY;
     public static final String NAME_DESC_BOB = " " + PREFIX_NAME + VALID_NAME_BOB;
@@ -55,11 +63,19 @@ public class CommandTestUtil {
     public static final String INVALID_ADDRESS_DESC = " " + PREFIX_ADDRESS; // empty string not allowed for addresses
     public static final String INVALID_TAG_DESC = " " + PREFIX_TAG + "hubby*"; // '*' not allowed in tags
 
+    public static final String ASSIGN_DATE_TIME = " " + PREFIX_DATE + VALID_DATE + " " + PREFIX_TIME + VALID_TIME;
+    public static final String ASSIGN_TIME = " " + PREFIX_TIME + VALID_TIME;
+    public static final String ASSIGN_DATE = " " + PREFIX_DATE + VALID_DATE;
+
+
     public static final String PREAMBLE_WHITESPACE = "\t  \r  \n";
     public static final String PREAMBLE_NON_EMPTY = "NonEmptyPreamble";
 
     public static final EditCommand.EditPatientDescriptor DESC_AMY;
     public static final EditCommand.EditPatientDescriptor DESC_BOB;
+    public static final AssignCommand.DateTimeLoader LOADER;
+    public static final AssignCommand.DateTimeLoader LOADER_TIME;
+    public static final AssignCommand.DateTimeLoader LOADER_DATE;
 
     static {
         DESC_AMY = new EditPatientDescriptorBuilder().withName(VALID_NAME_AMY)
@@ -68,6 +84,12 @@ public class CommandTestUtil {
         DESC_BOB = new EditPatientDescriptorBuilder().withName(VALID_NAME_BOB)
                 .withPhone(VALID_PHONE_BOB).withAddress(VALID_ADDRESS_BOB)
                 .withTags(VALID_TAG_HUSBAND, VALID_TAG_FRIEND).withNric(VALID_NRIC_BOB).build();
+    }
+
+    static {
+        LOADER = new DateTimeLoaderBuilder().withDate(VALID_DATE).withTime(VALID_TIME).build();
+        LOADER_TIME = new DateTimeLoaderBuilder().withDate(VALID_DATE).withTime(OVERLAP_TIME).build();
+        LOADER_DATE = new DateTimeLoaderBuilder().withDate(DIFF_DATE).withTime(OVERLAP_TIME).build();
     }
 
     /**

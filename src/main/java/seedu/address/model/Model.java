@@ -14,6 +14,7 @@ import seedu.address.model.patient.Patient;
 public interface Model {
     /** {@code Predicate} that always evaluate to true */
     Predicate<Patient> PREDICATE_SHOW_ALL_PATIENTS = unused -> true;
+    Predicate<Appointment> PREDICATE_SHOW_ALL_APPOINTMENTS = unused -> true;
 
     /**
      * Replaces user prefs data with the data in {@code userPrefs}.
@@ -59,6 +60,11 @@ public interface Model {
     boolean hasPatient(Patient patient);
 
     /**
+     * Returns true if the time slot of an appointment overlaps {@code appointment} in the appointment book.
+     */
+    boolean hasAppointment(Appointment appointment);
+
+    /**
      * Deletes the given patient.
      * The patient must exist in the address book.
      */
@@ -69,6 +75,12 @@ public interface Model {
      * {@code patient} must not already exist in the address book.
      */
     void addPatient(Patient patient);
+
+    /**
+     * Adds the given appointment.
+     * {@code appointment} must not already exist in the appointment book.
+     */
+    void addAppointment(Appointment appointment);
 
     /**
      * Replaces the given patient {@code target} with {@code editedPatient}.
@@ -86,6 +98,12 @@ public interface Model {
      * @throws NullPointerException if {@code predicate} is null.
      */
     void updateFilteredPatientList(Predicate<Patient> predicate);
+
+    /**
+     * Updates the filter of the filtered appointment list to filter by the given {@code predicate}.
+     * @throws NullPointerException if {@code predicate} is null.
+     */
+    void updateFilteredAppointmentList(Predicate<Appointment> predicate);
 
     /**
      * Replaces appointment book data with the data in {@code appointmentBook}.
