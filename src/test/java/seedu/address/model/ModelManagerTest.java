@@ -77,6 +77,18 @@ public class ModelManagerTest {
     }
 
     @Test
+    public void setAppointmentBookFilePath_nullPath_throwsNullPointerException() {
+        assertThrows(NullPointerException.class, () -> modelManager.setAppointmentBookFilePath(null));
+    }
+
+    @Test
+    public void setAppointmentBookFilePath_validPath_setsAppointmentBookFilePath() {
+        Path path = Paths.get("appointment/book/file/path");
+        modelManager.setAppointmentBookFilePath(path);
+        assertEquals(path, modelManager.getAppointmentBookFilePath());
+    }
+
+    @Test
     public void hasPatient_nullPatient_throwsNullPointerException() {
         assertThrows(NullPointerException.class, () -> modelManager.hasPatient(null));
     }
