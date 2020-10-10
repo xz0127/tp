@@ -5,8 +5,9 @@ import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.time.Duration;
 import java.util.Objects;
+import java.util.Optional;
 
-import seedu.address.model.patient.Nric;
+import seedu.address.model.patient.Patient;
 
 /**
  * Represents an Appointment in the appointment book.
@@ -24,14 +25,13 @@ public class Appointment {
     private final AppointmentId appointmentId;
 
     // Data field
-
-    private final Nric patientId;
+    private final Optional<Patient> patient;
 
     /**
      * Every field must be present and not null.
      */
-    public Appointment(Date date, Time startTime, Nric patientId) {
-        requireAllNonNull(date, startTime, patientId);
+    public Appointment(Date date, Time startTime) {
+        requireAllNonNull(date, startTime);
         this.date = date;
         this.startTime = startTime;
         this.endTime = new Time(startTime.getTime().plus(DEFAULT_DURATION));
@@ -39,7 +39,22 @@ public class Appointment {
         assert startTime.isBefore(endTime);
 
         this.appointmentId = new AppointmentId(date, startTime);
-        this.patientId = patientId;
+        this.patient = Optional.empty();
+    }
+
+    /**
+     * Every field must be present and not null.
+     */
+    public Appointment(Date date, Time startTime, Patient patient) {
+        requireAllNonNull(date, startTime, patient);
+        this.date = date;
+        this.startTime = startTime;
+        this.endTime = new Time(startTime.getTime().plus(DEFAULT_DURATION));
+
+        assert startTime.isBefore(endTime);
+
+        this.appointmentId = new AppointmentId(date, startTime);
+        this.patient = Optional.of(patient);
     }
 
     public Date getDate() {
@@ -58,8 +73,12 @@ public class Appointment {
         return appointmentId;
     }
 
-    public Nric getPatientId() {
-        return patientId;
+    public Optional<Patient> getPatient() {
+        return patient;
+    }
+
+    public boolean hasPatient(Patient other) {
+        return patient.map(p -> p.isSamePatient(other)).orElse(false);
     }
 
     /**
@@ -130,18 +149,18 @@ public class Appointment {
                 && otherAppointment.getEndTime().equals(getEndTime())
                 && otherAppointment.getDate().equals(getDate())
                 && otherAppointment.getAppointmentId().equals(getAppointmentId())
-                && otherAppointment.getPatientId().equals(getPatientId());
+                && otherAppointment.getPatient().equals(getPatient());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(startTime, endTime, date, appointmentId, patientId);
+        return Objects.hash(startTime, endTime, date, appointmentId, patient);
     }
 
     @Override
     public String toString() {
         return getAppointmentId() + "\nDate: " + getDate()
                 + " Time: from " + getStartTime() + " to " + getEndTime()
-                + "\nPatient IC: " + getPatientId();
+                + getPatient().map(p -> "Patient : " + p.getName()).orElse("");
     }
 }
