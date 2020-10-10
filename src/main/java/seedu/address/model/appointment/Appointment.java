@@ -6,13 +6,15 @@ import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 import java.time.Duration;
 import java.util.Objects;
 
+import seedu.address.model.patient.Nric;
+
 /**
  * Represents an Appointment in the appointment book.
  * Guarantees: details are present and not null, field values are validated, immutable.
  */
 public class Appointment {
     // Duration of an appointment in hours
-    private static final Duration DEFAULT_DURATION = Duration.ofHours(1);
+    public static final Duration DEFAULT_DURATION = Duration.ofHours(1);
 
     // Identity fields
     private final Date date;
@@ -22,13 +24,13 @@ public class Appointment {
     private final AppointmentId appointmentId;
 
     // Data field
-    // todo: Change String object to IC object
-    private final String patientId;
+
+    private final Nric patientId;
 
     /**
      * Every field must be present and not null.
      */
-    public Appointment(Date date, Time startTime, String patientId) {
+    public Appointment(Date date, Time startTime, Nric patientId) {
         requireAllNonNull(date, startTime, patientId);
         this.date = date;
         this.startTime = startTime;
@@ -56,7 +58,7 @@ public class Appointment {
         return appointmentId;
     }
 
-    public String getPatientId() {
+    public Nric getPatientId() {
         return patientId;
     }
 
@@ -111,7 +113,7 @@ public class Appointment {
 
     /**
      * Returns true if both appointments have the same identity and data fields.
-     * This defines a stronger notion of equality between two persons.
+     * This defines a stronger notion of equality between two patients.
      */
     @Override
     public boolean equals(Object other) {
@@ -138,8 +140,8 @@ public class Appointment {
 
     @Override
     public String toString() {
-        return getAppointmentId() + " Date: " + getDate()
+        return getAppointmentId() + "\nDate: " + getDate()
                 + " Time: from " + getStartTime() + " to " + getEndTime()
-                + " Patient IC: " + getPatientId();
+                + "\nPatient IC: " + getPatientId();
     }
 }

@@ -11,6 +11,7 @@ import java.time.LocalTime;
 
 import org.junit.jupiter.api.Test;
 
+import seedu.address.model.patient.Nric;
 import seedu.address.testutil.AppointmentBuilder;
 
 public class AppointmentTest {
@@ -58,7 +59,7 @@ public class AppointmentTest {
 
         // same date, same time, different patient id -> returns true
         editedOne = new AppointmentBuilder(APPOINTMENT_ONE)
-                .withPatientId("T0034567B").build();
+                .withPatientId(new Nric("T0134567B")).build();
         assertTrue(APPOINTMENT_ONE.isOverlapping(editedOne));
 
         // later start time, same date (overlapping) -> returns true
@@ -108,7 +109,7 @@ public class AppointmentTest {
 
         // same start time and same date, different patientId -> returns false
         editedOne = new AppointmentBuilder(APPOINTMENT_ONE)
-                .withPatientId("T0034567B").build();
+                .withPatientId(new Nric("T0134567B")).build();
         assertFalse(APPOINTMENT_ONE.isBefore(editedOne));
 
         // later start time, same date (overlapping) -> returns false
@@ -158,7 +159,7 @@ public class AppointmentTest {
 
         // same start time and same date, different patientId -> returns false
         editedOne = new AppointmentBuilder(APPOINTMENT_ONE)
-                .withPatientId("T0034567B").build();
+                .withPatientId(new Nric("T0134567B")).build();
         assertFalse(APPOINTMENT_ONE.isAfter(editedOne));
 
         // later start time, same date (overlapping) -> returns false
@@ -210,7 +211,7 @@ public class AppointmentTest {
 
         // different patient -> returns false
         editedOne = new AppointmentBuilder(APPOINTMENT_ONE)
-                .withPatientId("T0134567B").build();
+                .withPatientId(new Nric("T0134567B")).build();
         assertFalse(APPOINTMENT_ONE.equals(editedOne));
     }
 }
