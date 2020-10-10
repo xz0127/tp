@@ -5,9 +5,6 @@ import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DATE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TIME;
 
-import java.time.LocalDate;
-import java.time.LocalTime;
-
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.AssignCommand;
 import seedu.address.logic.commands.AssignCommand.DateTimeLoader;
@@ -47,8 +44,8 @@ public class AssignCommandParser implements Parser<AssignCommand> {
         }
 
         DateTimeLoader dateTimeLoader = new DateTimeLoader();
-        Date date = argMultimap.getValue(PREFIX_DATE).map(x -> new Date(LocalDate.parse(x))).get();
-        Time time = argMultimap.getValue(PREFIX_TIME).map(x -> new Time(LocalTime.parse(x))).get();
+        Date date = ParserUtil.parseDate(argMultimap.getValue(PREFIX_DATE).get());
+        Time time = ParserUtil.parseTime(argMultimap.getValue(PREFIX_TIME).get());
         dateTimeLoader.setAppointmentDate(date);
         dateTimeLoader.setAppointmentTime(time);
 

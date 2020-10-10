@@ -108,10 +108,10 @@ public class Patient {
     public String toString() {
         final StringBuilder builder = new StringBuilder();
         builder.append(getName())
-                .append(" Phone: ")
-                .append(getPhone())
                 .append(" NRIC: ")
                 .append(getNric())
+                .append("\nPhone: ")
+                .append(getPhone())
                 .append(" Address: ")
                 .append(getAddress())
                 .append(" Tags: ");
