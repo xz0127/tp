@@ -32,7 +32,7 @@ public class AppointmentCard extends UiPart<Region> {
     @FXML
     private Label name;
     @FXML
-    private Label patientNric;
+    private Label contactNumber;
 
     /**
      * Creates a {@code AppointmentCard} with the given {@code Patient} to display.
@@ -44,7 +44,7 @@ public class AppointmentCard extends UiPart<Region> {
         time.setText("Time: " + appointment.getStartTime() + " - " + appointment.getEndTime());
         name.setText("Name: " + appointment.getPatientId());
         // todo: get name for appointment
-        patientNric.setText("Id: " + appointment.getPatientId());
+        contactNumber.setText("Contact: " + appointment.getPatientId());
     }
 
     @Override

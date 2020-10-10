@@ -27,8 +27,8 @@
           <Region fx:constant="USE_PREF_SIZE" />
         </minWidth>
       </Label>
-      <Label fx:id="name" styleClass="cell_small_label" text="\$patient name" wrapText="true" />
-      <Label fx:id="patientNric" styleClass="cell_small_label" text="\$patientId" wrapText="true" />
+      <Label fx:id="name" styleClass="cell_small_label" text="\$name" wrapText="true" />
+      <Label fx:id="contactNumber" styleClass="cell_small_label" text="\$contact number" wrapText="true" />
     </VBox>
   </GridPane>
 </HBox>
