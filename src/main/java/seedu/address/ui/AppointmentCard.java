@@ -26,13 +26,9 @@ public class AppointmentCard extends UiPart<Region> {
     @FXML
     private HBox cardPane;
     @FXML
-    private Label appointmentId;
-    @FXML
     private Label date;
     @FXML
-    private Label startTime;
-    @FXML
-    private Label endTime;
+    private Label time;
     @FXML
     private Label name;
     @FXML
@@ -44,12 +40,11 @@ public class AppointmentCard extends UiPart<Region> {
     public AppointmentCard(Appointment appointment) {
         super(FXML);
         this.appointment = appointment;
-        appointmentId.setText("ID: " + appointment.getAppointmentId());
-        date.setText("NRIC: " + appointment.getDate());
-        startTime.setText("Phone: " + appointment.getStartTime());
-        endTime.setText("Address: " + appointment.getEndTime());
+        date.setText("Date: " + appointment.getDate());
+        time.setText("Time: " + appointment.getStartTime() + " - " + appointment.getEndTime());
+        name.setText("Name: " + appointment.getPatientId());
         // todo: get name for appointment
-        patientNric.setText("Address: " + appointment.getAppointmentId());
+        patientNric.setText("Id: " + appointment.getPatientId());
     }
 
     @Override
