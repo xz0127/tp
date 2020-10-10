@@ -37,7 +37,7 @@ public class DateTest {
         LocalDate testDate = LocalDate.of(2020, 6, 6);
 
         assertEquals("Saturday, Jun 06 2020", new Date(testDate).toStringBasedOn(currDate));
-        assertEquals("Today", new Date(testDate).toStringBasedOn(testDate));
+        assertEquals("Saturday, Jun 06 2020 (Today)", new Date(testDate).toStringBasedOn(testDate));
     }
 
     @Test
