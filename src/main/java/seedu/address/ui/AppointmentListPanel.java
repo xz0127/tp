@@ -34,10 +34,10 @@ public class AppointmentListPanel extends UiPart<Region> {
      */
     class AppointmentListViewCell extends ListCell<Appointment> {
         @Override
-        protected void updateItem(Appointment appointment, boolean empty) {
-            super.updateItem(appointment, empty);
+        protected void updateItem(Appointment appointment, boolean isEmpty) {
+            super.updateItem(appointment, isEmpty);
 
-            if (empty || appointment == null) {
+            if (isEmpty || appointment == null) {
                 setGraphic(null);
                 setText(null);
             } else {
