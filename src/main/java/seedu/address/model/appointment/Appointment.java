@@ -113,7 +113,7 @@ public class Appointment {
 
         return getDate().isBefore(otherAppointment.getDate())
                 || (getDate().equals(otherAppointment.getDate())
-                    && !(getEndTime().isAfter(otherAppointment.getStartTime()))); // End1 <= Start2
+                && !(getEndTime().isAfter(otherAppointment.getStartTime()))); // End1 <= Start2
     }
 
     /**
@@ -127,7 +127,7 @@ public class Appointment {
 
         return getDate().isAfter(otherAppointment.getDate())
                 || (getDate().equals(otherAppointment.getDate())
-                    && !(otherAppointment.getEndTime().isAfter(getStartTime()))); // End2 <= Start1
+                && !(otherAppointment.getEndTime().isAfter(getStartTime()))); // End2 <= Start1
     }
 
     /**
@@ -159,8 +159,21 @@ public class Appointment {
 
     @Override
     public String toString() {
-        return getAppointmentId() + "\nDate: " + getDate()
-                + " Time: from " + getStartTime() + " to " + getEndTime()
-                + getPatient().map(p -> "Patient : " + p.getName()).orElse("");
+        final StringBuilder builder = new StringBuilder();
+        builder.append("Date: ")
+                .append(getDate())
+                .append(", Time: from ")
+                .append(getStartTime())
+                .append(" to ")
+                .append(getEndTime());
+
+        getPatient().ifPresent(p -> builder
+                .append("\nPatient: ")
+                .append(p.getName())
+                .append(" Contact: ")
+                .append(p.getPhone())
+        );
+
+        return builder.toString();
     }
 }
