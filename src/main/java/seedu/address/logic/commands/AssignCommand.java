@@ -33,8 +33,8 @@ public class AssignCommand extends Command {
             + PREFIX_TIME + "TIME \n"
             + "Example: " + COMMAND_WORD + " "
             + "1 "
-            + PREFIX_DATE + "2018-12-12 "
-            + PREFIX_TIME + "16:00:00";
+            + PREFIX_DATE + "12-Dec-2021 "
+            + PREFIX_TIME + "4:00PM";
 
     public static final String MESSAGE_SUCCESS = "New Appointment added: %1$s";
     public static final String ASSIGNMENT_OVERLAP = "This time slot is occupied";
@@ -115,7 +115,6 @@ public class AssignCommand extends Command {
 
         /**
          * Copy constructor.
-         * A defensive copy of {@code patientId} is used internally.
          */
         public DateTimeLoader(DateTimeLoader toCopy) {
             setAppointmentDate(toCopy.date);
