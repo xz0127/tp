@@ -162,7 +162,7 @@ public class Appointment {
         final StringBuilder builder = new StringBuilder();
         builder.append("Date: ")
                 .append(getDate())
-                .append(", Time: from ")
+                .append(", from ")
                 .append(getStartTime())
                 .append(" to ")
                 .append(getEndTime());
