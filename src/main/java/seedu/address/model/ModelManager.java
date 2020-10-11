@@ -133,7 +133,7 @@ public class ModelManager implements Model {
     //=========== AppointmentBook ================================================================================
     @Override
     public boolean hasAppointment(Appointment appointment) {
-        return appointmentBook.isAppointmentOverlapped(appointment);
+        return appointmentBook.hasAppointment(appointment);
     }
 
     @Override

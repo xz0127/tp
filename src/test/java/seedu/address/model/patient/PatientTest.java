@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_ADDRESS_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_NRIC_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
 import static seedu.address.testutil.Assert.assertThrows;
@@ -38,7 +39,11 @@ public class PatientTest {
         editedAlice = new PatientBuilder(ALICE).withName(VALID_NAME_BOB).build();
         assertFalse(ALICE.isSamePatient(editedAlice));
 
-        // same name, same phone, different attributes -> returns true
+        // different nric -> returns false
+        editedAlice = new PatientBuilder(ALICE).withName(VALID_NRIC_BOB).build();
+        assertFalse(ALICE.isSamePatient(editedAlice));
+
+        // same name, same phone, same nric, different attributes -> returns true
         editedAlice = new PatientBuilder(ALICE).withAddress(VALID_ADDRESS_BOB)
                 .withTags(VALID_TAG_HUSBAND).build();
         assertTrue(ALICE.isSamePatient(editedAlice));
@@ -72,6 +77,10 @@ public class PatientTest {
 
         // different address -> returns false
         editedAlice = new PatientBuilder(ALICE).withAddress(VALID_ADDRESS_BOB).build();
+        assertFalse(ALICE.equals(editedAlice));
+
+        // different nric -> returns false
+        editedAlice = new PatientBuilder(ALICE).withNric(VALID_NRIC_BOB).build();
         assertFalse(ALICE.equals(editedAlice));
 
         // different tags -> returns false
