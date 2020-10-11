@@ -5,8 +5,9 @@ import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.time.Duration;
 import java.util.Objects;
+import java.util.Optional;
 
-import seedu.address.model.patient.Nric;
+import seedu.address.model.patient.Patient;
 
 /**
  * Represents an Appointment in the appointment book.
@@ -24,14 +25,21 @@ public class Appointment {
     private final AppointmentId appointmentId;
 
     // Data field
-
-    private final Nric patientId;
+    private final Optional<Patient> patient;
 
     /**
-     * Every field must be present and not null.
+     * Create an appointment without adding a patient.
+     * Every field must be present and non-null.
      */
-    public Appointment(Date date, Time startTime, Nric patientId) {
-        requireAllNonNull(date, startTime, patientId);
+    public Appointment(Date date, Time startTime) {
+        this(date, startTime, null);
+    }
+
+    /**
+     * Create an appointment with the patient.
+     */
+    public Appointment(Date date, Time startTime, Patient patient) {
+        requireAllNonNull(date, startTime);
         this.date = date;
         this.startTime = startTime;
         this.endTime = new Time(startTime.getTime().plus(DEFAULT_DURATION));
@@ -39,7 +47,7 @@ public class Appointment {
         assert startTime.isBefore(endTime);
 
         this.appointmentId = new AppointmentId(date, startTime);
-        this.patientId = patientId;
+        this.patient = Optional.ofNullable(patient);
     }
 
     public Date getDate() {
@@ -58,8 +66,25 @@ public class Appointment {
         return appointmentId;
     }
 
-    public Nric getPatientId() {
-        return patientId;
+    public Optional<Patient> getPatient() {
+        return patient;
+    }
+
+    public Appointment setPatient(Patient p) {
+        requireNonNull(p);
+        return new Appointment(date, startTime, p);
+    }
+
+    /**
+     * Checks if the appointment has {@code Patient other}.
+     * Other must be non-null.
+     *
+     * @param other the patient to check in the appointment.
+     * @return true if {@other Patient other} is in the Appointment, false otherwise.
+     */
+    public boolean hasPatient(Patient other) {
+        requireNonNull(other);
+        return patient.map(p -> p.isSamePatient(other)).orElse(false);
     }
 
     /**
@@ -94,7 +119,7 @@ public class Appointment {
 
         return getDate().isBefore(otherAppointment.getDate())
                 || (getDate().equals(otherAppointment.getDate())
-                    && !(getEndTime().isAfter(otherAppointment.getStartTime()))); // End1 <= Start2
+                && !(getEndTime().isAfter(otherAppointment.getStartTime()))); // End1 <= Start2
     }
 
     /**
@@ -108,7 +133,7 @@ public class Appointment {
 
         return getDate().isAfter(otherAppointment.getDate())
                 || (getDate().equals(otherAppointment.getDate())
-                    && !(otherAppointment.getEndTime().isAfter(getStartTime()))); // End2 <= Start1
+                && !(otherAppointment.getEndTime().isAfter(getStartTime()))); // End2 <= Start1
     }
 
     /**
@@ -130,18 +155,31 @@ public class Appointment {
                 && otherAppointment.getEndTime().equals(getEndTime())
                 && otherAppointment.getDate().equals(getDate())
                 && otherAppointment.getAppointmentId().equals(getAppointmentId())
-                && otherAppointment.getPatientId().equals(getPatientId());
+                && otherAppointment.getPatient().equals(getPatient());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(startTime, endTime, date, appointmentId, patientId);
+        return Objects.hash(startTime, endTime, date, appointmentId, patient);
     }
 
     @Override
     public String toString() {
-        return getAppointmentId() + "\nDate: " + getDate()
-                + " Time: from " + getStartTime() + " to " + getEndTime()
-                + "\nPatient IC: " + getPatientId();
+        final StringBuilder builder = new StringBuilder();
+        builder.append("Date: ")
+                .append(getDate())
+                .append(", from ")
+                .append(getStartTime())
+                .append(" to ")
+                .append(getEndTime());
+
+        getPatient().ifPresent(p -> builder
+                .append("\nPatient: ")
+                .append(p.getName())
+                .append(" Contact: ")
+                .append(p.getPhone())
+        );
+
+        return builder.toString();
     }
 }

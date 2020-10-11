@@ -16,7 +16,6 @@ import seedu.address.model.Model;
 import seedu.address.model.appointment.Appointment;
 import seedu.address.model.appointment.Date;
 import seedu.address.model.appointment.Time;
-import seedu.address.model.patient.Nric;
 import seedu.address.model.patient.Patient;
 
 /**
@@ -81,8 +80,7 @@ public class AssignCommand extends Command {
      * Creates and returns an {@code Appointment} with merged details of {@code patient}
      * and {@code assignAppointmentBuilder}
      */
-    private static Appointment createAppointment(Patient patient,
-            DateTimeLoader dateTimeLoader) {
+    private static Appointment createAppointment(Patient patient, DateTimeLoader dateTimeLoader) {
         assert patient != null;
         assert dateTimeLoader.getDate().isPresent();
         assert dateTimeLoader.getTime().isPresent();
@@ -90,10 +88,7 @@ public class AssignCommand extends Command {
         Date assignedDate = dateTimeLoader.getDate().get();
         Time assignedTime = dateTimeLoader.getTime().get();
 
-        // Id is currently the name of patient.
-        Nric assignedPatientId = patient.getNric();
-
-        return new Appointment(assignedDate, assignedTime, assignedPatientId);
+        return new Appointment(assignedDate, assignedTime, patient);
     }
 
     @Override
