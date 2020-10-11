@@ -22,7 +22,7 @@ import seedu.address.model.appointment.exceptions.OverlappingAppointmentExceptio
  * @see Appointment#isOverlapping(Appointment)
  */
 public class UniqueAppointmentList {
-
+    // todo: UniqueAppointmentListTest
     private final ObservableList<Appointment> internalList = FXCollections.observableArrayList();
     private final ObservableList<Appointment> internalUnmodifiableList =
             FXCollections.unmodifiableObservableList(internalList.sorted(new AppointmentComparator()));
