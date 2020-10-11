@@ -108,15 +108,15 @@ public class Patient {
     public String toString() {
         final StringBuilder builder = new StringBuilder();
         builder.append(getName())
-                .append(" NRIC: ")
+                .append(" (NRIC: ")
                 .append(getNric())
-                .append("\nPhone: ")
+                .append(")\nPhone: ")
                 .append(getPhone())
-                .append(" Address: ")
+                .append("; Address: ")
                 .append(getAddress())
-                .append(" Tags: ");
+                .append("; Tags: ");
         getTags().forEach(builder::append);
-        return builder.toString();
+        return builder.append(";").toString();
     }
 
 }

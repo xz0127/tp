@@ -37,7 +37,7 @@ public class TimeParserUtil {
      */
     private static List<DateTimeFormatter> createTimeFormats() {
         // List of acceptable date format with optional year/month
-        List<String> knownTimePatterns = Arrays.asList("HHmm", "h:mm[ ]a", "h[ ]a");
+        List<String> knownTimePatterns = Arrays.asList("HHmm", "h[:][.]mm[ ]a", "h[ ]a");
 
         List<DateTimeFormatter> knownFormats = new ArrayList<>();
         // Create a formatter for each known patterns to be used for parsing dates

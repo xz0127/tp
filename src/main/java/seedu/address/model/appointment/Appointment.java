@@ -16,6 +16,8 @@ import seedu.address.model.patient.Patient;
 public class Appointment {
     // Duration of an appointment in hours
     public static final Duration DEFAULT_DURATION = Duration.ofHours(1);
+    // Creation offset in minutes. Used to allow creation of "last-minute" appointments.
+    public static final int CREATION_OFFSET_MINUTES = 20;
 
     // Identity fields
     private final Date date;
@@ -80,7 +82,7 @@ public class Appointment {
      * Other must be non-null.
      *
      * @param other the patient to check in the appointment.
-     * @return true if {@other Patient other} is in the Appointment, false otherwise.
+     * @return true if {@code Patient other} is in the Appointment, false otherwise.
      */
     public boolean hasPatient(Patient other) {
         requireNonNull(other);
@@ -166,8 +168,7 @@ public class Appointment {
     @Override
     public String toString() {
         final StringBuilder builder = new StringBuilder();
-        builder.append("Date: ")
-                .append(getDate())
+        builder.append(getDate())
                 .append(", from ")
                 .append(getStartTime())
                 .append(" to ")
@@ -176,7 +177,7 @@ public class Appointment {
         getPatient().ifPresent(p -> builder
                 .append("\nPatient: ")
                 .append(p.getName())
-                .append(" Contact: ")
+                .append("; Contact: ")
                 .append(p.getPhone())
         );
 

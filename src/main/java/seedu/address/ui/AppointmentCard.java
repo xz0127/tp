@@ -40,8 +40,8 @@ public class AppointmentCard extends UiPart<Region> {
     public AppointmentCard(Appointment appointment) {
         super(FXML);
         this.appointment = appointment;
-        date.setText("Date: " + appointment.getDate());
-        time.setText("Time: " + appointment.getStartTime() + " - " + appointment.getEndTime());
+        date.setText(appointment.getDate().toString());
+        time.setText(appointment.getStartTime() + " - " + appointment.getEndTime());
         appointment.getPatient().ifPresent(p -> {
             name.setText("Name: " + p.getName());
             contactNumber.setText("Contact: " + p.getPhone());
