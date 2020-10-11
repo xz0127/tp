@@ -42,10 +42,8 @@ public class AppointmentCard extends UiPart<Region> {
         this.appointment = appointment;
         date.setText(appointment.getDate().toString());
         time.setText(appointment.getStartTime() + " - " + appointment.getEndTime());
-        appointment.getPatient().ifPresent(p -> {
-            name.setText("Name: " + p.getName());
-            contactNumber.setText("Contact: " + p.getPhone());
-        });
+        name.setText("Name: " + appointment.getPatient().getName());
+        contactNumber.setText("Contact: " + appointment.getPatient().getPhone());
     }
 
     @Override

@@ -26,13 +26,7 @@ import seedu.address.testutil.PatientBuilder;
 public class AppointmentTest {
     @Test
     public void constructor_null_throwsNullPointerException() {
-        assertThrows(NullPointerException.class, () -> new Appointment(null, null));
         assertThrows(NullPointerException.class, () -> new Appointment(null, null, null));
-    }
-
-    @Test
-    public void hasPatient_null_throwsNullPointerException() {
-        assertThrows(NullPointerException.class, () -> ALICE_APPOINTMENT.hasPatient(null));
     }
 
     @Test
@@ -53,6 +47,9 @@ public class AppointmentTest {
 
     @Test
     public void hasPatient_returnFalse() {
+        // null -> returns false
+        assertFalse(ALICE_APPOINTMENT.hasPatient(null));
+
         // different phone -> returns false
         Patient editedAlice = new PatientBuilder(ALICE).withPhone(VALID_PHONE_BOB).build();
         assertFalse(ALICE_APPOINTMENT.hasPatient(editedAlice));
@@ -64,12 +61,6 @@ public class AppointmentTest {
         // different nric -> returns false
         editedAlice = new PatientBuilder(ALICE).withName(VALID_NRIC_BOB).build();
         assertFalse(ALICE.isSamePatient(editedAlice));
-
-        // Appointment with no patient
-        Appointment noPatientAppointment =
-                new AppointmentBuilder(ALICE_APPOINTMENT).withPatient(null).build();
-        assertFalse(noPatientAppointment.hasPatient(ALICE));
-        assertFalse(noPatientAppointment.hasPatient(BOB));
     }
 
     @Test

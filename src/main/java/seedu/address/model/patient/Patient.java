@@ -27,7 +27,6 @@ public class Patient {
     /**
      * Every field must be present and not null.
      */
-
     public Patient(Name name, Phone phone, Address address, Set<Tag> tags, Nric nric) {
         requireAllNonNull(name, phone, address, tags, nric);
         this.name = name;
