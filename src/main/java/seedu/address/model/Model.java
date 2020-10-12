@@ -37,14 +37,14 @@ public interface Model {
     void setGuiSettings(GuiSettings guiSettings);
 
     /**
-     * Returns the user prefs' address book file path.
+     * Returns the user prefs' patient book file path.
      */
-    Path getAddressBookFilePath();
+    Path getPatientBookFilePath();
 
     /**
-     * Sets the user prefs' address book file path.
+     * Sets the user prefs' patient book file path.
      */
-    void setAddressBookFilePath(Path addressBookFilePath);
+    void setPatientBookFilePath(Path patientBookFilePath);
 
     /**
      * Returns the user prefs' appointment book file path.
@@ -57,15 +57,15 @@ public interface Model {
     void setAppointmentBookFilePath(Path appointmentBookFilePath);
 
     /**
-     * Replaces address book data with the data in {@code addressBook}.
+     * Replaces patient book data with the data in {@code patientBook}.
      */
-    void setAddressBook(ReadOnlyAddressBook addressBook);
+    void setPatientBook(ReadOnlyPatientBook patientBook);
 
-    /** Returns the AddressBook */
-    ReadOnlyAddressBook getAddressBook();
+    /** Returns the PatientBook */
+    ReadOnlyPatientBook getPatientBook();
 
     /**
-     * Returns true if a patient with the same identity as {@code patient} exists in the address book.
+     * Returns true if a patient with the same identity as {@code patient} exists in the patient book.
      */
     boolean hasPatient(Patient patient);
 
@@ -76,13 +76,13 @@ public interface Model {
 
     /**
      * Deletes the given patient.
-     * The patient must exist in the address book.
+     * The patient must exist in the patient book.
      */
     void deletePatient(Patient target);
 
     /**
      * Adds the given patient.
-     * {@code patient} must not already exist in the address book.
+     * {@code patient} must not already exist in the patient book.
      */
     void addPatient(Patient patient);
 
@@ -94,9 +94,9 @@ public interface Model {
 
     /**
      * Replaces the given patient {@code target} with {@code editedPatient}.
-     * {@code target} must exist in the address book.
+     * {@code target} must exist in the patient book.
      * The patient identity of {@code editedPatient} must not be the same as another existing patient
-     * in the address book.
+     * in the patient book.
      */
     void setPatient(Patient target, Patient editedPatient);
 
