@@ -46,9 +46,9 @@ public class AppointmentBookTest {
 
     @Test
     public void resetData_withOverlappingAppointments_throwsOverlappingAppointmentException() {
-        // Two patients with the same identity fields
-        Appointment editedAppointmentOne = new AppointmentBuilder(ALICE_APPOINTMENT).withStartTime(LocalTime.of(9, 30))
-                .build();
+        // Two patients with the overlapping appointments.
+        Appointment editedAppointmentOne = new AppointmentBuilder(ALICE_APPOINTMENT)
+                .withTime(LocalTime.of(9, 30)).build();
         List<Appointment> newAppointments = Arrays.asList(ALICE_APPOINTMENT, editedAppointmentOne);
         AppointmentBookStub newData = new AppointmentBookStub(newAppointments);
 
@@ -74,8 +74,15 @@ public class AppointmentBookTest {
     @Test
     public void hasAppointment_appointmentWithOverlapsInPatientBook_returnsTrue() {
         appointmentBook.addAppointment(ALICE_APPOINTMENT);
-        Appointment overlappingAppointment = new AppointmentBuilder(ALICE_APPOINTMENT)
-                .withPatient(BOB).withStartTime(ALICE_APPOINTMENT.getStartTime().getTime().plusMinutes(1))
+
+        Appointment overlappingAppointment = new AppointmentBuilder(ALICE_APPOINTMENT).withPatient(BOB)
+                .withTime(ALICE_APPOINTMENT.getStartTime().getTime().plusMinutes(1))
+                .build();
+        assertTrue(appointmentBook.hasAppointment(overlappingAppointment));
+
+        overlappingAppointment = new AppointmentBuilder(ALICE_APPOINTMENT).withPatient(BOB)
+                .withTime(ALICE_APPOINTMENT.getStartTime().getTime().plusMinutes(1),
+                        ALICE_APPOINTMENT.getEndTime().getTime().minusMinutes(1))
                 .build();
         assertTrue(appointmentBook.hasOverlapsWith(overlappingAppointment));
     }

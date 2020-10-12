@@ -2,6 +2,7 @@ package seedu.address.testutil;
 
 import static seedu.address.testutil.TypicalPatients.ALICE;
 
+import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
@@ -16,11 +17,13 @@ import seedu.address.model.patient.Patient;
 public class AppointmentBuilder {
 
     public static final LocalDate DEFAULT_DATE = LocalDate.of(2020, 12, 23);
-    public static final LocalTime DEFAULT_TIME = LocalTime.of(13, 30);
+    public static final LocalTime DEFAULT_START_TIME = LocalTime.of(13, 30);
+    public static final Duration DEFAULT_DURATION = Duration.ofHours(1);
     public static final Patient DEFAULT_PATIENT = ALICE;
 
     private Date date;
     private Time startTime;
+    private Time endTime;
     private Patient patient;
 
     /**
@@ -28,7 +31,8 @@ public class AppointmentBuilder {
      */
     public AppointmentBuilder() {
         date = new Date(DEFAULT_DATE);
-        startTime = new Time(DEFAULT_TIME);
+        startTime = new Time(DEFAULT_START_TIME);
+        endTime = new Time(DEFAULT_START_TIME.plus(DEFAULT_DURATION));
         patient = DEFAULT_PATIENT;
     }
 
@@ -38,6 +42,7 @@ public class AppointmentBuilder {
     public AppointmentBuilder(Appointment appointmentToCopy) {
         date = appointmentToCopy.getDate();
         startTime = appointmentToCopy.getStartTime();
+        endTime = appointmentToCopy.getEndTime();
         patient = appointmentToCopy.getPatient();
     }
 
@@ -50,10 +55,18 @@ public class AppointmentBuilder {
     }
 
     /**
-     * Sets the start time of the {@code Appointment} that we are building.
+     * Same as {@link #withTime(LocalTime, LocalTime)} but using the {@code DEFAULT_DURATION}
      */
-    public AppointmentBuilder withStartTime(LocalTime time) {
-        this.startTime = new Time(time);
+    public AppointmentBuilder withTime(LocalTime startTime) {
+        return withTime(startTime, startTime.plus(DEFAULT_DURATION));
+    }
+
+    /**
+     * Sets the start time and end time of the {@code Appointment} that we are building.
+     */
+    public AppointmentBuilder withTime(LocalTime startTime, LocalTime endTime) {
+        this.startTime = new Time(startTime);
+        this.endTime = new Time(endTime);
         return this;
     }
 
@@ -65,8 +78,11 @@ public class AppointmentBuilder {
         return this;
     }
 
+    /**
+     * Build the {@code Appointment}.
+     */
     public Appointment build() {
-        return new Appointment(date, startTime, patient);
+        return new Appointment(date, startTime, endTime, patient);
     }
 
 }

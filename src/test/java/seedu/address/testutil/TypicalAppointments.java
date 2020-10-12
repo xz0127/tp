@@ -19,28 +19,28 @@ import seedu.address.model.appointment.AppointmentComparator;
 public class TypicalAppointments {
 
     public static final Appointment ALICE_APPOINTMENT = new AppointmentBuilder()
-            .withDate(LocalDate.of(2020, 1, 1))
-            .withStartTime(LocalTime.of(9, 0))
+            .withDate(LocalDate.of(2050, 1, 1))
+            .withTime(LocalTime.of(9, 0))
             .withPatient(ALICE).build();
     public static final Appointment BOB_APPOINTMENT = new AppointmentBuilder()
-            .withDate(LocalDate.of(2020, 5, 12))
-            .withStartTime(LocalTime.of(11, 30))
+            .withDate(LocalDate.of(2050, 5, 12))
+            .withTime(LocalTime.of(11, 30))
             .withPatient(BOB).build();
     public static final Appointment CARL_APPOINTMENT = new AppointmentBuilder()
-            .withDate(LocalDate.of(2020, 1, 1))
-            .withStartTime(LocalTime.of(20, 0))
+            .withDate(LocalDate.of(2050, 1, 1))
+            .withTime(LocalTime.of(20, 0))
             .withPatient(CARL).build();
     public static final Appointment ALICE_APPOINTMENT_2 = new AppointmentBuilder()
-            .withDate(LocalDate.of(2020, 5, 22))
-            .withStartTime(LocalTime.of(15, 0))
+            .withDate(LocalDate.of(2050, 5, 22))
+            .withTime(LocalTime.of(15, 0))
             .withPatient(ALICE).build();
     public static final Appointment BOB_APPOINTMENT_2 = new AppointmentBuilder()
-            .withDate(LocalDate.of(2020, 4, 1))
-            .withStartTime(LocalTime.of(11, 30))
+            .withDate(LocalDate.of(2050, 4, 1))
+            .withTime(LocalTime.of(11, 30))
             .withPatient(BOB).build();
     public static final Appointment CARL_APPOINTMENT_2 = new AppointmentBuilder()
-            .withDate(LocalDate.of(2020, 5, 22))
-            .withStartTime(LocalTime.of(14, 0))
+            .withDate(LocalDate.of(2050, 5, 22))
+            .withTime(LocalTime.of(14, 0))
             .withPatient(CARL).build();
 
     private TypicalAppointments() {

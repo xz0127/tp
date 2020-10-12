@@ -24,7 +24,10 @@ import seedu.address.model.ReadOnlyPatientBook;
 import seedu.address.model.ReadOnlyUserPrefs;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.util.SampleDataUtil;
+import seedu.address.storage.AddressBookStorage;
+import seedu.address.storage.AppointmentBookStorage;
 import seedu.address.storage.JsonPatientBookStorage;
+import seedu.address.storage.JsonAppointmentBookStorage;
 import seedu.address.storage.JsonUserPrefsStorage;
 import seedu.address.storage.PatientBookStorage;
 import seedu.address.storage.Storage;
@@ -58,8 +61,11 @@ public class MainApp extends Application {
 
         UserPrefsStorage userPrefsStorage = new JsonUserPrefsStorage(config.getUserPrefsFilePath());
         UserPrefs userPrefs = initPrefs(userPrefsStorage);
+
         PatientBookStorage patientBookStorage = new JsonPatientBookStorage(userPrefs.getPatientBookFilePath());
-        storage = new StorageManager(patientBookStorage, userPrefsStorage);
+        AppointmentBookStorage appointmentBookStorage =
+                new JsonAppointmentBookStorage(userPrefs.getAppointmentBookFilePath());
+        storage = new StorageManager(patientBookStorage, appointmentBookStorage, userPrefsStorage);
 
         initLogging(config);
 
@@ -77,24 +83,46 @@ public class MainApp extends Application {
      */
     private Model initModelManager(Storage storage, ReadOnlyUserPrefs userPrefs) {
         Optional<ReadOnlyPatientBook> patientBookOptional;
-        ReadOnlyPatientBook initialData;
-        //TODO: to be changed after finishing storage
-        ReadOnlyAppointmentBook initAppointmentData = new AppointmentBook();
+        ReadOnlyPatientBook initialPatientData;
         try {
             patientBookOptional = storage.readPatientBook();
             if (!patientBookOptional.isPresent()) {
                 logger.info("Data file not found. Will be starting with a sample PatientBook");
             }
-            initialData = patientBookOptional.orElseGet(SampleDataUtil::getSamplePatientBook);
+            initialPatientData = patientBookOptional.orElseGet(SampleDataUtil::getSamplePatientBook);
         } catch (DataConversionException e) {
             logger.warning("Data file not in the correct format. Will be starting with an empty PatientBook");
-            initialData = new PatientBook();
+            initialPatientData = new PatientBook();
         } catch (IOException e) {
             logger.warning("Problem while reading from the file. Will be starting with an empty PatientBook");
-            initialData = new PatientBook();
+            initialPatientData = new PatientBook();
         }
 
-        return new ModelManager(initialData, initAppointmentData, userPrefs);
+        Optional<ReadOnlyAppointmentBook> appointmentBookOptional;
+        ReadOnlyAppointmentBook initialAppointmentData;
+        try {
+            appointmentBookOptional = storage.readAppointmentBook();
+            if (!appointmentBookOptional.isPresent()) {
+                logger.info("Data file not found. Will be starting with a sample AppointmentBook");
+            }
+
+            // TODO: Sample Appointment Book
+            initialAppointmentData = appointmentBookOptional.orElseGet(AppointmentBook::new);
+        } catch (DataConversionException e) {
+            logger.warning("Data file not in the correct format. Will be starting with an empty AppointmentBook");
+            initialAppointmentData = new AppointmentBook();
+        } catch (IOException e) {
+            logger.warning("Problem while reading from the file. Will be starting with an empty AppointmentBook");
+            initialAppointmentData = new AppointmentBook();
+        }
+
+        if (!ModelManager.isValidModel(initialPatientData, initialAppointmentData)) {
+            logger.warning("Appointment data not in sync with Patients' data. "
+                    + "Will be starting with an empty AppointmentBook");
+            initialAppointmentData = new AppointmentBook();
+        }
+
+        return new ModelManager(initialPatientData, initialAppointmentData, userPrefs);
     }
 
     private void initLogging(Config config) {

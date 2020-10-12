@@ -27,6 +27,22 @@ public class AppointmentTest {
     @Test
     public void constructor_null_throwsNullPointerException() {
         assertThrows(NullPointerException.class, () -> new Appointment(null, null, null));
+        assertThrows(NullPointerException.class, ()
+            -> new Appointment(null, null, null, null));
+    }
+
+    @Test
+    public void constructor_invalidStartAndEndTime_throwsIllegalArgumentException() {
+        LocalDate date = LocalDate.of(2024, 1, 1);
+        LocalTime time = LocalTime.of(13, 0);
+
+        // same start and end time
+        assertThrows(IllegalArgumentException.class, ()
+            -> new Appointment(new Date(date), new Time(time), new Time(time), ALICE));
+
+        // start time > end time
+        assertThrows(IllegalArgumentException.class, ()
+            -> new Appointment(new Date(date), new Time(time), new Time(time.minusHours(1)), ALICE));
     }
 
     @Test
@@ -88,7 +104,8 @@ public class AppointmentTest {
         // different date and time -> returns false
         editedOne = new AppointmentBuilder(ALICE_APPOINTMENT)
                 .withDate(LocalDate.of(2019, 12, 20))
-                .withStartTime(LocalTime.of(13, 30)).build();
+                .withTime(LocalTime.of(13, 30), LocalTime.of(14, 0))
+                .build();
         assertFalse(ALICE_APPOINTMENT.isOverlapping(editedOne));
 
         // earlier date -> returns false
@@ -99,13 +116,13 @@ public class AppointmentTest {
 
         // earlier start time, same date (not overlapping) -> returns false
         editedOne = new AppointmentBuilder(ALICE_APPOINTMENT)
-                .withStartTime(ALICE_APPOINTMENT.getStartTime().getTime().minusHours(1))
+                .withTime(ALICE_APPOINTMENT.getStartTime().getTime().minusHours(1))
                 .build();
         assertFalse(ALICE_APPOINTMENT.isOverlapping(editedOne));
 
         // earlier start time, same date (overlapping) -> returns true
         editedOne = new AppointmentBuilder(ALICE_APPOINTMENT)
-                .withStartTime(ALICE_APPOINTMENT.getStartTime().getTime().minusMinutes(30))
+                .withTime(ALICE_APPOINTMENT.getStartTime().getTime().minusMinutes(30))
                 .build();
         assertTrue(ALICE_APPOINTMENT.isOverlapping(editedOne));
 
@@ -116,13 +133,13 @@ public class AppointmentTest {
 
         // later start time, same date (overlapping) -> returns true
         editedOne = new AppointmentBuilder(ALICE_APPOINTMENT)
-                .withStartTime(ALICE_APPOINTMENT.getStartTime().getTime().plusMinutes(30))
+                .withTime(ALICE_APPOINTMENT.getStartTime().getTime().plusMinutes(30))
                 .build();
         assertTrue(ALICE_APPOINTMENT.isOverlapping(editedOne));
 
         // later start time, same date (not overlapping) -> returns true
         editedOne = new AppointmentBuilder(ALICE_APPOINTMENT)
-                .withStartTime(ALICE_APPOINTMENT.getStartTime().getTime().plusHours(1))
+                .withTime(ALICE_APPOINTMENT.getStartTime().getTime().plusHours(1))
                 .build();
         assertFalse(ALICE_APPOINTMENT.isOverlapping(editedOne));
 
@@ -149,13 +166,13 @@ public class AppointmentTest {
 
         // earlier start time, same date (not overlapping) -> returns false
         editedOne = new AppointmentBuilder(ALICE_APPOINTMENT)
-                .withStartTime(ALICE_APPOINTMENT.getStartTime().getTime().minusHours(1))
+                .withTime(ALICE_APPOINTMENT.getStartTime().getTime().minusHours(1))
                 .build();
         assertFalse(ALICE_APPOINTMENT.isBefore(editedOne));
 
         // earlier start time, same date (overlapping) -> returns false
         editedOne = new AppointmentBuilder(ALICE_APPOINTMENT)
-                .withStartTime(ALICE_APPOINTMENT.getStartTime().getTime().minusMinutes(30))
+                .withTime(ALICE_APPOINTMENT.getStartTime().getTime().minusMinutes(30))
                 .build();
         assertFalse(ALICE_APPOINTMENT.isBefore(editedOne));
 
@@ -166,13 +183,13 @@ public class AppointmentTest {
 
         // later start time, same date (overlapping) -> returns false
         editedOne = new AppointmentBuilder(ALICE_APPOINTMENT)
-                .withStartTime(ALICE_APPOINTMENT.getStartTime().getTime().plusMinutes(30))
+                .withTime(ALICE_APPOINTMENT.getStartTime().getTime().plusMinutes(30))
                 .build();
         assertFalse(ALICE_APPOINTMENT.isBefore(editedOne));
 
         // later start time, same date (not overlapping) -> returns false
         editedOne = new AppointmentBuilder(ALICE_APPOINTMENT)
-                .withStartTime(ALICE_APPOINTMENT.getStartTime().getTime().plusHours(1))
+                .withTime(ALICE_APPOINTMENT.getStartTime().getTime().plusHours(1))
                 .build();
         assertTrue(ALICE_APPOINTMENT.isBefore(editedOne));
 
@@ -199,13 +216,13 @@ public class AppointmentTest {
 
         // earlier start time, same date (not overlapping) -> returns false
         editedOne = new AppointmentBuilder(ALICE_APPOINTMENT)
-                .withStartTime(ALICE_APPOINTMENT.getStartTime().getTime().minusHours(1))
+                .withTime(ALICE_APPOINTMENT.getStartTime().getTime().minusHours(1))
                 .build();
         assertTrue(ALICE_APPOINTMENT.isAfter(editedOne));
 
         // earlier start time, same date (overlapping) -> returns false
         editedOne = new AppointmentBuilder(ALICE_APPOINTMENT)
-                .withStartTime(ALICE_APPOINTMENT.getStartTime().getTime().minusMinutes(30))
+                .withTime(ALICE_APPOINTMENT.getStartTime().getTime().minusMinutes(30))
                 .build();
         assertFalse(ALICE_APPOINTMENT.isAfter(editedOne));
 
@@ -216,13 +233,13 @@ public class AppointmentTest {
 
         // later start time, same date (overlapping) -> returns false
         editedOne = new AppointmentBuilder(ALICE_APPOINTMENT)
-                .withStartTime(ALICE_APPOINTMENT.getStartTime().getTime().plusMinutes(30))
+                .withTime(ALICE_APPOINTMENT.getStartTime().getTime().plusMinutes(30))
                 .build();
         assertFalse(ALICE_APPOINTMENT.isAfter(editedOne));
 
         // later start time, same date (not overlapping) -> returns false
         editedOne = new AppointmentBuilder(ALICE_APPOINTMENT)
-                .withStartTime(ALICE_APPOINTMENT.getStartTime().getTime().plusHours(1))
+                .withTime(ALICE_APPOINTMENT.getStartTime().getTime().plusHours(1))
                 .build();
         assertFalse(ALICE_APPOINTMENT.isAfter(editedOne));
 
@@ -258,7 +275,7 @@ public class AppointmentTest {
 
         // different time -> returns false
         editedOne = new AppointmentBuilder(ALICE_APPOINTMENT)
-                .withStartTime(LocalTime.of(15, 15)).build();
+                .withTime(LocalTime.of(15, 15)).build();
         assertFalse(ALICE_APPOINTMENT.equals(editedOne));
 
         // different patient -> returns false

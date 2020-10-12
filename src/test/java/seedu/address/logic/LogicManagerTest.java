@@ -29,6 +29,7 @@ import seedu.address.model.ReadOnlyPatientBook;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.patient.Patient;
 import seedu.address.storage.JsonPatientBookStorage;
+import seedu.address.storage.JsonAppointmentBookStorage;
 import seedu.address.storage.JsonUserPrefsStorage;
 import seedu.address.storage.StorageManager;
 import seedu.address.testutil.PatientBuilder;
@@ -46,8 +47,10 @@ public class LogicManagerTest {
     public void setUp() {
         JsonPatientBookStorage patientBookStorage =
                 new JsonPatientBookStorage(temporaryFolder.resolve("patientBook.json"));
+        JsonAppointmentBookStorage appointmentBookStorage =
+                new JsonAppointmentBookStorage(temporaryFolder.resolve("appointmentBook.json"));
         JsonUserPrefsStorage userPrefsStorage = new JsonUserPrefsStorage(temporaryFolder.resolve("userPrefs.json"));
-        StorageManager storage = new StorageManager(patientBookStorage, userPrefsStorage);
+        StorageManager storage = new StorageManager(patientBookStorage, appointmentBookStorage, userPrefsStorage);
         logic = new LogicManager(model, storage);
     }
 
@@ -74,9 +77,11 @@ public class LogicManagerTest {
         // Setup LogicManager with JsonPatientBookIoExceptionThrowingStub
         JsonPatientBookStorage patientBookStorage =
                 new JsonPatientBookIoExceptionThrowingStub(temporaryFolder.resolve("ioExceptionPatientBook.json"));
+        JsonAppointmentBookStorage appointmentBookStorage =
+                new JsonAppointmentBookStorage(temporaryFolder.resolve("ioExceptionAppointmentBook.json"));
         JsonUserPrefsStorage userPrefsStorage =
                 new JsonUserPrefsStorage(temporaryFolder.resolve("ioExceptionUserPrefs.json"));
-        StorageManager storage = new StorageManager(patientBookStorage, userPrefsStorage);
+        StorageManager storage = new StorageManager(patientBookStorage, appointmentBookStorage, userPrefsStorage);
         logic = new LogicManager(model, storage);
 
         // Execute add command

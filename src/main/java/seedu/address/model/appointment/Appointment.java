@@ -1,6 +1,7 @@
 package seedu.address.model.appointment;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.commons.util.AppUtil.checkArgument;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.time.Duration;
@@ -18,6 +19,8 @@ public class Appointment {
     // Creation offset in minutes. Used to allow creation of "last-minute" appointments.
     public static final int CREATION_OFFSET_MINUTES = 20;
 
+    public static final String MESSAGE_CONSTRAINTS = "The appointment start time should be before the end time.";
+
     // Identity fields
     private final Date date;
     private final Time startTime;
@@ -30,16 +33,24 @@ public class Appointment {
     private final Patient patient;
 
     /**
-     * Create an appointment with the patient.
+     * Create an appointment using the default duration.
      * Every field must be present and not null.
      */
     public Appointment(Date date, Time startTime, Patient patient) {
-        requireAllNonNull(date, startTime, patient);
+        this(date, startTime, new Time(startTime.getTime().plus(DEFAULT_DURATION)), patient);
+    }
+
+    /**
+     * Create an appointment with specified end time.
+     * Every field must be present and not null.
+     */
+    public Appointment(Date date, Time startTime, Time endTime, Patient patient) {
+        requireAllNonNull(date, startTime, endTime, patient);
+        checkArgument(startTime.isBefore(endTime), MESSAGE_CONSTRAINTS);
+
         this.date = date;
         this.startTime = startTime;
-        this.endTime = new Time(startTime.getTime().plus(DEFAULT_DURATION));
-
-        assert startTime.isBefore(endTime);
+        this.endTime = endTime;
 
         this.appointmentId = new AppointmentId(date, startTime);
 
@@ -88,7 +99,7 @@ public class Appointment {
     }
     public Appointment setPatient(Patient p) {
         requireNonNull(p);
-        return new Appointment(date, startTime, p);
+        return new Appointment(date, startTime, endTime, p);
     }
 
     public Appointment markAsDone() {
