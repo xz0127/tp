@@ -24,7 +24,6 @@ import seedu.address.model.ReadOnlyPatientBook;
 import seedu.address.model.ReadOnlyUserPrefs;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.util.SampleDataUtil;
-import seedu.address.storage.AddressBookStorage;
 import seedu.address.storage.AppointmentBookStorage;
 import seedu.address.storage.JsonPatientBookStorage;
 import seedu.address.storage.JsonAppointmentBookStorage;
@@ -77,16 +76,35 @@ public class MainApp extends Application {
     }
 
     /**
-     * Returns a {@code ModelManager} with the data from {@code storage}'s patient book and {@code userPrefs}. <br>
+     * Returns a {@code ModelManager} with the data from {@code storage}'s patient book,
+     * {@code storage}'s appointment book and {@code userPrefs}.
+     */
+    private Model initModelManager(Storage storage, ReadOnlyUserPrefs userPrefs) {
+        ReadOnlyPatientBook initialPatientData = initPatientBookModel(storage);
+        ReadOnlyAppointmentBook initialAppointmentData = initAppointmentBookModel(storage);
+
+        // Check if model is in sync
+        if (!ModelManager.isValidModel(initialPatientData, initialAppointmentData)) {
+            logger.warning("Appointment data not in sync with Patients' data. "
+                    + "Will be starting with an empty AppointmentBook");
+            initialAppointmentData = new AppointmentBook();
+        }
+
+        return new ModelManager(initialPatientData, initialAppointmentData, userPrefs);
+    }
+
+    /**
+     * Returns a {@code ReadOnlyPatientBook} with the data from {@code storage}'s patient book.<br>
      * The data from the sample patient book will be used instead if {@code storage}'s patient book is not found,
      * or an empty patient book will be used instead if errors occur when reading {@code storage}'s patient book.
      */
-    private Model initModelManager(Storage storage, ReadOnlyUserPrefs userPrefs) {
+    private ReadOnlyPatientBook initPatientBookModel(Storage storage) {
         Optional<ReadOnlyPatientBook> patientBookOptional;
         ReadOnlyPatientBook initialPatientData;
+
         try {
-            patientBookOptional = storage.readPatientBook();
-            if (!patientBookOptional.isPresent()) {
+            patientBookOptional = storage.readAppointmentBook();
+            if (patientBookOptional.isEmpty()) {
                 logger.info("Data file not found. Will be starting with a sample PatientBook");
             }
             initialPatientData = patientBookOptional.orElseGet(SampleDataUtil::getSamplePatientBook);
@@ -98,11 +116,22 @@ public class MainApp extends Application {
             initialPatientData = new PatientBook();
         }
 
+        return initialPatientData;
+    }
+
+    /**
+     * Returns a {@code ReadOnlyAppointmentBook} with the data from {@code storage}'s appointment book.<br>
+     * The data from the sample appointment book will be used instead if {@code storage}'s appointment book
+     * is not found, or an empty appointment book will be used instead if errors occur when reading
+     * {@code storage}'s appointment book.
+     */
+    private ReadOnlyAppointmentBook initAppointmentBookModel(Storage storage) {
         Optional<ReadOnlyAppointmentBook> appointmentBookOptional;
         ReadOnlyAppointmentBook initialAppointmentData;
+
         try {
             appointmentBookOptional = storage.readAppointmentBook();
-            if (!appointmentBookOptional.isPresent()) {
+            if (appointmentBookOptional.isEmpty()) {
                 logger.info("Data file not found. Will be starting with a sample AppointmentBook");
             }
 
@@ -116,13 +145,7 @@ public class MainApp extends Application {
             initialAppointmentData = new AppointmentBook();
         }
 
-        if (!ModelManager.isValidModel(initialPatientData, initialAppointmentData)) {
-            logger.warning("Appointment data not in sync with Patients' data. "
-                    + "Will be starting with an empty AppointmentBook");
-            initialAppointmentData = new AppointmentBook();
-        }
-
-        return new ModelManager(initialPatientData, initialAppointmentData, userPrefs);
+        return initialAppointmentData;
     }
 
     private void initLogging(Config config) {

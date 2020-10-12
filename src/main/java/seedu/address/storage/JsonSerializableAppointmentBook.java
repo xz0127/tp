@@ -61,7 +61,7 @@ class JsonSerializableAppointmentBook {
 
             if (DateTimeUtil.isExpiredByDay(appointment.getDate().getDate())) {
                 // send to archive
-                break;
+                continue;
             }
 
             // add to appointment book
