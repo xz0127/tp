@@ -83,6 +83,17 @@ public class ModelManager implements Model {
         userPrefs.setAddressBookFilePath(addressBookFilePath);
     }
 
+    @Override
+    public Path getAppointmentBookFilePath() {
+        return userPrefs.getAppointmentBookFilePath();
+    }
+
+    @Override
+    public void setAppointmentBookFilePath(Path appointmentBookFilePath) {
+        requireNonNull(appointmentBookFilePath);
+        userPrefs.setAppointmentBookFilePath(appointmentBookFilePath);
+    }
+
     //=========== AddressBook ================================================================================
 
     @Override
@@ -122,7 +133,7 @@ public class ModelManager implements Model {
     //=========== AppointmentBook ================================================================================
     @Override
     public boolean hasAppointment(Appointment appointment) {
-        return appointmentBook.isAppointmentOverlapped(appointment);
+        return appointmentBook.hasAppointment(appointment);
     }
 
     @Override

@@ -54,7 +54,7 @@ public class AssignCommandTest {
     public void execute_appointmentAcceptedByModel_assignSuccessful() {
         DateTimeLoader loader = new DateTimeLoaderBuilder().withDate(VALID_DATE).withTime(VALID_TIME).build();
         AssignCommand assignCommand = new AssignCommand(INDEX_FIRST_APPOINTMENT, loader);
-        Appointment appointment = new Appointment(loader.getDate().get(), loader.getTime().get(), ALICE.getNric());
+        Appointment appointment = new Appointment(loader.getDate().get(), loader.getTime().get(), ALICE);
 
         String expectedMessage = String.format(AssignCommand.MESSAGE_SUCCESS, appointment);
         AppointmentBook expectedAppointmentBook = new AppointmentBookBuilder().withAppointment(appointment).build();
@@ -79,7 +79,7 @@ public class AssignCommandTest {
         DateTimeLoader loader = new DateTimeLoaderBuilder().withDate(VALID_DATE).withTime(VALID_TIME).build();
         AssignCommand assignCommand = new AssignCommand(INDEX_FIRST_APPOINTMENT, loader);
         Appointment appointment = new Appointment(
-                loader.getDate().get(), new Time(TimeParserUtil.parse(SAME_TIME)), ALICE.getNric()
+                loader.getDate().get(), new Time(TimeParserUtil.parse(SAME_TIME)), ALICE
         );
 
         model.addAppointment(appointment);
@@ -92,7 +92,7 @@ public class AssignCommandTest {
         DateTimeLoader loader = new DateTimeLoaderBuilder().withDate(VALID_DATE).withTime(VALID_TIME).build();
         AssignCommand assignCommand = new AssignCommand(INDEX_FIRST_APPOINTMENT, loader);
         Appointment appointment = new Appointment(
-                loader.getDate().orElse(null), new Time(TimeParserUtil.parse(OVERLAP_TIME)), ALICE.getNric()
+                loader.getDate().get(), new Time(TimeParserUtil.parse(OVERLAP_TIME)), ALICE
         );
 
         model.addAppointment(appointment);

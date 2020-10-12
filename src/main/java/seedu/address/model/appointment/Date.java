@@ -80,12 +80,14 @@ public class Date {
      * @return the string representation of the appointment {@code Date}.
      */
     protected String toStringBasedOn(LocalDate currDate) {
+        String toDisplay = value.format(DATE_FORMAT);
+
         if (value.isEqual(currDate)) {
             // Simplify date to "Today"
-            return "Today";
+            toDisplay += " (Today)";
         }
 
-        return value.format(DATE_FORMAT);
+        return toDisplay;
     }
 
     /**

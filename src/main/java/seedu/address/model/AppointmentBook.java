@@ -66,12 +66,33 @@ public class AppointmentBook implements ReadOnlyAppointmentBook {
         appointments.add(a);
     }
 
+    // /**
+    //  * Replaces the given appointment {@code target} in the list with {@code editedAppointment}.
+    //  * {@code target} must exist in the appointment book.
+    //  * The identity of {@code editedPatient} must not be the same as another existing appointment
+    //  * in the address book.
+    //  */
+    // public void setAppointment(Appointment target, Appointment editedAppointment) { }
+    //
+    // /**
+    //  * Removes {@code key} from this {@code AppointmentBook}.
+    //  * {@code key} must exist in the appointment book.
+    //  */
+    // public void removeAppointment(Appointment key) {}
+
     /**
-     * Checks if an appointment overlaps with {@code appointments}.
+     * Checks if an appointment hasOverlaps with {@code appointments}.
      */
-    public boolean isAppointmentOverlapped(Appointment a) {
-        return appointments.overlaps(a);
+    public boolean hasAppointment(Appointment a) {
+        requireNonNull(a);
+        return appointments.hasOverlaps(a);
     }
+
+    //// patient-related appointment operations
+
+    // public void updateAppointmentsWithPatient(Patient target, Patient editedPatient) {}
+    //
+    // public void deleteAppointmentsWithPatient(Patient target) {}
 
     //// util methods
 
