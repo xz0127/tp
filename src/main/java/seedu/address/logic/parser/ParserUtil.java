@@ -2,6 +2,8 @@ package seedu.address.logic.parser;
 
 import static java.util.Objects.requireNonNull;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
@@ -9,17 +11,18 @@ import java.util.Set;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.StringUtil;
 import seedu.address.logic.parser.exceptions.ParseException;
-import seedu.address.model.person.Address;
-import seedu.address.model.person.Name;
-import seedu.address.model.person.Nric;
-import seedu.address.model.person.Phone;
+import seedu.address.model.appointment.Date;
+import seedu.address.model.appointment.Time;
+import seedu.address.model.patient.Address;
+import seedu.address.model.patient.Name;
+import seedu.address.model.patient.Nric;
+import seedu.address.model.patient.Phone;
 import seedu.address.model.tag.Tag;
 
 /**
  * Contains utility methods used for parsing strings in the various *Parser classes.
  */
 public class ParserUtil {
-
     public static final String MESSAGE_INVALID_INDEX = "Index is not a non-zero unsigned integer.";
 
     /**
@@ -120,5 +123,43 @@ public class ParserUtil {
             tagSet.add(parseTag(tagName));
         }
         return tagSet;
+    }
+
+    /**
+     * Parses {@code String date} into a {@code Date}.
+     * Leading and trailing whitespace will be trimmed.
+     *
+     * @throws ParseException if the given {@code date} is invalid
+     */
+    public static Date parseDate(String date) throws ParseException {
+        requireNonNull(date);
+        String trimmedDate = date.trim();
+
+        // Parses the date into a LocalDate
+        LocalDate parsedDate = DateParserUtil.parse(trimmedDate);
+
+        if (!Date.isValidAppointmentDate(parsedDate)) {
+            throw new ParseException(Date.MESSAGE_CONSTRAINTS);
+        }
+        return new Date(parsedDate);
+    }
+
+    /**
+     * Parses {@code String time} into a {@code Time}.
+     * Leading and trailing whitespace will be trimmed.
+     *
+     * @throws ParseException if the given {@code time} is invalid
+     */
+    public static Time parseTime(String time) throws ParseException {
+        requireNonNull(time);
+        String trimmedTime = time.trim();
+
+        LocalTime parsedTime = TimeParserUtil.parse(trimmedTime);
+
+        if (!Time.isValidStartTime(parsedTime)) {
+            throw new ParseException(Time.MESSAGE_CONSTRAINTS);
+        }
+
+        return new Time(parsedTime);
     }
 }

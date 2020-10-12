@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<VBox alignment="TOP_CENTER" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+  <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Patients" VBox.vgrow="NEVER">
+    <font>
+      <Font name="Segoe UI Light" size="20.0" />
+    </font>
+    <VBox.margin>
+      <Insets bottom="5.0" />
+    </VBox.margin>
+  </Text>
+  <ListView fx:id="patientListView" VBox.vgrow="ALWAYS" />
+</VBox>

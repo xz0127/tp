@@ -3,12 +3,12 @@ package seedu.address.model;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
+import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PATIENTS;
 import static seedu.address.testutil.Assert.assertThrows;
-import static seedu.address.testutil.TypicalAppointments.APPOINTMENT_ONE;
-import static seedu.address.testutil.TypicalAppointments.APPOINTMENT_TWO;
-import static seedu.address.testutil.TypicalPersons.ALICE;
-import static seedu.address.testutil.TypicalPersons.BENSON;
+import static seedu.address.testutil.TypicalAppointments.ALICE_APPOINTMENT;
+import static seedu.address.testutil.TypicalAppointments.BOB_APPOINTMENT;
+import static seedu.address.testutil.TypicalPatients.ALICE;
+import static seedu.address.testutil.TypicalPatients.BENSON;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -17,7 +17,7 @@ import java.util.Arrays;
 import org.junit.jupiter.api.Test;
 
 import seedu.address.commons.core.GuiSettings;
-import seedu.address.model.person.NameContainsKeywordsPredicate;
+import seedu.address.model.patient.NameContainsKeywordsPredicate;
 import seedu.address.testutil.AddressBookBuilder;
 import seedu.address.testutil.AppointmentBookBuilder;
 
@@ -42,13 +42,15 @@ public class ModelManagerTest {
     public void setUserPrefs_validUserPrefs_copiesUserPrefs() {
         UserPrefs userPrefs = new UserPrefs();
         userPrefs.setAddressBookFilePath(Paths.get("address/book/file/path"));
-        userPrefs.setGuiSettings(new GuiSettings(1, 2, 3, 4));
+        userPrefs.setAppointmentBookFilePath(Paths.get("appointment/book/file/path"));
+        userPrefs.setGuiSettings(new GuiSettings(1, 2, 3, 4, 0.5));
         modelManager.setUserPrefs(userPrefs);
         assertEquals(userPrefs, modelManager.getUserPrefs());
 
         // Modifying userPrefs should not modify modelManager's userPrefs
         UserPrefs oldUserPrefs = new UserPrefs(userPrefs);
         userPrefs.setAddressBookFilePath(Paths.get("new/address/book/file/path"));
+        userPrefs.setAppointmentBookFilePath(Paths.get("new/appointment/book/file/path"));
         assertEquals(oldUserPrefs, modelManager.getUserPrefs());
     }
 
@@ -59,7 +61,7 @@ public class ModelManagerTest {
 
     @Test
     public void setGuiSettings_validGuiSettings_setsGuiSettings() {
-        GuiSettings guiSettings = new GuiSettings(1, 2, 3, 4);
+        GuiSettings guiSettings = new GuiSettings(1, 2, 3, 4, 0.5);
         modelManager.setGuiSettings(guiSettings);
         assertEquals(guiSettings, modelManager.getGuiSettings());
     }
@@ -77,31 +79,43 @@ public class ModelManagerTest {
     }
 
     @Test
-    public void hasPerson_nullPerson_throwsNullPointerException() {
-        assertThrows(NullPointerException.class, () -> modelManager.hasPerson(null));
+    public void setAppointmentBookFilePath_nullPath_throwsNullPointerException() {
+        assertThrows(NullPointerException.class, () -> modelManager.setAppointmentBookFilePath(null));
     }
 
     @Test
-    public void hasPerson_personNotInAddressBook_returnsFalse() {
-        assertFalse(modelManager.hasPerson(ALICE));
+    public void setAppointmentBookFilePath_validPath_setsAppointmentBookFilePath() {
+        Path path = Paths.get("appointment/book/file/path");
+        modelManager.setAppointmentBookFilePath(path);
+        assertEquals(path, modelManager.getAppointmentBookFilePath());
     }
 
     @Test
-    public void hasPerson_personInAddressBook_returnsTrue() {
-        modelManager.addPerson(ALICE);
-        assertTrue(modelManager.hasPerson(ALICE));
+    public void hasPatient_nullPatient_throwsNullPointerException() {
+        assertThrows(NullPointerException.class, () -> modelManager.hasPatient(null));
     }
 
     @Test
-    public void getFilteredPersonList_modifyList_throwsUnsupportedOperationException() {
-        assertThrows(UnsupportedOperationException.class, () -> modelManager.getFilteredPersonList().remove(0));
+    public void hasPatient_patientNotInAddressBook_returnsFalse() {
+        assertFalse(modelManager.hasPatient(ALICE));
+    }
+
+    @Test
+    public void hasPatient_patientInAddressBook_returnsTrue() {
+        modelManager.addPatient(ALICE);
+        assertTrue(modelManager.hasPatient(ALICE));
+    }
+
+    @Test
+    public void getFilteredPatientList_modifyList_throwsUnsupportedOperationException() {
+        assertThrows(UnsupportedOperationException.class, () -> modelManager.getFilteredPatientList().remove(0));
     }
 
     @Test
     public void equals() {
-        AddressBook addressBook = new AddressBookBuilder().withPerson(ALICE).withPerson(BENSON).build();
+        AddressBook addressBook = new AddressBookBuilder().withPatient(ALICE).withPatient(BENSON).build();
         AppointmentBook appointmentBook = new AppointmentBookBuilder()
-                .withAppointment(APPOINTMENT_ONE).withAppointment(APPOINTMENT_TWO).build();
+                .withAppointment(ALICE_APPOINTMENT).withAppointment(BOB_APPOINTMENT).build();
         AddressBook differentAddressBook = new AddressBook();
         AppointmentBook differentAppointmentBook = new AppointmentBook();
         UserPrefs userPrefs = new UserPrefs();
@@ -128,15 +142,16 @@ public class ModelManagerTest {
 
         // different filteredList -> returns false
         String[] keywords = ALICE.getName().fullName.split("\\s+");
-        modelManager.updateFilteredPersonList(new NameContainsKeywordsPredicate(Arrays.asList(keywords)));
+        modelManager.updateFilteredPatientList(new NameContainsKeywordsPredicate(Arrays.asList(keywords)));
         assertFalse(modelManager.equals(new ModelManager(addressBook, appointmentBook, userPrefs)));
 
         // resets modelManager to initial state for upcoming tests
-        modelManager.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+        modelManager.updateFilteredPatientList(PREDICATE_SHOW_ALL_PATIENTS);
 
         // different userPrefs -> returns false
         UserPrefs differentUserPrefs = new UserPrefs();
         differentUserPrefs.setAddressBookFilePath(Paths.get("differentFilePath"));
+        differentUserPrefs.setAppointmentBookFilePath(Paths.get("differentFilePath2"));
         assertFalse(modelManager.equals(new ModelManager(addressBook, appointmentBook, differentUserPrefs)));
     }
 }

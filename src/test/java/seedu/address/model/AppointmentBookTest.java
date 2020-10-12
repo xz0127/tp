@@ -1,8 +1,12 @@
 package seedu.address.model;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.testutil.Assert.assertThrows;
-import static seedu.address.testutil.TypicalAppointments.APPOINTMENT_ONE;
+import static seedu.address.testutil.TypicalAppointments.ALICE_APPOINTMENT;
+import static seedu.address.testutil.TypicalAppointments.getTypicalAppointmentBook;
+import static seedu.address.testutil.TypicalPatients.BOB;
 
 import java.time.LocalTime;
 import java.util.Arrays;
@@ -33,48 +37,48 @@ public class AppointmentBookTest {
     }
 
 
-    //  Wait for assign command
-    //    @Test
-    //    public void resetData_withValidReadOnlyAddressBook_replacesData() {
-    //        AppointmentBook newData = getTypicalAppointmentBook();
-    //        appointmentBook.resetData(newData);
-    //        assertEquals(newData, appointmentBook);
-    //    }
+    @Test
+    public void resetData_withValidReadOnlyAddressBook_replacesData() {
+        AppointmentBook newData = getTypicalAppointmentBook();
+        appointmentBook.resetData(newData);
+        assertEquals(newData, appointmentBook);
+    }
 
     @Test
     public void resetData_withOverlappingAppointments_throwsOverlappingAppointmentException() {
-        // Two persons with the same identity fields
-        Appointment editedAppointmentOne = new AppointmentBuilder(APPOINTMENT_ONE).withStartTime(LocalTime.of(9, 30))
+        // Two patients with the same identity fields
+        Appointment editedAppointmentOne = new AppointmentBuilder(ALICE_APPOINTMENT).withStartTime(LocalTime.of(9, 30))
                 .build();
-        List<Appointment> newAppointments = Arrays.asList(APPOINTMENT_ONE, editedAppointmentOne);
+        List<Appointment> newAppointments = Arrays.asList(ALICE_APPOINTMENT, editedAppointmentOne);
         AppointmentBookStub newData = new AppointmentBookStub(newAppointments);
 
         assertThrows(OverlappingAppointmentException.class, () -> appointmentBook.resetData(newData));
     }
 
-    //    @Test
-    //    public void hasPerson_nullPerson_throwsNullPointerException() {
-    //        assertThrows(NullPointerException.class, () -> appointmentBook.hasPerson(null));
-    //    }
-    //
-    //    @Test
-    //    public void hasPerson_personNotInAddressBook_returnsFalse() {
-    //        assertFalse(addressBook.hasPerson(ALICE));
-    //    }
-    //
-    //    @Test
-    //    public void hasPerson_personInAddressBook_returnsTrue() {
-    //        addressBook.addPerson(ALICE);
-    //        assertTrue(addressBook.hasPerson(ALICE));
-    //    }
-    //
-    //    @Test
-    //    public void hasPerson_personWithSameIdentityFieldsInAddressBook_returnsTrue() {
-    //        addressBook.addPerson(ALICE);
-    //        Person editedAlice = new PersonBuilder(ALICE).withAddress(VALID_ADDRESS_BOB).withTags(VALID_TAG_HUSBAND)
-    //                .build();
-    //        assertTrue(addressBook.hasPerson(editedAlice));
-    //    }
+    @Test
+    public void hasAppointment_nullAppointment_throwsNullPointerException() {
+        assertThrows(NullPointerException.class, () -> appointmentBook.hasAppointment(null));
+    }
+
+    @Test
+    public void hasAppointment_nullAppointment_returnsFalse() {
+        assertFalse(appointmentBook.hasAppointment(ALICE_APPOINTMENT));
+    }
+
+    @Test
+    public void hasAppointment_appointmentInAppointmentBook_returnsTrue() {
+        appointmentBook.addAppointment(ALICE_APPOINTMENT);
+        assertTrue(appointmentBook.hasAppointment(ALICE_APPOINTMENT));
+    }
+
+    @Test
+    public void hasAppointment_appointmentWithOverlapsInAddressBook_returnsTrue() {
+        appointmentBook.addAppointment(ALICE_APPOINTMENT);
+        Appointment overlappingAppointment = new AppointmentBuilder(ALICE_APPOINTMENT)
+                .withPatient(BOB).withStartTime(ALICE_APPOINTMENT.getStartTime().getTime().plusMinutes(1))
+                .build();
+        assertTrue(appointmentBook.hasAppointment(overlappingAppointment));
+    }
 
     @Test
     public void getAppointmentList_modifyList_throwsUnsupportedOperationException() {
@@ -87,8 +91,8 @@ public class AppointmentBookTest {
     private static class AppointmentBookStub implements ReadOnlyAppointmentBook {
         private final ObservableList<Appointment> appointments = FXCollections.observableArrayList();
 
-        AppointmentBookStub(Collection<Appointment> persons) {
-            this.appointments.setAll(persons);
+        AppointmentBookStub(Collection<Appointment> patients) {
+            this.appointments.setAll(patients);
         }
 
         @Override
