@@ -3,7 +3,7 @@ layout: page
 title: Lim Jin Hao's Project Portfolio Page
 ---
 
-## Project: AddressBook Level 3
+## Project: PatientBook Level 3
 
 Nuudle is a **desktop app for managing patient records and clinic appointments**. 
 It is optimised for use via a Command Line Interface (CLI), and has a Graphical User Interface (GUI) built with javafx.   

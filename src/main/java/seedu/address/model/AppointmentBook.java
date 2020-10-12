@@ -59,7 +59,7 @@ public class AppointmentBook implements ReadOnlyAppointmentBook {
     //// appointment-level operations
 
     /**
-     * Adds an appointment to the address book.
+     * Adds an appointment to the patient book.
      * The appointment must not overlap with appointments in the appointment book.
      */
     public void addAppointment(Appointment a) {
@@ -70,7 +70,7 @@ public class AppointmentBook implements ReadOnlyAppointmentBook {
     //  * Replaces the given appointment {@code target} in the list with {@code editedAppointment}.
     //  * {@code target} must exist in the appointment book.
     //  * The identity of {@code editedPatient} must not be the same as another existing appointment
-    //  * in the address book.
+    //  * in the patient book.
     //  */
     // public void setAppointment(Appointment target, Appointment editedAppointment) { }
     //
