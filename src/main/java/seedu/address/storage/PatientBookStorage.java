@@ -35,7 +35,7 @@ public interface PatientBookStorage {
      * @param patientBook cannot be null.
      * @throws IOException if there was any problem writing to the file.
      */
-    void savePatientBook(ReadOnlyPatientBook PatientBook) throws IOException;
+    void savePatientBook(ReadOnlyPatientBook patientBook) throws IOException;
 
     /**
      * @see #savePatientBook(ReadOnlyPatientBook)
