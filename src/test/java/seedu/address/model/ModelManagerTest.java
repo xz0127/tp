@@ -18,8 +18,8 @@ import org.junit.jupiter.api.Test;
 
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.model.patient.NameContainsKeywordsPredicate;
-import seedu.address.testutil.PatientBookBuilder;
 import seedu.address.testutil.AppointmentBookBuilder;
+import seedu.address.testutil.PatientBookBuilder;
 
 public class ModelManagerTest {
 
