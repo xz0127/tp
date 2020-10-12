@@ -10,11 +10,13 @@ import seedu.address.commons.core.LogsCenter;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.logic.parser.AddressBookParser;
+import seedu.address.logic.parser.NuudleParser;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.Model;
 import seedu.address.model.ReadOnlyAddressBook;
-import seedu.address.model.person.Person;
+import seedu.address.model.ReadOnlyAppointmentBook;
+import seedu.address.model.appointment.Appointment;
+import seedu.address.model.patient.Patient;
 import seedu.address.storage.Storage;
 
 /**
@@ -26,7 +28,7 @@ public class LogicManager implements Logic {
 
     private final Model model;
     private final Storage storage;
-    private final AddressBookParser addressBookParser;
+    private final NuudleParser nuudleParser;
 
     /**
      * Constructs a {@code LogicManager} with the given {@code Model} and {@code Storage}.
@@ -34,7 +36,7 @@ public class LogicManager implements Logic {
     public LogicManager(Model model, Storage storage) {
         this.model = model;
         this.storage = storage;
-        addressBookParser = new AddressBookParser();
+        nuudleParser = new NuudleParser();
     }
 
     @Override
@@ -45,7 +47,7 @@ public class LogicManager implements Logic {
 
         CommandResult commandResult;
         //Parse user input from String to a Command
-        Command command = addressBookParser.parseCommand(commandText);
+        Command command = nuudleParser.parseCommand(commandText);
         //Executes the Command and stores the result
         commandResult = command.execute(model);
 
@@ -66,13 +68,28 @@ public class LogicManager implements Logic {
     }
 
     @Override
-    public ObservableList<Person> getFilteredPersonList() {
-        return model.getFilteredPersonList();
+    public ObservableList<Patient> getFilteredPatientList() {
+        return model.getFilteredPatientList();
     }
 
     @Override
     public Path getAddressBookFilePath() {
         return model.getAddressBookFilePath();
+    }
+
+    @Override
+    public ReadOnlyAppointmentBook getAppointmentBook() {
+        return model.getAppointmentBook();
+    }
+
+    @Override
+    public ObservableList<Appointment> getFilteredAppointmentList() {
+        return model.getFilteredAppointmentList();
+    }
+
+    @Override
+    public Path getAppointmentBookFilePath() {
+        return model.getAppointmentBookFilePath();
     }
 
     @Override
