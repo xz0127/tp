@@ -7,6 +7,7 @@ import java.util.List;
 import javafx.collections.ObservableList;
 import seedu.address.model.appointment.Appointment;
 import seedu.address.model.appointment.UniqueAppointmentList;
+import seedu.address.model.patient.Patient;
 
 /**
  * Wraps all data at the appointment-book level
@@ -70,7 +71,7 @@ public class AppointmentBook implements ReadOnlyAppointmentBook {
      * Replaces the given appointment {@code target} in the list with {@code editedAppointment}.
      * {@code target} must exist in the appointment book.
      * The identity of {@code editedAppointment} must not be the same as another existing appointment
-     * in the address book.
+     * in the appointment book.
      */
     public void setAppointment(Appointment target, Appointment editedAppointment) {
         requireNonNull(editedAppointment);
@@ -78,11 +79,14 @@ public class AppointmentBook implements ReadOnlyAppointmentBook {
         appointments.setAppointment(target, editedAppointment);
     }
 
-    // /**
-    //  * Removes {@code key} from this {@code AppointmentBook}.
-    //  * {@code key} must exist in the appointment book.
-    //  */
-    // public void removeAppointment(Appointment key) {}
+    /**
+     * Removes {@code key} from this {@code AppointmentBook}.
+     * {@code key} must exist in the appointment book.
+     */
+    public void removeAppointment(Appointment key) {
+        requireNonNull(key);
+        appointments.remove(key);
+    }
 
     /**
      * Checks if an appointment hasOverlaps with {@code appointments}.
@@ -96,16 +100,36 @@ public class AppointmentBook implements ReadOnlyAppointmentBook {
      * Checks if the appointment list already contains the appointment.
      */
     public boolean hasAppointment(Appointment a) {
+        requireNonNull(a);
         return appointments.hasCompleteOverlaps(a);
     }
 
-    //// patient-related appointment operations
+    // patient-related appointment operations
 
-    // public void updateAppointmentsWithPatient(Patient target, Patient editedPatient) {}
-    //
-    // public void deleteAppointmentsWithPatient(Patient target) {}
+    /**
+     * Updates the specific appointment which contains the given {@code target}
+     * in the list with {@code editedPatient}.
+     * {@code target} must exist in at least one of the appointments in the appointment book.
+     *
+     * @param target specific patient who has been updated.
+     * @param editedPatient the patient after the update.
+     */
+    public void updateAppointmentsWithPatients(Patient target, Patient editedPatient) {
+        requireNonNull(editedPatient);
+        appointments.updateAppointmentsWithPatients(target, editedPatient);
+    }
 
-    //// util methods
+    /**
+     * Deletes the relevant appointments in the appointment book upon the deletion of a given {@code target}.
+     *
+     * @param target the specific patient deleted.
+     */
+    public void deleteAppointmentsWithPatients(Patient target) {
+        requireNonNull(target);
+        appointments.deleteAppointmentsWithPatients(target);
+    }
+
+    // util methods
 
     @Override
     public String toString() {
