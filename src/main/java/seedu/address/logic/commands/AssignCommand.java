@@ -67,7 +67,7 @@ public class AssignCommand extends Command {
         Patient patient = lastShownPatientList.get(targetIndex.getZeroBased());
         Appointment appointment = createAppointment(patient, dateTimeLoader);
 
-        if (model.hasAppointment(appointment)) {
+        if (model.hasOverlappingAppointment(appointment)) {
             throw new CommandException(ASSIGNMENT_OVERLAP);
         }
 
