@@ -92,7 +92,7 @@ public class AssignCommandTest {
         DateTimeLoader loader = new DateTimeLoaderBuilder().withDate(VALID_DATE).withTime(VALID_TIME).build();
         AssignCommand assignCommand = new AssignCommand(INDEX_FIRST_APPOINTMENT, loader);
         Appointment appointment = new Appointment(
-                loader.getDate().get(), new Time(TimeParserUtil.parse(OVERLAP_TIME)), ALICE.getNric()
+                loader.getDate().orElse(null), new Time(TimeParserUtil.parse(OVERLAP_TIME)), ALICE.getNric()
         );
 
         model.addAppointment(appointment);

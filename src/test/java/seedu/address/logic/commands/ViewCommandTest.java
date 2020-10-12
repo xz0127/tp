@@ -7,7 +7,6 @@ import static seedu.address.commons.core.Messages.MESSAGE_APPOINTMENTS_OVERVIEW;
 import static seedu.address.logic.commands.CommandTestUtil.DIFF_DATE;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_DATE;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
-import static seedu.address.model.Model.PREDICATE_SHOW_ALL_APPOINTMENTS;
 import static seedu.address.testutil.TypicalAppointments.getTypicalAppointmentBook;
 import static seedu.address.testutil.TypicalPatients.getTypicalAddressBook;
 
@@ -55,7 +54,7 @@ public class ViewCommandTest {
         assertTrue(firstViewCommand.equals(firstViewCommand));
 
         // same values -> returns true
-        ViewCommand firstViewCommandCopy = new ViewCommand(firstPredicate);
+        ViewCommand firstViewCommandCopy = new ViewCommand(firstPredicateCopy);
         assertTrue(firstViewCommand.equals(firstViewCommandCopy));
 
         // different types -> returns false
@@ -66,16 +65,6 @@ public class ViewCommandTest {
 
         // different date -> returns false
         assertFalse(firstViewCommand.equals(secondViewCommand));
-    }
-
-    @Test
-    public void execute_noDate_allAppointmentReturn() {
-        String expectedMessage = String.format(MESSAGE_APPOINTMENTS_OVERVIEW,
-                getTypicalAppointmentBook().getAppointmentList().size());
-        ViewCommand command = new ViewCommand();
-        expectedModel.updateFilteredAppointmentList(PREDICATE_SHOW_ALL_APPOINTMENTS);
-        assertCommandSuccess(command, model, expectedMessage, expectedModel);
-        assertEquals(model.getFilteredAppointmentList(), expectedModel.getFilteredAppointmentList());
     }
 
     @Test

@@ -61,13 +61,7 @@ public class ViewCommand extends Command {
     public boolean equals(Object other) {
         return other == this
                 || (other instanceof ViewCommand
-                && isAll ? ((ViewCommand) other).isAll
-                         : predicate.equals(((ViewCommand) other).predicate));
-    }
-
-    @Override
-    public String toString() {
-        return isAll ? null
-                : predicate.getDate().toString();
+                    && predicate.equals(((ViewCommand) other).predicate)
+                    && isAll == ((ViewCommand) other).isAll);
     }
 }
