@@ -21,7 +21,7 @@ import seedu.address.logic.parser.exceptions.ParseException;
 /**
  * Parses user input.
  */
-public class AddressBookParser {
+public class NuudleParser {
 
     /**
      * Used for initial separation of command word and args.

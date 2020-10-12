@@ -42,7 +42,7 @@ public class PatientCard extends UiPart<Region> {
     private Label nric;
 
     /**
-     * Creates a {@code PatientCode} with the given {@code Patient} and index to display.
+     * Creates a {@code PatientCard} with the given {@code Patient} and index to display.
      */
     public PatientCard(Patient patient, int displayedIndex) {
         super(FXML);

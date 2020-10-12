@@ -34,10 +34,10 @@ public class PatientListPanel extends UiPart<Region> {
      */
     class PatientListViewCell extends ListCell<Patient> {
         @Override
-        protected void updateItem(Patient patient, boolean empty) {
-            super.updateItem(patient, empty);
+        protected void updateItem(Patient patient, boolean isEmpty) {
+            super.updateItem(patient, isEmpty);
 
-            if (empty || patient == null) {
+            if (isEmpty || patient == null) {
                 setGraphic(null);
                 setText(null);
             } else {

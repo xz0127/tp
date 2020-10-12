@@ -47,6 +47,16 @@ public interface Model {
     void setAddressBookFilePath(Path addressBookFilePath);
 
     /**
+     * Returns the user prefs' appointment book file path.
+     */
+    Path getAppointmentBookFilePath();
+
+    /**
+     * Sets the user prefs' appointment book file path.
+     */
+    void setAppointmentBookFilePath(Path appointmentBookFilePath);
+
+    /**
      * Replaces address book data with the data in {@code addressBook}.
      */
     void setAddressBook(ReadOnlyAddressBook addressBook);
@@ -60,7 +70,7 @@ public interface Model {
     boolean hasPatient(Patient patient);
 
     /**
-     * Returns true if the time slot of an appointment overlaps {@code appointment} in the appointment book.
+     * Returns true if the time slot of an appointment hasOverlaps {@code appointment} in the appointment book.
      */
     boolean hasAppointment(Appointment appointment);
 
