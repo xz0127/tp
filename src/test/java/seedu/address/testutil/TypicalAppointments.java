@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import seedu.address.model.AppointmentBook;
 import seedu.address.model.appointment.Appointment;
 import seedu.address.model.patient.Nric;
 
@@ -42,16 +43,16 @@ public class TypicalAppointments {
     private TypicalAppointments() {
     } // prevents instantiation
 
-    //     /**
-    //      * Returns an {@code AppointmentBook} with all the typical Appointments.
-    //      */
-    //     public static AppointmentBook getTypicalAppointmentBook() {
-    //         AppointmentBook ab = new AppointmentBook();
-    //         for (Appointment Appointment : getTypicalAppointments()) {
-    //             ab.addAppointment(Appointment);
-    //         }
-    //         return ab;
-    //     }
+    /**
+    * Returns an {@code AppointmentBook} with all the typical Appointments.
+    */
+    public static AppointmentBook getTypicalAppointmentBook() {
+        AppointmentBook ab = new AppointmentBook();
+        for (Appointment appointment : getTypicalAppointments()) {
+            ab.addAppointment(appointment);
+        }
+        return ab;
+    }
 
     public static List<Appointment> getTypicalAppointments() {
         return new ArrayList<>(Arrays.asList(
