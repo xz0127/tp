@@ -18,7 +18,7 @@ import seedu.address.model.patient.Patient;
 class JsonAdaptedAppointment {
 
     public static final String MISSING_FIELD_MESSAGE_FORMAT = "Appointment's %s field is missing!";
-    public static final String INVALID_START_END_TIME = "Appointment start time is not before end time!";
+    public static final String TIME_IN_WRONG_ORDER = "Appointment start time is not before end time!";
 
     private final LocalDate date;
     private final LocalTime startTime;
@@ -66,7 +66,7 @@ class JsonAdaptedAppointment {
         }
 
         if (!startTime.isBefore(endTime)) {
-            throw new IllegalValueException(INVALID_START_END_TIME);
+            throw new IllegalValueException(TIME_IN_WRONG_ORDER);
         }
 
         final Time modelStartTime = new Time(startTime);

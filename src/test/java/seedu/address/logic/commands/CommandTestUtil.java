@@ -38,8 +38,8 @@ public class CommandTestUtil {
     public static final String VALID_ADDRESS_BOB = "Block 123, Bobby Street 3";
     public static final String VALID_TAG_HUSBAND = "husband";
     public static final String VALID_TAG_FRIEND = "friend";
-    public static final String VALID_DATE = "20 Nov 2035";
-    public static final String DIFF_DATE = "03 August 2035";
+    public static final String VALID_DATE = "20 Nov 2050";
+    public static final String DIFF_DATE = "03 August 2050";
     public static final String VALID_TIME = "12pm";
     public static final String SAME_TIME = "Afternoon";
     public static final String OVERLAP_TIME = "12:01 pm";

@@ -3,6 +3,8 @@ package seedu.address.testutil;
 import static seedu.address.testutil.TypicalPatients.ALICE;
 import static seedu.address.testutil.TypicalPatients.BENSON;
 import static seedu.address.testutil.TypicalPatients.CARL;
+import static seedu.address.testutil.TypicalPatients.HOON;
+import static seedu.address.testutil.TypicalPatients.IDA;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -43,12 +45,20 @@ public class TypicalAppointments {
             .withTime(LocalTime.of(14, 0))
             .withPatient(CARL).build();
 
+    // Manually added
+    public static final Appointment HOON_APPOINTMENT = new AppointmentBuilder().withPatient(HOON)
+            .withDate(LocalDate.of(2050, 2, 5))
+            .withTime(LocalTime.of(13, 0)).build();
+    public static final Appointment IDA_APPOINTMENT = new AppointmentBuilder().withPatient(IDA)
+            .withDate(LocalDate.of(2050, 2, 5))
+            .withTime(LocalTime.of(19, 30)).build();
+
     private TypicalAppointments() {
     } // prevents instantiation
 
     /**
-    * Returns an {@code AppointmentBook} with all the typical Appointments.
-    */
+     * Returns an {@code AppointmentBook} with all the typical Appointments.
+     */
     public static AppointmentBook getTypicalAppointmentBook() {
         AppointmentBook ab = new AppointmentBook();
         for (Appointment appointment : getTypicalAppointments()) {

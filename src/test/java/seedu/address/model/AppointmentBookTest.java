@@ -6,7 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.testutil.Assert.assertThrows;
 import static seedu.address.testutil.TypicalAppointments.ALICE_APPOINTMENT;
 import static seedu.address.testutil.TypicalAppointments.getTypicalAppointmentBook;
-import static seedu.address.testutil.TypicalPatients.BOB;
+import static seedu.address.testutil.TypicalPatients.BENSON;
 
 import java.time.LocalTime;
 import java.util.Arrays;
@@ -75,12 +75,12 @@ public class AppointmentBookTest {
     public void hasAppointment_appointmentWithOverlapsInPatientBook_returnsTrue() {
         appointmentBook.addAppointment(ALICE_APPOINTMENT);
 
-        Appointment overlappingAppointment = new AppointmentBuilder(ALICE_APPOINTMENT).withPatient(BOB)
+        Appointment overlappingAppointment = new AppointmentBuilder(ALICE_APPOINTMENT).withPatient(BENSON)
                 .withTime(ALICE_APPOINTMENT.getStartTime().getTime().plusMinutes(1))
                 .build();
         assertTrue(appointmentBook.hasAppointment(overlappingAppointment));
 
-        overlappingAppointment = new AppointmentBuilder(ALICE_APPOINTMENT).withPatient(BOB)
+        overlappingAppointment = new AppointmentBuilder(ALICE_APPOINTMENT).withPatient(BENSON)
                 .withTime(ALICE_APPOINTMENT.getStartTime().getTime().plusMinutes(1),
                         ALICE_APPOINTMENT.getEndTime().getTime().minusMinutes(1))
                 .build();

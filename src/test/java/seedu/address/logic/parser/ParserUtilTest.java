@@ -38,7 +38,7 @@ public class ParserUtilTest {
     private static final String VALID_ADDRESS = "123 Main Street #0505";
     private static final String VALID_TAG_1 = "friend";
     private static final String VALID_TAG_2 = "neighbour";
-    private static final String VALID_DATE = "20-AUG-2035";
+    private static final String VALID_DATE = "20-AUG-2050";
     private static final String VALID_TIME = "noon";
 
     private static final String WHITESPACE = " \t\r\n";
@@ -214,14 +214,14 @@ public class ParserUtilTest {
 
     @Test
     public void parseDate_validValueWithoutWhitespace_returnsDate() throws Exception {
-        Date expectedDate = new Date(2035, 8, 20);
+        Date expectedDate = new Date(2050, 8, 20);
         assertEquals(expectedDate, ParserUtil.parseDate(VALID_DATE));
     }
 
     @Test
     public void parseDate_validValueWithWhitespace_returnsTrimmedDate() throws Exception {
         String dateWithWhitespace = WHITESPACE + VALID_DATE + WHITESPACE;
-        Date expectedDate = new Date(2035, 8, 20);
+        Date expectedDate = new Date(2050, 8, 20);
         assertEquals(expectedDate, ParserUtil.parseDate(dateWithWhitespace));
     }
 
