@@ -148,6 +148,11 @@ public class ModelManager implements Model {
     }
 
     @Override
+    public void deleteAppointment(Appointment target) {
+        appointmentBook.removeAppointment(target);
+    }
+
+    @Override
     public void setAppointmentBook(ReadOnlyAppointmentBook appointmentBook) {
         this.patientBook.resetData(patientBook);
     }
@@ -164,8 +169,20 @@ public class ModelManager implements Model {
         return appointmentBook;
     }
 
-    //=========== Filtered Appointment List Accessors =============================================================
+    //=========== Patient-related Appointment Operations =============================================================
+    @Override
+    public void updateAppointmentsWithPatient(Patient target, Patient editedPatient) {
+        requireNonNull(editedPatient);
 
+        appointmentBook.updateAppointmentsWithPatients(target, editedPatient);
+    }
+
+    @Override
+    public void deleteAppointmentsWithPatient(Patient target) {
+        appointmentBook.deleteAppointmentsWithPatients(target);
+    }
+
+    //=========== Filtered Appointment List Accessors =================================================================
     /**
      * Returns an unmodifiable view of the list of {@code Appointment} backed by the internal list of
      * {@code versionedAppointmentBook}

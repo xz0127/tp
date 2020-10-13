@@ -3,12 +3,15 @@ package seedu.address.model.appointment;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import seedu.address.model.appointment.exceptions.AppointmentNotFoundException;
 import seedu.address.model.appointment.exceptions.OverlappingAppointmentException;
+import seedu.address.model.patient.Patient;
 
 /**
  * A list of appointments that enforces uniqueness between its elements and does not allow nulls.
@@ -22,7 +25,7 @@ import seedu.address.model.appointment.exceptions.OverlappingAppointmentExceptio
  *
  * @see Appointment#isOverlapping(Appointment)
  */
-public class UniqueAppointmentList {
+public class UniqueAppointmentList implements Iterable<Appointment> {
     // todo: UniqueAppointmentListTest
     private final ObservableList<Appointment> internalList = FXCollections.observableArrayList();
     private final ObservableList<Appointment> internalUnmodifiableList =
@@ -65,26 +68,33 @@ public class UniqueAppointmentList {
      */
     public void setAppointment(Appointment target, Appointment editedAppointment) {
         requireAllNonNull(target, editedAppointment);
-
         int index = internalList.indexOf(target);
         if (index == -1) {
             throw new AppointmentNotFoundException();
         }
-        if (!target.startAtSameTime(editedAppointment.getDate(), editedAppointment.getStartTime())
-                && hasOverlaps(editedAppointment)) {
+        try {
+            internalList.remove(target);
+            internalList.add(index, editedAppointment);
+        } catch (OverlappingAppointmentException ex) {
+            internalList.add(index, target);
             throw new OverlappingAppointmentException();
         }
-
-        internalList.set(index, editedAppointment);
+        // if (!target.isOverlapping(editedAppointment) && hasOverlaps(editedAppointment)) {
+        //     throw new OverlappingAppointmentException();
+        // }
+        // internalList.set(index, editedAppointment);
     }
-    //
-    // /**
-    //  * Removes the equivalent appointment from the list.
-    //  * The appointment must exist in the list.
-    //  */
-    // public void remove(Appointment toRemove) {
-    //     // todo
-    // }
+
+    /**
+     * Removes the equivalent appointment from the list.
+     * The appointment must exist in the list.
+     */
+    public void remove(Appointment toRemove) {
+        requireAllNonNull(toRemove);
+        if (!internalList.remove(toRemove)) {
+            throw new AppointmentNotFoundException();
+        }
+    }
 
     /**
      * Returns the backing list as an unmodifiable {@code ObservableList}.
@@ -109,6 +119,42 @@ public class UniqueAppointmentList {
         }
 
         internalList.setAll(appointments);
+    }
+
+    /**
+     * Deletes the relevant appointments upon the deletion of the {@code target}.
+     */
+    public void deleteAppointmentsWithPatients(Patient target) {
+        requireAllNonNull(target);
+        List<Appointment> newAppointmentList = new ArrayList<>();
+        for (Appointment appointment : internalList) {
+            if (!appointment.hasPatient(target)) {
+                newAppointmentList.add(appointment);
+            }
+        }
+        internalList.setAll(newAppointmentList);
+    }
+
+    /**
+     * Updates the relevant appointments in the appointment book upon the update of {@code target} details
+     * with {@code editedPatient}.
+     */
+    public void updateAppointmentsWithPatients(Patient target, Patient editedPatient) {
+        requireAllNonNull(target, editedPatient);
+        List<Appointment> newAppointmentList = new ArrayList<>();
+        for (Appointment appointment : internalList) {
+            if (appointment.hasPatient(target)) {
+                newAppointmentList.add(appointment.setPatient(editedPatient));
+            } else {
+                newAppointmentList.add(appointment);
+            }
+        }
+        internalList.setAll(newAppointmentList);
+    }
+
+    @Override
+    public Iterator<Appointment> iterator() {
+        return internalList.iterator();
     }
 
     @Override

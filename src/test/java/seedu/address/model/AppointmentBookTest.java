@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.testutil.Assert.assertThrows;
 import static seedu.address.testutil.TypicalAppointments.ALICE_APPOINTMENT;
 import static seedu.address.testutil.TypicalAppointments.getTypicalAppointmentBook;
+import static seedu.address.testutil.TypicalPatients.ALICE;
 import static seedu.address.testutil.TypicalPatients.BOB;
 
 import java.time.LocalTime;
@@ -78,6 +79,43 @@ public class AppointmentBookTest {
                 .withPatient(BOB).withStartTime(ALICE_APPOINTMENT.getStartTime().getTime().plusMinutes(1))
                 .build();
         assertTrue(appointmentBook.hasOverlapsWith(overlappingAppointment));
+    }
+
+    @Test
+    public void removeAppointment_appointmentInAppointmentBook_returnsFalse() {
+        appointmentBook.addAppointment(ALICE_APPOINTMENT);
+        appointmentBook.removeAppointment(ALICE_APPOINTMENT);
+        assertFalse(appointmentBook.hasAppointment(ALICE_APPOINTMENT));
+    }
+
+    @Test
+    public void removeAppointment_nullAppointment_throwsNullPointerException() {
+        assertThrows(NullPointerException.class, () -> appointmentBook.removeAppointment(null));
+    }
+
+    @Test
+    public void deleteAppointmentWithPatients_nullPatient_throwsNullPointerException() {
+        assertThrows(NullPointerException.class, () -> appointmentBook.deleteAppointmentsWithPatients(null));
+    }
+
+    @Test
+    public void deleteAppointmentWithPatients_patientInAppointmentBook_returnsFalse() {
+        appointmentBook.addAppointment(ALICE_APPOINTMENT);
+        appointmentBook.deleteAppointmentsWithPatients(ALICE);
+        assertFalse(appointmentBook.hasAppointment(ALICE_APPOINTMENT));
+    }
+
+    @Test
+    public void updateAppointmentsWithPatients_nullEditedPatient_throwsNullPointerException() {
+        assertThrows(NullPointerException.class, () -> appointmentBook
+            .updateAppointmentsWithPatients(ALICE, null));
+    }
+
+    @Test
+    public void updateAppointmentsWithPatients_patientInAppointmentBook_returnsFalse() {
+        appointmentBook.addAppointment(ALICE_APPOINTMENT);
+        appointmentBook.updateAppointmentsWithPatients(ALICE, BOB);
+        assertFalse(appointmentBook.getAppointmentList().get(0).equals(ALICE_APPOINTMENT));
     }
 
     @Test
