@@ -2,6 +2,8 @@ package seedu.address.logic.parser;
 
 import static java.util.Objects.requireNonNull;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
@@ -9,22 +11,24 @@ import java.util.Set;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.StringUtil;
 import seedu.address.logic.parser.exceptions.ParseException;
-import seedu.address.model.person.Address;
-import seedu.address.model.person.Email;
-import seedu.address.model.person.Name;
-import seedu.address.model.person.Phone;
+import seedu.address.model.appointment.Date;
+import seedu.address.model.appointment.Time;
+import seedu.address.model.patient.Address;
+import seedu.address.model.patient.Name;
+import seedu.address.model.patient.Nric;
+import seedu.address.model.patient.Phone;
 import seedu.address.model.tag.Tag;
 
 /**
  * Contains utility methods used for parsing strings in the various *Parser classes.
  */
 public class ParserUtil {
-
     public static final String MESSAGE_INVALID_INDEX = "Index is not a non-zero unsigned integer.";
 
     /**
      * Parses {@code oneBasedIndex} into an {@code Index} and returns it. Leading and trailing whitespaces will be
      * trimmed.
+     *
      * @throws ParseException if the specified index is invalid (not non-zero unsigned integer).
      */
     public static Index parseIndex(String oneBasedIndex) throws ParseException {
@@ -66,6 +70,21 @@ public class ParserUtil {
     }
 
     /**
+     * Parses a {@code String nric} into a {@code Nric}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws ParseException if the given {@code Nric} is invalid.
+     */
+    public static Nric parseNric(String nric) throws ParseException {
+        requireNonNull(nric);
+        String trimmedNric = nric.trim();
+        if (!Nric.isValidNric(trimmedNric)) {
+            throw new ParseException(Nric.MESSAGE_CONSTRAINTS);
+        }
+        return new Nric(trimmedNric);
+    }
+
+    /**
      * Parses a {@code String address} into an {@code Address}.
      * Leading and trailing whitespaces will be trimmed.
      *
@@ -78,21 +97,6 @@ public class ParserUtil {
             throw new ParseException(Address.MESSAGE_CONSTRAINTS);
         }
         return new Address(trimmedAddress);
-    }
-
-    /**
-     * Parses a {@code String email} into an {@code Email}.
-     * Leading and trailing whitespaces will be trimmed.
-     *
-     * @throws ParseException if the given {@code email} is invalid.
-     */
-    public static Email parseEmail(String email) throws ParseException {
-        requireNonNull(email);
-        String trimmedEmail = email.trim();
-        if (!Email.isValidEmail(trimmedEmail)) {
-            throw new ParseException(Email.MESSAGE_CONSTRAINTS);
-        }
-        return new Email(trimmedEmail);
     }
 
     /**
@@ -122,4 +126,38 @@ public class ParserUtil {
         return tagSet;
     }
 
+    /**
+     * Parses {@code String date} into a {@code Date}.
+     * Leading and trailing whitespace will be trimmed.
+     *
+     * @throws ParseException if the given {@code date} is invalid
+     */
+    public static Date parseDate(String date) throws ParseException {
+        requireNonNull(date);
+        String trimmedDate = date.trim();
+
+        // Parses the date into a LocalDate
+        LocalDate parsedDate = DateParserUtil.parse(trimmedDate);
+
+        return new Date(parsedDate);
+    }
+
+    /**
+     * Parses {@code String time} into a {@code Time}.
+     * Leading and trailing whitespace will be trimmed.
+     *
+     * @throws ParseException if the given {@code time} is invalid
+     */
+    public static Time parseTime(String time) throws ParseException {
+        requireNonNull(time);
+        String trimmedTime = time.trim();
+
+        LocalTime parsedTime = TimeParserUtil.parse(trimmedTime);
+
+        if (!Time.isValidStartTime(parsedTime)) {
+            throw new ParseException(Time.MESSAGE_CONSTRAINTS);
+        }
+
+        return new Time(parsedTime);
+    }
 }
