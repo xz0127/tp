@@ -1,7 +1,7 @@
 package seedu.address.testutil;
 
 import static seedu.address.testutil.TypicalPatients.ALICE;
-import static seedu.address.testutil.TypicalPatients.BOB;
+import static seedu.address.testutil.TypicalPatients.BENSON;
 import static seedu.address.testutil.TypicalPatients.CARL;
 
 import java.time.LocalDate;
@@ -22,10 +22,10 @@ public class TypicalAppointments {
             .withDate(LocalDate.of(2050, 1, 1))
             .withTime(LocalTime.of(9, 0))
             .withPatient(ALICE).build();
-    public static final Appointment BOB_APPOINTMENT = new AppointmentBuilder()
+    public static final Appointment BENSON_APPOINTMENT = new AppointmentBuilder()
             .withDate(LocalDate.of(2050, 5, 12))
             .withTime(LocalTime.of(11, 30))
-            .withPatient(BOB).build();
+            .withPatient(BENSON).build();
     public static final Appointment CARL_APPOINTMENT = new AppointmentBuilder()
             .withDate(LocalDate.of(2050, 1, 1))
             .withTime(LocalTime.of(20, 0))
@@ -34,10 +34,10 @@ public class TypicalAppointments {
             .withDate(LocalDate.of(2050, 5, 22))
             .withTime(LocalTime.of(15, 0))
             .withPatient(ALICE).build();
-    public static final Appointment BOB_APPOINTMENT_2 = new AppointmentBuilder()
+    public static final Appointment BENSON_APPOINTMENT_2 = new AppointmentBuilder()
             .withDate(LocalDate.of(2050, 4, 1))
             .withTime(LocalTime.of(11, 30))
-            .withPatient(BOB).build();
+            .withPatient(BENSON).build();
     public static final Appointment CARL_APPOINTMENT_2 = new AppointmentBuilder()
             .withDate(LocalDate.of(2050, 5, 22))
             .withTime(LocalTime.of(14, 0))
@@ -59,8 +59,8 @@ public class TypicalAppointments {
 
     public static List<Appointment> getTypicalAppointments() {
         List<Appointment> appointmentList = Arrays.asList(
-                ALICE_APPOINTMENT, BOB_APPOINTMENT, CARL_APPOINTMENT,
-                CARL_APPOINTMENT_2, ALICE_APPOINTMENT_2, BOB_APPOINTMENT_2
+                ALICE_APPOINTMENT, BENSON_APPOINTMENT, CARL_APPOINTMENT,
+                CARL_APPOINTMENT_2, ALICE_APPOINTMENT_2, BENSON_APPOINTMENT_2
         );
         appointmentList.sort(new AppointmentComparator());
         return appointmentList;

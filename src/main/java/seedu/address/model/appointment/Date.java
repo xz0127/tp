@@ -19,6 +19,17 @@ public class Date {
     /**
      * Create a {@code Date} that represents the date of an appointment.
      *
+     * @param year  the year of the date.
+     * @param month the month of the date, from 1 (January) to 12 (December).
+     * @param day   the day of the date, from 1 to 31.
+     */
+    public Date(int year, int month, int day) {
+        this(LocalDate.of(year, month, day));
+    }
+
+    /**
+     * Create a {@code Date} that represents the date of an appointment.
+     *
      * @param date the {@code LocalDate} containing the date.
      */
     public Date(LocalDate date) {

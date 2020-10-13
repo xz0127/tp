@@ -10,7 +10,7 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_FRIEND;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
 import static seedu.address.testutil.Assert.assertThrows;
 import static seedu.address.testutil.TypicalAppointments.ALICE_APPOINTMENT;
-import static seedu.address.testutil.TypicalAppointments.BOB_APPOINTMENT;
+import static seedu.address.testutil.TypicalAppointments.BENSON_APPOINTMENT;
 import static seedu.address.testutil.TypicalPatients.ALICE;
 import static seedu.address.testutil.TypicalPatients.BOB;
 
@@ -266,7 +266,7 @@ public class AppointmentTest {
         assertFalse(ALICE_APPOINTMENT.equals(5));
 
         // different Appointment -> returns false
-        assertFalse(ALICE_APPOINTMENT.equals(BOB_APPOINTMENT));
+        assertFalse(ALICE_APPOINTMENT.equals(BENSON_APPOINTMENT));
 
         // different date -> returns false
         Appointment editedOne = new AppointmentBuilder(ALICE_APPOINTMENT)
