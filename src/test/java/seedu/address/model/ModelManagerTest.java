@@ -4,11 +4,16 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PATIENTS;
+import static seedu.address.model.ModelManager.isValidModel;
 import static seedu.address.testutil.Assert.assertThrows;
 import static seedu.address.testutil.TypicalAppointments.ALICE_APPOINTMENT;
+import static seedu.address.testutil.TypicalAppointments.ALICE_APPOINTMENT_2;
 import static seedu.address.testutil.TypicalAppointments.BENSON_APPOINTMENT;
+import static seedu.address.testutil.TypicalAppointments.CARL_APPOINTMENT;
+import static seedu.address.testutil.TypicalAppointments.getTypicalAppointmentBook;
 import static seedu.address.testutil.TypicalPatients.ALICE;
 import static seedu.address.testutil.TypicalPatients.BENSON;
+import static seedu.address.testutil.TypicalPatients.getTypicalAddressBook;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -109,6 +114,29 @@ public class ModelManagerTest {
     @Test
     public void getFilteredPatientList_modifyList_throwsUnsupportedOperationException() {
         assertThrows(UnsupportedOperationException.class, () -> modelManager.getFilteredPatientList().remove(0));
+    }
+
+    @Test
+    public void isValidModel_inconsistentPatientAndAppointmentBook_returnsFalse() {
+        AddressBook addressBook = new AddressBookBuilder().withPatient(ALICE).withPatient(BENSON).build();
+        AppointmentBook appointmentBook = new AppointmentBookBuilder()
+                .withAppointment(ALICE_APPOINTMENT).withAppointment(CARL_APPOINTMENT).build();
+
+        assertFalse(isValidModel(addressBook, appointmentBook));
+    }
+
+    @Test
+    public void isValidModel_consistentPatientAndAppointmentBook_returnsFalse() {
+        AddressBook addressBook = new AddressBookBuilder().withPatient(ALICE).withPatient(BENSON).build();
+        AppointmentBook appointmentBook = new AppointmentBookBuilder().withAppointment(ALICE_APPOINTMENT)
+                .withAppointment(ALICE_APPOINTMENT_2).withAppointment(BENSON_APPOINTMENT).build();
+
+        assertTrue(isValidModel(addressBook, appointmentBook));
+
+        addressBook = getTypicalAddressBook();
+        appointmentBook = getTypicalAppointmentBook();
+
+        assertTrue(isValidModel(addressBook, appointmentBook));
     }
 
     @Test

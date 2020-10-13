@@ -58,6 +58,6 @@ public class ViewCommand extends Command {
     public boolean equals(Object other) {
         return other == this
                 || (other instanceof ViewCommand
-                && predicate.equals(((ViewCommand) other).predicate));
+                    && predicate.equals(((ViewCommand) other).predicate));
     }
 }

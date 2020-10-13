@@ -223,9 +223,9 @@ public class ModelManager implements Model {
     //=========== Model Validation =============================================================
 
     /**
-     * Check if {@code ReadOnlyAppointmentBook} is consistent with {@code ReadOnlyAddressBook} data.
+     * Checks if the {@code addressBook} is consistent with the {@code appointmentBook} data.
      *
-     * @param addressBook     the patients data
+     * @param addressBook the patients data
      * @param appointmentBook the appointments data
      * @return true if the two books are valid, false otherwise
      */

@@ -23,7 +23,7 @@ public class DateTimeUtil {
     }
 
     /**
-     * Check if the given date and time is expired.
+     * Checks if the given date and time is expired.
      * A given date and time is expired if it is before the current date and time.
      *
      * @param date the given date.
@@ -36,7 +36,7 @@ public class DateTimeUtil {
 
 
     /**
-     * Similar to {@link DateTimeUtil#isExpired(LocalDate, LocalTime)}
+     * Similar to {@link DateTimeUtil#isExpired(LocalDate, LocalTime)}.
      * Uses {@code LocalDateTime now} as the current datetime to compare against.
      *
      * @param now the current datetime, usually {@code LocalDateTime.now()}.
