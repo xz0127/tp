@@ -7,7 +7,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_TIME;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.AssignCommand;
-import seedu.address.logic.commands.AssignCommand.DateTimeLoader;
+import seedu.address.logic.commands.DateTimeLoader;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.appointment.Date;
 import seedu.address.model.appointment.Time;

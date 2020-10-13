@@ -12,8 +12,6 @@ import java.util.Optional;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.appointment.Appointment;
-import seedu.address.model.appointment.Date;
-import seedu.address.model.appointment.Time;
 
 /**
  * Marks an appointment in the list as done.
@@ -21,8 +19,8 @@ import seedu.address.model.appointment.Time;
 public class DoneCommand extends Command {
     public static final String COMMAND_WORD = "done";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Mark the appointment as done "
-            + "by date and time specified."
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Mark the appointment "
+            + "specified by the date and time as done. "
             + "Parameters: "
             + PREFIX_DATE + "DATE "
             + PREFIX_TIME + "TIME \n"
@@ -36,17 +34,17 @@ public class DoneCommand extends Command {
     public static final String DATE_MISSING = "The date of appointment is missing";
     public static final String TIME_MISSING = "The time of appointment is missing";
 
-    private final AssignCommand.DateTimeLoader dateTimeLoader;
+    private final DateTimeLoader dateTimeLoader;
     /**
      * Creates a DoneCommand to add a new {@code Appointment}
      * @param dateTimeLoader details of an appointment.
      */
-    public DoneCommand(AssignCommand.DateTimeLoader dateTimeLoader) {
+    public DoneCommand(DateTimeLoader dateTimeLoader) {
         requireAllNonNull(dateTimeLoader);
-        this.dateTimeLoader = new AssignCommand.DateTimeLoader(dateTimeLoader);
+        this.dateTimeLoader = new DateTimeLoader(dateTimeLoader);
     }
 
-    public AssignCommand.DateTimeLoader getDateTimeLoader() {
+    public DateTimeLoader getDateTimeLoader() {
         return this.dateTimeLoader;
     }
 
@@ -55,9 +53,10 @@ public class DoneCommand extends Command {
         requireNonNull(model);
         List<Appointment> lastShownAppointmentList = model.getFilteredAppointmentList();
 
-        Appointment appointmentWithSameTimeSlot = createAppointment(dateTimeLoader);
         Optional<Appointment> appointmentToMark = lastShownAppointmentList.stream()
-                .filter(appointmentWithSameTimeSlot::startAtSameTime).findAny();
+                .filter(appointment -> appointment.startAtSameTime(dateTimeLoader.getDate().get(),
+                        dateTimeLoader.getTime().get()))
+                .findAny();
         Appointment toMark = appointmentToMark.orElse(null);
         if (toMark == null) {
             throw new CommandException(APPOINTMENT_DOES_NOT_EXISTS);
@@ -68,23 +67,9 @@ public class DoneCommand extends Command {
         }
         Appointment doneAppointment = toMark.markAsDone();
 
-
         model.setAppointment(toMark, doneAppointment);
         model.updateFilteredAppointmentList(PREDICATE_SHOW_ALL_APPOINTMENTS);
         return new CommandResult(String.format(MESSAGE_MARK_DONE_SUCCESS, toMark));
-    }
-
-    /**
-     * Creates and returns an {@code Appointment} with merged details of {@code assignAppointmentBuilder}
-     */
-    private static Appointment createAppointment(AssignCommand.DateTimeLoader dateTimeLoader) {
-        assert dateTimeLoader.getDate().isPresent();
-        assert dateTimeLoader.getTime().isPresent();
-
-        Date assignedDate = dateTimeLoader.getDate().get();
-        Time assignedTime = dateTimeLoader.getTime().get();
-
-        return new Appointment(assignedDate, assignedTime);
     }
 
     @Override

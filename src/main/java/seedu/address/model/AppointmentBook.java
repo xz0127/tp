@@ -69,7 +69,7 @@ public class AppointmentBook implements ReadOnlyAppointmentBook {
     /**
      * Replaces the given appointment {@code target} in the list with {@code editedAppointment}.
      * {@code target} must exist in the appointment book.
-     * The identity of {@code editedPatient} must not be the same as another existing appointment
+     * The identity of {@code editedAppointment} must not be the same as another existing appointment
      * in the address book.
      */
     public void setAppointment(Appointment target, Appointment editedAppointment) {

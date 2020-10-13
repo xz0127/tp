@@ -134,18 +134,15 @@ public class Appointment {
     }
 
     /**
-     * Returns true if both appointments start at the same time.
-     * @param otherAppointment
+     * Returns true if both appointments start at the given date and time.
+     * @param d given date
+     * @param t given time
      */
-    public boolean startAtSameTime(Appointment otherAppointment) {
-        requireNonNull(otherAppointment);
+    public boolean startAtSameTime(Date d, Time t) {
+        requireAllNonNull(d, t);
 
-        if (otherAppointment == this) {
-            return true;
-        }
-
-        return getDate().equals(otherAppointment.getDate())
-                && getStartTime().equals(otherAppointment.getStartTime());
+        return getDate().equals(d)
+                && getStartTime().equals(t);
     }
 
     /**

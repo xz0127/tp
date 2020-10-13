@@ -5,7 +5,7 @@ import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DATE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TIME;
 
-import seedu.address.logic.commands.AssignCommand;
+import seedu.address.logic.commands.DateTimeLoader;
 import seedu.address.logic.commands.DoneCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.appointment.Date;
@@ -35,7 +35,7 @@ public class DoneCommandParser implements Parser<DoneCommand> {
             throw new ParseException(DoneCommand.TIME_MISSING);
         }
 
-        AssignCommand.DateTimeLoader dateTimeLoader = new AssignCommand.DateTimeLoader();
+        DateTimeLoader dateTimeLoader = new DateTimeLoader();
         Date date = ParserUtil.parseDate(argMultimap.getValue(PREFIX_DATE).get());
         Time time = ParserUtil.parseTime(argMultimap.getValue(PREFIX_TIME).get());
         dateTimeLoader.setAppointmentDate(date);

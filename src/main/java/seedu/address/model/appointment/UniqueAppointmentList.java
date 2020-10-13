@@ -41,7 +41,8 @@ public class UniqueAppointmentList {
      */
     public boolean hasCompleteOverlaps(Appointment toCheck) {
         requireNonNull(toCheck);
-        return internalList.stream().anyMatch(toCheck::startAtSameTime);
+        return internalList.stream().anyMatch(appointment -> appointment.startAtSameTime(toCheck.getDate(),
+                toCheck.getStartTime()));
     }
 
     /**
@@ -69,11 +70,12 @@ public class UniqueAppointmentList {
         if (index == -1) {
             throw new AppointmentNotFoundException();
         }
-        if (target.equals(editedAppointment) && hasOverlaps(editedAppointment)) {
+        if (!target.startAtSameTime(editedAppointment.getDate(), editedAppointment.getStartTime())
+                && hasOverlaps(editedAppointment)) {
             throw new OverlappingAppointmentException();
-        } else {
-            internalList.set(index, editedAppointment);
         }
+
+        internalList.set(index, editedAppointment);
     }
     //
     // /**

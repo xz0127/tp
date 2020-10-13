@@ -26,7 +26,7 @@ public class DoneCommandTest {
 
     @Test
     public void execute_validDateTimeInput_success() {
-        AssignCommand.DateTimeLoader loader = new DateTimeLoaderBuilder()
+        DateTimeLoader loader = new DateTimeLoaderBuilder()
                 .withDate("1 Jan 2020").withTime("9am").build();
         Appointment appointmentToMark = ALICE_APPOINTMENT;
         Appointment markedAppointment = ALICE_APPOINTMENT.markAsDone();
@@ -44,7 +44,7 @@ public class DoneCommandTest {
 
     @Test
     public void execute_invalidDateTimeInput_fail() {
-        AssignCommand.DateTimeLoader loader = new DateTimeLoaderBuilder()
+        DateTimeLoader loader = new DateTimeLoaderBuilder()
                 .withDate(VALID_DATE).withTime(VALID_TIME).build();
         DoneCommand doneCommand = new DoneCommand(loader);
 
@@ -53,7 +53,7 @@ public class DoneCommandTest {
 
     @Test
     public void execute_markTheAlreadyDoneAppointment_fail() {
-        AssignCommand.DateTimeLoader loader = new DateTimeLoaderBuilder()
+        DateTimeLoader loader = new DateTimeLoaderBuilder()
                 .withDate("1 Jan 2020").withTime("9am").build();
         Appointment appointmentToMark = ALICE_APPOINTMENT;
         Appointment markedAppointment = ALICE_APPOINTMENT.markAsDone();
@@ -65,7 +65,7 @@ public class DoneCommandTest {
 
     @Test
     public void equals() {
-        AssignCommand.DateTimeLoader loader = new DateTimeLoaderBuilder()
+        DateTimeLoader loader = new DateTimeLoaderBuilder()
                 .withDate(VALID_DATE).withTime(VALID_TIME).build();
         final DoneCommand standardCommand = new DoneCommand(loader);
 
@@ -83,7 +83,7 @@ public class DoneCommandTest {
         assertFalse(standardCommand.equals(new ClearCommand()));
 
         // different DateTimeLoader -> returns false
-        AssignCommand.DateTimeLoader difLoader = new DateTimeLoaderBuilder()
+        DateTimeLoader difLoader = new DateTimeLoaderBuilder()
                 .withDate(DIFF_DATE).withTime(SAME_TIME).build();
         assertFalse(standardCommand.equals(new DoneCommand(difLoader)));
     }

@@ -166,7 +166,7 @@ public class AddCommandTest {
 
         @Override
         public void setAppointment(Appointment target, Appointment editedPatient) {
-
+            throw new AssertionError("This method should not be called.");
         }
 
         @Override

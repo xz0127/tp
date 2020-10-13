@@ -14,7 +14,7 @@ import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSucces
 
 import org.junit.jupiter.api.Test;
 
-import seedu.address.logic.commands.AssignCommand;
+import seedu.address.logic.commands.DateTimeLoader;
 import seedu.address.logic.commands.DoneCommand;
 import seedu.address.model.appointment.Date;
 import seedu.address.model.appointment.Time;
@@ -61,7 +61,7 @@ public class DoneCommandParserTest {
     public void parse_allFieldPresents_success() {
         String userInput = ASSIGN_DATE + ASSIGN_TIME;
 
-        AssignCommand.DateTimeLoader loader = new DateTimeLoaderBuilder()
+        DateTimeLoader loader = new DateTimeLoaderBuilder()
                 .withDate(VALID_DATE).withTime(VALID_TIME).build();
 
         DoneCommand expectedCommand = new DoneCommand(loader);
