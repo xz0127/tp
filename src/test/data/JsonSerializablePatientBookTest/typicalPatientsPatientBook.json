@@ -1,5 +1,5 @@
 {
-  "_comment": "AddressBook save file which contains the same Patient values as in TypicalPatients#getTypicalAddressBook()",
+  "_comment": "PatientBook save file which contains the same Patient values as in TypicalPatients#getTypicalPatientBook()",
   "patients" : [ {
     "name" : "Alice Pauline",
     "nric" : "S1234567I",

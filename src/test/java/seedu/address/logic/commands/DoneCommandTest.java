@@ -10,7 +10,7 @@ import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.testutil.TypicalAppointments.ALICE_APPOINTMENT;
 import static seedu.address.testutil.TypicalAppointments.getTypicalAppointmentBook;
-import static seedu.address.testutil.TypicalPatients.getTypicalAddressBook;
+import static seedu.address.testutil.TypicalPatients.getTypicalPatientBook;
 
 import org.junit.jupiter.api.Test;
 
@@ -22,7 +22,7 @@ import seedu.address.testutil.DateTimeLoaderBuilder;
 
 
 public class DoneCommandTest {
-    private Model model = new ModelManager(getTypicalAddressBook(), getTypicalAppointmentBook(), new UserPrefs());
+    private Model model = new ModelManager(getTypicalPatientBook(), getTypicalAppointmentBook(), new UserPrefs());
 
     @Test
     public void execute_validDateTimeInput_success() {
@@ -34,7 +34,7 @@ public class DoneCommandTest {
 
         String expectedMessage = String.format(DoneCommand.MESSAGE_MARK_DONE_SUCCESS, appointmentToMark);
 
-        ModelManager expectedModel = new ModelManager(model.getAddressBook(),
+        ModelManager expectedModel = new ModelManager(model.getPatientBook(),
                 model.getAppointmentBook(), new UserPrefs());
         expectedModel.setAppointment(appointmentToMark, markedAppointment);
 
