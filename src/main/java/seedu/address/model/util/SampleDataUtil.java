@@ -1,11 +1,17 @@
 package seedu.address.model.util;
 
+import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.Set;
 import java.util.stream.Collectors;
 
 import seedu.address.model.PatientBook;
+import seedu.address.model.AppointmentBook;
 import seedu.address.model.ReadOnlyPatientBook;
+import seedu.address.model.ReadOnlyAppointmentBook;
+import seedu.address.model.appointment.Appointment;
+import seedu.address.model.appointment.Date;
+import seedu.address.model.appointment.Time;
 import seedu.address.model.patient.Address;
 import seedu.address.model.patient.Name;
 import seedu.address.model.patient.Nric;
@@ -14,7 +20,8 @@ import seedu.address.model.patient.Phone;
 import seedu.address.model.tag.Tag;
 
 /**
- * Contains utility methods for populating {@code PatientBook} with sample data.
+ * Contains utility methods for populating {@code PatientBook} and
+ * {@code AppointmentBook} with sample data.
  */
 public class SampleDataUtil {
     public static Patient[] getSamplePatients() {
@@ -55,6 +62,29 @@ public class SampleDataUtil {
         return Arrays.stream(strings)
                 .map(Tag::new)
                 .collect(Collectors.toSet());
+    }
+
+    public static Appointment[] getSampleAppointments() {
+        Patient[] patients = getSamplePatients();
+        // Expired appointments will be deleted on model initialization
+        return new Appointment[]{
+            new Appointment(new Date(LocalDate.now()), new Time(15, 0), patients[2]),
+            new Appointment(new Date(LocalDate.now().plusDays(1)), new Time(10, 30), patients[0]),
+            new Appointment(new Date(LocalDate.now()), new Time(16, 0), patients[4]),
+            new Appointment(new Date(LocalDate.now().plusDays(2)), new Time(20, 0), patients[0]),
+            new Appointment(new Date(2025, 12, 1), new Time(13, 30), patients[3]),
+            new Appointment(new Date(2021, 11, 5), new Time(9, 0), patients[1]),
+            new Appointment(new Date(2022, 5, 2), new Time(9, 0), patients[3]),
+            new Appointment(new Date(LocalDate.now().plusDays(1)), new Time(11, 30), patients[5]),
+        };
+    }
+
+    public static ReadOnlyAppointmentBook getSampleAppointmentBook() {
+        AppointmentBook sampleAb = new AppointmentBook();
+        for (Appointment sampleAppointment : getSampleAppointments()) {
+            sampleAb.addAppointment(sampleAppointment);
+        }
+        return sampleAb;
     }
 
 }
