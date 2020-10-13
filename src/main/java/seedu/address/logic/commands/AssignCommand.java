@@ -25,7 +25,7 @@ public class AssignCommand extends Command {
 
     public static final String COMMAND_WORD = "assign";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Assigns an appointment to an existing patient. "
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Assigns an appointment to an existing patient.\n"
             + "Parameters: "
             + "PATIENT INDEX (must be a positive integer) "
             + PREFIX_DATE + "DATE "
@@ -42,9 +42,11 @@ public class AssignCommand extends Command {
 
     private final Index targetIndex;
     private final DateTimeLoader dateTimeLoader;
+
     /**
      * Creates an AssignCommand to add a new {@code Appointment}
-     * @param targetIndex index of the patient in the list.
+     *
+     * @param targetIndex    index of the patient in the list.
      * @param dateTimeLoader details of an appointment.
      */
     public AssignCommand(Index targetIndex, DateTimeLoader dateTimeLoader) {
@@ -54,7 +56,6 @@ public class AssignCommand extends Command {
         this.dateTimeLoader = new DateTimeLoader(dateTimeLoader);
     }
 
-    // todo
     @Override
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);

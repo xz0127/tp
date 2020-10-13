@@ -47,8 +47,8 @@ public class TypicalAppointments {
     } // prevents instantiation
 
     /**
-     * Returns an {@code AppointmentBook} with all the typical Appointments.
-     */
+    * Returns an {@code AppointmentBook} with all the typical Appointments.
+    */
     public static AppointmentBook getTypicalAppointmentBook() {
         AppointmentBook ab = new AppointmentBook();
         for (Appointment appointment : getTypicalAppointments()) {
