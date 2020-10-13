@@ -16,7 +16,6 @@ import static seedu.address.testutil.TypicalPatients.getTypicalPatients;
 import org.junit.jupiter.api.Test;
 
 import seedu.address.commons.core.index.Index;
-import seedu.address.logic.commands.AssignCommand.DateTimeLoader;
 import seedu.address.logic.parser.TimeParserUtil;
 import seedu.address.model.AppointmentBook;
 import seedu.address.model.Model;

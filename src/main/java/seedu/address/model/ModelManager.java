@@ -132,6 +132,11 @@ public class ModelManager implements Model {
 
     //=========== AppointmentBook ================================================================================
     @Override
+    public boolean hasOverlappingAppointment(Appointment appointment) {
+        return appointmentBook.hasOverlapsWith(appointment);
+    }
+
+    @Override
     public boolean hasAppointment(Appointment appointment) {
         return appointmentBook.hasAppointment(appointment);
     }
@@ -145,6 +150,13 @@ public class ModelManager implements Model {
     @Override
     public void setAppointmentBook(ReadOnlyAppointmentBook appointmentBook) {
         this.patientBook.resetData(patientBook);
+    }
+
+    @Override
+    public void setAppointment(Appointment target, Appointment editedAppointment) {
+        requireAllNonNull(target, editedAppointment);
+
+        appointmentBook.setAppointment(target, editedAppointment);
     }
 
     @Override

@@ -73,9 +73,9 @@ public class CommandTestUtil {
 
     public static final EditCommand.EditPatientDescriptor DESC_AMY;
     public static final EditCommand.EditPatientDescriptor DESC_BOB;
-    public static final AssignCommand.DateTimeLoader LOADER;
-    public static final AssignCommand.DateTimeLoader LOADER_TIME;
-    public static final AssignCommand.DateTimeLoader LOADER_DATE;
+    public static final DateTimeLoader LOADER;
+    public static final DateTimeLoader LOADER_TIME;
+    public static final DateTimeLoader LOADER_DATE;
 
     static {
         DESC_AMY = new EditPatientDescriptorBuilder().withName(VALID_NAME_AMY)

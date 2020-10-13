@@ -72,6 +72,11 @@ public interface Model {
     /**
      * Returns true if the time slot of an appointment hasOverlaps {@code appointment} in the appointment book.
      */
+    boolean hasOverlappingAppointment(Appointment appointment);
+
+    /**
+     * Returns true if the time slot of an appointment is same {@code appointment} in the appointment book.
+     */
     boolean hasAppointment(Appointment appointment);
 
     /**
@@ -99,6 +104,14 @@ public interface Model {
      * in the patient book.
      */
     void setPatient(Patient target, Patient editedPatient);
+
+    /**
+     * Replaces the given appointment {@code target} with {@code editedAppointment}.
+     * {@code target} must exist in the appointment book.
+     * The appointment identity  of {@code editedAppointment} must not be the same as another appointment
+     * in the appointment book.
+     */
+    void setAppointment(Appointment target, Appointment editedPatient);
 
     /** Returns an unmodifiable view of the filtered patient list */
     ObservableList<Patient> getFilteredPatientList();
