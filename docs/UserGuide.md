@@ -77,8 +77,12 @@ Adds a patient to the patient book.
 Format: `add n/NAME i/NRIC p/PHONE_NUMBER a/ADDRESS [t/TAG]…​`
 
 <div markdown="span" class="alert alert-primary">:bulb: **Tip:**
-Tags are used to indicate a patient's underlying medical conditions. A patient can also have any number of tags (including 0)
+Tags are used to indicate a patient's underlying medical conditions. A patient can also have any number of tags (including 0).
 </div>
+
+* Adds a patient with the specified details. 
+* The following fields are compulsory and must be provided: `NAME, NRIC, PHONE_NUMBER, ADDRESS`.
+* It is optional to add `TAG`s for the patient. Tags can still be added with the edit command upon creating the patient entry in Nuudle.
 
 Examples:
 * `add n/John Doe i/S9730284G p/98765432 a/John street, block 123, #01-01`
@@ -138,6 +142,20 @@ Examples:
 * `list` followed by `delete 2` deletes the 2nd patient in the patient book.
 * `find Betsy` followed by `delete 1` deletes the 1st patient in the results of the `find` command.
 
+### Adding a remark for a patient : `remark`
+
+Adds a remark to an existing patient in the patient book for nurses to store additional data unique to the patient.
+
+Format: `remark INDEX r/REMARK`
+
+* Creates and adds a remark for the patient at the specified `INDEX`. The index refers to the index number shown in the displayed patient list. The index **must be a positive integer** 1, 2, 3, …​
+* A remark serves as an optional field for a patient and can be modified using the edit command after it has been created.
+
+Examples:
+*  `remark 2 r/Has been visiting Dr John` Adds a remark `Has been visiting Dr John` to the patient currently displayed second from the top in the patient list.
+*  `remark 1 r/Can only converse in mandarin` Adds a remark `Can only converse in mandarin` to the patient currently displayed at the top of the patient list.
+
+
 ### Adding an appointment : `assign`
 
 Assign the specified patient into the specified appointment date and time.
@@ -157,16 +175,17 @@ Examples:
 
 ### Canceling an appointment : `cancel`
 
-Delete the specified appointment from the appointment book.
+Deletes the specified appointment at the date and time indicated from the appointment book.
 
-Format `cancel APPT_ID`
+Format `cancel d/DATE t/TIME`
 
-* Deletes the appointment at the specified `APPT_ID`.
-* The `APPT_ID` must be a positive integer 1, 2, 3, …​
-* The `APPT_ID` is a unique id containing information on the appointment date and time.
+* Deletes the appointment at the specified `DATE and TIME`.
+* The `DATE and TIME` indicated must take place in the future.
+* An appointment with the corresponding `DATE and TIME` must exist in the appointment book.
 
 Example:
-* `cancel 202003081000` deletes the appointment happening on 08/03/2020 10am.
+* `cancel d/02/12/2020 t/10am` deletes the appointment happening on 02/12/2020 10am.
+* `cancel 05-Nov-2020 t/1pm` deletes the appointment happening on 05/11/2020 1pm.
 
 ### Listing upcoming appointments by date : `view`
 
@@ -186,14 +205,15 @@ Example:
 
 Marks a specific appointment in the patient book as done.
 
-Format: `done APPT_ID`
+Format: `done d/DATE t/TIME`
 
-* Marks the appointment with the specified `APPT_ID` as done.
-* The `APPT_ID` must be a positive integer.
-* The `APPT_ID` is a unique id containing information on the appointment date and time.
+* Marks the appointment with the specified `DATE and TIME` as done.
+* The `DATE and TIME` indicated must take place in the future.
+* An appointment with the corresponding `DATE and TIME` must exist in the appointment book.
 
 Example:
-* `done 202010101300` marks the appointment happening on 10/10/2020 1pm as done.
+* `done d/02/12/2020 t/10am` marks the appointment happening on 02/12/2020 10am as completed.
+* `done 05-Nov-2020 t/1pm` marks the appointment happening on 05/11/2020 1pm as completed.
 
 ### Clearing all appointment entries : `clear`
 
@@ -248,6 +268,7 @@ Action | Format, Examples
 **Edit** | `edit INDEX [n/NAME] [p/PHONE_NUMBER] [i/NRIC] [a/ADDRESS] [t/TAG]…`<br> e.g.,`edit 2 n/James Lee a/College Avenue 8`
 **Find** | `find KEYWORD [MORE_KEYWORDS]`<br> e.g., `find James Jake`
 **List** | `list`
+**Remark** | `remark INDEX r/REMARK` e.g., `remark 2 r/Has been visiting Dr John`
 **Assign** | `assign INDEX d/DATE t/TIME`<br> e.g., `assign 3 d/tomorrow t/3pm`
 **Cancel** | `cancel APPT_ID`<br> e.g., `cancel 202003081000`
 **View** | `view [d/DATE]`<br> e.g., `view d/today`
