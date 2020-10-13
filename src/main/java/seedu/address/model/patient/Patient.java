@@ -10,7 +10,7 @@ import java.util.Set;
 import seedu.address.model.tag.Tag;
 
 /**
- * Represents a Patient in the address book.
+ * Represents a Patient in the patient book.
  * Guarantees: details are present and not null, field values are validated, immutable.
  */
 public class Patient {
@@ -27,7 +27,6 @@ public class Patient {
     /**
      * Every field must be present and not null.
      */
-
     public Patient(Name name, Phone phone, Address address, Set<Tag> tags, Nric nric) {
         requireAllNonNull(name, phone, address, tags, nric);
         this.name = name;
@@ -108,15 +107,15 @@ public class Patient {
     public String toString() {
         final StringBuilder builder = new StringBuilder();
         builder.append(getName())
-                .append(" NRIC: ")
+                .append(" (NRIC: ")
                 .append(getNric())
-                .append("\nPhone: ")
+                .append(")\nPhone: ")
                 .append(getPhone())
-                .append(" Address: ")
+                .append("; Address: ")
                 .append(getAddress())
-                .append(" Tags: ");
+                .append("; Tags: ");
         getTags().forEach(builder::append);
-        return builder.toString();
+        return builder.append(";").toString();
     }
 
 }

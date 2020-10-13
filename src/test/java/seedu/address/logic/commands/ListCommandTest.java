@@ -4,7 +4,7 @@ import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.logic.commands.CommandTestUtil.showPatientAtIndex;
 import static seedu.address.testutil.TypicalAppointments.getTypicalAppointmentBook;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PATIENT;
-import static seedu.address.testutil.TypicalPatients.getTypicalAddressBook;
+import static seedu.address.testutil.TypicalPatients.getTypicalPatientBook;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -23,8 +23,8 @@ public class ListCommandTest {
 
     @BeforeEach
     public void setUp() {
-        model = new ModelManager(getTypicalAddressBook(), getTypicalAppointmentBook(), new UserPrefs());
-        expectedModel = new ModelManager(model.getAddressBook(), model.getAppointmentBook(), new UserPrefs());
+        model = new ModelManager(getTypicalPatientBook(), getTypicalAppointmentBook(), new UserPrefs());
+        expectedModel = new ModelManager(model.getPatientBook(), model.getAppointmentBook(), new UserPrefs());
     }
 
     @Test

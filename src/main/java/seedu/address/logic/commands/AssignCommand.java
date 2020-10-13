@@ -7,7 +7,6 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_TIME;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_APPOINTMENTS;
 
 import java.util.List;
-import java.util.Optional;
 
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
@@ -25,7 +24,7 @@ public class AssignCommand extends Command {
 
     public static final String COMMAND_WORD = "assign";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Assigns an appointment to an existing patient. "
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Assigns an appointment to an existing patient.\n"
             + "Parameters: "
             + "PATIENT INDEX (must be a positive integer) "
             + PREFIX_DATE + "DATE "
@@ -42,9 +41,11 @@ public class AssignCommand extends Command {
 
     private final Index targetIndex;
     private final DateTimeLoader dateTimeLoader;
+
     /**
      * Creates an AssignCommand to add a new {@code Appointment}
-     * @param targetIndex index of the patient in the list.
+     *
+     * @param targetIndex    index of the patient in the list.
      * @param dateTimeLoader details of an appointment.
      */
     public AssignCommand(Index targetIndex, DateTimeLoader dateTimeLoader) {
@@ -54,7 +55,6 @@ public class AssignCommand extends Command {
         this.dateTimeLoader = new DateTimeLoader(dateTimeLoader);
     }
 
-    // todo
     @Override
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
@@ -67,7 +67,7 @@ public class AssignCommand extends Command {
         Patient patient = lastShownPatientList.get(targetIndex.getZeroBased());
         Appointment appointment = createAppointment(patient, dateTimeLoader);
 
-        if (model.hasAppointment(appointment)) {
+        if (model.hasOverlappingAppointment(appointment)) {
             throw new CommandException(ASSIGNMENT_OVERLAP);
         }
 
@@ -98,69 +98,4 @@ public class AssignCommand extends Command {
                 && targetIndex.equals(((AssignCommand) other).targetIndex)); // state check
     }
 
-    /**
-     * Stores the details to the appointment to be assigned.
-     * Each non=empty field value will replace the corresponding field value of the Appointment.
-     */
-    public static class DateTimeLoader {
-        private Date date;
-        private Time time;
-
-        public DateTimeLoader() {}
-
-        /**
-         * Copy constructor.
-         */
-        public DateTimeLoader(DateTimeLoader toCopy) {
-            setAppointmentDate(toCopy.date);
-            setAppointmentTime(toCopy.time);
-        }
-
-        /**
-         * Sets {@code date} of this AssignAppointmentBuilder object.
-         */
-        public void setAppointmentDate(Date date) {
-            this.date = date;
-        }
-
-        /**
-         * Gets {@code date} of this AssignAppointmentBuilder object.
-         */
-        public Optional<Date> getDate() {
-            return Optional.ofNullable(date);
-        }
-
-        /**
-         * Sets {@code time} of this AssignAppointmentBuilder object.
-         */
-        public void setAppointmentTime(Time time) {
-            this.time = time;
-        }
-
-        /**
-         * Gets {@code time} of this AssignAppointmentBuilder object.
-         */
-        public Optional<Time> getTime() {
-            return Optional.ofNullable(time);
-        }
-
-        @Override
-        public boolean equals(Object other) {
-            // short circuit if same object
-            if (other == this) {
-                return true;
-            }
-
-            // instanceof handles nulls
-            if (!(other instanceof DateTimeLoader)) {
-                return false;
-            }
-
-            // state check
-            DateTimeLoader loader = (DateTimeLoader) other;
-
-            return getDate().equals(loader.getDate())
-                    && getTime().equals(loader.getTime());
-        }
-    }
 }

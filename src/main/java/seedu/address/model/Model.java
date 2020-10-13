@@ -37,14 +37,14 @@ public interface Model {
     void setGuiSettings(GuiSettings guiSettings);
 
     /**
-     * Returns the user prefs' address book file path.
+     * Returns the user prefs' patient book file path.
      */
-    Path getAddressBookFilePath();
+    Path getPatientBookFilePath();
 
     /**
-     * Sets the user prefs' address book file path.
+     * Sets the user prefs' patient book file path.
      */
-    void setAddressBookFilePath(Path addressBookFilePath);
+    void setPatientBookFilePath(Path patientBookFilePath);
 
     /**
      * Returns the user prefs' appointment book file path.
@@ -57,32 +57,37 @@ public interface Model {
     void setAppointmentBookFilePath(Path appointmentBookFilePath);
 
     /**
-     * Replaces address book data with the data in {@code addressBook}.
+     * Replaces patient book data with the data in {@code patientBook}.
      */
-    void setAddressBook(ReadOnlyAddressBook addressBook);
+    void setPatientBook(ReadOnlyPatientBook patientBook);
 
-    /** Returns the AddressBook */
-    ReadOnlyAddressBook getAddressBook();
+    /** Returns the PatientBook */
+    ReadOnlyPatientBook getPatientBook();
 
     /**
-     * Returns true if a patient with the same identity as {@code patient} exists in the address book.
+     * Returns true if a patient with the same identity as {@code patient} exists in the patient book.
      */
     boolean hasPatient(Patient patient);
 
     /**
      * Returns true if the time slot of an appointment hasOverlaps {@code appointment} in the appointment book.
      */
+    boolean hasOverlappingAppointment(Appointment appointment);
+
+    /**
+     * Returns true if the time slot of an appointment is same {@code appointment} in the appointment book.
+     */
     boolean hasAppointment(Appointment appointment);
 
     /**
      * Deletes the given patient.
-     * The patient must exist in the address book.
+     * The patient must exist in the patient book.
      */
     void deletePatient(Patient target);
 
     /**
      * Adds the given patient.
-     * {@code patient} must not already exist in the address book.
+     * {@code patient} must not already exist in the patient book.
      */
     void addPatient(Patient patient);
 
@@ -94,11 +99,19 @@ public interface Model {
 
     /**
      * Replaces the given patient {@code target} with {@code editedPatient}.
-     * {@code target} must exist in the address book.
+     * {@code target} must exist in the patient book.
      * The patient identity of {@code editedPatient} must not be the same as another existing patient
-     * in the address book.
+     * in the patient book.
      */
     void setPatient(Patient target, Patient editedPatient);
+
+    /**
+     * Replaces the given appointment {@code target} with {@code editedAppointment}.
+     * {@code target} must exist in the appointment book.
+     * The appointment identity  of {@code editedAppointment} must not be the same as another appointment
+     * in the appointment book.
+     */
+    void setAppointment(Appointment target, Appointment editedPatient);
 
     /** Returns an unmodifiable view of the filtered patient list */
     ObservableList<Patient> getFilteredPatientList();

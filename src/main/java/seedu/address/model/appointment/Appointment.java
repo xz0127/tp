@@ -5,7 +5,6 @@ import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.time.Duration;
 import java.util.Objects;
-import java.util.Optional;
 
 import seedu.address.model.patient.Patient;
 
@@ -16,29 +15,42 @@ import seedu.address.model.patient.Patient;
 public class Appointment {
     // Duration of an appointment in hours
     public static final Duration DEFAULT_DURATION = Duration.ofHours(1);
+    // Creation offset in minutes. Used to allow creation of "last-minute" appointments.
+    public static final int CREATION_OFFSET_MINUTES = 20;
 
     // Identity fields
     private final Date date;
     private final Time startTime;
     private final Time endTime;
+    private boolean isDone;
     // todo: add more support for appointmentId
     private final AppointmentId appointmentId;
 
     // Data field
-    private final Optional<Patient> patient;
-
-    /**
-     * Create an appointment without adding a patient.
-     * Every field must be present and non-null.
-     */
-    public Appointment(Date date, Time startTime) {
-        this(date, startTime, null);
-    }
+    private final Patient patient;
 
     /**
      * Create an appointment with the patient.
+     * Every field must be present and not null.
      */
     public Appointment(Date date, Time startTime, Patient patient) {
+        requireAllNonNull(date, startTime, patient);
+        this.date = date;
+        this.startTime = startTime;
+        this.endTime = new Time(startTime.getTime().plus(DEFAULT_DURATION));
+
+        assert startTime.isBefore(endTime);
+
+        this.appointmentId = new AppointmentId(date, startTime);
+
+        this.patient = patient;
+        this.isDone = false;
+    }
+
+    /**
+     * Create an appointment which is done.
+     */
+    public Appointment(Date date, Time startTime, Patient patient, boolean isDone) {
         requireAllNonNull(date, startTime);
         this.date = date;
         this.startTime = startTime;
@@ -47,7 +59,8 @@ public class Appointment {
         assert startTime.isBefore(endTime);
 
         this.appointmentId = new AppointmentId(date, startTime);
-        this.patient = Optional.ofNullable(patient);
+        this.patient = patient;
+        this.isDone = isDone;
     }
 
     public Date getDate() {
@@ -66,25 +79,30 @@ public class Appointment {
         return appointmentId;
     }
 
-    public Optional<Patient> getPatient() {
+    public Patient getPatient() {
         return patient;
     }
 
+    public boolean getIsDoneStatus() {
+        return isDone;
+    }
     public Appointment setPatient(Patient p) {
         requireNonNull(p);
         return new Appointment(date, startTime, p);
     }
 
+    public Appointment markAsDone() {
+        return new Appointment(date, startTime, patient, true);
+    }
+
     /**
      * Checks if the appointment has {@code Patient other}.
-     * Other must be non-null.
      *
      * @param other the patient to check in the appointment.
-     * @return true if {@other Patient other} is in the Appointment, false otherwise.
+     * @return true if {@code Patient other} is in the Appointment, false otherwise.
      */
     public boolean hasPatient(Patient other) {
-        requireNonNull(other);
-        return patient.map(p -> p.isSamePatient(other)).orElse(false);
+        return patient.isSamePatient(other);
     }
 
     /**
@@ -106,6 +124,18 @@ public class Appointment {
         // overlap if end1 > start2 and end2 > start1
         return (getEndTime().isAfter(otherAppointment.getStartTime()))
                 && otherAppointment.getEndTime().isAfter(getStartTime());
+    }
+
+    /**
+     * Returns true if both appointments start at the given date and time.
+     * @param d given date
+     * @param t given time
+     */
+    public boolean startAtSameTime(Date d, Time t) {
+        requireAllNonNull(d, t);
+
+        return getDate().equals(d)
+                && getStartTime().equals(t);
     }
 
     /**
@@ -155,7 +185,8 @@ public class Appointment {
                 && otherAppointment.getEndTime().equals(getEndTime())
                 && otherAppointment.getDate().equals(getDate())
                 && otherAppointment.getAppointmentId().equals(getAppointmentId())
-                && otherAppointment.getPatient().equals(getPatient());
+                && otherAppointment.getPatient().equals(getPatient())
+                && otherAppointment.getIsDoneStatus() == this.getIsDoneStatus();
     }
 
     @Override
@@ -166,19 +197,15 @@ public class Appointment {
     @Override
     public String toString() {
         final StringBuilder builder = new StringBuilder();
-        builder.append("Date: ")
-                .append(getDate())
+        builder.append(getDate())
                 .append(", from ")
                 .append(getStartTime())
                 .append(" to ")
-                .append(getEndTime());
-
-        getPatient().ifPresent(p -> builder
+                .append(getEndTime())
                 .append("\nPatient: ")
-                .append(p.getName())
-                .append(" Contact: ")
-                .append(p.getPhone())
-        );
+                .append(getPatient().getName())
+                .append("; Contact: ")
+                .append(getPatient().getPhone());
 
         return builder.toString();
     }

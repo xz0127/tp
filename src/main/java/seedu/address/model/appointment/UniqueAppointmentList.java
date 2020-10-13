@@ -7,6 +7,7 @@ import java.util.List;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import seedu.address.model.appointment.exceptions.AppointmentNotFoundException;
 import seedu.address.model.appointment.exceptions.OverlappingAppointmentException;
 
 /**
@@ -36,6 +37,15 @@ public class UniqueAppointmentList {
     }
 
     /**
+     * Returns true if the list contains an appointment that completely overlaps with toCheck appointment.
+     */
+    public boolean hasCompleteOverlaps(Appointment toCheck) {
+        requireNonNull(toCheck);
+        return internalList.stream().anyMatch(appointment -> appointment.startAtSameTime(toCheck.getDate(),
+                toCheck.getStartTime()));
+    }
+
+    /**
      * Adds an appointment to the list.
      * The appointment must not overlap with existing appointments in the list.
      */
@@ -47,15 +57,26 @@ public class UniqueAppointmentList {
         internalList.add(toAdd);
     }
 
-    // /**
-    //  * Replaces the appointment {@code target} in the list with {@code editedAppointment}.
-    //  * {@code target} must exist in the list.
-    //  * The appointment identity of {@code editedAppointment} must not be the same as
-    //  * another existing appointment in the list.
-    //  */
-    // public void setAppointment(Appointment target, Appointment editedAppointment) {
-    //     // todo
-    // }
+    /**
+     * Replaces the appointment {@code target} in the list with {@code editedAppointment}.
+     * {@code target} must exist in the list.
+     * The appointment identity of {@code editedAppointment} must not be the same as
+     * another existing appointment in the list.
+     */
+    public void setAppointment(Appointment target, Appointment editedAppointment) {
+        requireAllNonNull(target, editedAppointment);
+
+        int index = internalList.indexOf(target);
+        if (index == -1) {
+            throw new AppointmentNotFoundException();
+        }
+        if (!target.startAtSameTime(editedAppointment.getDate(), editedAppointment.getStartTime())
+                && hasOverlaps(editedAppointment)) {
+            throw new OverlappingAppointmentException();
+        }
+
+        internalList.set(index, editedAppointment);
+    }
     //
     // /**
     //  * Removes the equivalent appointment from the list.

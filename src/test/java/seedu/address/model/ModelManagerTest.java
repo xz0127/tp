@@ -18,8 +18,8 @@ import org.junit.jupiter.api.Test;
 
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.model.patient.NameContainsKeywordsPredicate;
-import seedu.address.testutil.AddressBookBuilder;
 import seedu.address.testutil.AppointmentBookBuilder;
+import seedu.address.testutil.PatientBookBuilder;
 
 public class ModelManagerTest {
 
@@ -29,7 +29,7 @@ public class ModelManagerTest {
     public void constructor() {
         assertEquals(new UserPrefs(), modelManager.getUserPrefs());
         assertEquals(new GuiSettings(), modelManager.getGuiSettings());
-        assertEquals(new AddressBook(), new AddressBook(modelManager.getAddressBook()));
+        assertEquals(new PatientBook(), new PatientBook(modelManager.getPatientBook()));
         assertEquals(new AppointmentBook(), new AppointmentBook(modelManager.getAppointmentBook()));
     }
 
@@ -41,7 +41,7 @@ public class ModelManagerTest {
     @Test
     public void setUserPrefs_validUserPrefs_copiesUserPrefs() {
         UserPrefs userPrefs = new UserPrefs();
-        userPrefs.setAddressBookFilePath(Paths.get("address/book/file/path"));
+        userPrefs.setPatientBookFilePath(Paths.get("address/book/file/path"));
         userPrefs.setAppointmentBookFilePath(Paths.get("appointment/book/file/path"));
         userPrefs.setGuiSettings(new GuiSettings(1, 2, 3, 4, 0.5));
         modelManager.setUserPrefs(userPrefs);
@@ -49,7 +49,7 @@ public class ModelManagerTest {
 
         // Modifying userPrefs should not modify modelManager's userPrefs
         UserPrefs oldUserPrefs = new UserPrefs(userPrefs);
-        userPrefs.setAddressBookFilePath(Paths.get("new/address/book/file/path"));
+        userPrefs.setPatientBookFilePath(Paths.get("new/address/book/file/path"));
         userPrefs.setAppointmentBookFilePath(Paths.get("new/appointment/book/file/path"));
         assertEquals(oldUserPrefs, modelManager.getUserPrefs());
     }
@@ -67,15 +67,15 @@ public class ModelManagerTest {
     }
 
     @Test
-    public void setAddressBookFilePath_nullPath_throwsNullPointerException() {
-        assertThrows(NullPointerException.class, () -> modelManager.setAddressBookFilePath(null));
+    public void setPatientBookFilePath_nullPath_throwsNullPointerException() {
+        assertThrows(NullPointerException.class, () -> modelManager.setPatientBookFilePath(null));
     }
 
     @Test
-    public void setAddressBookFilePath_validPath_setsAddressBookFilePath() {
+    public void setPatientBookFilePath_validPath_setsPatientBookFilePath() {
         Path path = Paths.get("address/book/file/path");
-        modelManager.setAddressBookFilePath(path);
-        assertEquals(path, modelManager.getAddressBookFilePath());
+        modelManager.setPatientBookFilePath(path);
+        assertEquals(path, modelManager.getPatientBookFilePath());
     }
 
     @Test
@@ -96,12 +96,12 @@ public class ModelManagerTest {
     }
 
     @Test
-    public void hasPatient_patientNotInAddressBook_returnsFalse() {
+    public void hasPatient_patientNotInPatientBook_returnsFalse() {
         assertFalse(modelManager.hasPatient(ALICE));
     }
 
     @Test
-    public void hasPatient_patientInAddressBook_returnsTrue() {
+    public void hasPatient_patientInPatientBook_returnsTrue() {
         modelManager.addPatient(ALICE);
         assertTrue(modelManager.hasPatient(ALICE));
     }
@@ -113,16 +113,16 @@ public class ModelManagerTest {
 
     @Test
     public void equals() {
-        AddressBook addressBook = new AddressBookBuilder().withPatient(ALICE).withPatient(BENSON).build();
+        PatientBook patientBook = new PatientBookBuilder().withPatient(ALICE).withPatient(BENSON).build();
         AppointmentBook appointmentBook = new AppointmentBookBuilder()
                 .withAppointment(ALICE_APPOINTMENT).withAppointment(BOB_APPOINTMENT).build();
-        AddressBook differentAddressBook = new AddressBook();
+        PatientBook differentPatientBook = new PatientBook();
         AppointmentBook differentAppointmentBook = new AppointmentBook();
         UserPrefs userPrefs = new UserPrefs();
 
         // same values -> returns true
-        modelManager = new ModelManager(addressBook, appointmentBook, userPrefs);
-        ModelManager modelManagerCopy = new ModelManager(addressBook, appointmentBook, userPrefs);
+        modelManager = new ModelManager(patientBook, appointmentBook, userPrefs);
+        ModelManager modelManagerCopy = new ModelManager(patientBook, appointmentBook, userPrefs);
         assertTrue(modelManager.equals(modelManagerCopy));
 
         // same object -> returns true
@@ -134,24 +134,24 @@ public class ModelManagerTest {
         // different types -> returns false
         assertFalse(modelManager.equals(5));
 
-        // different addressBook -> returns false
-        assertFalse(modelManager.equals(new ModelManager(differentAddressBook, appointmentBook, userPrefs)));
+        // different patientBook -> returns false
+        assertFalse(modelManager.equals(new ModelManager(differentPatientBook, appointmentBook, userPrefs)));
 
         // different appointmentBook -> returns false
-        assertFalse(modelManager.equals(new ModelManager(addressBook, differentAppointmentBook, userPrefs)));
+        assertFalse(modelManager.equals(new ModelManager(patientBook, differentAppointmentBook, userPrefs)));
 
         // different filteredList -> returns false
         String[] keywords = ALICE.getName().fullName.split("\\s+");
         modelManager.updateFilteredPatientList(new NameContainsKeywordsPredicate(Arrays.asList(keywords)));
-        assertFalse(modelManager.equals(new ModelManager(addressBook, appointmentBook, userPrefs)));
+        assertFalse(modelManager.equals(new ModelManager(patientBook, appointmentBook, userPrefs)));
 
         // resets modelManager to initial state for upcoming tests
         modelManager.updateFilteredPatientList(PREDICATE_SHOW_ALL_PATIENTS);
 
         // different userPrefs -> returns false
         UserPrefs differentUserPrefs = new UserPrefs();
-        differentUserPrefs.setAddressBookFilePath(Paths.get("differentFilePath"));
+        differentUserPrefs.setPatientBookFilePath(Paths.get("differentFilePath"));
         differentUserPrefs.setAppointmentBookFilePath(Paths.get("differentFilePath2"));
-        assertFalse(modelManager.equals(new ModelManager(addressBook, appointmentBook, differentUserPrefs)));
+        assertFalse(modelManager.equals(new ModelManager(patientBook, appointmentBook, differentUserPrefs)));
     }
 }

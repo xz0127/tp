@@ -38,7 +38,7 @@ public class AppointmentBookTest {
 
 
     @Test
-    public void resetData_withValidReadOnlyAddressBook_replacesData() {
+    public void resetData_withValidReadOnlyPatientBook_replacesData() {
         AppointmentBook newData = getTypicalAppointmentBook();
         appointmentBook.resetData(newData);
         assertEquals(newData, appointmentBook);
@@ -72,12 +72,12 @@ public class AppointmentBookTest {
     }
 
     @Test
-    public void hasAppointment_appointmentWithOverlapsInAddressBook_returnsTrue() {
+    public void hasAppointment_appointmentWithOverlapsInPatientBook_returnsTrue() {
         appointmentBook.addAppointment(ALICE_APPOINTMENT);
         Appointment overlappingAppointment = new AppointmentBuilder(ALICE_APPOINTMENT)
                 .withPatient(BOB).withStartTime(ALICE_APPOINTMENT.getStartTime().getTime().plusMinutes(1))
                 .build();
-        assertTrue(appointmentBook.hasAppointment(overlappingAppointment));
+        assertTrue(appointmentBook.hasOverlapsWith(overlappingAppointment));
     }
 
     @Test
