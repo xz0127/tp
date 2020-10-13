@@ -38,7 +38,7 @@ public class AppointmentBuilder {
     public AppointmentBuilder(Appointment appointmentToCopy) {
         date = appointmentToCopy.getDate();
         startTime = appointmentToCopy.getStartTime();
-        patient = appointmentToCopy.getPatient().get();
+        patient = appointmentToCopy.getPatient();
     }
 
     /**

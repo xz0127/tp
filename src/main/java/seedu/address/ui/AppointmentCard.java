@@ -45,8 +45,8 @@ public class AppointmentCard extends UiPart<Region> {
     public AppointmentCard(Appointment appointment) {
         super(FXML);
         this.appointment = appointment;
-        date.setText("Date: " + appointment.getDate());
-        time.setText("Time: " + appointment.getStartTime() + " - " + appointment.getEndTime());
+        date.setText(appointment.getDate().toString());
+        time.setText(appointment.getStartTime() + " - " + appointment.getEndTime());
         String statusText = appointment.getIsDoneStatus() ? "Done!" : "Upcoming";
         status.setText("Status: " + statusText);
         if (appointment.getIsDoneStatus()) {
@@ -54,10 +54,8 @@ public class AppointmentCard extends UiPart<Region> {
         } else {
             status.setBackground(new Background(new BackgroundFill(Color.GREEN, null, null)));
         }
-        appointment.getPatient().ifPresent(p -> {
-            name.setText("Name: " + p.getName());
-            contactNumber.setText("Contact: " + p.getPhone());
-        });
+        name.setText("Name: " + appointment.getPatient().getName());
+        contactNumber.setText("Contact: " + appointment.getPatient().getPhone());
     }
 
     @Override

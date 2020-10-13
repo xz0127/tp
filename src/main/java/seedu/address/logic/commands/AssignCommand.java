@@ -41,9 +41,11 @@ public class AssignCommand extends Command {
 
     private final Index targetIndex;
     private final DateTimeLoader dateTimeLoader;
+
     /**
      * Creates an AssignCommand to add a new {@code Appointment}
-     * @param targetIndex index of the patient in the list.
+     *
+     * @param targetIndex    index of the patient in the list.
      * @param dateTimeLoader details of an appointment.
      */
     public AssignCommand(Index targetIndex, DateTimeLoader dateTimeLoader) {
@@ -53,7 +55,6 @@ public class AssignCommand extends Command {
         this.dateTimeLoader = new DateTimeLoader(dateTimeLoader);
     }
 
-    // todo
     @Override
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
