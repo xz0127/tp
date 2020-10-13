@@ -74,8 +74,7 @@ public class NuudleParser {
             return new AssignCommandParser().parse(arguments);
 
         case ViewCommand.COMMAND_WORD:
-            return arguments.isEmpty() ? new ViewCommand()
-                : new ViewCommandParser().parse(arguments);
+            return new ViewCommandParser().parse(arguments);
 
         default:
             throw new ParseException(MESSAGE_UNKNOWN_COMMAND);

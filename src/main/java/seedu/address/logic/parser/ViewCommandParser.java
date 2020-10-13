@@ -1,8 +1,8 @@
 package seedu.address.logic.parser;
 
-import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DATE;
+import static seedu.address.model.Model.PREDICATE_SHOW_ALL_APPOINTMENTS;
 
 import seedu.address.logic.commands.ViewCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
@@ -21,7 +21,10 @@ public class ViewCommandParser implements Parser<ViewCommand> {
      */
     @Override
     public ViewCommand parse(String arg) throws ParseException {
-        requireNonNull(arg);
+        if (arg.equals("")) {
+            return new ViewCommand(PREDICATE_SHOW_ALL_APPOINTMENTS);
+        }
+
         ArgumentMultimap argMultimap =
                 ArgumentTokenizer.tokenize(arg, PREFIX_DATE);
 
