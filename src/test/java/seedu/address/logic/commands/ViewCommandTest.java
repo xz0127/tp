@@ -8,7 +8,7 @@ import static seedu.address.logic.commands.CommandTestUtil.DIFF_DATE;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_DATE;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.testutil.TypicalAppointments.getTypicalAppointmentBook;
-import static seedu.address.testutil.TypicalPatients.getTypicalAddressBook;
+import static seedu.address.testutil.TypicalPatients.getTypicalPatientBook;
 
 import java.time.LocalDate;
 
@@ -28,12 +28,12 @@ import seedu.address.model.appointment.DateMatchesPredicate;
 public class ViewCommandTest {
 
     private final Model model = new ModelManager(
-            getTypicalAddressBook(),
+            getTypicalPatientBook(),
             getTypicalAppointmentBook(),
             new UserPrefs()
     );
     private Model expectedModel = new ModelManager(
-            getTypicalAddressBook(),
+            getTypicalPatientBook(),
             getTypicalAppointmentBook(),
             new UserPrefs()
     );

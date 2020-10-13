@@ -59,7 +59,7 @@ public class AppointmentBook implements ReadOnlyAppointmentBook {
     //// appointment-level operations
 
     /**
-     * Adds an appointment to the address book.
+     * Adds an appointment to the appointment book.
      * The appointment must not overlap with appointments in the appointment book.
      */
     public void addAppointment(Appointment a) {
