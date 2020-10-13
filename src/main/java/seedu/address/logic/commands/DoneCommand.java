@@ -20,7 +20,7 @@ public class DoneCommand extends Command {
     public static final String COMMAND_WORD = "done";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Mark the appointment "
-            + "specified by the date and time as done. "
+            + "specified by the date and time as done. \n"
             + "Parameters: "
             + PREFIX_DATE + "DATE "
             + PREFIX_TIME + "TIME \n"
