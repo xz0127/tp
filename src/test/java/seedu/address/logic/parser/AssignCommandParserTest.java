@@ -20,7 +20,6 @@ import org.junit.jupiter.api.Test;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.AssignCommand;
 import seedu.address.logic.commands.DateTimeLoader;
-import seedu.address.model.appointment.Date;
 import seedu.address.model.appointment.Time;
 import seedu.address.testutil.DateTimeLoaderBuilder;
 

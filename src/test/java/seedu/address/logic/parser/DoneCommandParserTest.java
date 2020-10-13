@@ -4,7 +4,6 @@ import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT
 import static seedu.address.logic.commands.CommandTestUtil.ASSIGN_DATE;
 import static seedu.address.logic.commands.CommandTestUtil.ASSIGN_TIME;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_DATE_DESC;
-import static seedu.address.logic.commands.CommandTestUtil.INVALID_DATE_DESC_EXPIRED;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_TIME_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_TIME_DESC_CLOSED;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_DATE;
@@ -16,7 +15,6 @@ import org.junit.jupiter.api.Test;
 
 import seedu.address.logic.commands.DateTimeLoader;
 import seedu.address.logic.commands.DoneCommand;
-import seedu.address.model.appointment.Date;
 import seedu.address.model.appointment.Time;
 import seedu.address.testutil.DateTimeLoaderBuilder;
 
@@ -42,7 +40,6 @@ public class DoneCommandParserTest {
     @Test
     public void parse_invalidValue_failure() {
         assertParseFailure(parser, INVALID_DATE_DESC + ASSIGN_TIME, DateParserUtil.MESSAGE_CONSTRAINTS);
-        assertParseFailure(parser, INVALID_DATE_DESC_EXPIRED + ASSIGN_TIME, Date.MESSAGE_CONSTRAINTS);
 
         assertParseFailure(parser, INVALID_TIME_DESC + ASSIGN_DATE, TimeParserUtil.MESSAGE_CONSTRAINTS);
         assertParseFailure(parser, INVALID_TIME_DESC_CLOSED + ASSIGN_DATE, Time.MESSAGE_CONSTRAINTS);
@@ -51,10 +48,6 @@ public class DoneCommandParserTest {
                 DateParserUtil.MESSAGE_CONSTRAINTS);
         assertParseFailure(parser, INVALID_TIME_DESC_CLOSED + INVALID_DATE_DESC,
                 DateParserUtil.MESSAGE_CONSTRAINTS);
-        assertParseFailure(parser, INVALID_TIME_DESC + INVALID_DATE_DESC_EXPIRED,
-                Date.MESSAGE_CONSTRAINTS);
-        assertParseFailure(parser, INVALID_TIME_DESC_CLOSED + INVALID_DATE_DESC_EXPIRED,
-                Date.MESSAGE_CONSTRAINTS);
     }
 
     @Test
