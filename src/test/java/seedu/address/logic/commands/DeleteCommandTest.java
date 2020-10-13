@@ -80,7 +80,7 @@ public class DeleteCommandTest {
     }
 
     @Test
-    public void execute_patientNotWithInAppointmentBook_success() {
+    public void execute_patientNotWithinAppointmentBook_success() {
         Index indexOfPatientNotInAppointmentBook = Index.fromOneBased(model.getFilteredPatientList().size());
         Patient patientToDelete = model.getFilteredPatientList().get(indexOfPatientNotInAppointmentBook.getZeroBased());
 

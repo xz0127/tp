@@ -87,7 +87,7 @@ public interface Model {
 
     /**
      * Deletes the given appointment.
-     * The appointment must exist in the address book.
+     * The appointment must exist in the appointment book.
      */
     void deleteAppointment(Appointment target);
 

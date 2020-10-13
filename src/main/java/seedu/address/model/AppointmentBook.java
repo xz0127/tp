@@ -107,7 +107,7 @@ public class AppointmentBook implements ReadOnlyAppointmentBook {
     // patient-related appointment operations
 
     /**
-     * Updates the specific appointment which contains the given {@code target}
+     * Updates all appointments which contain the given {@code target}
      * in the list with {@code editedPatient}.
      * {@code target} must exist in at least one of the appointments in the appointment book.
      *
