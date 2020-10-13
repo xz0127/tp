@@ -17,8 +17,8 @@ import seedu.address.model.appointment.Time;
 public class DoneCommandParser implements Parser<DoneCommand> {
     /**
      * Parses the given {@code String} of arguments in the context of the DoneCommand
-     * and returns an DoneCommand object for execution.
-     * @throws ParseException if the user input does not conform the expected format
+     * and returns a DoneCommand object for execution.
+     * @throws ParseException if the user input does not conform to the expected format.
      */
     public DoneCommand parse(String arg) throws ParseException {
         requireNonNull(arg);

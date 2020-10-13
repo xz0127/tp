@@ -36,7 +36,7 @@ public class DoneCommand extends Command {
 
     private final DateTimeLoader dateTimeLoader;
     /**
-     * Creates a DoneCommand to add a new {@code Appointment}
+     * Creates a DoneCommand to mark the specific appointment as done.
      * @param dateTimeLoader details of an appointment.
      */
     public DoneCommand(DateTimeLoader dateTimeLoader) {
