@@ -17,13 +17,12 @@ public class ViewCommand extends Command {
 
     public static final String COMMAND_WORD = "view";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Views all appointments [on a date]"
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Views all appointments [on a date]\n"
             + "Parameters: "
-            + "[" + PREFIX_DATE + "DATE ]"
-            + "Example: " + COMMAND_WORD + " "
-            + PREFIX_DATE + "2020-09-11"
-            + "or \n"
-            + "Example: " + COMMAND_WORD;
+            + "[" + PREFIX_DATE + "DATE]\n"
+            + "Example: " + COMMAND_WORD + " or "
+            + COMMAND_WORD + " "
+            + PREFIX_DATE + "12-Dec-2021 ";
 
     public static final String MESSAGE_SUCCESS = "Viewed all Appointments";
 
