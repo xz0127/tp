@@ -100,7 +100,7 @@ public class EditCommand extends Command {
         Address updatedAddress = editPatientDescriptor.getAddress().orElse(patientToEdit.getAddress());
         Set<Tag> updatedTags = editPatientDescriptor.getTags().orElse(patientToEdit.getTags());
         Nric updatedNric = editPatientDescriptor.getNric().orElse(patientToEdit.getNric());
-        Remark updatedRemark = editPersonDescriptor.getRemark().orElse(personToEdit.getRemark());
+        Remark updatedRemark = editPatientDescriptor.getRemark().orElse(patientToEdit.getRemark());
 
         return new Patient(updatedName, updatedPhone, updatedAddress, updatedTags, updatedNric, updatedRemark);
     }
