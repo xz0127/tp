@@ -131,7 +131,7 @@ public class MainWindow extends UiPart<Stage> {
         resultDisplay = new ResultDisplay();
         resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());
 
-        StatusBarFooter patientStatusBarFooter = new StatusBarFooter(logic.getAddressBookFilePath());
+        StatusBarFooter patientStatusBarFooter = new StatusBarFooter(logic.getPatientBookFilePath());
         patientStatusbarPlaceholder.getChildren().add(patientStatusBarFooter.getRoot());
 
         StatusBarFooter appointmentStatusBarFooter = new StatusBarFooter(logic.getAppointmentBookFilePath());
