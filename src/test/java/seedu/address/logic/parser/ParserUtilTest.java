@@ -30,10 +30,9 @@ public class ParserUtilTest {
     private static final String INVALID_NRIC = "S12347B";
     private static final String INVALID_ADDRESS = " ";
     private static final String INVALID_TAG = "#friend";
-    private static final String INVALID_DATE_1 = "20-Aug-2019";
-    private static final String INVALID_DATE_2 = "1-1-1";
-    private static final String INVALID_TIME_1 = "midnight";
-    private static final String INVALID_TIME_2 = "2359am";
+    private static final String INVALID_DATE_FORMAT = "1-1-1";
+    private static final String INVALID_TIME_CLOSED = "midnight";
+    private static final String INVALID_TIME_FORMAT = "2359am";
 
     private static final String VALID_NAME = "Rachel Walker";
     private static final String VALID_PHONE = "123456";
@@ -211,10 +210,8 @@ public class ParserUtilTest {
 
     @Test
     public void parseDate_invalidValue_throwsParseException() {
-        assertThrows(ParseException.class, Date.MESSAGE_CONSTRAINTS, ()
-            -> ParserUtil.parseDate(INVALID_DATE_1));
         assertThrows(ParseException.class, DateParserUtil.MESSAGE_CONSTRAINTS, ()
-            -> ParserUtil.parseDate(INVALID_DATE_2));
+            -> ParserUtil.parseDate(INVALID_DATE_FORMAT));
     }
 
     @Test
@@ -238,9 +235,9 @@ public class ParserUtilTest {
     @Test
     public void parseTime_invalidValue_throwsParseException() {
         assertThrows(ParseException.class, Time.MESSAGE_CONSTRAINTS, ()
-            -> ParserUtil.parseTime(INVALID_TIME_1));
+            -> ParserUtil.parseTime(INVALID_TIME_CLOSED));
         assertThrows(ParseException.class, TimeParserUtil.MESSAGE_CONSTRAINTS, ()
-            -> ParserUtil.parseTime(INVALID_TIME_2));
+            -> ParserUtil.parseTime(INVALID_TIME_FORMAT));
     }
 
     @Test
