@@ -77,7 +77,7 @@ public class AppointmentBook implements ReadOnlyAppointmentBook {
 
         appointments.setAppointment(target, editedAppointment);
     }
-  
+
     // /**
     //  * Removes {@code key} from this {@code AppointmentBook}.
     //  * {@code key} must exist in the appointment book.
