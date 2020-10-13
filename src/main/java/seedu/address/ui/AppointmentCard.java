@@ -2,8 +2,11 @@ package seedu.address.ui;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
+import javafx.scene.paint.Color;
 import seedu.address.model.appointment.Appointment;
 
 /**
@@ -30,6 +33,8 @@ public class AppointmentCard extends UiPart<Region> {
     @FXML
     private Label time;
     @FXML
+    private Label status;
+    @FXML
     private Label name;
     @FXML
     private Label contactNumber;
@@ -42,6 +47,13 @@ public class AppointmentCard extends UiPart<Region> {
         this.appointment = appointment;
         date.setText(appointment.getDate().toString());
         time.setText(appointment.getStartTime() + " - " + appointment.getEndTime());
+        String statusText = appointment.getIsDoneStatus() ? "Done!" : "Upcoming";
+        status.setText("Status: " + statusText);
+        if (appointment.getIsDoneStatus()) {
+            status.setBackground(new Background(new BackgroundFill(Color.FIREBRICK, null, null)));
+        } else {
+            status.setBackground(new Background(new BackgroundFill(Color.GREEN, null, null)));
+        }
         name.setText("Name: " + appointment.getPatient().getName());
         contactNumber.setText("Contact: " + appointment.getPatient().getPhone());
     }

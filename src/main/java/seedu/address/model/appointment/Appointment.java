@@ -22,6 +22,7 @@ public class Appointment {
     private final Date date;
     private final Time startTime;
     private final Time endTime;
+    private boolean isDone;
     // todo: add more support for appointmentId
     private final AppointmentId appointmentId;
 
@@ -41,7 +42,25 @@ public class Appointment {
         assert startTime.isBefore(endTime);
 
         this.appointmentId = new AppointmentId(date, startTime);
+
         this.patient = patient;
+        this.isDone = false;
+    }
+
+    /**
+     * Create an appointment which is done.
+     */
+    public Appointment(Date date, Time startTime, Patient patient, boolean isDone) {
+        requireAllNonNull(date, startTime);
+        this.date = date;
+        this.startTime = startTime;
+        this.endTime = new Time(startTime.getTime().plus(DEFAULT_DURATION));
+
+        assert startTime.isBefore(endTime);
+
+        this.appointmentId = new AppointmentId(date, startTime);
+        this.patient = patient;
+        this.isDone = isDone;
     }
 
     public Date getDate() {
@@ -64,9 +83,16 @@ public class Appointment {
         return patient;
     }
 
+    public boolean getIsDoneStatus() {
+        return isDone;
+    }
     public Appointment setPatient(Patient p) {
         requireNonNull(p);
         return new Appointment(date, startTime, p);
+    }
+
+    public Appointment markAsDone() {
+        return new Appointment(date, startTime, patient, true);
     }
 
     /**
@@ -98,6 +124,18 @@ public class Appointment {
         // overlap if end1 > start2 and end2 > start1
         return (getEndTime().isAfter(otherAppointment.getStartTime()))
                 && otherAppointment.getEndTime().isAfter(getStartTime());
+    }
+
+    /**
+     * Returns true if both appointments start at the given date and time.
+     * @param d given date
+     * @param t given time
+     */
+    public boolean startAtSameTime(Date d, Time t) {
+        requireAllNonNull(d, t);
+
+        return getDate().equals(d)
+                && getStartTime().equals(t);
     }
 
     /**
@@ -147,7 +185,8 @@ public class Appointment {
                 && otherAppointment.getEndTime().equals(getEndTime())
                 && otherAppointment.getDate().equals(getDate())
                 && otherAppointment.getAppointmentId().equals(getAppointmentId())
-                && otherAppointment.getPatient().equals(getPatient());
+                && otherAppointment.getPatient().equals(getPatient())
+                && otherAppointment.getIsDoneStatus() == this.getIsDoneStatus();
     }
 
     @Override
