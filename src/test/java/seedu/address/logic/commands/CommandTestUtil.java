@@ -64,8 +64,10 @@ public class CommandTestUtil {
     public static final String INVALID_ADDRESS_DESC = " " + PREFIX_ADDRESS; // empty string not allowed for addresses
     public static final String INVALID_TAG_DESC = " " + PREFIX_TAG + "hubby*"; // '*' not allowed in tags
     public static final String INVALID_DATE_DESC = " " + PREFIX_DATE + "20201202"; // not a recognised date format
+    public static final String INVALID_DATE_DESC_LETTERS = " " + PREFIX_DATE + "abcd"; // not a recognised date format
     public static final String INVALID_DATE_DESC_EXPIRED = " " + PREFIX_DATE + "20/12/2010"; // date is in the past
     public static final String INVALID_TIME_DESC = " " + PREFIX_TIME + "2530"; // not a proper 24h time format
+    public static final String INVALID_TIME_DESC_LETTERS = " " + PREFIX_TIME + "abcd"; // not a recognised time format
     public static final String INVALID_TIME_DESC_CLOSED = " " + PREFIX_TIME + "2359"; // not during opening hours
 
     public static final String PREAMBLE_WHITESPACE = "\t  \r  \n";
