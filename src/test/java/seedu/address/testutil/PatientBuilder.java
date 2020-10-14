@@ -8,6 +8,7 @@ import seedu.address.model.patient.Name;
 import seedu.address.model.patient.Nric;
 import seedu.address.model.patient.Patient;
 import seedu.address.model.patient.Phone;
+import seedu.address.model.patient.Remark;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.util.SampleDataUtil;
 
@@ -20,12 +21,14 @@ public class PatientBuilder {
     public static final String DEFAULT_PHONE = "85355255";
     public static final String DEFAULT_ADDRESS = "123, Jurong West Ave 6, #08-111";
     public static final String DEFAULT_NRIC = "S1234567U";
+    public static final String DEFAULT_REMARK = "This is a test remark :)";
 
     private Name name;
     private Phone phone;
     private Address address;
     private Set<Tag> tags;
     private Nric nric;
+    private Remark remark;
 
     /**
      * Creates a {@code PatientBuilder} with the default details.
@@ -36,6 +39,7 @@ public class PatientBuilder {
         address = new Address(DEFAULT_ADDRESS);
         tags = new HashSet<>();
         nric = new Nric(DEFAULT_NRIC);
+        remark = new Remark(DEFAULT_REMARK);
     }
 
     /**
@@ -47,6 +51,7 @@ public class PatientBuilder {
         address = patientToCopy.getAddress();
         tags = new HashSet<>(patientToCopy.getTags());
         nric = patientToCopy.getNric();
+        remark = patientToCopy.getRemark();
     }
 
     /**
@@ -89,8 +94,15 @@ public class PatientBuilder {
         return this;
     }
 
-    public Patient build() {
-        return new Patient(name, phone, address, tags, nric);
+    /**
+     * Sets the {@code Remark} of the {@code Patient} that we are building.
+     */
+    public PatientBuilder withRemark(String remark) {
+        this.remark = new Remark(remark);
+        return this;
     }
 
+    public Patient build() {
+        return new Patient(name, phone, address, tags, nric, remark);
+    }
 }

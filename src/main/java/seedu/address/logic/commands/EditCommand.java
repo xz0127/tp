@@ -5,7 +5,9 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NRIC;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_REMARK;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
+import static seedu.address.model.Model.PREDICATE_SHOW_ALL_APPOINTMENTS;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PATIENTS;
 
 import java.util.Collections;
@@ -24,6 +26,7 @@ import seedu.address.model.patient.Name;
 import seedu.address.model.patient.Nric;
 import seedu.address.model.patient.Patient;
 import seedu.address.model.patient.Phone;
+import seedu.address.model.patient.Remark;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -41,6 +44,7 @@ public class EditCommand extends Command {
             + "[" + PREFIX_PHONE + "PHONE] "
             + "[" + PREFIX_NRIC + "NRIC] "
             + "[" + PREFIX_ADDRESS + "ADDRESS] "
+            + "[" + PREFIX_REMARK + "REMARK] "
             + "[" + PREFIX_TAG + "TAG]...\n"
             + "Example: " + COMMAND_WORD + " 1 "
             + PREFIX_PHONE + "91234567 ";
@@ -81,7 +85,9 @@ public class EditCommand extends Command {
         }
 
         model.setPatient(patientToEdit, editedPatient);
+        model.updateAppointmentsWithPatient(patientToEdit, editedPatient);
         model.updateFilteredPatientList(PREDICATE_SHOW_ALL_PATIENTS);
+        model.updateFilteredAppointmentList(PREDICATE_SHOW_ALL_APPOINTMENTS);
         return new CommandResult(String.format(MESSAGE_EDIT_PATIENT_SUCCESS, editedPatient));
     }
 
@@ -97,8 +103,9 @@ public class EditCommand extends Command {
         Address updatedAddress = editPatientDescriptor.getAddress().orElse(patientToEdit.getAddress());
         Set<Tag> updatedTags = editPatientDescriptor.getTags().orElse(patientToEdit.getTags());
         Nric updatedNric = editPatientDescriptor.getNric().orElse(patientToEdit.getNric());
+        Remark updatedRemark = editPatientDescriptor.getRemark().orElse(patientToEdit.getRemark());
 
-        return new Patient(updatedName, updatedPhone, updatedAddress, updatedTags, updatedNric);
+        return new Patient(updatedName, updatedPhone, updatedAddress, updatedTags, updatedNric, updatedRemark);
     }
 
     @Override
@@ -129,6 +136,7 @@ public class EditCommand extends Command {
         private Address address;
         private Set<Tag> tags;
         private Nric nric;
+        private Remark remark;
 
         public EditPatientDescriptor() {}
 
@@ -142,13 +150,14 @@ public class EditCommand extends Command {
             setAddress(toCopy.address);
             setTags(toCopy.tags);
             setNric(toCopy.nric);
+            setRemark(toCopy.remark);
         }
 
         /**
          * Returns true if at least one field is edited.
          */
         public boolean isAnyFieldEdited() {
-            return CollectionUtil.isAnyNonNull(name, phone, address, tags, nric);
+            return CollectionUtil.isAnyNonNull(name, phone, address, tags, nric, remark);
         }
 
         public void setName(Name name) {
@@ -181,6 +190,14 @@ public class EditCommand extends Command {
 
         public Optional<Address> getAddress() {
             return Optional.ofNullable(address);
+        }
+
+        public void setRemark(Remark remark) {
+            this.remark = remark;
+        }
+
+        public Optional<Remark> getRemark() {
+            return Optional.ofNullable(remark);
         }
 
         /**
@@ -219,7 +236,8 @@ public class EditCommand extends Command {
                     && getPhone().equals(e.getPhone())
                     && getAddress().equals(e.getAddress())
                     && getTags().equals(e.getTags())
-                    && getNric().equals(e.getNric());
+                    && getNric().equals(e.getNric())
+                    && getRemark().equals(e.getRemark());
         }
     }
 }

@@ -27,6 +27,7 @@ public class JsonAdaptedPatientTest {
     private static final String VALID_PHONE = BENSON.getPhone().toString();
     private static final String VALID_ADDRESS = BENSON.getAddress().toString();
     private static final String VALID_NRIC = BENSON.getNric().toString();
+    private static final String VALID_REMARK = BENSON.getRemark().toString();
     private static final List<JsonAdaptedTag> VALID_TAGS = BENSON.getTags().stream()
             .map(JsonAdaptedTag::new)
             .collect(Collectors.toList());
@@ -40,7 +41,7 @@ public class JsonAdaptedPatientTest {
     @Test
     public void toModelType_invalidName_throwsIllegalValueException() {
         JsonAdaptedPatient patient =
-                new JsonAdaptedPatient(INVALID_NAME, VALID_PHONE, VALID_ADDRESS, VALID_TAGS, VALID_NRIC);
+                new JsonAdaptedPatient(INVALID_NAME, VALID_PHONE, VALID_ADDRESS, VALID_TAGS, VALID_NRIC, VALID_REMARK);
         String expectedMessage = Name.MESSAGE_CONSTRAINTS;
         assertThrows(IllegalValueException.class, expectedMessage, patient::toModelType);
     }
@@ -48,7 +49,7 @@ public class JsonAdaptedPatientTest {
     @Test
     public void toModelType_nullName_throwsIllegalValueException() {
         JsonAdaptedPatient patient = new JsonAdaptedPatient(null, VALID_PHONE, VALID_ADDRESS, VALID_TAGS,
-                VALID_NRIC);
+                VALID_NRIC, VALID_REMARK);
         String expectedMessage = String.format(MISSING_FIELD_MESSAGE_FORMAT, Name.class.getSimpleName());
         assertThrows(IllegalValueException.class, expectedMessage, patient::toModelType);
     }
@@ -57,7 +58,7 @@ public class JsonAdaptedPatientTest {
     public void toModelType_invalidPhone_throwsIllegalValueException() {
         JsonAdaptedPatient patient =
                 new JsonAdaptedPatient(VALID_NAME, INVALID_PHONE, VALID_ADDRESS, VALID_TAGS,
-                        VALID_NRIC);
+                        VALID_NRIC, VALID_REMARK);
         String expectedMessage = Phone.MESSAGE_CONSTRAINTS;
         assertThrows(IllegalValueException.class, expectedMessage, patient::toModelType);
     }
@@ -65,7 +66,7 @@ public class JsonAdaptedPatientTest {
     @Test
     public void toModelType_nullPhone_throwsIllegalValueException() {
         JsonAdaptedPatient patient = new JsonAdaptedPatient(VALID_NAME, null, VALID_ADDRESS, VALID_TAGS,
-                VALID_NRIC);
+                VALID_NRIC, VALID_REMARK);
         String expectedMessage = String.format(MISSING_FIELD_MESSAGE_FORMAT, Phone.class.getSimpleName());
         assertThrows(IllegalValueException.class, expectedMessage, patient::toModelType);
     }
@@ -74,7 +75,7 @@ public class JsonAdaptedPatientTest {
     public void toModelType_invalidAddress_throwsIllegalValueException() {
         JsonAdaptedPatient patient =
                 new JsonAdaptedPatient(VALID_NAME, VALID_PHONE, INVALID_ADDRESS, VALID_TAGS,
-                        VALID_NRIC);
+                        VALID_NRIC, VALID_REMARK);
         String expectedMessage = Address.MESSAGE_CONSTRAINTS;
         assertThrows(IllegalValueException.class, expectedMessage, patient::toModelType);
     }
@@ -82,7 +83,7 @@ public class JsonAdaptedPatientTest {
     @Test
     public void toModelType_nullAddress_throwsIllegalValueException() {
         JsonAdaptedPatient patient = new JsonAdaptedPatient(VALID_NAME, VALID_PHONE, null, VALID_TAGS,
-                VALID_NRIC);
+                VALID_NRIC, VALID_REMARK);
         String expectedMessage = String.format(MISSING_FIELD_MESSAGE_FORMAT, Address.class.getSimpleName());
         assertThrows(IllegalValueException.class, expectedMessage, patient::toModelType);
     }
@@ -93,7 +94,7 @@ public class JsonAdaptedPatientTest {
         invalidTags.add(new JsonAdaptedTag(INVALID_TAG));
         JsonAdaptedPatient patient =
                 new JsonAdaptedPatient(VALID_NAME, VALID_PHONE, VALID_ADDRESS, invalidTags,
-                        VALID_NRIC);
+                        VALID_NRIC, VALID_REMARK);
         assertThrows(IllegalValueException.class, patient::toModelType);
     }
 
