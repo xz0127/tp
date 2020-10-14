@@ -24,8 +24,8 @@ public class TimeParserUtil {
             + "An example of a properly formatted time includes (but is not limited to): 2 PM\n"
             + "An example of a natural time language is 'morning' (8am) or 'evening' (7pm)"
             + "Please visit our user guide at "
-            + "https://ay2021s1-cs2103t-t12-4.github.io/tp/UserGuide.html#faq"
-            + " for more date/time variants.";
+            + " for more date/time variants."
+            + "\nType help in the input box for the link!";
 
     /**
      * List of known time formats that parser accepts.

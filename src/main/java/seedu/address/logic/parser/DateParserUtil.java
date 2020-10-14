@@ -26,9 +26,9 @@ public class DateParserUtil {
             + "or adopt a recognised natural date language.\n"
             + "An example of a properly formatted date includes (but is not limited to): 02 Aug 2020\n"
             + "An example of a natural date language is 'today' or 'wednesday'(any day of the week)"
-            + "Please visit our user guide at "
-            + "https://ay2021s1-cs2103t-t12-4.github.io/tp/UserGuide.html#faq"
-            + " for more date/time variants.";
+            + "Please visit our user guide"
+            + " for more date/time variants."
+            + "\nType help in the input box for the link!";
 
     /**
      * List of known date formats that parser accepts.
