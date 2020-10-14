@@ -52,9 +52,10 @@ public class LogicManager implements Logic {
         commandResult = command.execute(model);
 
         try {
-            //We can deduce that the previous line of code modifies model in some way
+            // We can deduce that the previous line of code modifies model in some way
             // since it's being stored here.
             storage.savePatientBook(model.getPatientBook());
+            storage.saveAppointmentBook(model.getAppointmentBook());
         } catch (IOException ioe) {
             throw new CommandException(FILE_OPS_ERROR_MESSAGE + ioe, ioe);
         }

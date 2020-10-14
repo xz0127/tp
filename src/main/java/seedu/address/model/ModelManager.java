@@ -4,6 +4,7 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.nio.file.Path;
+import java.util.List;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
 
@@ -236,4 +237,25 @@ public class ModelManager implements Model {
                 && filteredAppointments.equals(other.filteredAppointments);
     }
 
+    //=========== Model Validation =============================================================
+
+    /**
+     * Checks if the {@code readOnlyPatientBook} is consistent with the {@code appointmentBook} data.
+     *
+     * @param readOnlyPatientBook the patients data
+     * @param appointmentBook the appointments data
+     * @return true if the two books are valid, false otherwise
+     */
+    public static boolean isValidModel(ReadOnlyPatientBook readOnlyPatientBook,
+                                       ReadOnlyAppointmentBook appointmentBook) {
+        List<Appointment> appointmentList = appointmentBook.getAppointmentList();
+        PatientBook patientBook = new PatientBook(readOnlyPatientBook);
+
+        for (Appointment appointment : appointmentList) {
+            if (!patientBook.hasPatient(appointment.getPatient())) {
+                return false;
+            }
+        }
+        return true;
+    }
 }

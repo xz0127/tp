@@ -15,7 +15,6 @@ public class UserPrefs implements ReadOnlyUserPrefs {
 
     private GuiSettings guiSettings = new GuiSettings();
     private Path patientBookFilePath = Paths.get("data" , "patientbook.json");
-    // todo: Storage
     private Path appointmentBookFilePath = Paths.get("data" , "appointment.json");
 
     /**
@@ -38,6 +37,7 @@ public class UserPrefs implements ReadOnlyUserPrefs {
         requireNonNull(newUserPrefs);
         setGuiSettings(newUserPrefs.getGuiSettings());
         setPatientBookFilePath(newUserPrefs.getPatientBookFilePath());
+        setAppointmentBookFilePath(newUserPrefs.getAppointmentBookFilePath());
     }
 
     @Override
