@@ -5,8 +5,8 @@ import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DATE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TIME;
 
-import seedu.address.logic.commands.DateTimeLoader;
 import seedu.address.logic.commands.CancelCommand;
+import seedu.address.logic.commands.DateTimeLoader;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.appointment.Date;
 import seedu.address.model.appointment.Time;
