@@ -155,7 +155,7 @@ public class ModelManager implements Model {
 
     @Override
     public void setAppointmentBook(ReadOnlyAppointmentBook appointmentBook) {
-        this.patientBook.resetData(patientBook);
+        this.appointmentBook.resetData(appointmentBook);
     }
 
     @Override

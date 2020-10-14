@@ -119,9 +119,9 @@ public class Patient {
                 .append(getPhone())
                 .append("; Address: ")
                 .append(getAddress())
-                .append(" Remark: ")
+                .append("; Remark: ")
                 .append(getRemark())
-                .append(" Tags: ");
+                .append("; Tags: ");
         getTags().forEach(builder::append);
         return builder.append(";").toString();
     }

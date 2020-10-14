@@ -31,7 +31,7 @@ Nuudle is a **desktop app for managing patient records and clinic appointments, 
    * **`delete`**`3` : Deletes the 3rd patient shown in the current list.
 
    * **`edit`**`1 n/Betsy Crower p/91234567 a/College Avenue 8` : Edits the name, phone number, and address of the 1st patient in the list to be `Betsy`, `91234567`, and `College Avenue 8` respectively.
-      
+   
    * **`find`**`alex david` : Returns `Alex Yeoh`, `David Li` if the two names are found in the list.
 
    * **`clear`** : Deletes all patients.
@@ -193,9 +193,9 @@ Shows a list of all upcoming appointments entries or only the list of upcoming a
 
 Format `view [d/DATE]`
 
-* Outputs the list of all upcoming appointments happening on the specified date according to their `APPT_ID` order.
+* Outputs the list of all upcoming appointments happening on the specified date in chronological order.
 * `DATE` must be in the future.
-* If `DATE` is not included, outputs the list of all upcoming appointments according to their `APPT_ID` order.
+* If `DATE` is not included, outputs the list of all upcoming appointments in chronological order.
 
 Example:
 * `view` shows the list of all upcoming appointments in chronological order.
@@ -269,9 +269,9 @@ Action | Format, Examples
 **List** | `list`
 **Remark** | `remark INDEX r/REMARK` e.g., `remark 2 r/Has been visiting Dr John`
 **Assign** | `assign INDEX d/DATE t/TIME`<br> e.g., `assign 3 d/tomorrow t/3pm`
-**Cancel** | `cancel APPT_ID`<br> e.g., `cancel 202003081000`
+**Cancel** | `cancel d/DATE t/TIME`<br> e.g., `cancel d/today t/4pm`
 **View** | `view [d/DATE]`<br> e.g., `view d/today`
-**Done** | `done APPT_ID`<br> e.g., `done 202003081000`
+**Done** | `done d/DATE t/TIME`<br> e.g., `done d/23-Aug t/10.30am`
 **Clear** | `clear`
 **Help** | `help`
 **Exit** | `exit`
