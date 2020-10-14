@@ -135,7 +135,6 @@ public class EditCommand extends Command {
         private Nric nric;
         private Remark remark;
 
-
         public EditPatientDescriptor() {}
 
         /**
@@ -149,7 +148,6 @@ public class EditCommand extends Command {
             setTags(toCopy.tags);
             setNric(toCopy.nric);
             setRemark(toCopy.remark);
-
         }
 
         /**

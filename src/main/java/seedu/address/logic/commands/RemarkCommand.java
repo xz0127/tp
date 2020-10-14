@@ -25,15 +25,16 @@ public class RemarkCommand extends Command {
             + "by the index number used in the last patient listing. "
             + "Existing remark will be overwritten by the input.\n"
             + "Parameters: INDEX (must be a positive integer) "
-            + "r/ [REMARK]\n"
+            + "r/[REMARK]\n"
             + "Example: " + COMMAND_WORD + " 1 "
-            + "r/ Likes to swim.";
+            + "r/Has been visiting Dr John.";
 
 
     private final Index index;
     private final Remark remark;
 
     /**
+     * Creates a RemarkCommand to add a remark to the specified patient.
      * @param index of the patient in the filtered patient list to edit the remark
      * @param remark of the patient to be updated to
      */
