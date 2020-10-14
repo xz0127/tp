@@ -6,8 +6,6 @@ import static seedu.address.logic.parser.ParserUtil.MESSAGE_INVALID_INDEX;
 import static seedu.address.testutil.Assert.assertThrows;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PATIENT;
 
-import java.time.LocalDate;
-import java.time.LocalTime;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
@@ -40,7 +38,7 @@ public class ParserUtilTest {
     private static final String VALID_ADDRESS = "123 Main Street #0505";
     private static final String VALID_TAG_1 = "friend";
     private static final String VALID_TAG_2 = "neighbour";
-    private static final String VALID_DATE = "20-AUG-2035";
+    private static final String VALID_DATE = "20-AUG-2050";
     private static final String VALID_TIME = "noon";
 
     private static final String WHITESPACE = " \t\r\n";
@@ -216,14 +214,14 @@ public class ParserUtilTest {
 
     @Test
     public void parseDate_validValueWithoutWhitespace_returnsDate() throws Exception {
-        Date expectedDate = new Date(LocalDate.of(2035, 8, 20));
+        Date expectedDate = new Date(2050, 8, 20);
         assertEquals(expectedDate, ParserUtil.parseDate(VALID_DATE));
     }
 
     @Test
     public void parseDate_validValueWithWhitespace_returnsTrimmedDate() throws Exception {
         String dateWithWhitespace = WHITESPACE + VALID_DATE + WHITESPACE;
-        Date expectedDate = new Date(LocalDate.of(2035, 8, 20));
+        Date expectedDate = new Date(2050, 8, 20);
         assertEquals(expectedDate, ParserUtil.parseDate(dateWithWhitespace));
     }
 
@@ -242,14 +240,14 @@ public class ParserUtilTest {
 
     @Test
     public void parseTime_validValueWithoutWhitespace_returnsTime() throws Exception {
-        Time expectedTime = new Time(LocalTime.of(12, 0));
+        Time expectedTime = new Time(12, 0);
         assertEquals(expectedTime, ParserUtil.parseTime(VALID_TIME));
     }
 
     @Test
     public void parseTime_validValueWithWhitespace_returnsTrimmedTime() throws Exception {
         String timeWithWhitespace = WHITESPACE + VALID_TIME + WHITESPACE;
-        Time expectedTime = new Time(LocalTime.of(12, 0));
+        Time expectedTime = new Time(12, 0);
         assertEquals(expectedTime, ParserUtil.parseTime(timeWithWhitespace));
     }
 }

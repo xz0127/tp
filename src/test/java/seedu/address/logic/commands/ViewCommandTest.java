@@ -70,7 +70,7 @@ public class ViewCommandTest {
     @Test
     public void execute_multipleAppointmentsFound_viewSuccessful() {
         String expectedMessage = String.format(MESSAGE_APPOINTMENTS_OVERVIEW, 2);
-        DateMatchesPredicate predicate = preparePredicate(LocalDate.of(2020, 1, 1));
+        DateMatchesPredicate predicate = preparePredicate(LocalDate.of(2050, 1, 1));
         ViewCommand command = new ViewCommand(predicate);
         expectedModel.updateFilteredAppointmentList(predicate);
         assertCommandSuccess(command, model, expectedMessage, expectedModel);
@@ -84,7 +84,8 @@ public class ViewCommandTest {
         ViewCommand command = new ViewCommand(predicate);
         expectedModel.updateFilteredAppointmentList(predicate);
         assertCommandSuccess(command, model, expectedMessage, expectedModel);
-        assertEquals(model.getFilteredAppointmentList(), expectedModel.getFilteredAppointmentList());;
+        assertEquals(model.getFilteredAppointmentList(), expectedModel.getFilteredAppointmentList());
+        ;
     }
 
     /**

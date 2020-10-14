@@ -23,9 +23,9 @@ public class AppointmentComparatorTest {
 
         // different appointment time, same date (not overlapping)
         appointmentBefore = new AppointmentBuilder()
-                .withStartTime(LocalTime.of(9, 0)).build();
+                .withTime(LocalTime.of(9, 0), LocalTime.of(10, 0)).build();
         appointmentAfter = new AppointmentBuilder()
-                .withStartTime(LocalTime.of(17, 30)).build();
+                .withTime(LocalTime.of(10, 30), LocalTime.of(11, 0)).build();
         assertEquals(-1, comparator.compare(appointmentBefore, appointmentAfter));
     }
 
@@ -40,9 +40,9 @@ public class AppointmentComparatorTest {
 
         // different appointment time, same date (not overlapping)
         appointmentAfter = new AppointmentBuilder()
-                .withStartTime(LocalTime.of(17, 30)).build();
+                .withTime(LocalTime.of(10, 0), LocalTime.of(11, 0)).build();
         appointmentBefore = new AppointmentBuilder()
-                .withStartTime(LocalTime.of(9, 0)).build();
+                .withTime(LocalTime.of(9, 0), LocalTime.of(10, 0)).build();
         assertEquals(1, comparator.compare(appointmentAfter, appointmentBefore));
     }
 
@@ -50,9 +50,16 @@ public class AppointmentComparatorTest {
     public void compare_appointmentIsOverlapping_returnZero() {
         // different appointment time, but overlapping
         Appointment appointmentBefore = new AppointmentBuilder()
-                .withStartTime(LocalTime.of(17, 0)).build();
+                .withTime(LocalTime.of(17, 0), LocalTime.of(18, 0)).build();
         Appointment appointmentAfter = new AppointmentBuilder()
-                .withStartTime(LocalTime.of(17, 30)).build();
+                .withTime(LocalTime.of(17, 30), LocalTime.of(18, 40)).build();
+        assertEquals(0, comparator.compare(appointmentBefore, appointmentAfter));
+
+        // different appointment time, but overlapping
+        appointmentBefore = new AppointmentBuilder()
+                .withTime(LocalTime.of(17, 0), LocalTime.of(19, 0)).build();
+        appointmentAfter = new AppointmentBuilder()
+                .withTime(LocalTime.of(17, 30), LocalTime.of(18, 30)).build();
         assertEquals(0, comparator.compare(appointmentBefore, appointmentAfter));
 
         // different appointment time, but overlapping
