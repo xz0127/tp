@@ -13,7 +13,7 @@ import seedu.address.model.patient.Patient;
 import seedu.address.model.patient.Remark;
 
 /**
- * Changes the remark of an existing patient in the address book.
+ * Changes the remark of an existing patient in the patient book.
  */
 public class RemarkCommand extends Command {
 
