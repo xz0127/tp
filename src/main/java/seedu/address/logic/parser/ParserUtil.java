@@ -6,7 +6,6 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Collection;
 import java.util.HashSet;
-import java.util.Optional;
 import java.util.Set;
 
 import seedu.address.commons.core.index.Index;
@@ -170,11 +169,11 @@ public class ParserUtil {
      * @throws ParseException if the given {@code Remark} is invalid.
      */
     public static Remark parseRemark(String remark) throws ParseException {
-            requireNonNull(remark);
-            String trimmedRemark = remark.trim();
-            if (!Remark.isValidRemark(trimmedRemark)) {
-                throw new ParseException(Remark.MESSAGE_CONSTRAINTS);
-            }
-            return new Remark(trimmedRemark);
+        requireNonNull(remark);
+        String trimmedRemark = remark.trim();
+        if (!Remark.isValidRemark(trimmedRemark)) {
+            throw new ParseException(Remark.MESSAGE_CONSTRAINTS);
+        }
+        return new Remark(trimmedRemark);
     }
 }
