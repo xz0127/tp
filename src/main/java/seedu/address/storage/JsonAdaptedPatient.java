@@ -15,6 +15,7 @@ import seedu.address.model.patient.Name;
 import seedu.address.model.patient.Nric;
 import seedu.address.model.patient.Patient;
 import seedu.address.model.patient.Phone;
+import seedu.address.model.patient.Remark;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -27,6 +28,7 @@ class JsonAdaptedPatient {
     private final String name;
     private final String phone;
     private final String address;
+    private final String remark;
     private final List<JsonAdaptedTag> tagged = new ArrayList<>();
     private final String nric;
 
@@ -36,10 +38,12 @@ class JsonAdaptedPatient {
     @JsonCreator
     public JsonAdaptedPatient(@JsonProperty("name") String name, @JsonProperty("phone") String phone,
                               @JsonProperty("address") String address,
-                              @JsonProperty("tagged") List<JsonAdaptedTag> tagged, @JsonProperty("nric") String nric) {
+                              @JsonProperty("tagged") List<JsonAdaptedTag> tagged, @JsonProperty("nric") String nric,
+                              @JsonProperty("remark") String remark) {
         this.name = name;
         this.phone = phone;
         this.address = address;
+        this.remark = remark;
         if (tagged != null) {
             this.tagged.addAll(tagged);
         }
@@ -53,6 +57,7 @@ class JsonAdaptedPatient {
         name = source.getName().fullName;
         phone = source.getPhone().value;
         address = source.getAddress().value;
+        remark = source.getRemark().value;
         tagged.addAll(source.getTags().stream()
                 .map(JsonAdaptedTag::new)
                 .collect(Collectors.toList()));
@@ -104,7 +109,12 @@ class JsonAdaptedPatient {
 
         final Set<Tag> modelTags = new HashSet<>(patientTags);
 
-        return new Patient(modelName, modelPhone, modelAddress, modelTags, modelNric);
+        if (remark == null) {
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Remark.class.getSimpleName()));
+        }
+        final Remark modelRemark = new Remark(remark);
+
+        return new Patient(modelName, modelPhone, modelAddress, modelTags, modelNric, modelRemark);
     }
 
 }
