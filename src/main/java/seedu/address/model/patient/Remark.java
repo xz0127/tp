@@ -8,7 +8,9 @@ import static java.util.Objects.requireNonNull;
  */
 public class Remark {
 
-    public static final String MESSAGE_CONSTRAINTS = "Remark can take any values, and it should not be blank";
+    public static final String MESSAGE_CONSTRAINTS = "Remark can take any values, and it should not be blank."
+            + "Only use a blank remark when removing an existing remark from the patient.";
+    public static final String VALIDATION_REGEX = ".*";
 
     public final String value;
 
@@ -25,6 +27,13 @@ public class Remark {
     @Override
     public String toString() {
         return value;
+    }
+
+    /**
+     * Returns true if a given string is a valid Remark.
+     */
+    public static boolean isValidRemark(String test) {
+        return test.matches(VALIDATION_REGEX);
     }
 
     @Override
