@@ -235,20 +235,18 @@ _{Explain here how the data archiving feature will be implemented}_
 ### Product scope
 **Target user profile story**:
 
-Namise is a hard working nurse working at a popular dental clinic situated in town and gets appointment calls on an hourly basis. Swarmed with incoming calls, Namise has to make new appointments for new and existing patients while keeping track of the doctor’s schedule at the same time😞. With the need to juggle multiple tasks at once, Namise is also prone to making careless mistakes in his work due to fatigue.
-
-  
+Namise is a hard working nurse working at a popular dental clinic situated in town and gets appointment calls on an hourly basis. Swarmed with incoming calls, Namise has to make new appointments for new and existing patients while keeping track of the doctor’s schedule at the same time 😞. With the need to juggle multiple tasks at once, Namise is also prone to making careless mistakes in his work due to fatigue.
 
 Being a tech-savvy nurse armed with a commendable experience in unix, Namise prefers to scribble down appointment schedules on paper while on call with his patients to maximise efficiency. This task is further exacerbated with the need to transfer these notes into an excel table manually later in the day.
  
 **Target user profile summary**:
 *   Nurse working in a highly popular, small scale dental clinic
 *   Responsible for scheduling a large number of appointments daily
-*   Add new patients to the clinic records  
+*   Add new patients to the clinic records
 *   Do not entertain walk-ins and only operate on an appointment-basis
 *   Required to multi-task (create appointment arrangements with patients over the phone)
-*   Prone to carelessness due to the sheer number of appointments to handle  
-*   Tech-savvy  
+*   Prone to carelessness due to the sheer number of appointments to handle
+*   Tech-savvy
 *   Prefers typing & wants to get things done quickly
 *   Tired of transferring appointment details from paper notes to excel
 *   Prefers desktop apps over other types
@@ -306,7 +304,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 * 1a. The given keywords are invalid.
 
     * 1a1. Nuudle shows an error message.
-           
+    
       Use case ends.
 
 &nbsp;
@@ -327,17 +325,17 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 * 1a. The given keywords are invalid.
 
     * 1a1. Nuudle shows an error message.
-           
+    
       Use case ends.
 
 * 2a. The list is empty.
-           
+
   Use case ends.
   
 * 3a. The given index is invalid.
 
     * 3a1. Nuudle shows an error message.
-           
+    
       Use case resumes at step 2.
 
 &nbsp;
@@ -377,7 +375,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 2. Nuudle shows the list of patients with the requested name.
 3. User request to view patient record of a specific patient in the list.
 4. Nuudle shows the list of records for that patient.
-    
+
    Use case ends.
 
 **Extensions**
@@ -389,7 +387,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
       Use case ends.
 
 * 2a. The list is empty.
-      
+
   Use case ends.
 
 &nbsp;
@@ -429,13 +427,13 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 2. Nuudle shows the list of appointments.
 3. User requests to delete a specific appointment in the list.
 4. Nuudle deletes the appointment.
-    
+
    Use case ends.
 
 **Extensions**
 
 * 1a. The given index is invalid.
-    
+
     * 1a1. Nuudle shows an error message.
 
       Use case ends.
@@ -501,7 +499,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 **Extensions**
 
 * 3a. The given index is invalid.
-    
+
     * 3a1. Nuudle shows an error message.
 
       Use case resumes at step 2.
@@ -524,7 +522,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
       Use case ends.
 
 * 1b. The given date is invalid.
-    
+
     * 1b1. Nuudle shows an error message.
 
       Use case ends.
@@ -545,13 +543,13 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 4. Nuudle shows the list of available time slots.
 5. User requests to add an appointment for the new patient.
 6. Nuudle creates the appointment.
-    
+
    Use case ends.
 
 **Extensions**
 
 * 3a. The given date is invalid.
-    
+
     * 3a1. Nuudle shows an error message.
 
       Use case resumes at step 2.
@@ -567,7 +565,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
         * 4a1b. User does not use the suggested time slot.
         
           Use case resumes at step 3.
-      
+        
 ### Non-Functional Requirements
 
 1.  Should work on any _mainstream OS_ as long as it has Java `11` or above installed.
