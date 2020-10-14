@@ -31,7 +31,7 @@ Nuudle is a **desktop app for managing patient records and clinic appointments, 
    * **`delete`**`3` : Deletes the 3rd patient shown in the current list.
 
    * **`edit`**`1 n/Betsy Crower p/91234567 a/College Avenue 8` : Edits the name, phone number, and address of the 1st patient in the list to be `Betsy`, `91234567`, and `College Avenue 8` respectively.
-      
+   
    * **`find`**`alex david` : Returns `Alex Yeoh`, `David Li` if the two names are found in the list.
 
    * **`clear`** : Deletes all patients.

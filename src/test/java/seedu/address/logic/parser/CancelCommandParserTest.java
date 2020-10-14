@@ -15,8 +15,8 @@ import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSucces
 
 import org.junit.jupiter.api.Test;
 
-import seedu.address.logic.commands.DateTimeLoader;
 import seedu.address.logic.commands.CancelCommand;
+import seedu.address.logic.commands.DateTimeLoader;
 import seedu.address.model.appointment.Time;
 import seedu.address.testutil.DateTimeLoaderBuilder;
 
