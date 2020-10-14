@@ -46,7 +46,7 @@ public class AddCommandParser implements Parser<AddCommand> {
         Address address = ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS).get());
         Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
         Nric nric = ParserUtil.parseNric(argMultimap.getValue(PREFIX_NRIC).get());
-        Remark remark = new Remark("");
+        Remark remark = ParserUtil.parseRemark(argMultimap.getValue(PREFIX_REMARK).orElse(""));
 
         Patient patient = new Patient(name, phone, address, tagList, nric, remark);
 

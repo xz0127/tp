@@ -58,7 +58,7 @@ public class EditCommandParser implements Parser<EditCommand> {
             editPatientDescriptor.setNric(ParserUtil.parseNric(argMultimap.getValue(PREFIX_NRIC).get()));
         }
         if (argMultimap.getValue(PREFIX_REMARK).isPresent()) {
-            editPatientDescriptor.setRemark(ParserUtil.parseRemark(argMultimap.getValue(PREFIX_REMARK).get()));
+            editPatientDescriptor.setRemark(ParserUtil.parseRemark(argMultimap.getValue(PREFIX_REMARK).orElse("")));
         }
         parseTagsForEdit(argMultimap.getAllValues(PREFIX_TAG)).ifPresent(editPatientDescriptor::setTags);
 

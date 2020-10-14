@@ -29,7 +29,7 @@ public class Patient {
      * Every field must be present and not null.
      */
     public Patient(Name name, Phone phone, Address address, Set<Tag> tags, Nric nric, Remark remark) {
-        requireAllNonNull(name, phone, address, tags, nric);
+        requireAllNonNull(name, phone, address, tags, nric, remark);
         this.name = name;
         this.phone = phone;
         this.address = address;
