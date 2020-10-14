@@ -5,10 +5,10 @@ import java.util.Arrays;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import seedu.address.model.PatientBook;
 import seedu.address.model.AppointmentBook;
-import seedu.address.model.ReadOnlyPatientBook;
+import seedu.address.model.PatientBook;
 import seedu.address.model.ReadOnlyAppointmentBook;
+import seedu.address.model.ReadOnlyPatientBook;
 import seedu.address.model.appointment.Appointment;
 import seedu.address.model.appointment.Date;
 import seedu.address.model.appointment.Time;
@@ -48,11 +48,11 @@ public class SampleDataUtil {
     }
 
     public static ReadOnlyPatientBook getSamplePatientBook() {
-        PatientBook sampleAb = new PatientBook();
+        PatientBook samplePb = new PatientBook();
         for (Patient samplePatient : getSamplePatients()) {
-            sampleAb.addPatient(samplePatient);
+            samplePb.addPatient(samplePatient);
         }
-        return sampleAb;
+        return samplePb;
     }
 
     /**

@@ -55,7 +55,7 @@ class JsonSerializableAppointmentBook {
 
         for (JsonAdaptedAppointment jsonAdaptedAppointment : appointments) {
             Appointment appointment = jsonAdaptedAppointment.toModelType();
-            if (appointmentBook.hasAppointment(appointment)) {
+            if (appointmentBook.hasOverlapsWith(appointment)) {
                 throw new IllegalValueException(MESSAGE_OVERLAPPING_APPOINTMENT);
             }
 

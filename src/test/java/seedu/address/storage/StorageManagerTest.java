@@ -12,10 +12,10 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 
 import seedu.address.commons.core.GuiSettings;
-import seedu.address.model.PatientBook;
 import seedu.address.model.AppointmentBook;
-import seedu.address.model.ReadOnlyPatientBook;
+import seedu.address.model.PatientBook;
 import seedu.address.model.ReadOnlyAppointmentBook;
+import seedu.address.model.ReadOnlyPatientBook;
 import seedu.address.model.UserPrefs;
 
 public class StorageManagerTest {

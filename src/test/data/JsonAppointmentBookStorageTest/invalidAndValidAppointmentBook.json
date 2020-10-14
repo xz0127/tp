@@ -9,7 +9,8 @@
       "phone" : "94351253",
       "address" : "123, Jurong West Ave 6, #08-111",
       "tagged" : [ "friends" ]
-    }
+    },
+    "isDone" : false
   }, {
     "date" : "2050-05-22",
     "startTime" : "14:00:00",
@@ -20,6 +21,7 @@
       "address" : "wall street",
       "tagged" : [ ],
       "nric" : "S1234567P"
-    }
+    },
+    "isDone" : false
   } ]
 }

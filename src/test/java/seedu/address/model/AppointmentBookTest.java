@@ -78,7 +78,7 @@ public class AppointmentBookTest {
         Appointment overlappingAppointment = new AppointmentBuilder(ALICE_APPOINTMENT).withPatient(BENSON)
                 .withTime(ALICE_APPOINTMENT.getStartTime().getTime().plusMinutes(1))
                 .build();
-        assertTrue(appointmentBook.hasAppointment(overlappingAppointment));
+        assertTrue(appointmentBook.hasOverlapsWith(overlappingAppointment));
 
         overlappingAppointment = new AppointmentBuilder(ALICE_APPOINTMENT).withPatient(BENSON)
                 .withTime(ALICE_APPOINTMENT.getStartTime().getTime().plusMinutes(1),

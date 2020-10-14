@@ -66,11 +66,11 @@ public class TypicalPatients {
      * Returns an {@code PatientBook} with all the typical patients.
      */
     public static PatientBook getTypicalPatientBook() {
-        PatientBook ab = new PatientBook();
+        PatientBook pb = new PatientBook();
         for (Patient patient : getTypicalPatients()) {
-            ab.addPatient(patient);
+            pb.addPatient(patient);
         }
-        return ab;
+        return pb;
     }
 
     public static List<Patient> getTypicalPatients() {

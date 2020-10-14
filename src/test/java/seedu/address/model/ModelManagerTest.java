@@ -13,7 +13,7 @@ import static seedu.address.testutil.TypicalAppointments.CARL_APPOINTMENT;
 import static seedu.address.testutil.TypicalAppointments.getTypicalAppointmentBook;
 import static seedu.address.testutil.TypicalPatients.ALICE;
 import static seedu.address.testutil.TypicalPatients.BENSON;
-import static seedu.address.testutil.TypicalPatients.getTypicalAddressBook;
+import static seedu.address.testutil.TypicalPatients.getTypicalPatientBook;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -118,25 +118,25 @@ public class ModelManagerTest {
 
     @Test
     public void isValidModel_inconsistentPatientAndAppointmentBook_returnsFalse() {
-        AddressBook addressBook = new AddressBookBuilder().withPatient(ALICE).withPatient(BENSON).build();
+        PatientBook patientBook = new PatientBookBuilder().withPatient(ALICE).withPatient(BENSON).build();
         AppointmentBook appointmentBook = new AppointmentBookBuilder()
                 .withAppointment(ALICE_APPOINTMENT).withAppointment(CARL_APPOINTMENT).build();
 
-        assertFalse(isValidModel(addressBook, appointmentBook));
+        assertFalse(isValidModel(patientBook, appointmentBook));
     }
 
     @Test
     public void isValidModel_consistentPatientAndAppointmentBook_returnsFalse() {
-        AddressBook addressBook = new AddressBookBuilder().withPatient(ALICE).withPatient(BENSON).build();
+        PatientBook patientBook = new PatientBookBuilder().withPatient(ALICE).withPatient(BENSON).build();
         AppointmentBook appointmentBook = new AppointmentBookBuilder().withAppointment(ALICE_APPOINTMENT)
                 .withAppointment(ALICE_APPOINTMENT_2).withAppointment(BENSON_APPOINTMENT).build();
 
-        assertTrue(isValidModel(addressBook, appointmentBook));
+        assertTrue(isValidModel(patientBook, appointmentBook));
 
-        addressBook = getTypicalAddressBook();
+        patientBook = getTypicalPatientBook();
         appointmentBook = getTypicalAppointmentBook();
 
-        assertTrue(isValidModel(addressBook, appointmentBook));
+        assertTrue(isValidModel(patientBook, appointmentBook));
     }
 
     @Test

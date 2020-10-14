@@ -130,4 +130,3 @@ public class AppointmentBook implements ReadOnlyAppointmentBook {
         return appointments.hashCode();
     }
 }
-

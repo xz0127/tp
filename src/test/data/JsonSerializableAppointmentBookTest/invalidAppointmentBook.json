@@ -8,6 +8,7 @@
       "nric" : "S0000567P",
       "phone": "9482424",
       "address": "4th street"
-    }
+    },
+    "isDone" : false
   } ]
 }

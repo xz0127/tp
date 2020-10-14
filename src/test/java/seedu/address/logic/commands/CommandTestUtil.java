@@ -17,8 +17,10 @@ import java.util.List;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.AppointmentBook;
 import seedu.address.model.Model;
 import seedu.address.model.PatientBook;
+import seedu.address.model.appointment.Appointment;
 import seedu.address.model.patient.NameContainsKeywordsPredicate;
 import seedu.address.model.patient.Patient;
 import seedu.address.testutil.DateTimeLoaderBuilder;
@@ -128,11 +130,18 @@ public class CommandTestUtil {
         // we are unable to defensively copy the model for comparison later, so we can
         // only do so by copying its components.
         PatientBook expectedPatientBook = new PatientBook(actualModel.getPatientBook());
-        List<Patient> expectedFilteredList = new ArrayList<>(actualModel.getFilteredPatientList());
+        List<Patient> expectedFilteredPatientList = new ArrayList<>(actualModel.getFilteredPatientList());
+
+        AppointmentBook expectedAppointmentBook = new AppointmentBook(actualModel.getAppointmentBook());
+        List<Appointment> expectedFilteredAppointmentList = new ArrayList<>(actualModel.getFilteredAppointmentList());
 
         assertThrows(CommandException.class, expectedMessage, () -> command.execute(actualModel));
+
         assertEquals(expectedPatientBook, actualModel.getPatientBook());
-        assertEquals(expectedFilteredList, actualModel.getFilteredPatientList());
+        assertEquals(expectedFilteredPatientList, actualModel.getFilteredPatientList());
+
+        assertEquals(expectedAppointmentBook, actualModel.getAppointmentBook());
+        assertEquals(expectedFilteredAppointmentList, actualModel.getFilteredAppointmentList());
     }
 
     /**

@@ -46,6 +46,14 @@ public class AppointmentTest {
     }
 
     @Test
+    public void getIsDoneStatus() {
+        assertFalse(ALICE_APPOINTMENT.getIsDoneStatus());
+
+        Appointment doneAppointment = ALICE_APPOINTMENT.markAsDone();
+        assertTrue(doneAppointment.getIsDoneStatus());
+    }
+
+    @Test
     public void hasPatient_returnTrue() {
         assertTrue(ALICE_APPOINTMENT.hasPatient(ALICE));
 
@@ -86,6 +94,13 @@ public class AppointmentTest {
         assertTrue(ALICE_APPOINTMENT.setPatient(BOB).hasPatient(BOB));
 
         assertFalse(ALICE_APPOINTMENT.setPatient(BOB).hasPatient(ALICE));
+    }
+
+    @Test
+    public void startAtSameTime() {
+        assertTrue(ALICE_APPOINTMENT.startAtSameTime(ALICE_APPOINTMENT.getDate(), ALICE_APPOINTMENT.getStartTime()));
+
+        assertFalse(ALICE_APPOINTMENT.startAtSameTime(ALICE_APPOINTMENT.getDate(), ALICE_APPOINTMENT.getEndTime()));
     }
 
     @Test

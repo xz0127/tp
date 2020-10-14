@@ -29,6 +29,7 @@ public class JsonAdaptedAppointmentTest {
     private static final LocalTime VALID_START_TIME = BENSON_APPOINTMENT.getStartTime().getTime();
     private static final LocalTime VALID_END_TIME = BENSON_APPOINTMENT.getEndTime().getTime();
     private static final JsonAdaptedPatient VALID_PATIENT = new JsonAdaptedPatient(BENSON);
+    private static final Boolean VALID_DONE_STATUS = false;
 
     @Test
     public void toModelType_validAppointmentDetails_returnsAppointment() throws Exception {
@@ -39,7 +40,7 @@ public class JsonAdaptedAppointmentTest {
     @Test
     public void toModelType_nullDate_throwsIllegalValueException() {
         JsonAdaptedAppointment appointment =
-                new JsonAdaptedAppointment(null, VALID_START_TIME, VALID_END_TIME, VALID_PATIENT);
+                new JsonAdaptedAppointment(null, VALID_START_TIME, VALID_END_TIME, VALID_DONE_STATUS, VALID_PATIENT);
         String expectedMessage = String.format(MISSING_FIELD_MESSAGE_FORMAT, Date.class.getSimpleName());
         assertThrows(IllegalValueException.class, expectedMessage, appointment::toModelType);
     }
@@ -47,7 +48,7 @@ public class JsonAdaptedAppointmentTest {
     @Test
     public void toModelType_invalidStartTime_throwsIllegalValueException() {
         JsonAdaptedAppointment appointment =
-                new JsonAdaptedAppointment(VALID_DATE, INVALID_TIME, VALID_END_TIME, VALID_PATIENT);
+                new JsonAdaptedAppointment(VALID_DATE, INVALID_TIME, VALID_END_TIME, VALID_DONE_STATUS, VALID_PATIENT);
         String expectedMessage = Time.MESSAGE_CONSTRAINTS;
         assertThrows(IllegalValueException.class, expectedMessage, appointment::toModelType);
     }
@@ -55,7 +56,7 @@ public class JsonAdaptedAppointmentTest {
     @Test
     public void toModelType_nullStartTime_throwsIllegalValueException() {
         JsonAdaptedAppointment appointment =
-                new JsonAdaptedAppointment(VALID_DATE, null, VALID_END_TIME, VALID_PATIENT);
+                new JsonAdaptedAppointment(VALID_DATE, null, VALID_END_TIME, VALID_DONE_STATUS, VALID_PATIENT);
         String expectedMessage = String.format(MISSING_FIELD_MESSAGE_FORMAT, Time.class.getSimpleName());
         assertThrows(IllegalValueException.class, expectedMessage, appointment::toModelType);
     }
@@ -63,7 +64,8 @@ public class JsonAdaptedAppointmentTest {
     @Test
     public void toModelType_invalidEndTime_throwsIllegalValueException() {
         JsonAdaptedAppointment appointment =
-                new JsonAdaptedAppointment(VALID_DATE, VALID_START_TIME, INVALID_TIME, VALID_PATIENT);
+                new JsonAdaptedAppointment(VALID_DATE, VALID_START_TIME, INVALID_TIME, VALID_DONE_STATUS,
+                        VALID_PATIENT);
         String expectedMessage = Time.MESSAGE_CONSTRAINTS;
         assertThrows(IllegalValueException.class, expectedMessage, appointment::toModelType);
     }
@@ -71,7 +73,7 @@ public class JsonAdaptedAppointmentTest {
     @Test
     public void toModelType_nullEndTime_throwsIllegalValueException() {
         JsonAdaptedAppointment appointment =
-                new JsonAdaptedAppointment(VALID_DATE, VALID_START_TIME, null, VALID_PATIENT);
+                new JsonAdaptedAppointment(VALID_DATE, VALID_START_TIME, null, VALID_DONE_STATUS, VALID_PATIENT);
         String expectedMessage = String.format(MISSING_FIELD_MESSAGE_FORMAT, Time.class.getSimpleName());
         assertThrows(IllegalValueException.class, expectedMessage, appointment::toModelType);
     }
@@ -79,21 +81,31 @@ public class JsonAdaptedAppointmentTest {
     @Test
     public void toModelType_endTimeBeforeStartTime_throwsIllegalValueException() {
         JsonAdaptedAppointment appointment =
-                new JsonAdaptedAppointment(VALID_DATE, INVALID_START_TIME_ORDER, INVALID_END_TIME_ORDER, VALID_PATIENT);
+                new JsonAdaptedAppointment(VALID_DATE, INVALID_START_TIME_ORDER, INVALID_END_TIME_ORDER,
+                        VALID_DONE_STATUS, VALID_PATIENT);
         assertThrows(IllegalValueException.class, TIME_IN_WRONG_ORDER, appointment::toModelType);
+    }
+
+    @Test
+    public void toModelType_nullDoneStatus_throwsIllegalValueException() {
+        JsonAdaptedAppointment appointment =
+                new JsonAdaptedAppointment(VALID_DATE, VALID_START_TIME, VALID_END_TIME, null, VALID_PATIENT);
+        String expectedMessage = String.format(MISSING_FIELD_MESSAGE_FORMAT, "Done Status");
+        assertThrows(IllegalValueException.class, expectedMessage, appointment::toModelType);
     }
 
     @Test
     public void toModelType_invalidPatient_throwsIllegalValueException() {
         JsonAdaptedAppointment appointment =
-                new JsonAdaptedAppointment(VALID_DATE, VALID_START_TIME, VALID_END_TIME, INVALID_PATIENT);
+                new JsonAdaptedAppointment(VALID_DATE, VALID_START_TIME, VALID_END_TIME, VALID_DONE_STATUS,
+                        INVALID_PATIENT);
         assertThrows(IllegalValueException.class, appointment::toModelType);
     }
 
     @Test
     public void toModelType_nullPatient_throwsIllegalValueException() {
         JsonAdaptedAppointment appointment =
-                new JsonAdaptedAppointment(VALID_DATE, VALID_START_TIME, VALID_END_TIME, null);
+                new JsonAdaptedAppointment(VALID_DATE, VALID_START_TIME, VALID_END_TIME, VALID_DONE_STATUS, null);
         String expectedMessage = String.format(MISSING_FIELD_MESSAGE_FORMAT, Patient.class.getSimpleName());
         assertThrows(IllegalValueException.class, expectedMessage, appointment::toModelType);
     }

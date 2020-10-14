@@ -20,11 +20,13 @@ public class AppointmentBuilder {
     public static final LocalTime DEFAULT_START_TIME = LocalTime.of(13, 30);
     public static final Duration DEFAULT_DURATION = Duration.ofHours(1);
     public static final Patient DEFAULT_PATIENT = ALICE;
+    public static final boolean DEFAULT_DONE_STATUS = false;
 
     private Date date;
     private Time startTime;
     private Time endTime;
     private Patient patient;
+    private boolean isDone;
 
     /**
      * Creates an {@code AppointmentBuilder} with the default details.
@@ -34,6 +36,7 @@ public class AppointmentBuilder {
         startTime = new Time(DEFAULT_START_TIME);
         endTime = new Time(DEFAULT_START_TIME.plus(DEFAULT_DURATION));
         patient = DEFAULT_PATIENT;
+        isDone = DEFAULT_DONE_STATUS;
     }
 
     /**
@@ -44,6 +47,7 @@ public class AppointmentBuilder {
         startTime = appointmentToCopy.getStartTime();
         endTime = appointmentToCopy.getEndTime();
         patient = appointmentToCopy.getPatient();
+        isDone = appointmentToCopy.getIsDoneStatus();
     }
 
     /**
@@ -79,10 +83,18 @@ public class AppointmentBuilder {
     }
 
     /**
+     * Sets the done status for the {@code Appointment} that we are building.
+     */
+    public AppointmentBuilder withDoneStatus(boolean isDone) {
+        this.isDone = isDone;
+        return this;
+    }
+
+    /**
      * Build the {@code Appointment}.
      */
     public Appointment build() {
-        return new Appointment(date, startTime, endTime, patient);
+        return new Appointment(date, startTime, endTime, patient, isDone);
     }
 
 }

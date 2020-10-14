@@ -23,7 +23,7 @@ class JsonAdaptedAppointment {
     private final LocalDate date;
     private final LocalTime startTime;
     private final LocalTime endTime;
-
+    private final Boolean isDone;
     private final JsonAdaptedPatient patient;
 
     /**
@@ -33,10 +33,12 @@ class JsonAdaptedAppointment {
     public JsonAdaptedAppointment(@JsonProperty("date") LocalDate date,
                                   @JsonProperty("startTime") LocalTime startTime,
                                   @JsonProperty("endTime") LocalTime endTime,
+                                  @JsonProperty("doneStatus") Boolean isDone,
                                   @JsonProperty("patient") JsonAdaptedPatient patient) {
         this.date = date;
         this.startTime = startTime;
         this.endTime = endTime;
+        this.isDone = isDone;
         this.patient = patient;
     }
 
@@ -47,6 +49,7 @@ class JsonAdaptedAppointment {
         date = source.getDate().getDate();
         startTime = source.getStartTime().getTime();
         endTime = source.getEndTime().getTime();
+        isDone = source.getIsDoneStatus();
         patient = new JsonAdaptedPatient(source.getPatient());
     }
 
@@ -72,12 +75,17 @@ class JsonAdaptedAppointment {
         final Time modelStartTime = new Time(startTime);
         final Time modelEndTime = new Time(endTime);
 
-
         if (date == null) {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Date.class.getSimpleName()));
         }
 
         final Date modelDate = new Date(date);
+
+        if (isDone == null) {
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, "Done Status"));
+        }
+
+        final boolean modelDoneStatus = isDone;
 
         if (patient == null) {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Patient.class.getSimpleName()));
@@ -85,7 +93,7 @@ class JsonAdaptedAppointment {
 
         final Patient modelPatient = patient.toModelType();
 
-        return new Appointment(modelDate, modelStartTime, modelEndTime, modelPatient);
+        return new Appointment(modelDate, modelStartTime, modelEndTime, modelPatient, modelDoneStatus);
     }
 
 }

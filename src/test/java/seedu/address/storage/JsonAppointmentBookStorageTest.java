@@ -26,7 +26,7 @@ public class JsonAppointmentBookStorageTest {
     public Path testFolder;
 
     @Test
-    public void readAddressBook_nullFilePath_throwsNullPointerException() {
+    public void readAppointmentBook_nullFilePath_throwsNullPointerException() {
         assertThrows(NullPointerException.class, () -> readAppointmentBook(null));
     }
 
@@ -83,12 +83,12 @@ public class JsonAppointmentBookStorageTest {
     }
 
     @Test
-    public void saveAddressBook_nullAddressBook_throwsNullPointerException() {
+    public void saveAppointmentBook_nullAppointmentBook_throwsNullPointerException() {
         assertThrows(NullPointerException.class, () -> saveAppointmentBook(null, "SomeFile.json"));
     }
 
     @Test
-    public void saveAddressBook_nullFilePath_throwsNullPointerException() {
+    public void saveAppointmentBook_nullFilePath_throwsNullPointerException() {
         assertThrows(NullPointerException.class, () -> saveAppointmentBook(new AppointmentBook(), null));
     }
 

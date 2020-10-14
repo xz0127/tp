@@ -223,15 +223,16 @@ public class ModelManager implements Model {
     //=========== Model Validation =============================================================
 
     /**
-     * Checks if the {@code addressBook} is consistent with the {@code appointmentBook} data.
+     * Checks if the {@code readOnlyPatientBook} is consistent with the {@code appointmentBook} data.
      *
-     * @param addressBook the patients data
+     * @param readOnlyPatientBook the patients data
      * @param appointmentBook the appointments data
      * @return true if the two books are valid, false otherwise
      */
-    public static boolean isValidModel(ReadOnlyAddressBook addressBook, ReadOnlyAppointmentBook appointmentBook) {
+    public static boolean isValidModel(ReadOnlyPatientBook readOnlyPatientBook,
+                                       ReadOnlyAppointmentBook appointmentBook) {
         List<Appointment> appointmentList = appointmentBook.getAppointmentList();
-        AddressBook patientBook = new AddressBook(addressBook);
+        PatientBook patientBook = new PatientBook(readOnlyPatientBook);
 
         for (Appointment appointment : appointmentList) {
             if (!patientBook.hasPatient(appointment.getPatient())) {

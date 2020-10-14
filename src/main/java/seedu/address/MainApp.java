@@ -25,8 +25,8 @@ import seedu.address.model.ReadOnlyUserPrefs;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.util.SampleDataUtil;
 import seedu.address.storage.AppointmentBookStorage;
-import seedu.address.storage.JsonPatientBookStorage;
 import seedu.address.storage.JsonAppointmentBookStorage;
+import seedu.address.storage.JsonPatientBookStorage;
 import seedu.address.storage.JsonUserPrefsStorage;
 import seedu.address.storage.PatientBookStorage;
 import seedu.address.storage.Storage;
@@ -103,7 +103,7 @@ public class MainApp extends Application {
         ReadOnlyPatientBook initialPatientData;
 
         try {
-            patientBookOptional = storage.readAppointmentBook();
+            patientBookOptional = storage.readPatientBook();
             if (patientBookOptional.isEmpty()) {
                 logger.info("Data file not found. Will be starting with a sample PatientBook");
             }
