@@ -88,6 +88,12 @@ public interface Model {
     void deletePatient(Patient target);
 
     /**
+     * Deletes the given appointment.
+     * The appointment must exist in the appointment book.
+     */
+    void deleteAppointment(Appointment target);
+
+    /**
      * Adds the given patient.
      * {@code patient} must not already exist in the patient book.
      */
@@ -108,12 +114,22 @@ public interface Model {
     void setPatient(Patient target, Patient editedPatient);
 
     /**
-     * Replaces the given appointment {@code target} with {@code editedAppointment}.
+     * Updates the relevant appointments upon the editing of a given {@code target} with {@code editedPatient}.
+     */
+    void updateAppointmentsWithPatient(Patient target, Patient editedPatient);
+
+    /**
+     * Deletes the relevant appointments upon the deletion of a given {@code target}.
+     */
+    void deleteAppointmentsWithPatient(Patient target);
+
+    /**
+     * Replaces the given {@code target} with {@code editedAppointment}.
      * {@code target} must exist in the appointment book.
-     * The appointment identity  of {@code editedAppointment} must not be the same as another appointment
+     * The appointment details of {@code editedAppointment} must not be the same as another existing appointment
      * in the appointment book.
      */
-    void setAppointment(Appointment target, Appointment editedPatient);
+    void setAppointment(Appointment target, Appointment editedAppointment);
 
     /** Returns an unmodifiable view of the filtered patient list */
     ObservableList<Patient> getFilteredPatientList();
