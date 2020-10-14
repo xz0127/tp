@@ -6,7 +6,7 @@ import seedu.address.model.patient.Patient;
 /**
  * A utility class to help with building Patientbook objects.
  * Example usage: <br>
- *     {@code PatientBook ab = new PatientBookBuilder().withPatient("John", "Doe").build();}
+ *     {@code PatientBook pb = new PatientBookBuilder().withPatient("John", "Doe").build();}
  */
 public class PatientBookBuilder {
 

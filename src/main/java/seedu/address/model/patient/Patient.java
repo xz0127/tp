@@ -22,18 +22,20 @@ public class Patient {
 
     // Data fields
     private final Address address;
+    private final Remark remark;
     private final Set<Tag> tags = new HashSet<>();
 
     /**
      * Every field must be present and not null.
      */
-    public Patient(Name name, Phone phone, Address address, Set<Tag> tags, Nric nric) {
-        requireAllNonNull(name, phone, address, tags, nric);
+    public Patient(Name name, Phone phone, Address address, Set<Tag> tags, Nric nric, Remark remark) {
+        requireAllNonNull(name, phone, address, tags, nric, remark);
         this.name = name;
         this.phone = phone;
         this.address = address;
         this.tags.addAll(tags);
         this.nric = nric;
+        this.remark = remark;
     }
 
     public Name getName() {
@@ -50,6 +52,10 @@ public class Patient {
 
     public Nric getNric() {
         return nric;
+    }
+
+    public Remark getRemark() {
+        return remark;
     }
 
     /**
@@ -113,9 +119,10 @@ public class Patient {
                 .append(getPhone())
                 .append("; Address: ")
                 .append(getAddress())
+                .append("; Remark: ")
+                .append(getRemark())
                 .append("; Tags: ");
         getTags().forEach(builder::append);
         return builder.append(";").toString();
     }
-
 }

@@ -1,0 +1,29 @@
+{
+  "appointments" : [ {
+    "date" : "2050-01-01",
+    "startTime" : "10:00:00",
+    "endTime" : "11:00:00",
+    "patient" : {
+      "name" : "Alice Pauline",
+      "phone" : "94351253",
+      "address" : "123, Jurong West Ave 6, #08-111",
+      "tagged" : [ "friends" ],
+      "nric" : "S1234567I",
+      "remark" : ""
+    },
+    "isDone" : false
+  }, {
+    "date" : "2050-01-01",
+    "startTime" : "10:30:00",
+    "endTime" : "11:30:00",
+    "patient" : {
+      "name" : "Carl Kurz",
+      "phone" : "95352563",
+      "address" : "wall street",
+      "tagged" : [ ],
+      "nric" : "S1234567P",
+      "remark" : ""
+    },
+    "isDone" : false
+  } ]
+}

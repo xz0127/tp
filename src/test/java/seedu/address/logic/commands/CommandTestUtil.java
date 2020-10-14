@@ -17,8 +17,12 @@ import java.util.List;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.AppointmentBook;
 import seedu.address.model.Model;
 import seedu.address.model.PatientBook;
+import seedu.address.model.appointment.Appointment;
+import seedu.address.model.appointment.Date;
+import seedu.address.model.appointment.Time;
 import seedu.address.model.patient.NameContainsKeywordsPredicate;
 import seedu.address.model.patient.Patient;
 import seedu.address.testutil.DateTimeLoaderBuilder;
@@ -36,10 +40,12 @@ public class CommandTestUtil {
     public static final String VALID_PHONE_BOB = "22222222";
     public static final String VALID_ADDRESS_AMY = "Block 312, Amy Street 1";
     public static final String VALID_ADDRESS_BOB = "Block 123, Bobby Street 3";
+    public static final String VALID_REMARK_AMY = "She loves movies";
+    public static final String VALID_REMARK_BOB = "Serial entrepreneur";
     public static final String VALID_TAG_HUSBAND = "husband";
     public static final String VALID_TAG_FRIEND = "friend";
-    public static final String VALID_DATE = "20 Nov 2035";
-    public static final String DIFF_DATE = "03 August 2035";
+    public static final String VALID_DATE = "20 Nov 2050";
+    public static final String DIFF_DATE = "03 August 2050";
     public static final String VALID_TIME = "12pm";
     public static final String SAME_TIME = "Afternoon";
     public static final String OVERLAP_TIME = "12:01 pm";
@@ -130,15 +136,22 @@ public class CommandTestUtil {
         // we are unable to defensively copy the model for comparison later, so we can
         // only do so by copying its components.
         PatientBook expectedPatientBook = new PatientBook(actualModel.getPatientBook());
-        List<Patient> expectedFilteredList = new ArrayList<>(actualModel.getFilteredPatientList());
+        List<Patient> expectedFilteredPatientList = new ArrayList<>(actualModel.getFilteredPatientList());
+
+        AppointmentBook expectedAppointmentBook = new AppointmentBook(actualModel.getAppointmentBook());
+        List<Appointment> expectedFilteredAppointmentList = new ArrayList<>(actualModel.getFilteredAppointmentList());
 
         assertThrows(CommandException.class, expectedMessage, () -> command.execute(actualModel));
+
         assertEquals(expectedPatientBook, actualModel.getPatientBook());
-        assertEquals(expectedFilteredList, actualModel.getFilteredPatientList());
+        assertEquals(expectedFilteredPatientList, actualModel.getFilteredPatientList());
+
+        assertEquals(expectedAppointmentBook, actualModel.getAppointmentBook());
+        assertEquals(expectedFilteredAppointmentList, actualModel.getFilteredAppointmentList());
     }
 
     /**
-     * Updates {@code model}'s filtered list to show only the patient at the given {@code targetIndex} in the
+     * Updates {@code model}'s filtered patient list to show only the patient at the given {@code targetIndex} in the
      * {@code model}'s patient book.
      */
     public static void showPatientAtIndex(Model model, Index targetIndex) {
@@ -149,6 +162,21 @@ public class CommandTestUtil {
         model.updateFilteredPatientList(new NameContainsKeywordsPredicate(Arrays.asList(splitName[0])));
 
         assertEquals(1, model.getFilteredPatientList().size());
+    }
+
+    /**
+     * Updates {@code model}'s filtered appointment list to show only the appointment at the given {@code targetIndex}
+     * in the {@code model}'s appointment book.
+     */
+    public static void showAppointmentAtIndex(Model model, Index targetIndex) {
+        assertTrue(targetIndex.getZeroBased() < model.getFilteredAppointmentList().size());
+
+        Appointment appointment = model.getFilteredAppointmentList().get(targetIndex.getZeroBased());
+        final Date date = appointment.getDate();
+        final Time startTime = appointment.getStartTime();
+        model.updateFilteredAppointmentList(appt -> appt.startAtSameTime(date, startTime));
+
+        assertEquals(1, model.getFilteredAppointmentList().size());
     }
 
 }

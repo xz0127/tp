@@ -5,16 +5,13 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.testutil.Assert.assertThrows;
 
-import java.time.LocalDate;
-import java.time.LocalTime;
-
 import org.junit.jupiter.api.Test;
 
 public class AppointmentIdTest {
-    private final Date testDate = new Date(LocalDate.of(2020, 2, 2));
-    private final Time testTime = new Time(LocalTime.NOON);
-    private final Date testDate1 = new Date(LocalDate.of(2019, 11, 24));
-    private final Time testTime2 = new Time(LocalTime.of(13, 30));
+    private final Date testDate = new Date(2020, 2, 2);
+    private final Time testTime = new Time(12, 0);
+    private final Date testDate1 = new Date(2019, 11, 24);
+    private final Time testTime2 = new Time(13, 30);
 
     @Test
     public void constructor_null_throwsNullPointerException() {

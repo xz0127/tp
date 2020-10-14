@@ -12,7 +12,9 @@ import seedu.address.model.patient.Patient;
  * The API of the Model component.
  */
 public interface Model {
-    /** {@code Predicate} that always evaluate to true */
+    /**
+     * {@code Predicate} that always evaluate to true
+     */
     Predicate<Patient> PREDICATE_SHOW_ALL_PATIENTS = unused -> true;
     Predicate<Appointment> PREDICATE_SHOW_ALL_APPOINTMENTS = unused -> true;
 
@@ -134,12 +136,14 @@ public interface Model {
 
     /**
      * Updates the filter of the filtered patient list to filter by the given {@code predicate}.
+     *
      * @throws NullPointerException if {@code predicate} is null.
      */
     void updateFilteredPatientList(Predicate<Patient> predicate);
 
     /**
      * Updates the filter of the filtered appointment list to filter by the given {@code predicate}.
+     *
      * @throws NullPointerException if {@code predicate} is null.
      */
     void updateFilteredAppointmentList(Predicate<Appointment> predicate);
@@ -149,9 +153,13 @@ public interface Model {
      */
     void setAppointmentBook(ReadOnlyAppointmentBook appointmentBook);
 
-    /** Returns the AppointmentBook */
+    /**
+     * Returns the AppointmentBook
+     */
     ReadOnlyAppointmentBook getAppointmentBook();
 
-    /** Returns an unmodifiable view of the filtered appointment list */
+    /**
+     * Returns an unmodifiable view of the filtered appointment list
+     */
     ObservableList<Appointment> getFilteredAppointmentList();
 }

@@ -4,7 +4,7 @@ import java.util.function.Predicate;
 import java.util.stream.Stream;
 
 /**
- * Tests that an {@code Appointment}'s  {@code Date} matches the Date given.
+ * Tests that an {@code Appointment}'s {@code Date} matches the Date given.
  */
 public class DateMatchesPredicate implements Predicate<Appointment> {
     private final Date date;

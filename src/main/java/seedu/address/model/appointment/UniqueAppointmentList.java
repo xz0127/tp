@@ -161,7 +161,7 @@ public class UniqueAppointmentList implements Iterable<Appointment> {
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof UniqueAppointmentList // instanceof handles nulls
-                && internalList.equals(((UniqueAppointmentList) other).internalList));
+                && internalUnmodifiableList.equals(((UniqueAppointmentList) other).internalUnmodifiableList));
     }
 
     @Override
