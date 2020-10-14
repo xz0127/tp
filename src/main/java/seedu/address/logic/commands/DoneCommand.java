@@ -4,7 +4,6 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DATE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TIME;
-import static seedu.address.model.Model.PREDICATE_SHOW_ALL_APPOINTMENTS;
 
 import java.util.List;
 import java.util.Optional;
@@ -68,7 +67,6 @@ public class DoneCommand extends Command {
         Appointment doneAppointment = toMark.markAsDone();
 
         model.setAppointment(toMark, doneAppointment);
-        model.updateFilteredAppointmentList(PREDICATE_SHOW_ALL_APPOINTMENTS);
         return new CommandResult(String.format(MESSAGE_MARK_DONE_SUCCESS, toMark));
     }
 
