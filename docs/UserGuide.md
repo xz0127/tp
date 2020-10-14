@@ -179,9 +179,9 @@ Deletes the specified appointment at the date and time indicated from the appoin
 
 Format `cancel d/DATE t/TIME`
 
-* Deletes the appointment at the specified `DATE and TIME`.
-* The `DATE and TIME` indicated must take place in the future.
-* An appointment with the corresponding `DATE and TIME` must exist in the appointment book.
+* Deletes the appointment at the specified `DATE` and `TIME`.
+* The `DATE` and `TIME` indicated must take place in the future.
+* An appointment with the corresponding `DATE` and `TIME` must exist in the appointment book.
 
 Example:
 * `cancel d/02/12/2020 t/10am` deletes the appointment happening on 02/12/2020 10am.
@@ -207,9 +207,8 @@ Marks a specific appointment in the patient book as done.
 
 Format: `done d/DATE t/TIME`
 
-* Marks the appointment with the specified `DATE and TIME` as done.
-* The `DATE and TIME` indicated must take place in the future.
-* An appointment with the corresponding `DATE and TIME` must exist in the appointment book.
+* Marks the appointment with the specified `DATE` and `TIME` as done.
+* An appointment with the corresponding `DATE` and `TIME` must exist in the appointment book.
 
 Example:
 * `done d/02/12/2020 t/10am` marks the appointment happening on 02/12/2020 10am as completed.
