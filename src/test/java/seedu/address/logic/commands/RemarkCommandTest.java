@@ -69,8 +69,7 @@ class RemarkCommandTest {
 
         Patient firstPatient = model.getFilteredPatientList()
                 .get(INDEX_FIRST_PATIENT.getZeroBased());
-        Patient editedPatient = new PatientBuilder(model.getFilteredPatientList()
-                .get(INDEX_FIRST_PATIENT.getZeroBased()))
+        Patient editedPatient = new PatientBuilder(firstPatient)
                 .withRemark(REMARK_STUB).build();
 
         RemarkCommand remarkCommand = new RemarkCommand(INDEX_FIRST_PATIENT,
