@@ -20,7 +20,8 @@
       "phone" : "95352563",
       "address" : "wall street",
       "tagged" : [ ],
-      "nric" : "S1234567P"
+      "nric" : "S1234567P",
+      "remark" : ""
     },
     "isDone" : false
   } ]

@@ -8,7 +8,8 @@
       "phone" : "94351253",
       "address" : "123, Jurong West Ave 6, #08-111",
       "tagged" : [ "friends" ],
-      "nric" : "S1234567I"
+      "nric" : "S1234567I",
+      "remark" : "This is a test remark :)"
     },
     "isDone" : false
   }, {
@@ -20,7 +21,8 @@
       "phone" : "95352563",
       "address" : "wall street",
       "tagged" : [ ],
-      "nric" : "S1234567P"
+      "nric" : "S1234567P",
+      "remark" : "This is a test remark :)"
     },
     "isDone" : false
   }, {
@@ -32,7 +34,8 @@
       "phone" : "98765432",
       "address" : "311, Clementi Ave 2, #02-25",
       "tagged" : [ "owesMoney", "friends" ],
-      "nric" : "S1234567O"
+      "nric" : "S1234567O",
+      "remark" : "He can't take beer!"
     },
     "isDone" : false
   }, {
@@ -44,7 +47,8 @@
       "phone" : "98765432",
       "address" : "311, Clementi Ave 2, #02-25",
       "tagged" : [ "owesMoney", "friends" ],
-      "nric" : "S1234567O"
+      "nric" : "S1234567O",
+      "remark" : "He can't take beer!"
     },
     "isDone" : false
   }, {
@@ -56,7 +60,8 @@
       "phone" : "95352563",
       "address" : "wall street",
       "tagged" : [ ],
-      "nric" : "S1234567P"
+      "nric" : "S1234567P",
+      "remark" : "This is a test remark :)"
     },
     "isDone" : false
   }, {
@@ -68,7 +73,8 @@
       "phone" : "94351253",
       "address" : "123, Jurong West Ave 6, #08-111",
       "tagged" : [ "friends" ],
-      "nric" : "S1234567I"
+      "nric" : "S1234567I",
+      "remark" : "This is a test remark :)"
     },
     "isDone" : false
   } ]

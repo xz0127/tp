@@ -23,7 +23,7 @@ public class JsonAdaptedAppointmentTest {
     private static final LocalTime INVALID_END_TIME_ORDER = LocalTime.of(10, 0);
     private static final LocalTime INVALID_TIME = LocalTime.of(23, 59);
     private static final JsonAdaptedPatient INVALID_PATIENT =
-            new JsonAdaptedPatient("R@chel", "+651234", " ", null, "a123456G");
+            new JsonAdaptedPatient("R@chel", "+651234", " ", null, "a123456G", "");
 
     private static final LocalDate VALID_DATE = BENSON_APPOINTMENT.getDate().getDate();
     private static final LocalTime VALID_START_TIME = BENSON_APPOINTMENT.getStartTime().getTime();
