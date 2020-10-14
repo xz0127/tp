@@ -17,7 +17,18 @@ public class Date {
     private final LocalDate value;
 
     /**
-     * Create a {@code Date} that represents the date of an appointment.
+     * Creates a {@code Date} that represents the date of an appointment.
+     *
+     * @param year  the year of the date.
+     * @param month the month of the date, from 1 (January) to 12 (December).
+     * @param day   the day of the date, from 1 to 31.
+     */
+    public Date(int year, int month, int day) {
+        this(LocalDate.of(year, month, day));
+    }
+
+    /**
+     * Creates a {@code Date} that represents the date of an appointment.
      *
      * @param date the {@code LocalDate} containing the date.
      */
@@ -32,7 +43,7 @@ public class Date {
     }
 
     /**
-     * Check if the appointment date comes before the input {@code Date}.
+     * Checks if the appointment date comes before the input {@code Date}.
      *
      * @param inputDate the input date to be checked against
      * @return true if the appointment date comes before the input date, false otherwise
@@ -42,7 +53,7 @@ public class Date {
     }
 
     /**
-     * Check if the appointment date comes after the input {@code Date}.
+     * Checks if the appointment date comes after the input {@code Date}.
      *
      * @param inputDate the input date to be checked against
      * @return true if the appointment date comes after the input date, false otherwise
@@ -69,7 +80,7 @@ public class Date {
     }
 
     /**
-     * Format appointment date as text for viewing
+     * Formats appointment date as text for viewing
      */
     @Override
     public String toString() {

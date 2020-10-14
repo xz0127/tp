@@ -1,6 +1,7 @@
 package seedu.address.model.appointment;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.commons.util.AppUtil.checkArgument;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.time.Duration;
@@ -18,11 +19,13 @@ public class Appointment {
     // Creation offset in minutes. Used to allow creation of "last-minute" appointments.
     public static final int CREATION_OFFSET_MINUTES = 20;
 
+    public static final String MESSAGE_CONSTRAINTS = "The appointment start time should be before the end time.";
+
     // Identity fields
     private final Date date;
     private final Time startTime;
     private final Time endTime;
-    private boolean isDone;
+    private final boolean isDone;
     // todo: add more support for appointmentId
     private final AppointmentId appointmentId;
 
@@ -30,33 +33,32 @@ public class Appointment {
     private final Patient patient;
 
     /**
-     * Create an appointment with the patient.
+     * Create an appointment using the default duration.
      * Every field must be present and not null.
      */
     public Appointment(Date date, Time startTime, Patient patient) {
-        requireAllNonNull(date, startTime, patient);
-        this.date = date;
-        this.startTime = startTime;
-        this.endTime = new Time(startTime.getTime().plus(DEFAULT_DURATION));
-
-        assert startTime.isBefore(endTime);
-
-        this.appointmentId = new AppointmentId(date, startTime);
-
-        this.patient = patient;
-        this.isDone = false;
+        this(date, startTime, new Time(startTime.getTime().plus(DEFAULT_DURATION)), patient);
     }
 
     /**
-     * Create an appointment which is done.
+     * Create an appointment with specified end time.
+     * Every field must be present and not null.
      */
-    public Appointment(Date date, Time startTime, Patient patient, boolean isDone) {
-        requireAllNonNull(date, startTime);
+    public Appointment(Date date, Time startTime, Time endTime, Patient patient) {
+        this(date, startTime, endTime, patient, false);
+    }
+
+    /**
+     * Create an appointment with specified end time and end status.
+     * Every field must be present and not null.
+     */
+    public Appointment(Date date, Time startTime, Time endTime, Patient patient, boolean isDone) {
+        requireAllNonNull(date, startTime, endTime, patient);
+        checkArgument(startTime.isBefore(endTime), MESSAGE_CONSTRAINTS);
+
         this.date = date;
         this.startTime = startTime;
-        this.endTime = new Time(startTime.getTime().plus(DEFAULT_DURATION));
-
-        assert startTime.isBefore(endTime);
+        this.endTime = endTime;
 
         this.appointmentId = new AppointmentId(date, startTime);
         this.patient = patient;
@@ -86,13 +88,14 @@ public class Appointment {
     public boolean getIsDoneStatus() {
         return isDone;
     }
+
     public Appointment setPatient(Patient p) {
         requireNonNull(p);
-        return new Appointment(date, startTime, p);
+        return new Appointment(date, startTime, endTime, p, isDone);
     }
 
     public Appointment markAsDone() {
-        return new Appointment(date, startTime, patient, true);
+        return new Appointment(date, startTime, endTime, patient, true);
     }
 
     /**
@@ -128,6 +131,7 @@ public class Appointment {
 
     /**
      * Returns true if both appointments start at the given date and time.
+     *
      * @param d given date
      * @param t given time
      */
@@ -149,7 +153,7 @@ public class Appointment {
 
         return getDate().isBefore(otherAppointment.getDate())
                 || (getDate().equals(otherAppointment.getDate())
-                && !(getEndTime().isAfter(otherAppointment.getStartTime()))); // End1 <= Start2
+                    && !(getEndTime().isAfter(otherAppointment.getStartTime()))); // End1 <= Start2
     }
 
     /**
@@ -163,7 +167,7 @@ public class Appointment {
 
         return getDate().isAfter(otherAppointment.getDate())
                 || (getDate().equals(otherAppointment.getDate())
-                && !(otherAppointment.getEndTime().isAfter(getStartTime()))); // End2 <= Start1
+                    && !(otherAppointment.getEndTime().isAfter(getStartTime()))); // End2 <= Start1
     }
 
     /**

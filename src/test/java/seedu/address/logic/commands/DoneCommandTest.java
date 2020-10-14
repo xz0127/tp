@@ -26,8 +26,7 @@ public class DoneCommandTest {
 
     @Test
     public void execute_validDateTimeInput_success() {
-        DateTimeLoader loader = new DateTimeLoaderBuilder()
-                .withDate("1 Jan 2020").withTime("9am").build();
+        DateTimeLoader loader = new DateTimeLoaderBuilder(ALICE_APPOINTMENT).build();
         Appointment appointmentToMark = ALICE_APPOINTMENT;
         Appointment markedAppointment = ALICE_APPOINTMENT.markAsDone();
         DoneCommand doneCommand = new DoneCommand(loader);
@@ -53,8 +52,7 @@ public class DoneCommandTest {
 
     @Test
     public void execute_markTheAlreadyDoneAppointment_fail() {
-        DateTimeLoader loader = new DateTimeLoaderBuilder()
-                .withDate("1 Jan 2020").withTime("9am").build();
+        DateTimeLoader loader = new DateTimeLoaderBuilder(ALICE_APPOINTMENT).build();
         Appointment appointmentToMark = ALICE_APPOINTMENT;
         Appointment markedAppointment = ALICE_APPOINTMENT.markAsDone();
         model.setAppointment(appointmentToMark, markedAppointment);
