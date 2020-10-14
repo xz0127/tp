@@ -27,7 +27,7 @@ public class CancelCommandTest {
     @Test
     public void execute_validDateTimeInput_success() {
         DateTimeLoader loader = new DateTimeLoaderBuilder()
-                .withDate("1 Jan 2020").withTime("9am").build();
+                .withDate("1 Jan 2050").withTime("9am").build();
         Appointment appointmentToCancel = ALICE_APPOINTMENT;
         CancelCommand cancelCommand = new CancelCommand(loader);
 
@@ -39,7 +39,6 @@ public class CancelCommandTest {
 
         assertCommandSuccess(cancelCommand, model, expectedMessage, expectedModel);
     }
-
 
     @Test
     public void execute_appointmentWithDateTimeAbsent_fail() {

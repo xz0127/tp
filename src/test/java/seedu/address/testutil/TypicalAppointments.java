@@ -19,7 +19,7 @@ import seedu.address.model.appointment.AppointmentComparator;
 public class TypicalAppointments {
 
     public static final Appointment ALICE_APPOINTMENT = new AppointmentBuilder()
-            .withDate(LocalDate.of(2020, 1, 1))
+            .withDate(LocalDate.of(2050, 1, 1))
             .withStartTime(LocalTime.of(9, 0))
             .withPatient(ALICE).build();
     public static final Appointment BOB_APPOINTMENT = new AppointmentBuilder()
