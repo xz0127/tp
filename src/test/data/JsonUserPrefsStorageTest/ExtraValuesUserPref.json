@@ -10,6 +10,6 @@
     },
     "splitViewRatio" : 0.3
   },
-  "addressBookFilePath" : "addressbook.json",
+  "patientBookFilePath" : "patientbook.json",
   "appointmentBookFilePath" : "appointment.json"
 }

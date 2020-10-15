@@ -1,8 +1,10 @@
 package seedu.address.testutil;
 
 import static seedu.address.testutil.TypicalPatients.ALICE;
-import static seedu.address.testutil.TypicalPatients.BOB;
+import static seedu.address.testutil.TypicalPatients.BENSON;
 import static seedu.address.testutil.TypicalPatients.CARL;
+import static seedu.address.testutil.TypicalPatients.HOON;
+import static seedu.address.testutil.TypicalPatients.IDA;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -19,29 +21,37 @@ import seedu.address.model.appointment.AppointmentComparator;
 public class TypicalAppointments {
 
     public static final Appointment ALICE_APPOINTMENT = new AppointmentBuilder()
-            .withDate(LocalDate.of(2020, 1, 1))
-            .withStartTime(LocalTime.of(9, 0))
+            .withDate(LocalDate.of(2050, 1, 1))
+            .withTime(LocalTime.of(9, 0))
             .withPatient(ALICE).build();
-    public static final Appointment BOB_APPOINTMENT = new AppointmentBuilder()
-            .withDate(LocalDate.of(2020, 5, 12))
-            .withStartTime(LocalTime.of(11, 30))
-            .withPatient(BOB).build();
+    public static final Appointment BENSON_APPOINTMENT = new AppointmentBuilder()
+            .withDate(LocalDate.of(2050, 5, 12))
+            .withTime(LocalTime.of(11, 30))
+            .withPatient(BENSON).build();
     public static final Appointment CARL_APPOINTMENT = new AppointmentBuilder()
-            .withDate(LocalDate.of(2020, 1, 1))
-            .withStartTime(LocalTime.of(20, 0))
+            .withDate(LocalDate.of(2050, 1, 1))
+            .withTime(LocalTime.of(20, 0))
             .withPatient(CARL).build();
     public static final Appointment ALICE_APPOINTMENT_2 = new AppointmentBuilder()
-            .withDate(LocalDate.of(2020, 5, 22))
-            .withStartTime(LocalTime.of(15, 0))
+            .withDate(LocalDate.of(2050, 5, 22))
+            .withTime(LocalTime.of(15, 0))
             .withPatient(ALICE).build();
-    public static final Appointment BOB_APPOINTMENT_2 = new AppointmentBuilder()
-            .withDate(LocalDate.of(2020, 4, 1))
-            .withStartTime(LocalTime.of(11, 30))
-            .withPatient(BOB).build();
+    public static final Appointment BENSON_APPOINTMENT_2 = new AppointmentBuilder()
+            .withDate(LocalDate.of(2050, 4, 1))
+            .withTime(LocalTime.of(11, 30))
+            .withPatient(BENSON).build();
     public static final Appointment CARL_APPOINTMENT_2 = new AppointmentBuilder()
-            .withDate(LocalDate.of(2020, 5, 22))
-            .withStartTime(LocalTime.of(14, 0))
+            .withDate(LocalDate.of(2050, 5, 22))
+            .withTime(LocalTime.of(14, 0))
             .withPatient(CARL).build();
+
+    // Manually added
+    public static final Appointment HOON_APPOINTMENT = new AppointmentBuilder().withPatient(HOON)
+            .withDate(LocalDate.of(2050, 2, 5))
+            .withTime(LocalTime.of(13, 0)).build();
+    public static final Appointment IDA_APPOINTMENT = new AppointmentBuilder().withPatient(IDA)
+            .withDate(LocalDate.of(2050, 2, 5))
+            .withTime(LocalTime.of(19, 30)).build();
 
     private TypicalAppointments() {
     } // prevents instantiation
@@ -59,8 +69,8 @@ public class TypicalAppointments {
 
     public static List<Appointment> getTypicalAppointments() {
         List<Appointment> appointmentList = Arrays.asList(
-                ALICE_APPOINTMENT, BOB_APPOINTMENT, CARL_APPOINTMENT,
-                CARL_APPOINTMENT_2, ALICE_APPOINTMENT_2, BOB_APPOINTMENT_2
+                ALICE_APPOINTMENT, BENSON_APPOINTMENT, CARL_APPOINTMENT,
+                CARL_APPOINTMENT_2, ALICE_APPOINTMENT_2, BENSON_APPOINTMENT_2
         );
         appointmentList.sort(new AppointmentComparator());
         return appointmentList;

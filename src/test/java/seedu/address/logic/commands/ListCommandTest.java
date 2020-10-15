@@ -1,10 +1,12 @@
 package seedu.address.logic.commands;
 
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
+import static seedu.address.logic.commands.CommandTestUtil.showAppointmentAtIndex;
 import static seedu.address.logic.commands.CommandTestUtil.showPatientAtIndex;
 import static seedu.address.testutil.TypicalAppointments.getTypicalAppointmentBook;
+import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_APPOINTMENT;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PATIENT;
-import static seedu.address.testutil.TypicalPatients.getTypicalAddressBook;
+import static seedu.address.testutil.TypicalPatients.getTypicalPatientBook;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -23,18 +25,32 @@ public class ListCommandTest {
 
     @BeforeEach
     public void setUp() {
-        model = new ModelManager(getTypicalAddressBook(), getTypicalAppointmentBook(), new UserPrefs());
-        expectedModel = new ModelManager(model.getAddressBook(), model.getAppointmentBook(), new UserPrefs());
+        model = new ModelManager(getTypicalPatientBook(), getTypicalAppointmentBook(), new UserPrefs());
+        expectedModel = new ModelManager(model.getPatientBook(), model.getAppointmentBook(), new UserPrefs());
     }
 
     @Test
-    public void execute_listIsNotFiltered_showsSameList() {
+    public void execute_listsAreNotFiltered_showsSameList() {
         assertCommandSuccess(new ListCommand(), model, ListCommand.MESSAGE_SUCCESS, expectedModel);
     }
 
     @Test
-    public void execute_listIsFiltered_showsEverything() {
+    public void execute_patientListIsFiltered_showsEverything() {
         showPatientAtIndex(model, INDEX_FIRST_PATIENT);
         assertCommandSuccess(new ListCommand(), model, ListCommand.MESSAGE_SUCCESS, expectedModel);
     }
+
+    @Test
+    public void execute_appointmentListIsFiltered_showsEverything() {
+        showAppointmentAtIndex(model, INDEX_FIRST_APPOINTMENT);
+        assertCommandSuccess(new ListCommand(), model, ListCommand.MESSAGE_SUCCESS, expectedModel);
+    }
+
+    @Test
+    public void execute_bothListsAreFiltered_showsEverything() {
+        showPatientAtIndex(model, INDEX_FIRST_PATIENT);
+        showAppointmentAtIndex(model, INDEX_FIRST_APPOINTMENT);
+        assertCommandSuccess(new ListCommand(), model, ListCommand.MESSAGE_SUCCESS, expectedModel);
+    }
+
 }

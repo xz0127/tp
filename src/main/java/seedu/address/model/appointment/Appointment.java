@@ -1,11 +1,11 @@
 package seedu.address.model.appointment;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.commons.util.AppUtil.checkArgument;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.time.Duration;
 import java.util.Objects;
-import java.util.Optional;
 
 import seedu.address.model.patient.Patient;
 
@@ -16,38 +16,53 @@ import seedu.address.model.patient.Patient;
 public class Appointment {
     // Duration of an appointment in hours
     public static final Duration DEFAULT_DURATION = Duration.ofHours(1);
+    // Creation offset in minutes. Used to allow creation of "last-minute" appointments.
+    public static final int CREATION_OFFSET_MINUTES = 20;
+
+    public static final String MESSAGE_CONSTRAINTS = "The appointment start time should be before the end time.";
 
     // Identity fields
     private final Date date;
     private final Time startTime;
     private final Time endTime;
+    private final boolean isDone;
     // todo: add more support for appointmentId
     private final AppointmentId appointmentId;
 
     // Data field
-    private final Optional<Patient> patient;
+    private final Patient patient;
 
     /**
-     * Create an appointment without adding a patient.
-     * Every field must be present and non-null.
+     * Create an appointment using the default duration.
+     * Every field must be present and not null.
      */
-    public Appointment(Date date, Time startTime) {
-        this(date, startTime, null);
+    public Appointment(Date date, Time startTime, Patient patient) {
+        this(date, startTime, new Time(startTime.getTime().plus(DEFAULT_DURATION)), patient);
     }
 
     /**
-     * Create an appointment with the patient.
+     * Create an appointment with specified end time.
+     * Every field must be present and not null.
      */
-    public Appointment(Date date, Time startTime, Patient patient) {
-        requireAllNonNull(date, startTime);
+    public Appointment(Date date, Time startTime, Time endTime, Patient patient) {
+        this(date, startTime, endTime, patient, false);
+    }
+
+    /**
+     * Create an appointment with specified end time and end status.
+     * Every field must be present and not null.
+     */
+    public Appointment(Date date, Time startTime, Time endTime, Patient patient, boolean isDone) {
+        requireAllNonNull(date, startTime, endTime, patient);
+        checkArgument(startTime.isBefore(endTime), MESSAGE_CONSTRAINTS);
+
         this.date = date;
         this.startTime = startTime;
-        this.endTime = new Time(startTime.getTime().plus(DEFAULT_DURATION));
-
-        assert startTime.isBefore(endTime);
+        this.endTime = endTime;
 
         this.appointmentId = new AppointmentId(date, startTime);
-        this.patient = Optional.ofNullable(patient);
+        this.patient = patient;
+        this.isDone = isDone;
     }
 
     public Date getDate() {
@@ -66,25 +81,31 @@ public class Appointment {
         return appointmentId;
     }
 
-    public Optional<Patient> getPatient() {
+    public Patient getPatient() {
         return patient;
+    }
+
+    public boolean getIsDoneStatus() {
+        return isDone;
     }
 
     public Appointment setPatient(Patient p) {
         requireNonNull(p);
-        return new Appointment(date, startTime, p);
+        return new Appointment(date, startTime, endTime, p, isDone);
+    }
+
+    public Appointment markAsDone() {
+        return new Appointment(date, startTime, endTime, patient, true);
     }
 
     /**
      * Checks if the appointment has {@code Patient other}.
-     * Other must be non-null.
      *
      * @param other the patient to check in the appointment.
-     * @return true if {@other Patient other} is in the Appointment, false otherwise.
+     * @return true if {@code Patient other} is in the Appointment, false otherwise.
      */
     public boolean hasPatient(Patient other) {
-        requireNonNull(other);
-        return patient.map(p -> p.isSamePatient(other)).orElse(false);
+        return patient.isSamePatient(other);
     }
 
     /**
@@ -109,6 +130,19 @@ public class Appointment {
     }
 
     /**
+     * Returns true if both appointments start at the given date and time.
+     *
+     * @param d given date
+     * @param t given time
+     */
+    public boolean startAtSameTime(Date d, Time t) {
+        requireAllNonNull(d, t);
+
+        return getDate().equals(d)
+                && getStartTime().equals(t);
+    }
+
+    /**
      * Checks if this appointment comes before the given appointment input.
      *
      * @param otherAppointment the appointment to check against.
@@ -119,7 +153,7 @@ public class Appointment {
 
         return getDate().isBefore(otherAppointment.getDate())
                 || (getDate().equals(otherAppointment.getDate())
-                && !(getEndTime().isAfter(otherAppointment.getStartTime()))); // End1 <= Start2
+                    && !(getEndTime().isAfter(otherAppointment.getStartTime()))); // End1 <= Start2
     }
 
     /**
@@ -133,7 +167,7 @@ public class Appointment {
 
         return getDate().isAfter(otherAppointment.getDate())
                 || (getDate().equals(otherAppointment.getDate())
-                && !(otherAppointment.getEndTime().isAfter(getStartTime()))); // End2 <= Start1
+                    && !(otherAppointment.getEndTime().isAfter(getStartTime()))); // End2 <= Start1
     }
 
     /**
@@ -155,7 +189,8 @@ public class Appointment {
                 && otherAppointment.getEndTime().equals(getEndTime())
                 && otherAppointment.getDate().equals(getDate())
                 && otherAppointment.getAppointmentId().equals(getAppointmentId())
-                && otherAppointment.getPatient().equals(getPatient());
+                && otherAppointment.getPatient().equals(getPatient())
+                && otherAppointment.getIsDoneStatus() == this.getIsDoneStatus();
     }
 
     @Override
@@ -166,19 +201,15 @@ public class Appointment {
     @Override
     public String toString() {
         final StringBuilder builder = new StringBuilder();
-        builder.append("Date: ")
-                .append(getDate())
+        builder.append(getDate())
                 .append(", from ")
                 .append(getStartTime())
                 .append(" to ")
-                .append(getEndTime());
-
-        getPatient().ifPresent(p -> builder
+                .append(getEndTime())
                 .append("\nPatient: ")
-                .append(p.getName())
-                .append(" Contact: ")
-                .append(p.getPhone())
-        );
+                .append(getPatient().getName())
+                .append("; Contact: ")
+                .append(getPatient().getPhone());
 
         return builder.toString();
     }

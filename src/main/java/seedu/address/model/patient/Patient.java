@@ -10,7 +10,7 @@ import java.util.Set;
 import seedu.address.model.tag.Tag;
 
 /**
- * Represents a Patient in the address book.
+ * Represents a Patient in the patient book.
  * Guarantees: details are present and not null, field values are validated, immutable.
  */
 public class Patient {
@@ -22,19 +22,20 @@ public class Patient {
 
     // Data fields
     private final Address address;
+    private final Remark remark;
     private final Set<Tag> tags = new HashSet<>();
 
     /**
      * Every field must be present and not null.
      */
-
-    public Patient(Name name, Phone phone, Address address, Set<Tag> tags, Nric nric) {
-        requireAllNonNull(name, phone, address, tags, nric);
+    public Patient(Name name, Phone phone, Address address, Set<Tag> tags, Nric nric, Remark remark) {
+        requireAllNonNull(name, phone, address, tags, nric, remark);
         this.name = name;
         this.phone = phone;
         this.address = address;
         this.tags.addAll(tags);
         this.nric = nric;
+        this.remark = remark;
     }
 
     public Name getName() {
@@ -51,6 +52,10 @@ public class Patient {
 
     public Nric getNric() {
         return nric;
+    }
+
+    public Remark getRemark() {
+        return remark;
     }
 
     /**
@@ -108,15 +113,16 @@ public class Patient {
     public String toString() {
         final StringBuilder builder = new StringBuilder();
         builder.append(getName())
-                .append(" NRIC: ")
+                .append(" (NRIC: ")
                 .append(getNric())
-                .append("\nPhone: ")
+                .append(")\nPhone: ")
                 .append(getPhone())
-                .append(" Address: ")
+                .append("; Address: ")
                 .append(getAddress())
-                .append(" Tags: ");
+                .append("; Remark: ")
+                .append(getRemark())
+                .append("; Tags: ");
         getTags().forEach(builder::append);
-        return builder.toString();
+        return builder.append(";").toString();
     }
-
 }

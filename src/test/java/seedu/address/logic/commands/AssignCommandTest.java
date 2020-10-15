@@ -10,18 +10,17 @@ import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.testutil.Assert.assertThrows;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_APPOINTMENT;
 import static seedu.address.testutil.TypicalPatients.ALICE;
-import static seedu.address.testutil.TypicalPatients.getTypicalAddressBook;
+import static seedu.address.testutil.TypicalPatients.getTypicalPatientBook;
 import static seedu.address.testutil.TypicalPatients.getTypicalPatients;
 
 import org.junit.jupiter.api.Test;
 
 import seedu.address.commons.core.index.Index;
-import seedu.address.logic.commands.AssignCommand.DateTimeLoader;
 import seedu.address.logic.parser.TimeParserUtil;
-import seedu.address.model.AddressBook;
 import seedu.address.model.AppointmentBook;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
+import seedu.address.model.PatientBook;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.appointment.Appointment;
 import seedu.address.model.appointment.Time;
@@ -31,7 +30,7 @@ import seedu.address.testutil.DateTimeLoaderBuilder;
 
 public class AssignCommandTest {
 
-    private final Model model = new ModelManager(getTypicalAddressBook(), new AppointmentBook(), new UserPrefs());
+    private final Model model = new ModelManager(getTypicalPatientBook(), new AppointmentBook(), new UserPrefs());
 
     @Test
     public void constructor_nullIndex_throwsNullPointerException() {
@@ -59,7 +58,7 @@ public class AssignCommandTest {
         String expectedMessage = String.format(AssignCommand.MESSAGE_SUCCESS, appointment);
         AppointmentBook expectedAppointmentBook = new AppointmentBookBuilder().withAppointment(appointment).build();
 
-        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()),
+        Model expectedModel = new ModelManager(new PatientBook(model.getPatientBook()),
                 expectedAppointmentBook, new UserPrefs());
 
         assertCommandSuccess(assignCommand, model, expectedMessage, expectedModel);

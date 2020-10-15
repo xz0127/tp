@@ -21,7 +21,7 @@ You can reach us at the following emails:
 [[github](http://github.com/jinhao-l)]
 [[portfolio](team/jinhao-l.md)]
 
-* Role: Team Lead 
+* Role: Team Lead
 * Responsibilities: Storage
 
 ### Low Ming Lim
@@ -33,7 +33,7 @@ You can reach us at the following emails:
 
 * Role: Software Engineer
 * Responsibilities: Testing + Scheduling and Tracking
-* In-charge of: Logic and Parsers 
+* In-charge of: Logic and Parsers
 
 
 ### Yang Yue

@@ -7,6 +7,7 @@ import java.util.List;
 import javafx.collections.ObservableList;
 import seedu.address.model.appointment.Appointment;
 import seedu.address.model.appointment.UniqueAppointmentList;
+import seedu.address.model.patient.Patient;
 
 /**
  * Wraps all data at the appointment-book level
@@ -59,42 +60,76 @@ public class AppointmentBook implements ReadOnlyAppointmentBook {
     //// appointment-level operations
 
     /**
-     * Adds an appointment to the address book.
+     * Adds an appointment to the appointment book.
      * The appointment must not overlap with appointments in the appointment book.
      */
     public void addAppointment(Appointment a) {
         appointments.add(a);
     }
 
-    // /**
-    //  * Replaces the given appointment {@code target} in the list with {@code editedAppointment}.
-    //  * {@code target} must exist in the appointment book.
-    //  * The identity of {@code editedPatient} must not be the same as another existing appointment
-    //  * in the address book.
-    //  */
-    // public void setAppointment(Appointment target, Appointment editedAppointment) { }
-    //
-    // /**
-    //  * Removes {@code key} from this {@code AppointmentBook}.
-    //  * {@code key} must exist in the appointment book.
-    //  */
-    // public void removeAppointment(Appointment key) {}
+    /**
+     * Replaces the given appointment {@code target} in the list with {@code editedAppointment}.
+     * {@code target} must exist in the appointment book.
+     * The identity of {@code editedAppointment} must not be the same as another existing appointment
+     * in the appointment book.
+     */
+    public void setAppointment(Appointment target, Appointment editedAppointment) {
+        requireNonNull(editedAppointment);
+
+        appointments.setAppointment(target, editedAppointment);
+    }
+
+    /**
+     * Removes {@code key} from this {@code AppointmentBook}.
+     * {@code key} must exist in the appointment book.
+     */
+    public void removeAppointment(Appointment key) {
+        requireNonNull(key);
+        appointments.remove(key);
+    }
 
     /**
      * Checks if an appointment hasOverlaps with {@code appointments}.
      */
-    public boolean hasAppointment(Appointment a) {
-        requireNonNull(a);
-        return appointments.hasOverlaps(a);
+    public boolean hasOverlapsWith(Appointment appointment) {
+        requireNonNull(appointment);
+        return appointments.hasOverlaps(appointment);
     }
 
-    //// patient-related appointment operations
+    /**
+     * Checks if the appointment list already contains the appointment.
+     */
+    public boolean hasAppointment(Appointment a) {
+        requireNonNull(a);
+        return appointments.hasCompleteOverlaps(a);
+    }
 
-    // public void updateAppointmentsWithPatient(Patient target, Patient editedPatient) {}
-    //
-    // public void deleteAppointmentsWithPatient(Patient target) {}
+    // patient-related appointment operations
 
-    //// util methods
+    /**
+     * Updates all appointments which contain the given {@code target}
+     * in the list with {@code editedPatient}.
+     * {@code target} must exist in at least one of the appointments in the appointment book.
+     *
+     * @param target specific patient who has been updated.
+     * @param editedPatient the patient after the update.
+     */
+    public void updateAppointmentsWithPatients(Patient target, Patient editedPatient) {
+        requireNonNull(editedPatient);
+        appointments.updateAppointmentsWithPatients(target, editedPatient);
+    }
+
+    /**
+     * Deletes the relevant appointments in the appointment book upon the deletion of a given {@code target}.
+     *
+     * @param target the specific patient deleted.
+     */
+    public void deleteAppointmentsWithPatients(Patient target) {
+        requireNonNull(target);
+        appointments.deleteAppointmentsWithPatients(target);
+    }
+
+    // util methods
 
     @Override
     public String toString() {
@@ -119,4 +154,3 @@ public class AppointmentBook implements ReadOnlyAppointmentBook {
         return appointments.hashCode();
     }
 }
-

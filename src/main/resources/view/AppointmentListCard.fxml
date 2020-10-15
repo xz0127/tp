@@ -27,6 +27,11 @@
           <Region fx:constant="USE_PREF_SIZE" />
         </minWidth>
       </Label>
+      <Label fx:id="status" styleClass="cell_big_label" text="\$status" wrapText="true">
+        <minWidth>
+          <Region fx:constant="USE_PREF_SIZE" />
+        </minWidth>
+      </Label>
       <Label fx:id="name" styleClass="cell_small_label" text="\$name" wrapText="true" />
       <Label fx:id="contactNumber" styleClass="cell_small_label" text="\$contact number" wrapText="true" />
     </VBox>

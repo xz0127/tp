@@ -1,0 +1,15 @@
+{
+  "appointments" : [ {
+    "date" : "2050-01-01",
+    "startTime" : "23:59:00",
+    "endTime" : "07:00:00",
+    "patient" : {
+      "name": "Hans M@ster",
+      "nric" : "S0000567P",
+      "phone": "9482424",
+      "address": "4th street",
+      "remark" : ""
+    },
+    "isDone" : false
+  } ]
+}

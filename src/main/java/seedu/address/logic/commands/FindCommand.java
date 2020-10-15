@@ -7,7 +7,7 @@ import seedu.address.model.Model;
 import seedu.address.model.patient.NameContainsKeywordsPredicate;
 
 /**
- * Finds and lists all patients in address book whose name contains any of the argument keywords.
+ * Finds and lists all patients in patient book whose name contains any of the argument keywords.
  * Keyword matching is case insensitive.
  */
 public class FindCommand extends Command {
@@ -28,7 +28,9 @@ public class FindCommand extends Command {
     @Override
     public CommandResult execute(Model model) {
         requireNonNull(model);
+
         model.updateFilteredPatientList(predicate);
+        model.updateFilteredAppointmentList(appointment -> predicate.test(appointment.getPatient()));
         return new CommandResult(
                 String.format(Messages.MESSAGE_PATIENTS_LISTED_OVERVIEW, model.getFilteredPatientList().size()));
     }

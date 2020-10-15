@@ -3,6 +3,7 @@
     "name": "Hans M@ster",
     "nric" : "S0000567P",
     "phone": "9482424",
-    "address": "4th street"
+    "address": "4th street",
+    "remark" : ""
   } ]
 }

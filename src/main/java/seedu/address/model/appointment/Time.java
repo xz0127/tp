@@ -31,6 +31,16 @@ public class Time {
     /**
      * Create a {@code Time} that represents the time of an appointment.
      *
+     * @param hour    the hour of the day, from 0 to 23
+     * @param minutes the minute of the hour, from 0 to 59
+     */
+    public Time(int hour, int minutes) {
+        this(LocalTime.of(hour, minutes));
+    }
+
+    /**
+     * Create a {@code Time} that represents the time of an appointment.
+     *
      * @param time the LocalTime containing the time.
      */
     public Time(LocalTime time) {
