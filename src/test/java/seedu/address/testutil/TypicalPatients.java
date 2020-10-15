@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import seedu.address.model.AddressBook;
+import seedu.address.model.PatientBook;
 import seedu.address.model.patient.Patient;
 
 /**
@@ -26,10 +26,10 @@ public class TypicalPatients {
     public static final Patient ALICE = new PatientBuilder().withName("Alice Pauline")
             .withAddress("123, Jurong West Ave 6, #08-111")
             .withPhone("94351253").withNric("S1234567I")
-            .withTags("friends").build();
+            .withTags("friends").withRemark("This is a test remark :)").build();
     public static final Patient BENSON = new PatientBuilder().withName("Benson Meier")
             .withAddress("311, Clementi Ave 2, #02-25").withNric("S1234567O")
-            .withPhone("98765432")
+            .withPhone("98765432").withRemark("He can't take beer!")
             .withTags("owesMoney", "friends").build();
     public static final Patient CARL = new PatientBuilder().withName("Carl Kurz").withPhone("95352563")
             .withNric("S1234567P").withAddress("wall street").build();
@@ -63,14 +63,14 @@ public class TypicalPatients {
     private TypicalPatients() {} // prevents instantiation
 
     /**
-     * Returns an {@code AddressBook} with all the typical patients.
+     * Returns an {@code PatientBook} with all the typical patients.
      */
-    public static AddressBook getTypicalAddressBook() {
-        AddressBook ab = new AddressBook();
+    public static PatientBook getTypicalPatientBook() {
+        PatientBook pb = new PatientBook();
         for (Patient patient : getTypicalPatients()) {
-            ab.addPatient(patient);
+            pb.addPatient(patient);
         }
-        return ab;
+        return pb;
     }
 
     public static List<Patient> getTypicalPatients() {

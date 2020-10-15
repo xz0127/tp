@@ -17,6 +17,7 @@ import seedu.address.model.patient.Address;
 import seedu.address.model.patient.Name;
 import seedu.address.model.patient.Nric;
 import seedu.address.model.patient.Phone;
+import seedu.address.model.patient.Remark;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -28,6 +29,7 @@ public class ParserUtil {
     /**
      * Parses {@code oneBasedIndex} into an {@code Index} and returns it. Leading and trailing whitespaces will be
      * trimmed.
+     *
      * @throws ParseException if the specified index is invalid (not non-zero unsigned integer).
      */
     public static Index parseIndex(String oneBasedIndex) throws ParseException {
@@ -138,9 +140,6 @@ public class ParserUtil {
         // Parses the date into a LocalDate
         LocalDate parsedDate = DateParserUtil.parse(trimmedDate);
 
-        if (!Date.isValidAppointmentDate(parsedDate)) {
-            throw new ParseException(Date.MESSAGE_CONSTRAINTS);
-        }
         return new Date(parsedDate);
     }
 
@@ -161,5 +160,20 @@ public class ParserUtil {
         }
 
         return new Time(parsedTime);
+    }
+
+    /**
+     * Parses a {@code String remark} into a {@code Remark}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws ParseException if the given {@code Remark} is invalid.
+     */
+    public static Remark parseRemark(String remark) throws ParseException {
+        requireNonNull(remark);
+        String trimmedRemark = remark.trim();
+        if (!Remark.isValidRemark(trimmedRemark)) {
+            throw new ParseException(Remark.MESSAGE_CONSTRAINTS);
+        }
+        return new Remark(trimmedRemark);
     }
 }

@@ -2,12 +2,12 @@ package seedu.address.logic.commands;
 
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
-import static seedu.address.testutil.TypicalPatients.getTypicalAddressBook;
+import static seedu.address.testutil.TypicalAppointments.getTypicalAppointmentBook;
+import static seedu.address.testutil.TypicalPatients.getTypicalPatientBook;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import seedu.address.model.AppointmentBook;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
@@ -23,14 +23,14 @@ public class AddCommandIntegrationTest {
 
     @BeforeEach
     public void setUp() {
-        model = new ModelManager(getTypicalAddressBook(), new AppointmentBook(), new UserPrefs());
+        model = new ModelManager(getTypicalPatientBook(), getTypicalAppointmentBook(), new UserPrefs());
     }
 
     @Test
     public void execute_newPatient_success() {
         Patient validPatient = new PatientBuilder().build();
 
-        Model expectedModel = new ModelManager(model.getAddressBook(), new AppointmentBook(), new UserPrefs());
+        Model expectedModel = new ModelManager(model.getPatientBook(), model.getAppointmentBook(), new UserPrefs());
         expectedModel.addPatient(validPatient);
 
         assertCommandSuccess(new AddCommand(validPatient), model,
@@ -39,7 +39,7 @@ public class AddCommandIntegrationTest {
 
     @Test
     public void execute_duplicatePatient_throwsCommandException() {
-        Patient patientInList = model.getAddressBook().getPatientList().get(0);
+        Patient patientInList = model.getPatientBook().getPatientList().get(0);
         assertCommandFailure(new AddCommand(patientInList), model, AddCommand.MESSAGE_DUPLICATE_PATIENT);
     }
 

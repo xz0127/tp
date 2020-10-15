@@ -8,8 +8,6 @@ import static seedu.address.logic.commands.CommandTestUtil.LOADER_TIME;
 
 import org.junit.jupiter.api.Test;
 
-import seedu.address.logic.commands.AssignCommand.DateTimeLoader;
-
 public class DateTimeLoaderTest {
 
     @Test

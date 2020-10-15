@@ -6,6 +6,7 @@ import static seedu.address.logic.commands.CommandTestUtil.INVALID_DATE_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_DATE;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
+import static seedu.address.model.Model.PREDICATE_SHOW_ALL_APPOINTMENTS;
 
 import org.junit.jupiter.api.Test;
 
@@ -13,12 +14,19 @@ import seedu.address.logic.commands.ViewCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.appointment.DateMatchesPredicate;
 
+
 public class ViewCommandParserTest {
 
     private static final String MESSAGE_INVALID_FORMAT =
             String.format(MESSAGE_INVALID_COMMAND_FORMAT, ViewCommand.MESSAGE_USAGE);
 
     private final ViewCommandParser parser = new ViewCommandParser();
+
+    @Test
+    public void parse_noArgs_returnsViewCommand() {
+        ViewCommand expectedCommand = new ViewCommand(PREDICATE_SHOW_ALL_APPOINTMENTS);
+        assertParseSuccess(parser, "", expectedCommand);
+    }
 
     @Test
     public void parse_validArgs_returnsViewCommand() throws ParseException {

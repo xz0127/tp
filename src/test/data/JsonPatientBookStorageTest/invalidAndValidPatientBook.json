@@ -1,0 +1,15 @@
+{
+  "patients": [ {
+    "name": "Valid Patient",
+    "phone": "9482424",
+    "address": "4th street",
+    "nric" : "S1234567I",
+    "remark" : ""
+  }, {
+    "name": "Patient With Invalid Phone Field",
+    "phone": "948asdf2424",
+    "address": "4th street",
+    "nric" : "S123456D",
+    "remark" : ""
+  } ]
+}

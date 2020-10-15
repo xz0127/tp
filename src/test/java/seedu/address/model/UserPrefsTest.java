@@ -13,9 +13,14 @@ public class UserPrefsTest {
     }
 
     @Test
-    public void setAddressBookFilePath_nullPath_throwsNullPointerException() {
+    public void setPatientBookFilePath_nullPath_throwsNullPointerException() {
         UserPrefs userPrefs = new UserPrefs();
-        assertThrows(NullPointerException.class, () -> userPrefs.setAddressBookFilePath(null));
+        assertThrows(NullPointerException.class, () -> userPrefs.setPatientBookFilePath(null));
     }
 
+    @Test
+    public void setAppointmentBookFilePath_nullPath_throwsNullPointerException() {
+        UserPrefs userPrefs = new UserPrefs();
+        assertThrows(NullPointerException.class, () -> userPrefs.setAppointmentBookFilePath(null));
+    }
 }

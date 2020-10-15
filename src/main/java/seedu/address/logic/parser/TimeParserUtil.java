@@ -19,10 +19,13 @@ import seedu.address.model.appointment.NaturalDay;
  * Helper class for {@link ParserUtil#parseTime(String)}.
  */
 public class TimeParserUtil {
-    public static final String MESSAGE_CONSTRAINTS = "Time should contains a properly formatted time "
-            + "or a recognised natural time language.\n"
-            + "An example of a properly formatted time includes (but not limited to): 2 PM\n"
-            + "An example of a natural time language is 'morning' (8am) or 'evening' (7pm)";
+    public static final String MESSAGE_CONSTRAINTS = "The Time input must adhere to our formatting conventions "
+            + "or adopt a recognised natural time language.\n"
+            + "An example of a properly formatted time includes (but is not limited to): 2 PM\n"
+            + "An example of a natural time language is 'morning' (8am) or 'evening' (7pm)"
+            + "Please visit our user guide at "
+            + "https://ay2021s1-cs2103t-t12-4.github.io/tp/UserGuide.html#faq"
+            + " for more date/time variants.";
 
     /**
      * List of known time formats that parser accepts.
@@ -37,7 +40,7 @@ public class TimeParserUtil {
      */
     private static List<DateTimeFormatter> createTimeFormats() {
         // List of acceptable date format with optional year/month
-        List<String> knownTimePatterns = Arrays.asList("HHmm", "h:mm[ ]a", "h[ ]a");
+        List<String> knownTimePatterns = Arrays.asList("HHmm", "h[:][.]mm[ ]a", "h[ ]a");
 
         List<DateTimeFormatter> knownFormats = new ArrayList<>();
         // Create a formatter for each known patterns to be used for parsing dates

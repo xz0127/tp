@@ -35,6 +35,8 @@ public class PatientCard extends UiPart<Region> {
     @FXML
     private Label phone;
     @FXML
+    private Label remark;
+    @FXML
     private Label address;
     @FXML
     private FlowPane tags;
@@ -42,7 +44,7 @@ public class PatientCard extends UiPart<Region> {
     private Label nric;
 
     /**
-     * Creates a {@code PatientCode} with the given {@code Patient} and index to display.
+     * Creates a {@code PatientCard} with the given {@code Patient} and index to display.
      */
     public PatientCard(Patient patient, int displayedIndex) {
         super(FXML);
@@ -50,6 +52,7 @@ public class PatientCard extends UiPart<Region> {
         id.setText(displayedIndex + ". ");
         name.setText(patient.getName().fullName);
         nric.setText("NRIC: " + patient.getNric().value);
+        remark.setText("Remark: " + patient.getRemark().value);
         phone.setText("Phone: " + patient.getPhone().value);
         address.setText("Address: " + patient.getAddress().value);
         patient.getTags().stream()

@@ -14,12 +14,21 @@ public class Date {
      **/
     public static final DateTimeFormatter DATE_FORMAT = DateTimeFormatter.ofPattern("EEEE, MMM dd uuuu");
 
-    public static final String MESSAGE_CONSTRAINTS = "The date should be a future date or a current date.";
-
     private final LocalDate value;
 
     /**
-     * Create a {@code Date} that represents the date of an appointment.
+     * Creates a {@code Date} that represents the date of an appointment.
+     *
+     * @param year  the year of the date.
+     * @param month the month of the date, from 1 (January) to 12 (December).
+     * @param day   the day of the date, from 1 to 31.
+     */
+    public Date(int year, int month, int day) {
+        this(LocalDate.of(year, month, day));
+    }
+
+    /**
+     * Creates a {@code Date} that represents the date of an appointment.
      *
      * @param date the {@code LocalDate} containing the date.
      */
@@ -29,32 +38,12 @@ public class Date {
         value = date;
     }
 
-    /**
-     * Checks if the given {@code LocalDate date} is a valid appointment date.
-     * The {@code LocalDate} is valid if it is not a past date.
-     *
-     * @param date the LocalDate to check.
-     * @return true if is valid, false otherwise.
-     */
-    public static boolean isValidAppointmentDate(LocalDate date) {
-        return isValidAppointmentDate(date, LocalDate.now());
-    }
-
-    /**
-     * Similar to {@link #isValidAppointmentDate(LocalDate)}
-     *
-     * @param currDate the current {@code LocalDate} to inject
-     */
-    static boolean isValidAppointmentDate(LocalDate date, LocalDate currDate) {
-        return !(date.isBefore(currDate));
-    }
-
     public LocalDate getDate() {
         return value;
     }
 
     /**
-     * Check if the appointment date comes before the input {@code Date}.
+     * Checks if the appointment date comes before the input {@code Date}.
      *
      * @param inputDate the input date to be checked against
      * @return true if the appointment date comes before the input date, false otherwise
@@ -64,7 +53,7 @@ public class Date {
     }
 
     /**
-     * Check if the appointment date comes after the input {@code Date}.
+     * Checks if the appointment date comes after the input {@code Date}.
      *
      * @param inputDate the input date to be checked against
      * @return true if the appointment date comes after the input date, false otherwise
@@ -80,16 +69,18 @@ public class Date {
      * @return the string representation of the appointment {@code Date}.
      */
     protected String toStringBasedOn(LocalDate currDate) {
+        String toDisplay = value.format(DATE_FORMAT);
+
         if (value.isEqual(currDate)) {
             // Simplify date to "Today"
-            return "Today";
+            toDisplay += " (Today)";
         }
 
-        return value.format(DATE_FORMAT);
+        return toDisplay;
     }
 
     /**
-     * Format appointment date as text for viewing
+     * Formats appointment date as text for viewing
      */
     @Override
     public String toString() {

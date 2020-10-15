@@ -5,7 +5,9 @@
     "windowCoordinates" : {
       "x" : 300,
       "y" : 100
-    }
+    },
+    "splitViewRatio" : 0.3
   },
-  "addressBookFilePath" : "addressbook.json"
+  "patientBookFilePath" : "patientbook.json",
+  "appointmentBookFilePath" : "appointment.json"
 }

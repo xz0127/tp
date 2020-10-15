@@ -5,9 +5,9 @@ title: Zhang Wanlin's Project Portfolio Page
 
 ## Project: Nuudle
 
-Nuudle is a **desktop app for managing patient records and clinic appointments, optimized for use 
-via a Command Line Interface**(CLI) while still having the benefits of a Graphical User Interface (GUI). 
-If you can type fast, Nuudle can get your patient and appointment management tasks done faster than traditional GUI apps. 
+Nuudle is a **desktop app for managing patient records and clinic appointments, optimized for use
+via a Command Line Interface**(CLI) while still having the benefits of a Graphical User Interface (GUI).
+If you can type fast, Nuudle can get your patient and appointment management tasks done faster than traditional GUI apps.
 It is written in Java, and has about 10 kLoC.
 
 Given below are my contributions to the project.

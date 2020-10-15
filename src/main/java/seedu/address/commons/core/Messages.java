@@ -10,4 +10,5 @@ public class Messages {
     public static final String MESSAGE_INVALID_PATIENT_DISPLAYED_INDEX = "The patient index provided is invalid";
     public static final String MESSAGE_PATIENTS_LISTED_OVERVIEW = "%1$d patients" + " listed!";
     public static final String MESSAGE_APPOINTMENTS_OVERVIEW = "%1$d appointments" + " listed!";
+    public static final String MESSAGE_EXPIRED_DATE_TIME = "The appointment date and time should be an upcoming one.";
 }

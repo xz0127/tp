@@ -4,14 +4,14 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.AppUtil.checkArgument;
 
 /**
- * Represents a Patient's Nric in the address book.
+ * Represents a Patient's Nric in the patient book.
  * Guarantees: immutable; is valid as declared in {@link #isValidNric(String)}
  */
 public class Nric {
 
 
     public static final String MESSAGE_CONSTRAINTS =
-            "Nric should only contain 7 numbers leading and ending with an alphabet in caps";
+            "Nric should only contain 7 numbers leading and ending with an alphabet in uppercase";
     public static final String VALIDATION_REGEX = "[STFG]\\d{7}[A-Z]";
     public final String value;
 

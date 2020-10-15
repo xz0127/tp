@@ -7,9 +7,8 @@ import static seedu.address.commons.core.Messages.MESSAGE_APPOINTMENTS_OVERVIEW;
 import static seedu.address.logic.commands.CommandTestUtil.DIFF_DATE;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_DATE;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
-import static seedu.address.model.Model.PREDICATE_SHOW_ALL_APPOINTMENTS;
 import static seedu.address.testutil.TypicalAppointments.getTypicalAppointmentBook;
-import static seedu.address.testutil.TypicalPatients.getTypicalAddressBook;
+import static seedu.address.testutil.TypicalPatients.getTypicalPatientBook;
 
 import java.time.LocalDate;
 
@@ -29,12 +28,12 @@ import seedu.address.model.appointment.DateMatchesPredicate;
 public class ViewCommandTest {
 
     private final Model model = new ModelManager(
-            getTypicalAddressBook(),
+            getTypicalPatientBook(),
             getTypicalAppointmentBook(),
             new UserPrefs()
     );
     private Model expectedModel = new ModelManager(
-            getTypicalAddressBook(),
+            getTypicalPatientBook(),
             getTypicalAppointmentBook(),
             new UserPrefs()
     );
@@ -55,7 +54,7 @@ public class ViewCommandTest {
         assertTrue(firstViewCommand.equals(firstViewCommand));
 
         // same values -> returns true
-        ViewCommand firstViewCommandCopy = new ViewCommand(firstPredicate);
+        ViewCommand firstViewCommandCopy = new ViewCommand(firstPredicateCopy);
         assertTrue(firstViewCommand.equals(firstViewCommandCopy));
 
         // different types -> returns false
@@ -69,23 +68,24 @@ public class ViewCommandTest {
     }
 
     @Test
-    public void execute_noDate_allAppointmentReturn() {
-        String expectedMessage = String.format(MESSAGE_APPOINTMENTS_OVERVIEW,
-                getTypicalAppointmentBook().getAppointmentList().size());
-        ViewCommand command = new ViewCommand();
-        expectedModel.updateFilteredAppointmentList(PREDICATE_SHOW_ALL_APPOINTMENTS);
+    public void execute_multipleAppointmentsFound_viewSuccessful() {
+        String expectedMessage = String.format(MESSAGE_APPOINTMENTS_OVERVIEW, 2);
+        DateMatchesPredicate predicate = preparePredicate(LocalDate.of(2050, 1, 1));
+        ViewCommand command = new ViewCommand(predicate);
+        expectedModel.updateFilteredAppointmentList(predicate);
         assertCommandSuccess(command, model, expectedMessage, expectedModel);
         assertEquals(model.getFilteredAppointmentList(), expectedModel.getFilteredAppointmentList());
     }
 
     @Test
-    public void execute_multipleAppointmentsFound() {
-        String expectedMessage = String.format(MESSAGE_APPOINTMENTS_OVERVIEW, 2);
-        DateMatchesPredicate predicate = preparePredicate(LocalDate.of(2020, 1, 1));
+    public void execute_noAppointmentFound_viewSuccessful() {
+        String expectedMessage = String.format(MESSAGE_APPOINTMENTS_OVERVIEW, 0);
+        DateMatchesPredicate predicate = preparePredicate(LocalDate.of(2088, 3, 3));
         ViewCommand command = new ViewCommand(predicate);
         expectedModel.updateFilteredAppointmentList(predicate);
         assertCommandSuccess(command, model, expectedMessage, expectedModel);
         assertEquals(model.getFilteredAppointmentList(), expectedModel.getFilteredAppointmentList());
+        ;
     }
 
     /**

@@ -1,6 +1,6 @@
 package seedu.address.testutil;
 
-import seedu.address.logic.commands.AssignCommand.DateTimeLoader;
+import seedu.address.logic.commands.DateTimeLoader;
 import seedu.address.logic.parser.DateParserUtil;
 import seedu.address.logic.parser.TimeParserUtil;
 import seedu.address.logic.parser.exceptions.ParseException;

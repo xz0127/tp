@@ -5,17 +5,17 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.commons.core.Messages.MESSAGE_PATIENTS_LISTED_OVERVIEW;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
+import static seedu.address.testutil.TypicalAppointments.getTypicalAppointmentBook;
 import static seedu.address.testutil.TypicalPatients.CARL;
 import static seedu.address.testutil.TypicalPatients.ELLE;
 import static seedu.address.testutil.TypicalPatients.FIONA;
-import static seedu.address.testutil.TypicalPatients.getTypicalAddressBook;
+import static seedu.address.testutil.TypicalPatients.getTypicalPatientBook;
 
 import java.util.Arrays;
 import java.util.Collections;
 
 import org.junit.jupiter.api.Test;
 
-import seedu.address.model.AppointmentBook;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
@@ -25,8 +25,8 @@ import seedu.address.model.patient.NameContainsKeywordsPredicate;
  * Contains integration tests (interaction with the Model) for {@code FindCommand}.
  */
 public class FindCommandTest {
-    private Model model = new ModelManager(getTypicalAddressBook(), new AppointmentBook(), new UserPrefs());
-    private Model expectedModel = new ModelManager(getTypicalAddressBook(), new AppointmentBook(), new UserPrefs());
+    private Model model = new ModelManager(getTypicalPatientBook(), getTypicalAppointmentBook(), new UserPrefs());
+    private Model expectedModel = new ModelManager(model.getPatientBook(), model.getAppointmentBook(), new UserPrefs());
 
     @Test
     public void equals() {
@@ -61,6 +61,7 @@ public class FindCommandTest {
         NameContainsKeywordsPredicate predicate = preparePredicate(" ");
         FindCommand command = new FindCommand(predicate);
         expectedModel.updateFilteredPatientList(predicate);
+        expectedModel.updateFilteredAppointmentList(appointment -> predicate.test(appointment.getPatient()));
         assertCommandSuccess(command, model, expectedMessage, expectedModel);
         assertEquals(Collections.emptyList(), model.getFilteredPatientList());
     }
@@ -71,6 +72,7 @@ public class FindCommandTest {
         NameContainsKeywordsPredicate predicate = preparePredicate("Kurz Elle Kunz");
         FindCommand command = new FindCommand(predicate);
         expectedModel.updateFilteredPatientList(predicate);
+        expectedModel.updateFilteredAppointmentList(appointment -> predicate.test(appointment.getPatient()));
         assertCommandSuccess(command, model, expectedMessage, expectedModel);
         assertEquals(Arrays.asList(CARL, ELLE, FIONA), model.getFilteredPatientList());
     }
