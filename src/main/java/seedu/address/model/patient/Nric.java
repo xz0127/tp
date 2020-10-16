@@ -49,5 +49,4 @@ public class Nric {
     public int hashCode() {
         return value.hashCode();
     }
-
 }
