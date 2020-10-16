@@ -94,13 +94,13 @@ class RemarkCommandTest {
 
     /**
      * Edit filtered list where index is larger than size of filtered list,
-     * but smaller than size of address book
+     * but smaller than size of patient book
      */
     @Test
     public void execute_invalidPatientIndexFilteredList_failure() {
         showPatientAtIndex(model, INDEX_FIRST_PATIENT);
         Index outOfBoundIndex = INDEX_SECOND_PATIENT;
-        // ensures that outOfBoundIndex is still in bounds of address book list
+        // ensures that outOfBoundIndex is still in bounds of patient book list
         assertTrue(outOfBoundIndex.getZeroBased() < model.getPatientBook().getPatientList().size());
 
         RemarkCommand remarkCommand = new RemarkCommand(outOfBoundIndex, new Remark(VALID_REMARK_BOB));

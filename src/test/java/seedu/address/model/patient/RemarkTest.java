@@ -42,7 +42,7 @@ public class RemarkTest {
     }
 
     @Test
-    public void isValidRemark_Success() {
+    public void isValidRemark_success() {
         assertTrue(Remark.isValidRemark("")); // empty string
         assertTrue(Remark.isValidRemark(" ")); // spaces only, resetting remark
         assertTrue(Remark.isValidRemark("^")); // only non-alphanumeric characters
@@ -60,13 +60,13 @@ public class RemarkTest {
     }
 
     @Test
-    public void isValidRemark_null_Failure() {
+    public void isValidRemark_null_failure() {
         // null remark
         assertThrows(NullPointerException.class, () -> Remark.isValidRemark(null));
     }
 
     @Test
-    public void isValidRemark_input_Failure() {
+    public void isValidRemark_input_failure() {
         assertFalse(Remark.isValidRemark(WORDS_TWO_FIVE_ZERO));
         assertFalse(Remark.isValidRemark(WORDS_THREE_HUNDRED));
         assertFalse(Remark.isValidRemark(WORDS_THREE_HUNDRED + WORDS_TWO_FIVE_ZERO));
@@ -74,7 +74,7 @@ public class RemarkTest {
     }
 
     @Test
-    public void equals_Success() {
+    public void equals_success() {
         assertTrue(SAMPLE_REMARK_1.equals(new Remark(STRING_REMARK_1)));
         assertTrue(SAMPLE_REMARK_2.equals(new Remark(STRING_REMARK_2)));
         assertTrue(SAMPLE_REMARK_3.equals(new Remark(STRING_REMARK_3)));
@@ -89,7 +89,7 @@ public class RemarkTest {
     }
 
     @Test
-    public void equals_Failure() {
+    public void equals_failure() {
         assertFalse(SAMPLE_REMARK_1.equals(new Remark(STRING_REMARK_2)));
         assertFalse(SAMPLE_REMARK_2.equals(new Remark(STRING_REMARK_3)));
         assertFalse(SAMPLE_REMARK_3.equals(new Remark(STRING_REMARK_4)));
@@ -101,14 +101,14 @@ public class RemarkTest {
     }
 
     @Test
-    public void hashCode_Success() {
+    public void hashCode_success() {
         assertTrue(SAMPLE_REMARK_1.hashCode() == STRING_REMARK_1.hashCode());
         assertTrue(SAMPLE_REMARK_3.hashCode() == STRING_REMARK_3.hashCode());
         assertTrue(SAMPLE_REMARK_8.hashCode() == STRING_REMARK_8.hashCode());
     }
 
     @Test
-    public void toString_Success() {
+    public void toString_success() {
         assertTrue(SAMPLE_REMARK_1.toString() == STRING_REMARK_1);
         assertTrue(SAMPLE_REMARK_3.toString() == STRING_REMARK_3);
         assertTrue(SAMPLE_REMARK_8.toString() == STRING_REMARK_8);
