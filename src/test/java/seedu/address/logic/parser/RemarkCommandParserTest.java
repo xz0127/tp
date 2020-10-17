@@ -1,13 +1,8 @@
 package seedu.address.logic.parser;
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static seedu.address.logic.commands.CommandTestUtil.ASSIGN_DATE;
-import static seedu.address.logic.commands.CommandTestUtil.ASSIGN_TIME;
-import static seedu.address.logic.commands.CommandTestUtil.INVALID_DATE_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_REMARK_EXCEED_LIMIT;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_REMARK_INDEX;
-import static seedu.address.logic.commands.CommandTestUtil.INVALID_TIME_DESC;
-import static seedu.address.logic.commands.CommandTestUtil.INVALID_TIME_DESC_CLOSED;
 import static seedu.address.logic.commands.CommandTestUtil.REMARK_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.REMARK_DESC_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.REMARK_DESC_EMPTY;
@@ -22,9 +17,7 @@ import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PATIENT;
 import org.junit.jupiter.api.Test;
 
 import seedu.address.logic.commands.RemarkCommand;
-import seedu.address.model.appointment.Time;
 import seedu.address.model.patient.Remark;
-import seedu.address.testutil.DateTimeLoaderBuilder;
 
 public class RemarkCommandParserTest {
 

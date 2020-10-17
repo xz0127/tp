@@ -119,7 +119,8 @@ class RemarkCommandTest {
         Patient samplePatient = model.getFilteredPatientList()
                 .get(INDEX_SECOND_PATIENT.getZeroBased());
         Patient editedPatient = new PatientBuilder(samplePatient).withRemark(WORDS_ONE_NINETY_NINE).build();
-        RemarkCommand remarkCommand = new RemarkCommand(INDEX_SECOND_PATIENT, new Remark(editedPatient.getRemark().value));
+        RemarkCommand remarkCommand = new RemarkCommand(INDEX_SECOND_PATIENT,
+                new Remark(editedPatient.getRemark().value));
         assertTrue(remarkCommand.equals(remarkCommand));
     }
 
@@ -128,7 +129,8 @@ class RemarkCommandTest {
         Patient samplePatient = model.getFilteredPatientList()
                 .get(INDEX_SECOND_PATIENT.getZeroBased());
         Patient editedPatient = new PatientBuilder(samplePatient).withRemark(WORDS_ONE_NINETY_NINE).build();
-        RemarkCommand remarkCommand = new RemarkCommand(INDEX_SECOND_PATIENT, new Remark(editedPatient.getRemark().value));
+        RemarkCommand remarkCommand = new RemarkCommand(INDEX_SECOND_PATIENT,
+                new Remark(editedPatient.getRemark().value));
         RemarkCommand anotherRemarkCommand = new RemarkCommand(INDEX_SECOND_PATIENT, new Remark(WORDS_ONE_NINETY_NINE));
         assertTrue(remarkCommand.equals(anotherRemarkCommand));
 
@@ -141,8 +143,10 @@ class RemarkCommandTest {
     public void equals_differentContent_fail() {
         Patient samplePatient = model.getFilteredPatientList()
                 .get(INDEX_SECOND_PATIENT.getZeroBased());
-        Patient editedPatient = new PatientBuilder(samplePatient).withRemark(WORDS_ONE_NINETY_NINE).build();
-        RemarkCommand remarkCommand = new RemarkCommand(INDEX_SECOND_PATIENT, new Remark(editedPatient.getRemark().value));
+        Patient editedPatient = new PatientBuilder(samplePatient)
+                .withRemark(WORDS_ONE_NINETY_NINE).build();
+        RemarkCommand remarkCommand = new RemarkCommand(INDEX_SECOND_PATIENT,
+                new Remark(editedPatient.getRemark().value));
         RemarkCommand anotherRemarkCommand = new RemarkCommand(INDEX_SECOND_PATIENT, new Remark(STRING_REMARK_4));
         assertFalse(remarkCommand.equals(anotherRemarkCommand));
 
@@ -163,7 +167,8 @@ class RemarkCommandTest {
         Patient samplePatient = model.getFilteredPatientList()
                 .get(INDEX_SECOND_PATIENT.getZeroBased());
         Patient editedPatient = new PatientBuilder(samplePatient).withRemark(WORDS_ONE_NINETY_NINE).build();
-        RemarkCommand remarkCommand = new RemarkCommand(INDEX_SECOND_PATIENT, new Remark(editedPatient.getRemark().value));
+        RemarkCommand remarkCommand = new RemarkCommand(INDEX_SECOND_PATIENT,
+                new Remark(editedPatient.getRemark().value));
 
         assertFalse(remarkCommand.equals(standardCommand));
     }
@@ -173,7 +178,8 @@ class RemarkCommandTest {
         Patient samplePatient = model.getFilteredPatientList()
                 .get(INDEX_SECOND_PATIENT.getZeroBased());
         Patient editedPatient = new PatientBuilder(samplePatient).withRemark(WORDS_ONE_NINETY_NINE).build();
-        RemarkCommand remarkCommand = new RemarkCommand(INDEX_SECOND_PATIENT, new Remark(editedPatient.getRemark().value));
+        RemarkCommand remarkCommand = new RemarkCommand(INDEX_SECOND_PATIENT,
+                new Remark(editedPatient.getRemark().value));
 
         assertFalse(remarkCommand.equals(null));
     }
