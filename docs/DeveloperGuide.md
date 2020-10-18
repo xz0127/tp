@@ -122,6 +122,8 @@ The `Model`,
 The `Storage` component,
 * can save `UserPref` objects in json format and read it back.
 * can save the patient book data in json format and read it back.
+* can save the appointment data in json format and read it back.
+* can save the appointment data in csv format for archiving.
 
 ### Common classes
 
