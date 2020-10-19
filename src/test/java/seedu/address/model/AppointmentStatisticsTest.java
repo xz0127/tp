@@ -11,14 +11,16 @@ public class AppointmentStatisticsTest {
 
         assertEquals("Today: \n"
                 + "0 upcoming  |  "
-                + "0 done \n" + "This Week:\n" + "0 upcoming", b.getAppointmentBookStatistics().toString());
+                + "0 done \n" + "This Week:\n" + "0 upcoming  |  "
+                + "0 done", b.getAppointmentBookStatistics().toString());
     }
 
     @Test
     public void getStats() {
         AppointmentStatistics stats = new AppointmentStatistics(5, 2, 3, 6);
-        assertEquals(2, stats.getDoneToday());
-        assertEquals(3, stats.getUpcomingToday());
+        assertEquals(5, stats.getDoneToday());
+        assertEquals(2, stats.getUpcomingToday());
+        assertEquals(3, stats.getDoneThisWeek());
         assertEquals(6, stats.getUpcomingThisWeek());
     }
 

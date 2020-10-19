@@ -148,15 +148,18 @@ public class AppointmentBook implements ReadOnlyAppointmentBook {
     @Override
     public AppointmentStatistics getAppointmentBookStatistics() {
         Date td = new Date(LocalDate.now());
-        int upcomingThisWeek = appointments.asUnmodifiableObservableList()
-                .filtered(appointment -> appointment.isInSameWeek(td))
+        ObservableList<Appointment> thisWeek = appointments.asUnmodifiableObservableList()
+                .filtered(appointment -> appointment.isInSameWeek(td));
+        int totalThisWeek = thisWeek.size();
+        int upcomingThisWeek = thisWeek
                 .filtered(appointment -> !appointment.getIsDoneStatus()).size();
+        int doneThisWeek = totalThisWeek - upcomingThisWeek;
         DateMatchesPredicate p = new DateMatchesPredicate(td);
         ObservableList<Appointment> today = appointments.asUnmodifiableObservableList().filtered(p);
         int totalToday = today.size();
         int doneToday = today.filtered(appointment -> appointment.getIsDoneStatus()).size();
         int upcomingToday = totalToday - doneToday;
-        return new AppointmentStatistics(totalToday, doneToday, upcomingToday, upcomingThisWeek);
+        return new AppointmentStatistics(doneToday, upcomingToday, doneThisWeek, upcomingThisWeek);
     }
 
 

@@ -4,19 +4,19 @@ package seedu.address.model;
  * Collects related statistics of appointment book.
  */
 public class AppointmentStatistics {
-    private int totalToday;
     private int doneToday;
     private int upcomingToday;
+    private int doneThisWeek;
     private int upcomingThisWeek;
 
     /**
      * Creates a AppointmentStatistics with the {@code totalToday}, {@code doneToday}
      * {@code upcomingToday}, and {@code upcomingThisWeek}.
      */
-    public AppointmentStatistics(int totalToday, int doneToday, int upcomingToday, int upcomingThisWeek) {
-        this.totalToday = totalToday;
+    public AppointmentStatistics(int doneToday, int upcomingToday, int doneThisWeek, int upcomingThisWeek) {
         this.doneToday = doneToday;
         this.upcomingToday = upcomingToday;
+        this.doneThisWeek = doneThisWeek;
         this.upcomingThisWeek = upcomingThisWeek;
     }
 
@@ -41,11 +41,18 @@ public class AppointmentStatistics {
         return this.upcomingThisWeek;
     }
 
+    /**
+     * Returns the number of done appointments in this week.
+     */
+    public int getDoneThisWeek() {
+        return this.doneThisWeek;
+    }
+
     @Override
     public String toString() {
         return "Today: \n" + getUpcomingToday()
-                + " upcoming  |  " + getDoneToday()
-                + " done \n" + "This Week:\n" + getUpcomingThisWeek() + " upcoming";
+                + " upcoming  |  " + getDoneToday() + " done \n"
+                + "This Week:\n" + getUpcomingThisWeek() + " upcoming  |  " + getDoneThisWeek() + " done";
     }
 
     @Override
