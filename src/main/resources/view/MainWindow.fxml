@@ -38,7 +38,7 @@
             <Insets bottom="5" left="10" right="10" top="5" />
           </padding>
         </StackPane>
-            <SplitPane fx:id="splitView1" dividerPositions="0.5" prefWidth="200.0">
+            <SplitPane fx:id="splitView1" dividerPositions="0.8" prefWidth="200.0">
                <items>
                     <StackPane fx:id="resultDisplayPlaceholder" maxHeight="100" minHeight="100" prefHeight="100" prefWidth="120.0" styleClass="pane-with-border">
                 <padding>

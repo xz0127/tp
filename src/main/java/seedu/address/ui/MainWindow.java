@@ -134,7 +134,7 @@ public class MainWindow extends UiPart<Stage> {
         appointmentListPanel = new AppointmentListPanel(logic.getFilteredAppointmentList());
         appointmentListPanelPlaceholder.getChildren().add(appointmentListPanel.getRoot());
 
-        statisticsDisplay = new StatisticsDisplay();
+        statisticsDisplay = new StatisticsDisplay(logic.getAppointmentBook().getAppointmentBookStatistics());
         statisticsDisplayPlaceholder.getChildren().add(statisticsDisplay.getRoot());
 
         resultDisplay = new ResultDisplay();
@@ -215,7 +215,7 @@ public class MainWindow extends UiPart<Stage> {
             AppointmentStatistics stats = logic.getAppointmentBook().getAppointmentBookStatistics();
             logger.info("Result: " + commandResult.getFeedbackToUser());
             resultDisplay.setFeedbackToUser(commandResult.getFeedbackToUser() + "\n" + stats);
-            statisticsDisplay.setStatistics(stats + "");
+            statisticsDisplay.setStatistics(stats.toString());
 
             if (commandResult.isShowHelp()) {
                 handleHelp();
@@ -228,7 +228,7 @@ public class MainWindow extends UiPart<Stage> {
             return commandResult;
         } catch (CommandException | ParseException e) {
             logger.info("Invalid command: " + commandText);
-            resultDisplay.setFeedbackToUser(e.getMessage());
+            resultDisplay.setFeedbackToUser(e.getMessage() + "\n");
             throw e;
         }
     }
