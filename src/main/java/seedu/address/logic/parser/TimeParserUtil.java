@@ -23,7 +23,7 @@ public class TimeParserUtil {
             + "or adopt a recognised natural time language.\n"
             + "An example of a properly formatted time includes (but is not limited to): 2 PM\n"
             + "An example of a natural time language is 'morning' (8am) or 'evening' (7pm)"
-            + "Please visit our user guide at "
+            + "Please visit our user guide"
             + " for more date/time variants."
             + "\nType help in the input box for the link!";
 

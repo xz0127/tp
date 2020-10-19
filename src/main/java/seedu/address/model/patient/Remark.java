@@ -12,7 +12,7 @@ import java.util.regex.Pattern;
  */
 public class Remark {
 
-    public static final String MESSAGE_CONSTRAINTS = "Each remark have a capacity of up to 200 words and can take "
+    public static final String MESSAGE_CONSTRAINTS = "Each remark has a capacity of up to 200 words and can take "
             + "all alphanumeric and symbol characters.\n"
             + "Only use a blank remark to delete an existing remark from the patient.\n"
             + "Existing remarks for the patient will also be overridden with the new input.";
@@ -20,7 +20,7 @@ public class Remark {
     public final String value;
 
     /**
-     * Constructs an {@code Remark}.
+     * Constructs a {@code Remark}.
      *
      * @param remark A valid remark.
      */

@@ -66,9 +66,9 @@ public class CommandTestUtil {
     public static final String ASSIGN_DATE_TIME = " " + PREFIX_DATE + VALID_DATE + " " + PREFIX_TIME + VALID_TIME;
     public static final String ASSIGN_TIME = " " + PREFIX_TIME + VALID_TIME;
     public static final String ASSIGN_DATE = " " + PREFIX_DATE + VALID_DATE;
-    public static final String REMARK_DESC_AMY = " 1 " + PREFIX_REMARK + VALID_REMARK_AMY;
-    public static final String REMARK_DESC_BOB = " 2 " + PREFIX_REMARK + VALID_REMARK_BOB;
-    public static final String REMARK_DESC_EMPTY = " 1 " + PREFIX_REMARK + " ";
+    public static final String REMARK_DESC_AMY = PREFIX_REMARK + VALID_REMARK_AMY;
+    public static final String REMARK_DESC_BOB = PREFIX_REMARK + VALID_REMARK_BOB;
+    public static final String REMARK_DESC_EMPTY = PREFIX_REMARK + " ";
 
     public static final String INVALID_NAME_DESC = " " + PREFIX_NAME + "James&"; // '&' not allowed in names
     public static final String INVALID_NRIC_DESC = " " + PREFIX_NRIC + "q1234567k"; // lower caps not allowed in Nric

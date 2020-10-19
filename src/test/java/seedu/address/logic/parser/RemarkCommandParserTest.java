@@ -49,15 +49,15 @@ public class RemarkCommandParserTest {
 
     @Test
     public void parse_allFieldPresents_success() {
-        String userInput = REMARK_DESC_AMY;
+        String userInput = " 1 " + REMARK_DESC_AMY;
         RemarkCommand expectedCommand = new RemarkCommand(INDEX_FIRST_PATIENT, new Remark(VALID_REMARK_AMY));
         assertParseSuccess(parser, userInput, expectedCommand);
 
-        String userInput2 = REMARK_DESC_BOB;
+        String userInput2 = " 2 " + REMARK_DESC_BOB;
         RemarkCommand expectedCommand2 = new RemarkCommand(INDEX_SECOND_PATIENT, new Remark(VALID_REMARK_BOB));
         assertParseSuccess(parser, userInput2, expectedCommand2);
 
-        String userInput3 = REMARK_DESC_EMPTY;
+        String userInput3 = " 1 " + REMARK_DESC_EMPTY;
         RemarkCommand expectedCommand3 = new RemarkCommand(INDEX_FIRST_PATIENT, new Remark(""));
         assertParseSuccess(parser, userInput3, expectedCommand3);
     }
