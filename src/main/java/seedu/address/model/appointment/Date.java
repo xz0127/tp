@@ -2,8 +2,11 @@ package seedu.address.model.appointment;
 
 import static java.util.Objects.requireNonNull;
 
+import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.TemporalAdjuster;
+import java.time.temporal.TemporalAdjusters;
 
 /**
  * Represents an upcoming appointment date.
@@ -60,6 +63,20 @@ public class Date {
      */
     public boolean isAfter(Date inputDate) {
         return value.isAfter(inputDate.value);
+    }
+
+    /**
+     * Checks if the appointment date is in the same week with the input {@code Date}.
+     *
+     * @return true if the appointment date is in same week with the input date, false otherwise.
+     */
+    public boolean isInSameWeek(Date inputDate) {
+        TemporalAdjuster adj = TemporalAdjusters.next(DayOfWeek.MONDAY);
+        LocalDate nextMon = inputDate.value.with(adj);
+        LocalDate lastSun = nextMon.minusDays(8);
+        Date nextMonday = new Date(nextMon);
+        Date lastSunday = new Date(lastSun);
+        return isAfter(lastSunday) && isBefore(nextMonday);
     }
 
     /**

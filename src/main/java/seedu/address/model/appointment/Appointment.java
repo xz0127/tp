@@ -5,6 +5,7 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.time.Duration;
+import java.util.Calendar;
 import java.util.Objects;
 
 import seedu.address.model.patient.Patient;
@@ -170,6 +171,11 @@ public class Appointment {
                     && !(otherAppointment.getEndTime().isAfter(getStartTime()))); // End2 <= Start1
     }
 
+    public boolean isInSameWeek(Date date) {
+        requireNonNull(date);
+
+        return getDate().isInSameWeek(date);
+    }
     /**
      * Returns true if both appointments have the same identity and data fields.
      * This defines a stronger notion of equality between two patients.

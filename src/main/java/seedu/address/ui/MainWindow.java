@@ -35,6 +35,7 @@ public class MainWindow extends UiPart<Stage> {
     private PatientListPanel patientListPanel;
     private AppointmentListPanel appointmentListPanel;
     private ResultDisplay resultDisplay;
+    private StatisticsDisplay statisticsDisplay;
     private HelpWindow helpWindow;
 
     @FXML
@@ -54,6 +55,9 @@ public class MainWindow extends UiPart<Stage> {
 
     @FXML
     private StackPane resultDisplayPlaceholder;
+
+    @FXML
+    private StackPane statisticsDisplayPlaceholder;
 
     @FXML
     private StackPane patientStatusbarPlaceholder;
@@ -127,6 +131,9 @@ public class MainWindow extends UiPart<Stage> {
 
         appointmentListPanel = new AppointmentListPanel(logic.getFilteredAppointmentList());
         appointmentListPanelPlaceholder.getChildren().add(appointmentListPanel.getRoot());
+
+        statisticsDisplay = new StatisticsDisplay();
+        statisticsDisplayPlaceholder.getChildren().add(statisticsDisplay.getRoot());
 
         resultDisplay = new ResultDisplay();
         resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());
