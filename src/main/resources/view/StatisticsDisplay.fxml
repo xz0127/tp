@@ -4,5 +4,5 @@
 <?import javafx.scene.layout.StackPane?>
 
 <StackPane styleClass="pane-with-border" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
-    <TextArea fx:id="stats" editable="false" styleClass="stats-display" />
+    <TextArea fx:id="statistics" editable="false" styleClass="stats-display" />
 </StackPane>

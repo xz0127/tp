@@ -11,8 +11,4 @@ public class Messages {
     public static final String MESSAGE_PATIENTS_LISTED_OVERVIEW = "%1$d patients" + " listed!";
     public static final String MESSAGE_APPOINTMENTS_OVERVIEW = "%1$d appointments" + " listed!";
     public static final String MESSAGE_EXPIRED_DATE_TIME = "The appointment date and time should be an upcoming one.";
-    public static final String MESSAGE_APPOINTMENTS_STATISTICS = "Today: \n" +
-            "%2$d upcoming appointments\n%2$d done appointments\n" +
-            "This Week:\n" +
-            "%2$d upcoming appointments";
 }

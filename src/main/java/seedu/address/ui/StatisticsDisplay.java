@@ -13,10 +13,15 @@ public class StatisticsDisplay extends UiPart<Region> {
     private static final String FXML = "StatisticsDisplay.fxml";
 
     @FXML
-    private TextArea stats;
+    private TextArea statistics;
 
     public StatisticsDisplay() {
         super(FXML);
+    }
+
+    public void setStatistics(String stats) {
+        requireNonNull(stats);
+        statistics.setText(stats);
     }
 
 }

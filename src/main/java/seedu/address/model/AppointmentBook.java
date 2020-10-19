@@ -145,6 +145,7 @@ public class AppointmentBook implements ReadOnlyAppointmentBook {
         return appointments.asUnmodifiableObservableList();
     }
 
+    @Override
     public AppointmentStatistics getAppointmentBookStatistics() {
         Date td = new Date(LocalDate.now());
         int upcomingThisWeek = appointments.asUnmodifiableObservableList()
@@ -155,7 +156,7 @@ public class AppointmentBook implements ReadOnlyAppointmentBook {
         int totalToday = today.size();
         int doneToday = today.filtered(appointment -> appointment.getIsDoneStatus()).size();
         int upcomingToday = totalToday - doneToday;
-        return new AppointmentBook.AppointmentStatistics(totalToday, doneToday, upcomingToday, upcomingThisWeek);
+        return new AppointmentStatistics(totalToday, doneToday, upcomingToday, upcomingThisWeek);
     }
 
 
@@ -171,18 +172,4 @@ public class AppointmentBook implements ReadOnlyAppointmentBook {
         return appointments.hashCode();
     }
 
-    public static class AppointmentStatistics {
-        private int totalToday;
-        private int doneToday;
-        private int upcomingToday;
-        private int upcomingThisWeek;
-
-        public AppointmentStatistics(int totalToday, int doneToday, int upcomingToday, int upcomingThisWeek) {
-            this.totalToday = totalToday;
-            this.doneToday = doneToday;
-            this.upcomingToday = upcomingToday;
-            this.upcomingThisWeek = upcomingThisWeek;
-        }
-
-    }
 }
