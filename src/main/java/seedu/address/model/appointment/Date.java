@@ -71,8 +71,8 @@ public class Date {
      * @return true if the appointment date is in same week with the input date, false otherwise.
      */
     public boolean isInSameWeek(Date inputDate) {
-        TemporalAdjuster adj = TemporalAdjusters.next(DayOfWeek.MONDAY);
-        LocalDate nextMon = inputDate.value.with(adj);
+        TemporalAdjuster adjusterToMonday = TemporalAdjusters.next(DayOfWeek.MONDAY);
+        LocalDate nextMon = inputDate.value.with(adjusterToMonday);
         LocalDate lastSun = nextMon.minusDays(8);
         Date nextMonday = new Date(nextMon);
         Date lastSunday = new Date(lastSun);

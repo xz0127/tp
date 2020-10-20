@@ -15,7 +15,7 @@ public interface ReadOnlyAppointmentBook {
     ObservableList<Appointment> getAppointmentList();
 
     /**
-     * Returns the statistics of the appointment books.
+     * Returns the statistics of the appointment book.
      */
     AppointmentStatistics getAppointmentBookStatistics();
 }
