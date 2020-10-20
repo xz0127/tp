@@ -13,7 +13,8 @@ public class AppointmentStatistics {
      * Creates an AppointmentStatistics with the {@code totalToday}, {@code doneToday}
      * {@code upcomingToday}, and {@code upcomingThisWeek}.
      */
-    public AppointmentStatistics(int numOfDoneApptInToday, int numOfUpcomingApptInToday, int numOfDoneApptInThisWeek, int numOfUpcomingApptInThisWeek) {
+    public AppointmentStatistics(int numOfDoneApptInToday, int numOfUpcomingApptInToday,
+                                 int numOfDoneApptInThisWeek, int numOfUpcomingApptInThisWeek) {
         this.numOfDoneApptInToday = numOfDoneApptInToday;
         this.numOfUpcomingApptInToday = numOfUpcomingApptInToday;
         this.numOfDoneApptInThisWeek = numOfDoneApptInThisWeek;
@@ -52,7 +53,8 @@ public class AppointmentStatistics {
     public String toString() {
         return "Today: \n" + getNumOfUpcomingApptInToday()
                 + " upcoming  |  " + getNumOfDoneApptInToday() + " done \n"
-                + "This Week:\n" + getNumOfUpcomingApptInThisWeek() + " upcoming  |  " + getNumOfDoneApptInThisWeek() + " done";
+                + "This Week:\n" + getNumOfUpcomingApptInThisWeek()
+                + " upcoming  |  " + getNumOfDoneApptInThisWeek() + " done";
     }
 
     @Override
