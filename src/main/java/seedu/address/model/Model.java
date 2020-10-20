@@ -12,7 +12,9 @@ import seedu.address.model.patient.Patient;
  * The API of the Model component.
  */
 public interface Model {
-    /** {@code Predicate} that always evaluate to true */
+    /**
+     * {@code Predicate} that always evaluate to true
+     */
     Predicate<Patient> PREDICATE_SHOW_ALL_PATIENTS = unused -> true;
     Predicate<Appointment> PREDICATE_SHOW_ALL_APPOINTMENTS = unused -> true;
 
@@ -86,6 +88,12 @@ public interface Model {
     void deletePatient(Patient target);
 
     /**
+     * Deletes the given appointment.
+     * The appointment must exist in the appointment book.
+     */
+    void deleteAppointment(Appointment target);
+
+    /**
      * Adds the given patient.
      * {@code patient} must not already exist in the patient book.
      */
@@ -106,24 +114,36 @@ public interface Model {
     void setPatient(Patient target, Patient editedPatient);
 
     /**
-     * Replaces the given appointment {@code target} with {@code editedAppointment}.
+     * Updates the relevant appointments upon the editing of a given {@code target} with {@code editedPatient}.
+     */
+    void updateAppointmentsWithPatient(Patient target, Patient editedPatient);
+
+    /**
+     * Deletes the relevant appointments upon the deletion of a given {@code target}.
+     */
+    void deleteAppointmentsWithPatient(Patient target);
+
+    /**
+     * Replaces the given {@code target} with {@code editedAppointment}.
      * {@code target} must exist in the appointment book.
-     * The appointment identity  of {@code editedAppointment} must not be the same as another appointment
+     * The appointment details of {@code editedAppointment} must not be the same as another existing appointment
      * in the appointment book.
      */
-    void setAppointment(Appointment target, Appointment editedPatient);
+    void setAppointment(Appointment target, Appointment editedAppointment);
 
     /** Returns an unmodifiable view of the filtered patient list */
     ObservableList<Patient> getFilteredPatientList();
 
     /**
      * Updates the filter of the filtered patient list to filter by the given {@code predicate}.
+     *
      * @throws NullPointerException if {@code predicate} is null.
      */
     void updateFilteredPatientList(Predicate<Patient> predicate);
 
     /**
      * Updates the filter of the filtered appointment list to filter by the given {@code predicate}.
+     *
      * @throws NullPointerException if {@code predicate} is null.
      */
     void updateFilteredAppointmentList(Predicate<Appointment> predicate);
@@ -133,9 +153,13 @@ public interface Model {
      */
     void setAppointmentBook(ReadOnlyAppointmentBook appointmentBook);
 
-    /** Returns the AppointmentBook */
+    /**
+     * Returns the AppointmentBook
+     */
     ReadOnlyAppointmentBook getAppointmentBook();
 
-    /** Returns an unmodifiable view of the filtered appointment list */
+    /**
+     * Returns an unmodifiable view of the filtered appointment list
+     */
     ObservableList<Appointment> getFilteredAppointmentList();
 }

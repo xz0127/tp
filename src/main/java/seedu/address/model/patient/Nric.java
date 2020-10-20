@@ -11,7 +11,7 @@ public class Nric {
 
 
     public static final String MESSAGE_CONSTRAINTS =
-            "Nric should only contain 7 numbers leading and ending with an alphabet in caps";
+            "Nric should only contain 7 numbers leading and ending with an alphabet in uppercase";
     public static final String VALIDATION_REGEX = "[STFG]\\d{7}[A-Z]";
     public final String value;
 
@@ -23,6 +23,7 @@ public class Nric {
     public Nric(String nric) {
         requireNonNull(nric);
         checkArgument(isValidNric(nric), MESSAGE_CONSTRAINTS);
+        assert isValidNric(nric) : "Invalid nric";
         value = nric;
     }
 
@@ -49,5 +50,4 @@ public class Nric {
     public int hashCode() {
         return value.hashCode();
     }
-
 }

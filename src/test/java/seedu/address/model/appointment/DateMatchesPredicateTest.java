@@ -13,8 +13,8 @@ public class DateMatchesPredicateTest {
 
     @Test
     public void equals() {
-        Date firstPredicateDate = new Date(LocalDate.parse("2020-12-12"));
-        Date secondPredicateDate = new Date(LocalDate.parse("2020-12-02"));
+        Date firstPredicateDate = new Date(2020, 12, 12);
+        Date secondPredicateDate = new Date(2020, 12, 2);
 
         DateMatchesPredicate firstPredicate = new DateMatchesPredicate(firstPredicateDate);
         DateMatchesPredicate secondPredicate = new DateMatchesPredicate(secondPredicateDate);
@@ -38,14 +38,18 @@ public class DateMatchesPredicateTest {
 
     @Test
     public void test_dateMatches_returnsTrue() {
-        DateMatchesPredicate predicate = new DateMatchesPredicate(new Date(LocalDate.parse("2020-12-12")));
-        assertTrue(predicate.test(new AppointmentBuilder().withDate(LocalDate.parse("2020-12-12")).build()));
+        DateMatchesPredicate predicate = new DateMatchesPredicate(new Date(2020, 12, 12));
+        assertTrue(predicate.test(
+                new AppointmentBuilder().withDate(LocalDate.of(2020, 12, 12)).build()
+        ));
     }
 
     @Test
     public void test_dateDoesNotMatch_returnsFalse() {
-        DateMatchesPredicate predicate = new DateMatchesPredicate(new Date(LocalDate.parse("2020-12-02")));
-        assertFalse(predicate.test(new AppointmentBuilder().withDate(LocalDate.parse("2020-12-12")).build()));
+        DateMatchesPredicate predicate = new DateMatchesPredicate(new Date(2020, 12, 2));
+        assertFalse(predicate.test(
+                new AppointmentBuilder().withDate(LocalDate.of(2020, 12, 12)).build()
+        ));
     }
 
 }

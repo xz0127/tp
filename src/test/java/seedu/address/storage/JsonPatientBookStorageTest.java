@@ -30,16 +30,6 @@ public class JsonPatientBookStorageTest {
         assertThrows(NullPointerException.class, () -> readPatientBook(null));
     }
 
-    private java.util.Optional<ReadOnlyPatientBook> readPatientBook(String filePath) throws Exception {
-        return new JsonPatientBookStorage(Paths.get(filePath)).readPatientBook(addToTestDataPathIfNotNull(filePath));
-    }
-
-    private Path addToTestDataPathIfNotNull(String prefsFileInTestDataFolder) {
-        return prefsFileInTestDataFolder != null
-                ? TEST_DATA_FOLDER.resolve(prefsFileInTestDataFolder)
-                : null;
-    }
-
     @Test
     public void read_missingFile_emptyResult() throws Exception {
         assertFalse(readPatientBook("NonExistentFile.json").isPresent());
@@ -51,13 +41,13 @@ public class JsonPatientBookStorageTest {
     }
 
     @Test
-    public void readPatientBook_invalidPatientPatientBook_throwDataConversionException() {
-        assertThrows(DataConversionException.class, () -> readPatientBook("invalidPatientPatientBook.json"));
+    public void readPatientBook_invalidPatientBook_throwDataConversionException() {
+        assertThrows(DataConversionException.class, () -> readPatientBook("invalidPatientBook.json"));
     }
 
     @Test
-    public void readPatientBook_invalidAndValidPatientPatientBook_throwDataConversionException() {
-        assertThrows(DataConversionException.class, () -> readPatientBook("invalidAndValidPatientPatientBook.json"));
+    public void readPatientBook_invalidAndValidPatientBook_throwDataConversionException() {
+        assertThrows(DataConversionException.class, () -> readPatientBook("invalidAndValidPatientBook.json"));
     }
 
     @Test
@@ -91,6 +81,21 @@ public class JsonPatientBookStorageTest {
         assertThrows(NullPointerException.class, () -> savePatientBook(null, "SomeFile.json"));
     }
 
+    @Test
+    public void savePatientBook_nullFilePath_throwsNullPointerException() {
+        assertThrows(NullPointerException.class, () -> savePatientBook(new PatientBook(), null));
+    }
+
+    private Path addToTestDataPathIfNotNull(String prefsFileInTestDataFolder) {
+        return prefsFileInTestDataFolder != null
+                ? TEST_DATA_FOLDER.resolve(prefsFileInTestDataFolder)
+                : null;
+    }
+
+    private java.util.Optional<ReadOnlyPatientBook> readPatientBook(String filePath) throws Exception {
+        return new JsonPatientBookStorage(Paths.get(filePath)).readPatientBook(addToTestDataPathIfNotNull(filePath));
+    }
+
     /**
      * Saves {@code patientBook} at the specified {@code filePath}.
      */
@@ -103,8 +108,4 @@ public class JsonPatientBookStorageTest {
         }
     }
 
-    @Test
-    public void savePatientBook_nullFilePath_throwsNullPointerException() {
-        assertThrows(NullPointerException.class, () -> savePatientBook(new PatientBook(), null));
-    }
 }

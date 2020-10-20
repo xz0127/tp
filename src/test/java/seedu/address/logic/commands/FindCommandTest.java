@@ -61,6 +61,7 @@ public class FindCommandTest {
         NameContainsKeywordsPredicate predicate = preparePredicate(" ");
         FindCommand command = new FindCommand(predicate);
         expectedModel.updateFilteredPatientList(predicate);
+        expectedModel.updateFilteredAppointmentList(appointment -> predicate.test(appointment.getPatient()));
         assertCommandSuccess(command, model, expectedMessage, expectedModel);
         assertEquals(Collections.emptyList(), model.getFilteredPatientList());
     }
@@ -71,6 +72,7 @@ public class FindCommandTest {
         NameContainsKeywordsPredicate predicate = preparePredicate("Kurz Elle Kunz");
         FindCommand command = new FindCommand(predicate);
         expectedModel.updateFilteredPatientList(predicate);
+        expectedModel.updateFilteredAppointmentList(appointment -> predicate.test(appointment.getPatient()));
         assertCommandSuccess(command, model, expectedMessage, expectedModel);
         assertEquals(Arrays.asList(CARL, ELLE, FIONA), model.getFilteredPatientList());
     }

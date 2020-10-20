@@ -22,10 +22,13 @@ import seedu.address.model.appointment.NaturalDay;
  * Helper class for {@link ParserUtil#parseDate(String)}.
  */
 public class DateParserUtil {
-    public static final String MESSAGE_CONSTRAINTS = "Date should contains a properly formatted date "
-            + "or a recognised natural date language.\n"
-            + "An example of a properly formatted date includes (but not limited to): 02 Aug 2020\n"
-            + "An example of a natural date language is 'today' or 'wednesday'(any day of the week)";
+    public static final String MESSAGE_CONSTRAINTS = "The Date input must adhere to our formatting conventions "
+            + "or adopt a recognised natural date language.\n"
+            + "An example of a properly formatted date includes (but is not limited to): 02 Aug 2020\n"
+            + "An example of a natural date language is 'today' or 'wednesday'(any day of the week)"
+            + "Please visit our user guide"
+            + " for more date/time variants."
+            + "\nType help in the input box for the link!";
 
     /**
      * List of known date formats that parser accepts.

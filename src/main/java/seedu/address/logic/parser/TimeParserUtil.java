@@ -19,10 +19,13 @@ import seedu.address.model.appointment.NaturalDay;
  * Helper class for {@link ParserUtil#parseTime(String)}.
  */
 public class TimeParserUtil {
-    public static final String MESSAGE_CONSTRAINTS = "Time should contains a properly formatted time "
-            + "or a recognised natural time language.\n"
-            + "An example of a properly formatted time includes (but not limited to): 2 PM\n"
-            + "An example of a natural time language is 'morning' (8am) or 'evening' (7pm)";
+    public static final String MESSAGE_CONSTRAINTS = "The Time input must adhere to our formatting conventions "
+            + "or adopt a recognised natural time language.\n"
+            + "An example of a properly formatted time includes (but is not limited to): 2 PM\n"
+            + "An example of a natural time language is 'morning' (8am) or 'evening' (7pm)"
+            + "Please visit our user guide"
+            + " for more date/time variants."
+            + "\nType help in the input box for the link!";
 
     /**
      * List of known time formats that parser accepts.

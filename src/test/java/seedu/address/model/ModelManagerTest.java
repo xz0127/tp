@@ -4,11 +4,16 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PATIENTS;
+import static seedu.address.model.ModelManager.isValidModel;
 import static seedu.address.testutil.Assert.assertThrows;
 import static seedu.address.testutil.TypicalAppointments.ALICE_APPOINTMENT;
-import static seedu.address.testutil.TypicalAppointments.BOB_APPOINTMENT;
+import static seedu.address.testutil.TypicalAppointments.ALICE_APPOINTMENT_2;
+import static seedu.address.testutil.TypicalAppointments.BENSON_APPOINTMENT;
+import static seedu.address.testutil.TypicalAppointments.CARL_APPOINTMENT;
+import static seedu.address.testutil.TypicalAppointments.getTypicalAppointmentBook;
 import static seedu.address.testutil.TypicalPatients.ALICE;
 import static seedu.address.testutil.TypicalPatients.BENSON;
+import static seedu.address.testutil.TypicalPatients.getTypicalPatientBook;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -112,10 +117,33 @@ public class ModelManagerTest {
     }
 
     @Test
+    public void isValidModel_inconsistentPatientAndAppointmentBook_returnsFalse() {
+        PatientBook patientBook = new PatientBookBuilder().withPatient(ALICE).withPatient(BENSON).build();
+        AppointmentBook appointmentBook = new AppointmentBookBuilder()
+                .withAppointment(ALICE_APPOINTMENT).withAppointment(CARL_APPOINTMENT).build();
+
+        assertFalse(isValidModel(patientBook, appointmentBook));
+    }
+
+    @Test
+    public void isValidModel_consistentPatientAndAppointmentBook_returnsFalse() {
+        PatientBook patientBook = new PatientBookBuilder().withPatient(ALICE).withPatient(BENSON).build();
+        AppointmentBook appointmentBook = new AppointmentBookBuilder().withAppointment(ALICE_APPOINTMENT)
+                .withAppointment(ALICE_APPOINTMENT_2).withAppointment(BENSON_APPOINTMENT).build();
+
+        assertTrue(isValidModel(patientBook, appointmentBook));
+
+        patientBook = getTypicalPatientBook();
+        appointmentBook = getTypicalAppointmentBook();
+
+        assertTrue(isValidModel(patientBook, appointmentBook));
+    }
+
+    @Test
     public void equals() {
         PatientBook patientBook = new PatientBookBuilder().withPatient(ALICE).withPatient(BENSON).build();
         AppointmentBook appointmentBook = new AppointmentBookBuilder()
-                .withAppointment(ALICE_APPOINTMENT).withAppointment(BOB_APPOINTMENT).build();
+                .withAppointment(ALICE_APPOINTMENT).withAppointment(BENSON_APPOINTMENT).build();
         PatientBook differentPatientBook = new PatientBook();
         AppointmentBook differentAppointmentBook = new AppointmentBook();
         UserPrefs userPrefs = new UserPrefs();
