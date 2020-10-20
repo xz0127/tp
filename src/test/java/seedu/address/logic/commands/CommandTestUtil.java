@@ -7,9 +7,12 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_DATE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NRIC;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_REMARK;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TIME;
 import static seedu.address.testutil.Assert.assertThrows;
+import static seedu.address.testutil.RemarkUtil.WORDS_ONE_NINETY_NINE;
+import static seedu.address.testutil.RemarkUtil.WORDS_TWO_FIVE_ZERO;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -63,6 +66,9 @@ public class CommandTestUtil {
     public static final String ASSIGN_DATE_TIME = " " + PREFIX_DATE + VALID_DATE + " " + PREFIX_TIME + VALID_TIME;
     public static final String ASSIGN_TIME = " " + PREFIX_TIME + VALID_TIME;
     public static final String ASSIGN_DATE = " " + PREFIX_DATE + VALID_DATE;
+    public static final String REMARK_DESC_AMY = PREFIX_REMARK + VALID_REMARK_AMY;
+    public static final String REMARK_DESC_BOB = PREFIX_REMARK + VALID_REMARK_BOB;
+    public static final String REMARK_DESC_EMPTY = PREFIX_REMARK + " ";
 
     public static final String INVALID_NAME_DESC = " " + PREFIX_NAME + "James&"; // '&' not allowed in names
     public static final String INVALID_NRIC_DESC = " " + PREFIX_NRIC + "q1234567k"; // lower caps not allowed in Nric
@@ -75,6 +81,8 @@ public class CommandTestUtil {
     public static final String INVALID_TIME_DESC = " " + PREFIX_TIME + "2530"; // not a proper 24h time format
     public static final String INVALID_TIME_DESC_LETTERS = " " + PREFIX_TIME + "abcd"; // not a recognised time format
     public static final String INVALID_TIME_DESC_CLOSED = " " + PREFIX_TIME + "2359"; // not during opening hours
+    public static final String INVALID_REMARK_EXCEED_LIMIT = " 1 " + PREFIX_REMARK + WORDS_TWO_FIVE_ZERO;
+    public static final String INVALID_REMARK_INDEX = " 0 " + PREFIX_REMARK + WORDS_ONE_NINETY_NINE;
 
     public static final String PREAMBLE_WHITESPACE = "\t  \r  \n";
     public static final String PREAMBLE_NON_EMPTY = "NonEmptyPreamble";
