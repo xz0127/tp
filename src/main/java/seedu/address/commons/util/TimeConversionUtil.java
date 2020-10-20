@@ -27,7 +27,7 @@ public class TimeConversionUtil {
      * @param timeValue time value in minutes.
      * @return the time object which is equivalent to the time value.
      */
-    public Time convertIntToTime(int timeValue) {
+    public static Time convertIntToTime(int timeValue) {
         assert timeValue < 1440;
         assert timeValue >= 0;
 
