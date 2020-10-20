@@ -35,6 +35,7 @@ public class Index {
      * Creates a new {@code Index} using a zero-based index.
      */
     public static Index fromZeroBased(int zeroBasedIndex) {
+        assert zeroBasedIndex >= 0 : "Invalid zeroBasedIndex will yield negative number";
         return new Index(zeroBasedIndex);
     }
 
@@ -42,6 +43,7 @@ public class Index {
      * Creates a new {@code Index} using a one-based index.
      */
     public static Index fromOneBased(int oneBasedIndex) {
+        assert oneBasedIndex >= 1 : "Invalid oneBasedIndex will yield negative number";
         return new Index(oneBasedIndex - 1);
     }
 
