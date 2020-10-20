@@ -95,7 +95,8 @@ public class AssignCommand extends Command {
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof AssignCommand // instanceof handles nulls
-                && targetIndex.equals(((AssignCommand) other).targetIndex)); // state check
+                && targetIndex.equals(((AssignCommand) other).targetIndex)
+                && dateTimeLoader.equals(((AssignCommand) other).dateTimeLoader)); // state check
     }
 
 }

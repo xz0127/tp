@@ -1,5 +1,7 @@
 package seedu.address.logic.commands;
 
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_PATIENT_DISPLAYED_INDEX;
 import static seedu.address.logic.commands.CommandTestUtil.OVERLAP_TIME;
 import static seedu.address.logic.commands.CommandTestUtil.SAME_TIME;
@@ -9,6 +11,7 @@ import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.testutil.Assert.assertThrows;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_APPOINTMENT;
+import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_APPOINTMENT;
 import static seedu.address.testutil.TypicalPatients.ALICE;
 import static seedu.address.testutil.TypicalPatients.getTypicalPatientBook;
 import static seedu.address.testutil.TypicalPatients.getTypicalPatients;
@@ -97,5 +100,34 @@ public class AssignCommandTest {
         model.addAppointment(appointment);
 
         assertCommandFailure(assignCommand, model, AssignCommand.ASSIGNMENT_OVERLAP);
+    }
+
+    @Test
+    public void equals() {
+        DateTimeLoader loader = new DateTimeLoaderBuilder().withDate(VALID_DATE).withTime(VALID_TIME).build();
+        DateTimeLoader diffLoader = new DateTimeLoaderBuilder().withDate(VALID_DATE).withTime(OVERLAP_TIME).build();
+        AssignCommand command = new AssignCommand(INDEX_FIRST_APPOINTMENT, loader);
+
+        // same values -> returns true
+        DateTimeLoader loaderCopy = new DateTimeLoaderBuilder().withDate(VALID_DATE).withTime(VALID_TIME).build();
+        AssignCommand commandCopy = new AssignCommand(INDEX_FIRST_APPOINTMENT, loaderCopy);
+        assertTrue(command.equals(commandCopy));
+
+        // same object -> returns true
+        assertTrue(command.equals(command));
+
+        // null -> returns false
+        assertFalse(command.equals(null));
+
+        //different types -> returns false
+        assertFalse(command.equals(new ClearCommand()));
+
+        // different index -> returns false
+        AssignCommand diffIndexCommand = new AssignCommand(INDEX_SECOND_APPOINTMENT, loader);
+        assertFalse(command.equals(diffIndexCommand));
+
+        // different dateTimeLoader -> returns false
+        AssignCommand diffLoaderCommand = new AssignCommand(INDEX_FIRST_APPOINTMENT, diffLoader);
+        assertFalse(command.equals(diffLoaderCommand));
     }
 }
