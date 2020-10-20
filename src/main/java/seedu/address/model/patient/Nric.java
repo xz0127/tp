@@ -23,6 +23,7 @@ public class Nric {
     public Nric(String nric) {
         requireNonNull(nric);
         checkArgument(isValidNric(nric), MESSAGE_CONSTRAINTS);
+        assert isValidNric(nric) : "Invalid nric";
         value = nric;
     }
 
