@@ -11,9 +11,8 @@ end box
 
 box Model MODEL_COLOR_T1
 participant ":Model" as Model MODEL_COLOR
-participant "toMark:Appointment" as Appointment MODEL_COLOR
+participant "toMark:Appointment" as ToMarkAppointment MODEL_COLOR
 participant "doneAppointment:Appointment" as DoneAppointment MODEL_COLOR
-participant ":VersionedPatientBook" as VersionedPatientBook MODEL_COLOR
 end box
 [-> LogicManager : execute("done d/.. t/..")
 activate LogicManager
@@ -60,19 +59,18 @@ activate Model
 Model --> DoneCommand : lastShownAppointmentList
 deactivate Model
 
-create Appointment
-DoneCommand -> Appointment : lastShownAppointmentList.filter(appt -> appt.startAtSameTime).findAny()
-activate Appointment
-
-Appointment --> DoneCommand : toMark
-deactivate Appointment
+DoneCommand -> ToMarkAppointment : toMark.markAsDone()
+activate ToMarkAppointment
 
 create DoneAppointment
-DoneCommand -> DoneAppointment : toMark.markAsDone()
+ToMarkAppointment -> DoneAppointment : markAsDone()
 activate DoneAppointment
 
-DoneAppointment --> DoneCommand : doneAppointment
+DoneAppointment --> ToMarkAppointment
 deactivate DoneAppointment
+
+ToMarkAppointment --> DoneCommand : doneAppointment
+deactivate ToMarkAppointment
 
 DoneCommand -> Model : setAppointment(toMark, doneAppointment)
 activate Model

@@ -65,9 +65,10 @@ The sections below give more details of each component.
 [`Ui.java`](https://github.com/se-edu/AY2021S1-CS2103T-T12-4/tp/tree/master/src/main/java/seedu/address/ui/Ui.java)
 
 The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `StatisticsDisplay`, `AppointmentListPanel`, 
-`PersonListPanel`, `StatusBarFooter` etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class.
+`PatientListPanel`, `StatusBarFooter` etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class.
 
-The `UI` component uses JavaFx UI framework. The layout of these UI parts are defined in matching `.fxml` files that are in the `src/main/resources/view` folder. For example, the layout of the [`MainWindow`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/ui/MainWindow.java) is specified in [`MainWindow.fxml`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/resources/view/MainWindow.fxml)
+The `UI` component uses JavaFx UI framework. The layout of these UI parts are defined in matching `.fxml` files that are
+ in the `src/main/resources/view` folder. For example, the layout of the [`MainWindow`](https://github.com/se-edu/AY2021S1-CS2103T-T12-4/tp/tree/master/src/main/java/seedu/address/ui/MainWindow.java) is specified in [`MainWindow.fxml`](https://github.com/se-edu/AY2021S1-CS2103T-T12-4/tp/tree/master/src/main/resources/view/MainWindow.fxml)
 
 The `UI` component,
 
@@ -143,11 +144,11 @@ Example Usage:
 * `done d/Monday t/9am`
 * `done d/12-12-2020 t/12pm`
 
-The Mark Appointments as Done Feature is facilitated by the `DoneCommand`, which extends the abstract class `Command`, and
+The mark appointments as Done feature is facilitated by the `DoneCommand`, which extends the abstract class `Command`, and
 the `DoneCommandParser`, which implements the `Parser` interface. Both of these classes are part of the `Logic` component.
 Additionally, the command takes in a `DateTimeLoader`, which contains the date and time information of the appointment to mark.
 
-The following is an example usage scenario and how the mark as done mechanism behaves at each step:
+The following is an example usage scenario on how the mark as done mechanism works in each step:
 
 1. User types `done d/DATE t/TIME` into the app.
 
@@ -170,7 +171,7 @@ The following is an example usage scenario and how the mark as done mechanism be
 
 10. `DoneCommand` replaces the `toMark` with the `doneAppointment` by calling the `Model#setAppointment(target, editedAppointment)`.
 
-11. As a last step, `DoneCommand` creates a `CommandResult` with `SuccessMessage` and returns it to `LogicManager`.
+11. Lastly, `DoneCommand` creates a `CommandResult` with a `SuccessMessage` and returns it to `LogicManager`.
 
 
 The above process is shown in the following sequence diagram:
