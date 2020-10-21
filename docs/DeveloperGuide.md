@@ -133,85 +133,50 @@ Classes used by multiple components are in the `seedu.patientbook.commons` packa
 
 This section describes some noteworthy details on how certain features are implemented.
 
-### \[Proposed\] Undo/redo feature
+### 1. Done feature
+The mark done feature allows users to mark a specific appointment in the address book as done using `d/` tag and `t/` tag to specify the appointment at a certain time slot.
+#### 1.1 Implementation
+Command: `done d/DATE t/TIME`
 
-#### Proposed Implementation
+Example Usage: 
+* `done d/Monday t/9am`
+* `done d/12-12-2020 t/12pm`
 
-The proposed undo/redo mechanism is facilitated by `VersionedPatientBook`. It extends `PatientBook` with an undo/redo history, stored internally as an `patientBookStateList` and `currentStatePointer`. Additionally, it implements the following operations:
+The Mark Appointments as Done Feature is facilitated by the `DoneCommand`, which extends the abstract class `Command`, and
+the `DoneCommandParser`, which implements the `Parser` interface. Both of these classes are part of the `Logic` component.
+Additionally, the command takes in a `DateTimeLoader`, which contains the date and time information of the appointment to mark.
 
-* `VersionedPatientBook#commit()` — Saves the current patient book state in its history.
-* `VersionedPatientBook#undo()` — Restores the previous patient book state from its history.
-* `VersionedPatientBook#redo()` — Restores a previously undone patient book state from its history.
+The following is an example usage scenario and how the mark as done mechanism behaves at each step:
 
-These operations are exposed in the `Model` interface as `Model#commitPatientBook()`, `Model#undoPatientBook()` and `Model#redoPatientBook()` respectively.
+1. User types `done d/DATE t/TIME` into the app.
 
-Given below is an example usage scenario and how the undo/redo mechanism behaves at each step.
+2. The request is handled by `LogicManager#execute(String)`, which then calls and passes the input to the `NuudleParser#parseCommand(String)` method.
 
-Step 1. The user launches the application for the first time. The `VersionedPatientBook` will be initialized with the initial patient book state, and the `currentStatePointer` pointing to that single patient book state.
+3. `NuudleParser` detects the command word `done` in the input string and creates a new `DoneCommandParser` to parse inputs according to the format specified for `DoneCommand`.
 
-![UndoRedoState0](images/UndoRedoState0.png)
+4. Input is parsed using the `DoneCommandParser#parse(String)` method, which also performs input validation. The method creates a `DateTimeLoader` using the parsed inputs by calling the constructor of the class `DateTimeLoader`.
 
-Step 2. The user executes `delete 5` command to delete the 5th patient in the patient book. The `delete` command calls `Model#commitPatientBook()`, causing the modified state of the patient book after the `delete 5` command executes to be saved in the `PatientBookStateList`, and the `currentStatePointer` is shifted to the newly inserted patient book state.
+5. The `DoneCommandParser` creates a new `DoneCommand` instance with the newly created `DateTimeLoader` object and returns it to `NuudleParser`, which in turn returns it to `LogicManager`.
 
-![UndoRedoState1](images/UndoRedoState1.png)
+6. `LogicManager` calls the `DoneCommand#execute(model)` method.
 
-Step 3. The user executes `add n/David …​` to add a new patient. The `add` command also calls `Model#commitPatientBook()`, causing another modified patient book state to be saved into the `patientBookStateList`.
+7. `DoneCommand` obtains a copy of the `FilteredAppointmentList` by calling the `Model#getFilteredAppointmentList()` method. 
 
-![UndoRedoState2](images/UndoRedoState2.png)
+8. `DoneCommand` returns the appointment `toMark` in the `FilteredAppointmentList`, if there is an appointment in the list starts at the same time with the date and time indicated in the `DateTimeLoader`; Otherwise, throw an 
+`APPOINTMENT_DOES_NOT_EXISTS` exception.
 
-<div markdown="span" class="alert alert-info">:information_source: **Note:** If a command fails its execution, it will not call `Model#commitPatientBook()`, so the patient book state will not be saved into the `patientBookStateList`.
+9. `DoneCommand` creates another instance of this appointment `doneAppointment` which has a `done` status. 
 
-</div>
+10. `DoneCommand` replaces the `toMark` with the `doneAppointment` by calling the `Model#setAppointment(target, editedAppointment)`.
 
-Step 4. The user now decides that adding the patient was a mistake, and decides to undo that action by executing the `undo` command. The `undo` command will call `Model#undoPatientBook()`, which will shift the `currentStatePointer` once to the left, pointing it to the previous patient book state, and restores the patient book to that state.
+11. As a last step, `DoneCommand` creates a `CommandResult` with `SuccessMessage` and returns it to `LogicManager`.
 
-![UndoRedoState3](images/UndoRedoState3.png)
 
-<div markdown="span" class="alert alert-info">:information_source: **Note:** If the `currentStatePointer` is at index 0, pointing to the initial PatientBook state, then there are no previous PatientBook states to restore. The `undo` command uses `Model#canUndoPatientBook()` to check if this is the case. If so, it will return an error to the user rather
-than attempting to perform the undo.
-
-</div>
-
-The following sequence diagram shows how the undo operation works:
-
-![UndoSequenceDiagram](images/UndoSequenceDiagram.png)
-
-<div markdown="span" class="alert alert-info">:information_source: **Note:** The lifeline for `UndoCommand` should end at the destroy marker (X) but due to a limitation of PlantUML, the lifeline reaches the end of diagram.
-
-</div>
-
-The `redo` command does the opposite — it calls `Model#redoPatientBook()`, which shifts the `currentStatePointer` once to the right, pointing to the previously undone state, and restores the patient book to that state.
-
-<div markdown="span" class="alert alert-info">:information_source: **Note:** If the `currentStatePointer` is at index `patientBookStateList.size() - 1`, pointing to the latest patient book state, then there are no undone PatientBook states to restore. The `redo` command uses `Model#canRedoPatientBook()` to check if this is the case. If so, it will return an error to the user rather than attempting to perform the redo.
-
-</div>
-
-Step 5. The user then decides to execute the command `list`. Commands that do not modify the patient book, such as `list`, will usually not call `Model#commitAddressBook()`, `Model#undoAddressBook()` or `Model#redoAddressBook()`. Thus, the `addressBookStateList` remains unchanged.
-
-![UndoRedoState4](images/UndoRedoState4.png)
-
-Step 6. The user executes `clear`, which calls `Model#commitAddressBook()`. Since the `currentStatePointer` is not pointing at the end of the `addressBookStateList`, all patient book states after the `currentStatePointer` will be purged. Reason: It no longer makes sense to redo the `add n/David …​` command. This is the behavior that most modern desktop applications follow.
-
-![UndoRedoState5](images/UndoRedoState5.png)
+The above process is shown in the following sequence diagram:
+![DoneSequenceDiagram](images/DoneSequenceDiagram.png)
 
 The following activity diagram summarizes what happens when a user executes a new command:
-
-![CommitActivityDiagram](images/CommitActivityDiagram.png)
-
-#### Design consideration:
-
-##### Aspect: How undo & redo executes
-
-* **Alternative 1 (current choice):** Saves the entire patient book.
-  * Pros: Easy to implement.
-  * Cons: May have performance issues in terms of memory usage.
-
-* **Alternative 2:** Individual command knows how to undo/redo by
-  itself.
-  * Pros: Will use less memory (e.g. for `delete`, just save the patient being deleted).
-  * Cons: We must ensure that the implementation of each individual command are correct.
-
-_{more aspects and alternatives to be added}_
+![DoneCommandActivityDiagram](images/DoneCommandActivityDiagram.png)
 
 ### \[Proposed\] Data archiving
 
