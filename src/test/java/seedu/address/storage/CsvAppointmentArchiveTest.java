@@ -97,7 +97,7 @@ public class CsvAppointmentArchiveTest {
 
         assertEquals(expectedAppointment, archive.archiveAppointmentBook(appointmentBook));
 
-        Path archiveFile = testFolder.resolve("2010_May.csv");
+        Path archiveFile = testFolder.resolve("2010_MAY.csv");
         List<CsvAdaptedAppointment> csvData = archive.readAppointments(archiveFile);
         assertEquals(List.of(new CsvAdaptedAppointment(expiredAppointment)), csvData);
     }
