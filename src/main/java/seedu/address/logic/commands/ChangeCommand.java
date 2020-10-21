@@ -135,7 +135,7 @@ public class ChangeCommand extends Command {
         private Duration duration;
 
         /**
-         * Creates a EditAppointmentDescriptor object to store the new appointment details.
+         * Creates an EditAppointmentDescriptor object to store the new appointment details.
          * @param date Date of the new appointment.
          * @param startTime Starting time of the new appointment.
          * @param duration Duration of the new appointment.
