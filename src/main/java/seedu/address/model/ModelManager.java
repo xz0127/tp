@@ -95,6 +95,16 @@ public class ModelManager implements Model {
         userPrefs.setAppointmentBookFilePath(appointmentBookFilePath);
     }
 
+    @Override
+    public Path getArchiveDirPath() {
+        return userPrefs.getArchiveDirectoryPath();
+    }
+
+    @Override
+    public void setArchiveDirPath(Path archiveDirPath) {
+        requireNonNull(archiveDirPath);
+        userPrefs.setArchiveDirectoryPath(archiveDirPath);
+    }
     //=========== PatientBook ================================================================================
 
     @Override
@@ -184,6 +194,7 @@ public class ModelManager implements Model {
     }
 
     //=========== Filtered Appointment List Accessors =================================================================
+
     /**
      * Returns an unmodifiable view of the list of {@code Appointment} backed by the internal list of
      * {@code versionedAppointmentBook}
@@ -243,7 +254,7 @@ public class ModelManager implements Model {
      * Checks if the {@code readOnlyPatientBook} is consistent with the {@code appointmentBook} data.
      *
      * @param readOnlyPatientBook the patients data
-     * @param appointmentBook the appointments data
+     * @param appointmentBook     the appointments data
      * @return true if the two books are valid, false otherwise
      */
     public static boolean isValidModel(ReadOnlyPatientBook readOnlyPatientBook,

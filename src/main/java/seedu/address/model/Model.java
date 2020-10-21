@@ -59,11 +59,23 @@ public interface Model {
     void setAppointmentBookFilePath(Path appointmentBookFilePath);
 
     /**
+     * Returns the user prefs' appointment directory path.
+     */
+    Path getArchiveDirPath();
+
+    /**
+     * Sets the user prefs' archive directory path.
+     */
+    void setArchiveDirPath(Path archiveDirPath);
+
+    /**
      * Replaces patient book data with the data in {@code patientBook}.
      */
     void setPatientBook(ReadOnlyPatientBook patientBook);
 
-    /** Returns the PatientBook */
+    /**
+     * Returns the PatientBook
+     */
     ReadOnlyPatientBook getPatientBook();
 
     /**
@@ -131,7 +143,9 @@ public interface Model {
      */
     void setAppointment(Appointment target, Appointment editedAppointment);
 
-    /** Returns an unmodifiable view of the filtered patient list */
+    /**
+     * Returns an unmodifiable view of the filtered patient list
+     */
     ObservableList<Patient> getFilteredPatientList();
 
     /**

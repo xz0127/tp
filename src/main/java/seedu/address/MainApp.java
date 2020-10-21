@@ -62,8 +62,8 @@ public class MainApp extends Application {
         UserPrefs userPrefs = initPrefs(userPrefsStorage);
 
         PatientBookStorage patientBookStorage = new JsonPatientBookStorage(userPrefs.getPatientBookFilePath());
-        AppointmentBookStorage appointmentBookStorage =
-                new JsonAppointmentBookStorage(userPrefs.getAppointmentBookFilePath());
+        AppointmentBookStorage appointmentBookStorage = new JsonAppointmentBookStorage(
+                userPrefs.getAppointmentBookFilePath(), userPrefs.getArchiveDirectoryPath());
         storage = new StorageManager(patientBookStorage, appointmentBookStorage, userPrefsStorage);
 
         initLogging(config);

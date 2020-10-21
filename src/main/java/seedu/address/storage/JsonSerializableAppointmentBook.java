@@ -9,7 +9,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonRootName;
 
 import seedu.address.commons.exceptions.IllegalValueException;
-import seedu.address.commons.util.DateTimeUtil;
 import seedu.address.model.AppointmentBook;
 import seedu.address.model.ReadOnlyAppointmentBook;
 import seedu.address.model.appointment.Appointment;
@@ -52,16 +51,12 @@ class JsonSerializableAppointmentBook {
      */
     public AppointmentBook toModelType() throws IllegalValueException {
         AppointmentBook appointmentBook = new AppointmentBook();
+        AppointmentBook pastAppointmentBook = new AppointmentBook();
 
         for (JsonAdaptedAppointment jsonAdaptedAppointment : appointments) {
             Appointment appointment = jsonAdaptedAppointment.toModelType();
             if (appointmentBook.hasOverlapsWith(appointment)) {
                 throw new IllegalValueException(MESSAGE_OVERLAPPING_APPOINTMENT);
-            }
-
-            if (DateTimeUtil.isExpiredByDay(appointment.getDate().getDate())) {
-                // send to archive
-                continue;
             }
 
             // add to appointment book

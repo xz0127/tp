@@ -6,9 +6,9 @@ import java.util.HashMap;
 import java.util.List;
 
 /**
- * A class used to test serialization and deserialization
+ * A class used to test serialization and deserialization for Json
  */
-public class SerializableTestClass {
+public class SerializableJsonTestClass {
     public static final String JSON_STRING_REPRESENTATION = String.format("{%n"
             + "  \"name\" : \"This is a test class\",%n"
             + "  \"listOfLocalDateTimes\" : "

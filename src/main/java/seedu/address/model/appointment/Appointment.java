@@ -26,8 +26,6 @@ public class Appointment {
     private final Time startTime;
     private final Time endTime;
     private final boolean isDone;
-    // todo: add more support for appointmentId
-    private final AppointmentId appointmentId;
 
     // Data field
     private final Patient patient;
@@ -60,7 +58,6 @@ public class Appointment {
         this.startTime = startTime;
         this.endTime = endTime;
 
-        this.appointmentId = new AppointmentId(date, startTime);
         this.patient = patient;
         this.isDone = isDone;
     }
@@ -75,10 +72,6 @@ public class Appointment {
 
     public Time getEndTime() {
         return endTime;
-    }
-
-    public AppointmentId getAppointmentId() {
-        return appointmentId;
     }
 
     public Patient getPatient() {
@@ -153,7 +146,7 @@ public class Appointment {
 
         return getDate().isBefore(otherAppointment.getDate())
                 || (getDate().equals(otherAppointment.getDate())
-                    && !(getEndTime().isAfter(otherAppointment.getStartTime()))); // End1 <= Start2
+                && !(getEndTime().isAfter(otherAppointment.getStartTime()))); // End1 <= Start2
     }
 
     /**
@@ -167,7 +160,7 @@ public class Appointment {
 
         return getDate().isAfter(otherAppointment.getDate())
                 || (getDate().equals(otherAppointment.getDate())
-                    && !(otherAppointment.getEndTime().isAfter(getStartTime()))); // End2 <= Start1
+                && !(otherAppointment.getEndTime().isAfter(getStartTime()))); // End2 <= Start1
     }
 
     /**
@@ -188,14 +181,13 @@ public class Appointment {
         return otherAppointment.getStartTime().equals(getStartTime())
                 && otherAppointment.getEndTime().equals(getEndTime())
                 && otherAppointment.getDate().equals(getDate())
-                && otherAppointment.getAppointmentId().equals(getAppointmentId())
                 && otherAppointment.getPatient().equals(getPatient())
                 && otherAppointment.getIsDoneStatus() == this.getIsDoneStatus();
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(startTime, endTime, date, appointmentId, patient);
+        return Objects.hash(startTime, endTime, date, patient);
     }
 
     @Override

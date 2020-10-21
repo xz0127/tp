@@ -29,7 +29,7 @@ public class StorageManagerTest {
     public void setUp() {
         JsonPatientBookStorage patientBookStorage = new JsonPatientBookStorage(getTempFilePath("pb"));
         JsonAppointmentBookStorage appointmentBookStorage =
-                new JsonAppointmentBookStorage(getTempFilePath("appt"));
+                new JsonAppointmentBookStorage(getTempFilePath("appt"), getTempFilePath("archive"));
         JsonUserPrefsStorage userPrefsStorage = new JsonUserPrefsStorage(getTempFilePath("prefs"));
         storageManager = new StorageManager(patientBookStorage, appointmentBookStorage, userPrefsStorage);
     }

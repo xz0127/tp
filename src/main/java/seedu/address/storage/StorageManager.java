@@ -13,7 +13,7 @@ import seedu.address.model.ReadOnlyUserPrefs;
 import seedu.address.model.UserPrefs;
 
 /**
- * Manages storage of PatientBook data in local storage.
+ * Manages storage of PatientBook and AppointmentBook data in local storage.
  */
 public class StorageManager implements Storage {
 
@@ -90,15 +90,21 @@ public class StorageManager implements Storage {
     }
 
     @Override
-    public Optional<ReadOnlyAppointmentBook> readAppointmentBook() throws DataConversionException, IOException {
-        return readAppointmentBook(appointmentBookStorage.getAppointmentBookFilePath());
+    public Path getAppointmentArchiveDirPath() {
+        return appointmentBookStorage.getAppointmentArchiveDirPath();
     }
 
     @Override
-    public Optional<ReadOnlyAppointmentBook> readAppointmentBook(Path filePath)
+    public Optional<ReadOnlyAppointmentBook> readAppointmentBook() throws DataConversionException, IOException {
+        return readAppointmentBook(appointmentBookStorage.getAppointmentBookFilePath(),
+                appointmentBookStorage.getAppointmentArchiveDirPath());
+    }
+
+    @Override
+    public Optional<ReadOnlyAppointmentBook> readAppointmentBook(Path filePath, Path archiveDirPath)
             throws DataConversionException, IOException {
         logger.fine("Attempting to read data from file: " + filePath);
-        return appointmentBookStorage.readAppointmentBook(filePath);
+        return appointmentBookStorage.readAppointmentBook(filePath, archiveDirPath);
     }
 
     @Override

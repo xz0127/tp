@@ -96,6 +96,18 @@ public class ModelManagerTest {
     }
 
     @Test
+    public void setArchiveDirPath_nullPath_throwsNullPointerException() {
+        assertThrows(NullPointerException.class, () -> modelManager.setArchiveDirPath(null));
+    }
+
+    @Test
+    public void setArchiveDirPath_validPath_setsArchiveDirPath() {
+        Path path = Paths.get("archive/directory/path");
+        modelManager.setArchiveDirPath(path);
+        assertEquals(path, modelManager.getArchiveDirPath());
+    }
+
+    @Test
     public void hasPatient_nullPatient_throwsNullPointerException() {
         assertThrows(NullPointerException.class, () -> modelManager.hasPatient(null));
     }

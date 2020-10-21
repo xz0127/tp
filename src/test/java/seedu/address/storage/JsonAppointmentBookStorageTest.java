@@ -3,6 +3,7 @@ package seedu.address.storage;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static seedu.address.testutil.Assert.assertThrows;
+import static seedu.address.testutil.TypicalAppointments.ALICE_APPOINTMENT;
 import static seedu.address.testutil.TypicalAppointments.HOON_APPOINTMENT;
 import static seedu.address.testutil.TypicalAppointments.IDA_APPOINTMENT;
 import static seedu.address.testutil.TypicalAppointments.getTypicalAppointmentBook;
@@ -27,51 +28,55 @@ public class JsonAppointmentBookStorageTest {
 
     @Test
     public void readAppointmentBook_nullFilePath_throwsNullPointerException() {
-        assertThrows(NullPointerException.class, () -> readAppointmentBook(null));
+        assertThrows(NullPointerException.class, () -> readAppointmentBook(null, null));
     }
 
     @Test
     public void read_missingFile_emptyResult() throws Exception {
-        assertFalse(readAppointmentBook("NonExistentFile.json").isPresent());
+        assertFalse(readAppointmentBook("NonExistentFile.json", "archives").isPresent());
     }
 
     @Test
     public void read_notJsonFormat_exceptionThrown() {
-        assertThrows(DataConversionException.class, () -> readAppointmentBook("notJsonFormatAppointmentBook.json"));
+        assertThrows(DataConversionException.class, () -> readAppointmentBook(
+                "notJsonFormatAppointmentBook.json", "archives"));
     }
 
     @Test
     public void readAppointmentBook_invalidAppointmentBook_throwDataConversionException() {
-        assertThrows(DataConversionException.class, () -> readAppointmentBook("invalidAppointmentBook.json"));
+        assertThrows(DataConversionException.class, () -> readAppointmentBook(
+                "invalidAppointmentBook.json", "archives"));
     }
 
     @Test
     public void readAppointmentBook_invalidAndValidAppointmentBook_throwDataConversionException() {
-        assertThrows(DataConversionException.class, () -> readAppointmentBook("invalidAndValidAppointmentBook.json"));
+        assertThrows(DataConversionException.class, () -> readAppointmentBook(
+                "invalidAndValidAppointmentBook.json", "archives"));
     }
 
     @Test
     public void readAppointmentBook_overlappingAppointmentBook_throwDataConversionException() {
-        assertThrows(DataConversionException.class, () -> readAppointmentBook("overlappingAppointmentBook.json"));
+        assertThrows(DataConversionException.class, () -> readAppointmentBook(
+                "overlappingAppointmentBook.json", "archives"));
     }
 
     @Test
     public void readAndSaveAppointmentBook_allInOrder_success() throws Exception {
         Path filePath = testFolder.resolve("TempAppointmentBook.json");
+        Path archivePath = testFolder.resolve("archive");
         AppointmentBook original = getTypicalAppointmentBook();
-        JsonAppointmentBookStorage jsonAppointmentBookStorage = new JsonAppointmentBookStorage(filePath);
+        JsonAppointmentBookStorage jsonAppointmentBookStorage = new JsonAppointmentBookStorage(filePath, archivePath);
 
         // Save in new file and read back
         jsonAppointmentBookStorage.saveAppointmentBook(original, filePath);
-        ReadOnlyAppointmentBook readBack = jsonAppointmentBookStorage.readAppointmentBook(filePath).get();
+        ReadOnlyAppointmentBook readBack = jsonAppointmentBookStorage.readAppointmentBook(filePath, archivePath).get();
         assertEquals(original, new AppointmentBook(readBack));
 
         // Modify data, overwrite exiting file, and read back
         original.addAppointment(HOON_APPOINTMENT);
-        // TODO: add after implementation of remove appointment
-        // original.removeAppointment(ALICE_APPOINTMENT);
+        original.removeAppointment(ALICE_APPOINTMENT);
         jsonAppointmentBookStorage.saveAppointmentBook(original, filePath);
-        readBack = jsonAppointmentBookStorage.readAppointmentBook(filePath).get();
+        readBack = jsonAppointmentBookStorage.readAppointmentBook(filePath, archivePath).get();
         assertEquals(original, new AppointmentBook(readBack));
 
         // Save and read without specifying file path
@@ -98,9 +103,10 @@ public class JsonAppointmentBookStorageTest {
                 : null;
     }
 
-    private java.util.Optional<ReadOnlyAppointmentBook> readAppointmentBook(String filePath) throws Exception {
-        return new JsonAppointmentBookStorage(Paths.get(filePath))
-                .readAppointmentBook(addToTestDataPathIfNotNull(filePath));
+    private java.util.Optional<ReadOnlyAppointmentBook> readAppointmentBook(String filePath, String archivePath)
+            throws Exception {
+        return new JsonAppointmentBookStorage(Paths.get(filePath), Paths.get(archivePath))
+                .readAppointmentBook(addToTestDataPathIfNotNull(filePath), addToTestDataPathIfNotNull(archivePath));
     }
 
     /**
@@ -108,7 +114,7 @@ public class JsonAppointmentBookStorageTest {
      */
     private void saveAppointmentBook(ReadOnlyAppointmentBook appointmentBook, String filePath) {
         try {
-            new JsonAppointmentBookStorage(Paths.get(filePath))
+            new JsonAppointmentBookStorage(Paths.get(filePath), TEST_DATA_FOLDER.resolve("archive"))
                     .saveAppointmentBook(appointmentBook, addToTestDataPathIfNotNull(filePath));
         } catch (IOException ioe) {
             throw new AssertionError("There should not be an error writing to the file.", ioe);
