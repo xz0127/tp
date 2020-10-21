@@ -1,5 +1,6 @@
 package seedu.address.logic;
 
+import java.io.IOException;
 import java.nio.file.Path;
 
 import javafx.collections.ObservableList;
@@ -24,6 +25,13 @@ public interface Logic {
      * @throws ParseException If an error occurs during parsing.
      */
     CommandResult execute(String commandText) throws CommandException, ParseException;
+
+    /**
+     * Saves the model into storage.
+     *
+     * @throws IOException If an error occurs during saving
+     */
+    void saveData() throws IOException;
 
     /**
      * Returns the PatientBook.
@@ -64,4 +72,9 @@ public interface Logic {
      * Set the user prefs' GUI settings.
      */
     void setGuiSettings(GuiSettings guiSettings);
+
+    /**
+     * Get the archive status message.
+     */
+    String getArchiveStatus();
 }

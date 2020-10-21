@@ -70,9 +70,22 @@ public class MainApp extends Application {
 
         model = initModelManager(storage, userPrefs);
 
-        logic = new LogicManager(model, storage);
-
+        logic = initLogicManager(model, storage);
         ui = new UiManager(logic);
+    }
+    /**
+     * Returns a {@code ModelManager} with the data from {@code storage}'s patient book,
+     * {@code storage}'s appointment book and {@code userPrefs}.
+     */
+    private Logic initLogicManager(Model model, Storage storage) {
+        Logic logic = new LogicManager(model, storage);
+
+        try {
+            logic.saveData();
+        } catch (IOException ioe) {
+            logger.warning("Problem while saving to files");
+        }
+        return logic;
     }
 
     /**

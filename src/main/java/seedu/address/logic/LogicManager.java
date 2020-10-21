@@ -54,13 +54,18 @@ public class LogicManager implements Logic {
         try {
             // We can deduce that the previous line of code modifies model in some way
             // since it's being stored here.
-            storage.savePatientBook(model.getPatientBook());
-            storage.saveAppointmentBook(model.getAppointmentBook());
+            saveData();
         } catch (IOException ioe) {
             throw new CommandException(FILE_OPS_ERROR_MESSAGE + ioe, ioe);
         }
 
         return commandResult;
+    }
+
+    @Override
+    public void saveData() throws IOException {
+        storage.savePatientBook(model.getPatientBook());
+        storage.saveAppointmentBook(model.getAppointmentBook());
     }
 
     @Override
@@ -101,5 +106,10 @@ public class LogicManager implements Logic {
     @Override
     public void setGuiSettings(GuiSettings guiSettings) {
         model.setGuiSettings(guiSettings);
+    }
+
+    @Override
+    public String getArchiveStatus() {
+        return storage.getArchiveStatus();
     }
 }

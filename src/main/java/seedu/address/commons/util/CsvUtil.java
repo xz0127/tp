@@ -7,18 +7,15 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
 import java.util.Optional;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.MappingIterator;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
-import com.fasterxml.jackson.databind.deser.std.FromStringDeserializer;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import com.fasterxml.jackson.dataformat.csv.CsvMapper;
@@ -43,8 +40,7 @@ public class CsvUtil {
             .setVisibility(PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY)
             .registerModule(new JavaTimeModule())
             .registerModule(new SimpleModule("SimpleModule")
-                    .addSerializer(Level.class, new ToStringSerializer())
-                    .addDeserializer(Level.class, new LevelDeserializer(Level.class)));
+                    .addSerializer(Path.class, new ToStringSerializer()));
 
     static <T> void serializeObjectToCsvFile(Path csvFile, List<T> objectsToSerialize,
                 Class<T> classOfObjectToSerialize, boolean isOverwrite) throws IOException {
@@ -142,35 +138,6 @@ public class CsvUtil {
         }
 
         return objectMapper.writer(schema).writeValueAsString(instances);
-    }
-
-    /**
-     * Contains methods that retrieve logging level from serialized string.
-     */
-    private static class LevelDeserializer extends FromStringDeserializer<Level> {
-
-        protected LevelDeserializer(Class<?> vc) {
-            super(vc);
-        }
-
-        @Override
-        protected Level _deserialize(String value, DeserializationContext ctxt) {
-            return getLoggingLevel(value);
-        }
-
-        /**
-         * Gets the logging level that matches loggingLevelString
-         * <p>
-         * Returns null if there are no matches
-         */
-        private Level getLoggingLevel(String loggingLevelString) {
-            return Level.parse(loggingLevelString);
-        }
-
-        @Override
-        public Class<Level> handledType() {
-            return Level.class;
-        }
     }
 
 }

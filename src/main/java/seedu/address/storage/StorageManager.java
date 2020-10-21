@@ -117,4 +117,9 @@ public class StorageManager implements Storage {
         logger.fine("Attempting to write to data file: " + filePath);
         appointmentBookStorage.saveAppointmentBook(appointmentBook, filePath);
     }
+
+    @Override
+    public String getArchiveStatus() {
+        return appointmentBookStorage.getArchiveStatus();
+    }
 }

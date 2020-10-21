@@ -7,7 +7,6 @@ import java.nio.file.Path;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.ListIterator;
 import java.util.logging.Logger;
 
 import seedu.address.commons.core.LogsCenter;
@@ -20,6 +19,9 @@ import seedu.address.model.appointment.Appointment;
 
 public class AppointmentArchive {
     private static final Logger logger = LogsCenter.getLogger(AppointmentArchive.class);
+    // Statistics
+    private static int numberOfArchivedAppointments = 0;
+    private static int numberOfExpiredAppointments = 0;
 
     private final Path directoryPath;
 
@@ -39,45 +41,68 @@ public class AppointmentArchive {
      */
     public ReadOnlyAppointmentBook archiveAppointmentBook(ReadOnlyAppointmentBook appointmentBook) {
         List<Appointment> appointments = appointmentBook.getAppointmentList();
-        ListIterator<Appointment> iter = appointments.listIterator();
 
         LocalDate date = null;
         List<CsvAdaptedAppointment> pastAppointments = new ArrayList<>();
+        List<Appointment> upcomingAppointments = new ArrayList<>();
 
-        while (iter.hasNext()) {
-            Appointment appointment = iter.next();
+        for (int i = 0; i < appointments.size(); i++) {
+            Appointment appointment = appointments.get(i);
             LocalDate appointmentDate = appointment.getDate().getDate();
 
             if (date == null || date != appointmentDate) {
                 if (DateTimeUtil.isExpiredByDay(appointmentDate)) {
                     // change of day
+                    if (date != null && (date.getYear() != appointmentDate.getYear()
+                            || date.getMonth() != appointmentDate.getMonth())) {
+                        archiveAppointments(pastAppointments, getFileName(date));
+                    }
+                    pastAppointments.clear();
                     date = appointmentDate;
-                    // todo: check if should archive in new file
                 } else {
                     // no more expired appointments
+                    while (i < appointments.size()) {
+                        upcomingAppointments.add(appointments.get(i));
+                        i++;
+                    }
                     break;
                 }
             }
             pastAppointments.add(new CsvAdaptedAppointment(appointment));
-            iter.remove();
+            numberOfArchivedAppointments++;
+            numberOfExpiredAppointments += appointment.getIsDoneStatus() ? 0 : 1;
         }
 
-        try {
-            archiveAppointments(pastAppointments, directoryPath, getFileName(date));
-        } catch (IOException ioe) {
-            logger.warning("Failed to archive past appointment: " + ioe);
+        if (pastAppointments.isEmpty()) {
+            return appointmentBook;
         }
+
+        archiveAppointments(pastAppointments, getFileName(date));
 
         AppointmentBook book = new AppointmentBook();
-        book.setAppointments(appointments);
-        return appointmentBook;
+        book.setAppointments(upcomingAppointments);
+        return book;
     }
 
     /**
-     * Archive the expired appointments.
+     * Archive the given appointments.
      *
-     * @param appointments  the appointments to archive.
+     * @param appointments the appointments to archive.
+     * @param fileName     name of the archive data file. Cannot be null.
+     */
+    public void archiveAppointments(List<CsvAdaptedAppointment> appointments, String fileName) {
+        try {
+            archiveAppointments(appointments, directoryPath, fileName);
+        } catch (IOException ioe) {
+            logger.warning("Failed to archive past appointment: " + ioe);
+        }
+    }
+
+    /**
+     * Same as {@link #archiveAppointments(List, String)}.
+     *
      * @param directoryPath location of the data. Cannot be null.
+     * @throws IOException if there is an error writing to file.
      */
     public void archiveAppointments(List<CsvAdaptedAppointment> appointments, Path directoryPath, String fileName)
             throws IOException {
@@ -99,7 +124,12 @@ public class AppointmentArchive {
      */
     public String getFileName(LocalDate date) {
         requireNonNull(date);
-        return date.getYear() + date.getMonth().toString();
+        return date.getYear() + "_" + date.getMonth().toString();
+    }
+
+    public static String getArchiveStatistics() {
+        return String.format("%d %s archived, %d expired", numberOfArchivedAppointments,
+                numberOfArchivedAppointments > 1 ? "appointments" : "appointment", numberOfExpiredAppointments);
     }
 
 }

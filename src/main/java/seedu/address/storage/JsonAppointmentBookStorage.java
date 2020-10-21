@@ -96,4 +96,9 @@ public class JsonAppointmentBookStorage implements AppointmentBookStorage {
         JsonUtil.saveJsonFile(new JsonSerializableAppointmentBook(appointmentBook), filePath);
     }
 
+    @Override
+    public String getArchiveStatus() {
+        return AppointmentArchive.getArchiveStatistics();
+    }
+
 }

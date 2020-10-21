@@ -48,4 +48,5 @@ public interface AppointmentBookStorage {
      */
     void saveAppointmentBook(ReadOnlyAppointmentBook appointmentBook, Path filePath) throws IOException;
 
+    String getArchiveStatus();
 }
