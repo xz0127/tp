@@ -4,16 +4,19 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.core.Messages.MESSAGE_EXPIRED_DATE_TIME;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DATE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_DURATION;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TIME;
 import static seedu.address.model.appointment.Appointment.CREATION_OFFSET_MINUTES;
 
+import java.time.Duration;
 import java.time.LocalTime;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.DateTimeUtil;
 import seedu.address.logic.commands.AssignCommand;
-import seedu.address.logic.commands.DateTimeLoader;
+import seedu.address.logic.commands.AssignCommand.DurationSupporter;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.appointment.Appointment;
 import seedu.address.model.appointment.Date;
 import seedu.address.model.appointment.Time;
 
@@ -32,9 +35,10 @@ public class AssignCommandParser implements Parser<AssignCommand> {
     public AssignCommand parse(String arg) throws ParseException {
         requireNonNull(arg);
         ArgumentMultimap argMultimap =
-                ArgumentTokenizer.tokenize(arg, PREFIX_DATE, PREFIX_TIME);
+                ArgumentTokenizer.tokenize(arg, PREFIX_DATE, PREFIX_TIME, PREFIX_DURATION);
 
         Index index;
+        Duration duration;
 
         try {
             index = ParserUtil.parseIndex(argMultimap.getPreamble());
@@ -48,8 +52,15 @@ public class AssignCommandParser implements Parser<AssignCommand> {
         if (argMultimap.getValue(PREFIX_TIME).isEmpty()) {
             throw new ParseException(AssignCommand.TIME_MISSING);
         }
+        if (argMultimap.getValue(PREFIX_DURATION).isEmpty()) {
+            duration = Appointment.DEFAULT_DURATION;
+        } else {
+            duration = ParserUtil.parseDuration(
+                    requireNonNull(argMultimap.getValue(PREFIX_DURATION).get())
+            );
+        }
 
-        DateTimeLoader dateTimeLoader = new DateTimeLoader();
+        DurationSupporter loader = new DurationSupporter();
         Date date = ParserUtil.parseDate(argMultimap.getValue(PREFIX_DATE).get());
         Time time = ParserUtil.parseTime(argMultimap.getValue(PREFIX_TIME).get());
 
@@ -59,9 +70,10 @@ public class AssignCommandParser implements Parser<AssignCommand> {
             throw new ParseException(MESSAGE_EXPIRED_DATE_TIME);
         }
 
-        dateTimeLoader.setAppointmentDate(date);
-        dateTimeLoader.setAppointmentTime(time);
+        loader.setAppointmentDate(date);
+        loader.setAppointmentTime(time);
+        loader.setAppointmentDuration(duration);
 
-        return new AssignCommand(index, dateTimeLoader);
+        return new AssignCommand(index, loader);
     }
 }

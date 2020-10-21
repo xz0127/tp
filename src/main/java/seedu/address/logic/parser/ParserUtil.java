@@ -1,7 +1,9 @@
 package seedu.address.logic.parser;
 
+import static java.time.temporal.ChronoUnit.MINUTES;
 import static java.util.Objects.requireNonNull;
 
+import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Collection;
@@ -11,6 +13,7 @@ import java.util.Set;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.StringUtil;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.appointment.Appointment;
 import seedu.address.model.appointment.Date;
 import seedu.address.model.appointment.Time;
 import seedu.address.model.patient.Address;
@@ -25,6 +28,7 @@ import seedu.address.model.tag.Tag;
  */
 public class ParserUtil {
     public static final String MESSAGE_INVALID_INDEX = "Index is not a non-zero unsigned integer.";
+    public static final String MESSAGE_INVALID_DURATION = "Duration is not a non-zero unsigned integer.";
 
     /**
      * Parses {@code oneBasedIndex} into an {@code Index} and returns it. Leading and trailing whitespaces will be
@@ -175,5 +179,27 @@ public class ParserUtil {
             throw new ParseException(Remark.MESSAGE_CONSTRAINTS);
         }
         return new Remark(trimmedRemark);
+    }
+
+    /**
+     * Parses a {@code String duration} into a {@code Duration}
+     *
+     * @throws ParseException ParseException if the given {@code Duration} is not a positive integer string.
+     */
+    public static Duration parseDuration(String durationString) throws ParseException {
+        // null duration will use the default one hour duration.
+        String trimmedDuration = durationString.trim();
+        Duration duration;
+        try {
+            duration = Duration.of(Integer.parseInt(trimmedDuration), MINUTES);
+        } catch (NumberFormatException e) {
+            throw new ParseException(MESSAGE_INVALID_DURATION);
+        }
+
+        if (duration.isNegative()) {
+            throw new ParseException(MESSAGE_INVALID_DURATION);
+        }
+
+        return duration;
     }
 }
