@@ -75,16 +75,8 @@ public class Appointment {
         return startTime;
     }
 
-    public LocalTime getLocalStartTime() {
-        return startTime.getTime();
-    }
-
     public Time getEndTime() {
         return endTime;
-    }
-
-    public LocalTime getLocalEndTime() {
-        return endTime.getTime();
     }
 
     public Duration getDuration() {
