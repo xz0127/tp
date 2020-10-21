@@ -218,6 +218,57 @@ _{more aspects and alternatives to be added}_
 _{Explain here how the data archiving feature will be implemented}_
 
 
+### 5. Edit Patient Feature
+
+`[written by: Xin Zhe]`
+
+The Edit Patient Feature allows the nurse to edit an existing `Patient` in the patient book. 
+`Appointment` which involves the patient will be updated accordingly.
+
+#### 5.1 Implementation
+
+The Edit Patient Feature is facilitated by the `EditCommand`, which extends the abstract class `Command`, 
+and the `EditCommandParser`, which implements the `Parser` interface. All of these classes are part of the `Logic` component.
+
+This feature is supported by the `UniquePatientList` which stores the `patient` instances and the `UniqueAppointmentList` 
+which stores the `appointment` instances. These classes are part of the `model` component.
+
+Additionally, a public static class `EditPatientDescriptor` is nested in `EditCommand` as a container class to store the details to edit the `Patient` with.
+It also implements the following operations:
+
+* `EditCommand#createEditedPatient(Patient patientToEdit, EditPatientDescriptor editPatientDescriptor)` — 
+Creates a `patient` with the details of `patientToEdit` edited with `editPatientDescriptor`.
+
+Given below is an example usage scenario and how the edit mechanism behaves at each step.
+
+Step 1: The user types `edit INDEX [n/NAME] [p/PHONE] [i/NRIC] [a/ADDRESS] [t/TAG]…` into Nuudle.
+
+Step 2: The request is handled by `LogicManager#execute(String)`, which then calls and passes the input to the `NuudleParser#parseCommand(String)` method.
+
+Step 3: `NuudleParser` detects the command word `edit` in the input string and creates a new `EditCommandParser` to parse inputs according to the format specified for `EditCommand`.
+
+Step 4: Input is parsed using the EditCommandParser#parse(String) method, which also performs input validation. The method creates a `EditPatientDescriptor` using the parsed inputs by calling the static constructor inside `EditCommand`.
+
+Step 5: The `EditCommandParser` creates a new `EditCommand` instance with the given index and newly created `EditPatientDescriptor` object and returns it to `NuudleParser`, which in turn returns it to `LogicManager`.
+
+Step 6: `LogicManager` calls the `EditCommand#execute(Model)` method.
+
+Step 7: `EditCommand` obtains a copy of the `FilteredPatientList` by calling the `Model#getFilteredPatientList()` method. This is used to check if the `patient` index supplied by the user exists in Nuudle.
+
+Step 8: `EditCommand` creates a new `patient` specified by the `EditPatientDescriptor` by calling its own private static method `EditCommand#createEditedPatient(Patient patientToEdit, EditPatientDescriptor editPatientDescriptor).
+
+Step 9: `EditCommand` checks whether there are duplicate patients in the patient book by calling `Model#hasPatient(Patient)` method.
+
+Step 10: `EditCommand` edits the `patient` at a given index by calling `Model#setPatient(Patient, Patient)`;
+
+Step 11: `EditCommand` edits the `appointment` in the `UniqueAppointmentList` which contains the edited patient by calling `Model#updateAppointmentsWithPatient(Patient, Patient)` method.
+
+Step 12: `EditCommand` updates the filtered list by calling `Model#updateFilteredPatientList(Predicate)` method.
+
+Step 13: `EditCommand` updates the filtered list by calling `Model#updateFilteredAppointmentList(Predicate)` method.
+
+Step 14: Lastly, `EditCommand` creates a `CommandResult` with `SuccessMessage` and `Patient` and returns it to `LogicManager`.
+
 --------------------------------------------------------------------------------------------------------------------
 
 ## **Documentation, logging, testing, configuration, dev-ops**
