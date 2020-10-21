@@ -40,6 +40,7 @@ public class RemarkCommand extends Command {
      */
     public RemarkCommand(Index index, Remark remark) {
         requireAllNonNull(index, remark);
+        assert index.getZeroBased() >= 0 : "Invalid Index used in Remark";
         this.index = index;
         this.remark = remark;
     }

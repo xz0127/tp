@@ -4,12 +4,16 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DATE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_DURATION;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NRIC;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_REMARK;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TIME;
 import static seedu.address.testutil.Assert.assertThrows;
+import static seedu.address.testutil.RemarkUtil.WORDS_ONE_NINETY_NINE;
+import static seedu.address.testutil.RemarkUtil.WORDS_TWO_FIVE_ZERO;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -26,6 +30,7 @@ import seedu.address.model.appointment.Time;
 import seedu.address.model.patient.NameContainsKeywordsPredicate;
 import seedu.address.model.patient.Patient;
 import seedu.address.testutil.DateTimeLoaderBuilder;
+import seedu.address.testutil.DurationSupporterBuilder;
 import seedu.address.testutil.EditPatientDescriptorBuilder;
 
 /**
@@ -49,6 +54,8 @@ public class CommandTestUtil {
     public static final String VALID_TIME = "12pm";
     public static final String SAME_TIME = "Afternoon";
     public static final String OVERLAP_TIME = "12:01 pm";
+    public static final String VALID_DURATION = "90";
+    public static final String DIFF_DURATION = "91";
 
     public static final String NAME_DESC_AMY = " " + PREFIX_NAME + VALID_NAME_AMY;
     public static final String NAME_DESC_BOB = " " + PREFIX_NAME + VALID_NAME_BOB;
@@ -63,6 +70,10 @@ public class CommandTestUtil {
     public static final String ASSIGN_DATE_TIME = " " + PREFIX_DATE + VALID_DATE + " " + PREFIX_TIME + VALID_TIME;
     public static final String ASSIGN_TIME = " " + PREFIX_TIME + VALID_TIME;
     public static final String ASSIGN_DATE = " " + PREFIX_DATE + VALID_DATE;
+    public static final String ASSIGN_DURATION = " " + PREFIX_DURATION + VALID_DURATION;
+    public static final String REMARK_DESC_AMY = PREFIX_REMARK + VALID_REMARK_AMY;
+    public static final String REMARK_DESC_BOB = PREFIX_REMARK + VALID_REMARK_BOB;
+    public static final String REMARK_DESC_EMPTY = PREFIX_REMARK + " ";
 
     public static final String INVALID_NAME_DESC = " " + PREFIX_NAME + "James&"; // '&' not allowed in names
     public static final String INVALID_NRIC_DESC = " " + PREFIX_NRIC + "q1234567k"; // lower caps not allowed in Nric
@@ -75,6 +86,10 @@ public class CommandTestUtil {
     public static final String INVALID_TIME_DESC = " " + PREFIX_TIME + "2530"; // not a proper 24h time format
     public static final String INVALID_TIME_DESC_LETTERS = " " + PREFIX_TIME + "abcd"; // not a recognised time format
     public static final String INVALID_TIME_DESC_CLOSED = " " + PREFIX_TIME + "2359"; // not during opening hours
+    public static final String INVALID_REMARK_EXCEED_LIMIT = " 1 " + PREFIX_REMARK + WORDS_TWO_FIVE_ZERO;
+    public static final String INVALID_REMARK_INDEX = " 0 " + PREFIX_REMARK + WORDS_ONE_NINETY_NINE;
+    public static final String INVALID_DURATION_NEGATIVE_DESC = " " + PREFIX_DURATION + "-40";
+    public static final String INVALID_DURATION_NON_INTEGER_DESC = " " + PREFIX_DURATION + "CS";
 
     public static final String PREAMBLE_WHITESPACE = "\t  \r  \n";
     public static final String PREAMBLE_NON_EMPTY = "NonEmptyPreamble";
@@ -82,8 +97,12 @@ public class CommandTestUtil {
     public static final EditCommand.EditPatientDescriptor DESC_AMY;
     public static final EditCommand.EditPatientDescriptor DESC_BOB;
     public static final DateTimeLoader LOADER;
-    public static final DateTimeLoader LOADER_TIME;
-    public static final DateTimeLoader LOADER_DATE;
+    public static final DateTimeLoader LOADER_DIFF_TIME;
+    public static final DateTimeLoader LOADER_DIFF_DATE;
+    public static final AssignCommand.DurationSupporter SUPPORTER;
+    public static final AssignCommand.DurationSupporter SUPPORTER_DIFF_DATE;
+    public static final AssignCommand.DurationSupporter SUPPORTER_DIFF_TIME;
+    public static final AssignCommand.DurationSupporter SUPPORTER_DIFF_DURATION;
 
     static {
         DESC_AMY = new EditPatientDescriptorBuilder().withName(VALID_NAME_AMY)
@@ -96,8 +115,19 @@ public class CommandTestUtil {
 
     static {
         LOADER = new DateTimeLoaderBuilder().withDate(VALID_DATE).withTime(VALID_TIME).build();
-        LOADER_TIME = new DateTimeLoaderBuilder().withDate(VALID_DATE).withTime(OVERLAP_TIME).build();
-        LOADER_DATE = new DateTimeLoaderBuilder().withDate(DIFF_DATE).withTime(OVERLAP_TIME).build();
+        LOADER_DIFF_TIME = new DateTimeLoaderBuilder().withDate(VALID_DATE).withTime(OVERLAP_TIME).build();
+        LOADER_DIFF_DATE = new DateTimeLoaderBuilder().withDate(DIFF_DATE).withTime(OVERLAP_TIME).build();
+    }
+
+    static {
+        SUPPORTER = new DurationSupporterBuilder()
+                .withDate(VALID_DATE).withTime(VALID_TIME).withDuration(VALID_DURATION).build();
+        SUPPORTER_DIFF_DATE = new DurationSupporterBuilder()
+                .withDate(DIFF_DATE).withTime(VALID_TIME).withDuration(VALID_DURATION).build();
+        SUPPORTER_DIFF_TIME = new DurationSupporterBuilder()
+                .withDate(VALID_DATE).withTime(OVERLAP_TIME).withDuration(VALID_DURATION).build();
+        SUPPORTER_DIFF_DURATION = new DurationSupporterBuilder()
+                .withDate(VALID_DATE).withTime(VALID_TIME).withDuration(DIFF_DURATION).build();
     }
 
     /**

@@ -78,11 +78,11 @@ The `UI` component,
 ![Structure of the Logic Component](images/LogicClassDiagram.png)
 
 **API** :
-[`Logic.java`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/logic/Logic.java)
+[`Logic.java`](https://github.com/AY2021S1-CS2103T-T12-4/tp/blob/master/src/main/java/seedu/address/logic/Logic.java)
 
-1. `Logic` uses the `NuudleParser` class to parse the user command.
-1. This results in a `Command` object which is executed by the `LogicManager`.
-1. The command execution can affect the `Model` (e.g. adding a patient).
+1. `LogicManager` implements the `Logic` interface and uses the `NuudleParser` class to parse the user command with the `execute` method.
+1. This results in a `Command` object which is then executed by the `LogicManager`.
+1. The command execution can affect the `Model` (e.g. adding or deleting a patient).
 1. The result of the command execution is encapsulated as a `CommandResult` object which is passed back to the `Ui`.
 1. In addition, the `CommandResult` object can also instruct the `Ui` to perform certain actions, such as displaying help to the user.
 
@@ -117,11 +117,13 @@ The `Model`,
 
 ![Structure of the Storage Component](images/StorageClassDiagram.png)
 
-**API** : [`Storage.java`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/storage/Storage.java)
+**API** : [`Storage.java`](https://github.com/AY2021S1-CS2103T-T12-4/tp/tree/master/src/main/java/seedu/address/storage/Storage.java)
 
 The `Storage` component,
 * can save `UserPref` objects in json format and read it back.
 * can save the patient book data in json format and read it back.
+* can save the appointment data in json format and read it back.
+* can save the appointment data in csv format for archiving.
 
 ### Common classes
 
@@ -275,17 +277,17 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 | `* * *`  | nurse               | view the entire appointment list for the certain day| update my dentists of the itinerary for the day          |
 | `* * *`  | nurse               | mark the appointment as complete if the patient completes his/her appointment| have an accurate representation of the remaining appointments|
 | `* *`    | nurse               | add diagnosis to a completed appointment| have a record of the patient’s visit                                 |
-| `* *`    | nurse               | check the record of the patient      | view the appointment history of the patient easily                      |
 | `* *`    | administrative nurse| search for patient by phone number   | locate a patient easily                                                 |
 | `* *`    | administrative nurse| search for patient by name           | locate a patient easily                                                 |
 | `* *`    | administrative nurse| change the patient’s appointment if they call to postpone their appointment| update the appointment easily     |
-| `* *`    | administrative nurse| update patient’s details             | keep the information of patients up-to-date                             |
-| `* *`    | nurse               | add an event slot to indicate that the doctor is not available at that time period| avoid arranging an appointment to that time slot|
-| `* *`    | nurse               | get the available time slots of a day| inform my patient of the available times for that day                   |
+| `* *`    | administrative nurse| edit patient’s details               | keep the information of patients up-to-date                             |
+| `* *`    | nurse               | get the available time slots for a day| inform my patient of the available times for that day                  |
 | `*`      | nurse               | get the next available time slot     | inform my patient of the next available timing should their original preferred choice be filled|
-| `*`      | nurse               | check the earliest available slot for the clinic| automatically assign patient who does not have any preference for a specific doctor|
-| `* *`    | nurse handling multiple patient records| archive records of past appointments| review them in the future                             |
+| `* *`    | nurse handling multiple appointments| archive records of past appointments| review them in the future                                |
+| `*`      | nurse               | record the patient's existing medical condition | confirm if the medicine prescribed are suitable              |
 | `*`      | nurse               | check the patient’s drug allergy     | confirm if the medicines prescribed are not in the list                 |
+| `*`      | nurse               | get the number of appointments for the day | know how many appointments to expect today                        |
+| `*`      | nurse               | get the number of appointments for the week | know how busy the clinic is for the week                         |
 
 
 ### Use cases
@@ -397,7 +399,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 **MSS**
 
 1.  User requests to find an available time slot.
-2.  Nuudle shows a list of available time slots.
+2.  Nuudle shows the available time slots.
 3.  User requests to add an appointment to a specific time slot.
 4.  Nuudle adds the appointment to the list of appointment records.
 
@@ -451,7 +453,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 1.  User requests to list all appointments.
 2.  Nuudle shows a list of appointments.
 3.  User requests to find an available time slot.
-4.  Nuudle shows a list of available time slots.
+4.  Nuudle shows the available time slots.
 5.  User requests to change a specific appointment to another time.
 6.  Nuudle changes the appointment.
 
@@ -540,7 +542,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 1. User requests to create a <u>new patient (UC01)</u>.
 2. Nuudle creates the new patient.
 3. User requests for an available time slot on a preferred day.
-4. Nuudle shows the list of available time slots.
+4. Nuudle shows the available time slots.
 5. User requests to add an appointment for the new patient.
 6. Nuudle creates the appointment.
 
