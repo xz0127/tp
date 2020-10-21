@@ -97,6 +97,10 @@ public class ChangeCommand extends Command {
     private static Appointment createEditedAppointment(Appointment appointmentToEdit,
                                                        EditAppointmentDescriptor editAppointmentDescriptor) {
         assert appointmentToEdit != null;
+        assert editAppointmentDescriptor != null;
+        assert editAppointmentDescriptor.duration != null;
+        assert editAppointmentDescriptor.date != null;
+        assert editAppointmentDescriptor.startTime != null;
 
         Date date = editAppointmentDescriptor.getDate().get();
         Time startTime = editAppointmentDescriptor.getStartTime().get();
