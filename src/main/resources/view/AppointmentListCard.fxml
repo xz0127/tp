@@ -17,11 +17,19 @@
       <padding>
         <Insets bottom="5" left="15" right="5" top="5" />
       </padding>
-      <Label fx:id="date" styleClass="cell_big_label" text="\$date" wrapText="true">
-        <minWidth>
-          <Region fx:constant="USE_PREF_SIZE" />
-        </minWidth>
-      </Label>
+      <HBox spacing="5" alignment="CENTER_LEFT">
+        <Label fx:id="id" styleClass="cell_big_label">
+          <minWidth>
+            <!-- Ensures that the label text is never truncated -->
+            <Region fx:constant="USE_PREF_SIZE" />
+          </minWidth>
+        </Label>
+        <Label fx:id="date" styleClass="cell_big_label" text="\$date" wrapText="true">
+          <minWidth>
+            <Region fx:constant="USE_PREF_SIZE" />
+          </minWidth>
+        </Label>
+      </HBox>
       <Label fx:id="time" styleClass="cell_big_label" text="\$time" wrapText="true">
         <minWidth>
           <Region fx:constant="USE_PREF_SIZE" />

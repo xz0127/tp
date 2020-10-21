@@ -38,13 +38,16 @@ public class AppointmentCard extends UiPart<Region> {
     private Label name;
     @FXML
     private Label contactNumber;
+    @FXML
+    private Label id;
 
     /**
      * Creates a {@code AppointmentCard} with the given {@code Patient} to display.
      */
-    public AppointmentCard(Appointment appointment) {
+    public AppointmentCard(Appointment appointment, int displayedIndex) {
         super(FXML);
         this.appointment = appointment;
+        id.setText(displayedIndex + ". ");
         date.setText(appointment.getDate().toString());
         time.setText(appointment.getStartTime() + " - " + appointment.getEndTime());
         String statusText = appointment.getIsDoneStatus() ? "Done!" : "Upcoming";
