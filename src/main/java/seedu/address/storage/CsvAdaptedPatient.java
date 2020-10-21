@@ -40,4 +40,21 @@ class CsvAdaptedPatient {
         address = source.getAddress().value;
         remark = source.getRemark().value;
     }
+
+    @Override
+    public boolean equals(Object other) {
+        if (other == this) {
+            return true;
+        }
+
+        if (!(other instanceof CsvAdaptedPatient)) {
+            return false;
+        }
+
+        CsvAdaptedPatient otherPatient = (CsvAdaptedPatient) other;
+        return otherPatient.address.equals(address)
+                && otherPatient.name.equals(name)
+                && otherPatient.phone.equals(phone)
+                && otherPatient.remark.equals(remark);
+    }
 }

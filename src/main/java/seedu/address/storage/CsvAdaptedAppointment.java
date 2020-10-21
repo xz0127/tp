@@ -64,4 +64,22 @@ public class CsvAdaptedAppointment {
         isDone = source.getIsDoneStatus();
         patient = new CsvAdaptedPatient(source.getPatient());
     }
+
+    @Override
+    public boolean equals(Object other) {
+        if (other == this) {
+            return true;
+        }
+
+        if (!(other instanceof CsvAdaptedAppointment)) {
+            return false;
+        }
+
+        CsvAdaptedAppointment otherAppointment = (CsvAdaptedAppointment) other;
+        return otherAppointment.patient.equals(patient)
+                && otherAppointment.date.equals(date)
+                && otherAppointment.isDone.equals(isDone)
+                && otherAppointment.startTime.equals(startTime)
+                && otherAppointment.endTime.equals(endTime);
+    }
 }

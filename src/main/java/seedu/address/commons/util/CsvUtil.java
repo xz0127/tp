@@ -6,7 +6,6 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
-import java.util.Optional;
 import java.util.logging.Logger;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
@@ -64,13 +63,13 @@ public class CsvUtil {
      * @param classOfObjectToDeserialize Json file has to correspond to the structure in the class given here.
      * @throws DataConversionException if the file format is not as expected.
      */
-    public static <T> Optional<List<T>> readCsvFile(
+    public static <T> List<T> readCsvFile(
             Path filePath, Class<T> classOfObjectToDeserialize) throws DataConversionException {
         requireNonNull(filePath);
 
         if (!Files.exists(filePath)) {
             logger.info("Csv file " + filePath + " not found");
-            return Optional.empty();
+            return List.of();
         }
 
         List<T> csvFile;
@@ -82,7 +81,7 @@ public class CsvUtil {
             throw new DataConversionException(e);
         }
 
-        return Optional.of(csvFile);
+        return csvFile;
     }
 
     /**

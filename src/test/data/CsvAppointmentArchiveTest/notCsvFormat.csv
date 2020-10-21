@@ -1,0 +1,13 @@
+{
+  "appointments" : [ {
+    "date" : "2050-01-01",
+    "startTime" : "23:59:00",
+    "endTime" : "07:00:00",
+    "patient" : {
+      "name" : "Alice Pauline",
+      "phone" : "94351253",
+      "address" : "123, Jurong West Ave 6, #08-111",
+    },
+    "isDone" : false
+  } ]
+}

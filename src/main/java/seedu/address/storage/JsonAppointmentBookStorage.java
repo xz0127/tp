@@ -59,7 +59,7 @@ public class JsonAppointmentBookStorage implements AppointmentBookStorage {
         requireNonNull(filePath);
         requireNonNull(archiveDirPath);
 
-        AppointmentArchive appointmentArchive = new AppointmentArchive(archiveDirPath);
+        AppointmentArchive appointmentArchive = new CsvAppointmentArchive(archiveDirPath);
 
         Optional<JsonSerializableAppointmentBook> jsonAppointmentBook = JsonUtil.readJsonFile(
                 filePath, JsonSerializableAppointmentBook.class);
@@ -98,7 +98,7 @@ public class JsonAppointmentBookStorage implements AppointmentBookStorage {
 
     @Override
     public String getArchiveStatus() {
-        return AppointmentArchive.getArchiveStatistics();
+        return CsvAppointmentArchive.getArchiveStatistics();
     }
 
 }
