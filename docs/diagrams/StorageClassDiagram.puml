@@ -20,11 +20,14 @@ StorageManager o--> PatientBookStorage
 StorageManager o--> AppointmentBookStorage
 
 JsonUserPrefsStorage .left.|> UserPrefsStorage
-JsonPatientBookStorage .left.|> PatientBookStorage
-JsonPatientBookStorage .down.> JsonSerializablePatientBook
+
 JsonAppointmentBookStorage .right.|> AppointmentBookStorage
+JsonSerializableAppointmentBook .down.> JsonAdaptedAppointment
 JsonAppointmentBookStorage .down.> JsonSerializableAppointmentBook
-JsonSerializablePatientBook .right.> JsonAdaptedPatient
-JsonAdaptedPatient .up.> JsonAdaptedTag
-JsonSerializableAppointmentBook .right.> JsonAdaptedAppointment
+
+JsonPatientBookStorage .down.> JsonSerializablePatientBook
+JsonPatientBookStorage .left.|> PatientBookStorage
+JsonSerializablePatientBook .down.> JsonAdaptedPatient
+JsonAdaptedPatient .left.> JsonAdaptedTag
 @enduml
+
