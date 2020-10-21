@@ -1,0 +1,23 @@
+@startuml
+
+package Logic {
+class AssignCommand {
++ {static} COMMAND_WORD : String
+- targetIndex : Index
+- durationSupporter : DurationSupporter
+...
+--
++ AssignCommand(targetIndex: Index, durationSupporter: DurationSupporter)
++ CommandResult execute(model: Model)
+...
+}
+
+class AssignCommandParser {
++ parse(args: String) : AssignCommand
+}
+}
+
+
+
+AssignCommand -- AssignCommandParser
+@enduml

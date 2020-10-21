@@ -1,0 +1,35 @@
+@startuml
+package Model {
+
+class Appointment {
+- date : Date[1]
+- time : Time[1]
+- appointmentId : AppointmentId[1]
+- patient : Patient[1]
+...
+--
++ Appointment(data: Date, startTime: Time, patient: Patient)
+...
+}
+
+class UniqueAppointmentList {
+- internalList : ObservableList<Appointment>
+- internalUnmodifiableList : ObservableList<Appointment>
+--
++ add(toAdd: Appointment)
++ hasOverlaps(toCheck: Appointment) : boolean
+...
+}
+
+class AppointmentBook {
+- appointments : UniqueAppointmentList
+--
++ AppointmentBook(toBeCopied: ReadOnlyAppointmentBook)
++ addAppointment(a: Appointment)
+...
+}
+
+Appointment -- UniqueAppointmentList: contains <
+UniqueAppointmentList -- AppointmentBook : contains <
+}
+@enduml

@@ -228,11 +228,64 @@ The following activity diagram summarizes what happens when a user executes a ne
   * Pros: Will use less memory (e.g. for `delete`, just save the patient being deleted).
   * Cons: We must ensure that the implementation of each individual command are correct.
 
+
+### \[Proposed\] Assign Feature
+
+#### Proposed Implementation
+
+The Assign feature is implemented to allow users to assign a specified patient into a specified appointment date and time. 
+To avoid cyclic dependency, only an `Appointment` has an attribute of `Patient` object instead of `Appointment` object and 
+`Patient` object refer to each other.<br><br>
+
+This feature creates a new Appointment instance, which is stored in an instance of `UniqueAppointmentBook`, which in turn is stored 
+in the `AppointmentBook`. These classes are part of the `model` component.<br><br>
+
+The feature is supported by the AssignCommand class which extends the abstract class `Command`, and `AssignmentCommandParser` 
+which implements the `Parser` interface. These classes are part of the `logic` component.<br><br>
+
+The following class diagram showcases the relationship between the main classes that support this command and key attributes and methods: 
+
+
+![AssignLogicClassDiagram](images/AssignLogicClassDiagram.png)
+
+![AssignModelClassDiagram](images/AssignModelClassDiagram.png)
+
+
+Here below is an example usage scenario and how the `Assign` feature works at each step:<br>
+
+1. User enters `assign 1 d/tomorrow...` into the app.
+
+2. The input is handled by the `LogicManage#execute(String)`, which then calls and passes the input to the 
+`NuudleParser#parseCommand(String)` method.
+
+3. `NuudleParser` finds out the command word `assign` in the user input and creates an `AssignCommandParser`
+to parse the input according to the format specified for `AssignCommand`.
+
+4. `AssignCommandParser` parses the user input and checks the input validation for correct types 
+(eg. `Integer` for `Index` and alphanumeric characters for `Name`) via the `AssignCommandParser#parser(String)` method.
+
+5. `AssignCommandParser#parse(String)` calls the constructor of `Index` and `DurationSupporter`, and creates a new 
+`Index` instance and a new `DurationSupporter` object with the user input. It creates a new `AssignCommand` and passes
+the `Index` and `DurationSupporter` to it.
+
+6. `AssigCommand` returns the new `Command` instance to the `AssignCommandParser`, which in turn returns it to `LogicManager`.
+
+7. `LogicManager` calls the `AssignCommand#execute(Model)` method.
+
+8. The `AssigCommand#execute(Model)` method calls `AssignCommand#createAppointment()` to create an `Appointment`.
+
+9. This `Appointment` instance is added into the `Model` via `Model#addAppointment()`.
+
+10. The `Model#updateFilteredAppointmentList()` calls to update the `filteredAppointmentList` in the Model, and 
+meanwhile checks if the `Date` and `Time` of added `Appointment` overlaps with other `Appointment` in the list.
+
+11.  Lastly, the `AssignCommand` creates a `CommandResult` with `MESSAGE_SUCCESS`, and returns it into `LogicManager`.
+
+
+![AssignSequenceDiagram](images/AssignSequenceDiagram.png)
+
 _{more aspects and alternatives to be added}_
 
-### \[Proposed\] Data archiving
-
-_{Explain here how the data archiving feature will be implemented}_
 
 
 --------------------------------------------------------------------------------------------------------------------
