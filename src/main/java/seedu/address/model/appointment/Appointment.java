@@ -77,7 +77,7 @@ public class Appointment {
     public Duration getDuration() {
         return Duration.between(startTime.getTime(), endTime.getTime());
     }
-  
+
     public Patient getPatient() {
         return patient;
     }
