@@ -4,17 +4,32 @@ skinparam arrowThickness 1.1
 skinparam arrowColor STORAGE_COLOR
 skinparam classBackgroundColor STORAGE_COLOR
 
+Package Storage <<Rectangle>> {
 Interface Storage <<Interface>>
-Interface UserPrefsStorage <<Interface>>
-Interface PatientBookStorage <<Interface>>
-Interface AppointmentBookStorage <<Interface>>
-Interface AppointmentArchive <<Interface>>
-
 Class StorageManager
+
+Interface UserPrefsStorage <<Interface>>
 Class JsonUserPrefsStorage
+
+Interface PatientBookStorage <<Interface>>
 Class JsonPatientBookStorage
+Class JsonSerializablePatientBook
+Class JsonAdaptedPatient
+Class JsonAdaptedTag
+
+Interface AppointmentBookStorage <<Interface>>
 Class JsonAppointmentBookStorage
+Class JsonSerializableAppointmentBook
+Class JsonAdaptedAppointment
+
+Interface AppointmentArchive <<Interface>>
 Class CsvAppointmentArchive
+Class CsvAdaptedAppointment
+Class CsvAdaptedPatient
+}
+
+Class HiddenOutside #FFFFFF
+HiddenOutside ..> Storage
 
 StorageManager .left.|> Storage
 StorageManager o-right-> UserPrefsStorage
