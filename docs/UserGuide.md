@@ -3,7 +3,7 @@ layout: page
 title: User Guide
 ---
 
-Nuudle is a **desktop app for managing patient records and clinic appointments, optimized for use via a Command Line Interface (CLI)** while still having the benefits of a Graphical User Interface (GUI). If you can type fast, Nuudle can get your patient and appointment scheduling tasks done faster than traditional GUI apps.
+Nuudle is a **desktop app for managing patient and clinic appointments, optimized for use via a Command Line Interface (CLI)** while still having the benefits of a Graphical User Interface (GUI). If you can type fast, Nuudle can get your patient and appointment scheduling tasks done faster than traditional GUI apps.
 
 * Table of Contents
 {:toc}
@@ -141,7 +141,7 @@ Format: `delete INDEX`
 * The index **must be a positive integer** 1, 2, 3, …​
 
 Examples:
-* `list` followed by `delete 2` deletes the 2nd patient in the patient book.
+* `list` followed by `delete 2` deletes the 2nd patient in the displayed patient list.
 * `find Betsy` followed by `delete 1` deletes the 1st patient in the results of the `find` command.
 
 ### Adding a remark for a patient : `remark`
@@ -236,7 +236,7 @@ Patients and appointments data are saved in the hard disk automatically after an
 ### Archiving data files
 
 Upon starting up the app, past appointments will be automatically archived according to their months and saved into separate files.
-The files are saved in Comma Seperated Values (CSV) format and can be opened as an Excel file.
+The files are saved in Comma-Separated Values (CSV) format and can be opened as an Excel file.
 
 --------------------------------------------------------------------------------------------------------------------
 

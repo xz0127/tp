@@ -8,11 +8,13 @@ Interface Storage <<Interface>>
 Interface UserPrefsStorage <<Interface>>
 Interface PatientBookStorage <<Interface>>
 Interface AppointmentBookStorage <<Interface>>
+Interface AppointmentArchive <<Interface>>
 
 Class StorageManager
 Class JsonUserPrefsStorage
 Class JsonPatientBookStorage
 Class JsonAppointmentBookStorage
+Class CsvAppointmentArchive
 
 StorageManager .left.|> Storage
 StorageManager o-right-> UserPrefsStorage
@@ -21,13 +23,19 @@ StorageManager o--> AppointmentBookStorage
 
 JsonUserPrefsStorage .left.|> UserPrefsStorage
 
-JsonAppointmentBookStorage .right.|> AppointmentBookStorage
-JsonSerializableAppointmentBook .down.> JsonAdaptedAppointment
-JsonAppointmentBookStorage .down.> JsonSerializableAppointmentBook
-
-JsonPatientBookStorage .down.> JsonSerializablePatientBook
-JsonPatientBookStorage .left.|> PatientBookStorage
+JsonPatientBookStorage .up.|> PatientBookStorage
+JsonPatientBookStorage ..> JsonSerializablePatientBook
 JsonSerializablePatientBook .down.> JsonAdaptedPatient
-JsonAdaptedPatient .left.> JsonAdaptedTag
+JsonAdaptedPatient ..> JsonAdaptedTag
+
+JsonAppointmentBookStorage .up.|> AppointmentBookStorage
+JsonAppointmentBookStorage .down.> JsonSerializableAppointmentBook
+JsonSerializableAppointmentBook ..> JsonAdaptedAppointment
+JsonAdaptedAppointment .right.> JsonAdaptedPatient
+
+JsonAppointmentBookStorage o-up-> AppointmentArchive
+CsvAppointmentArchive .up.|> AppointmentArchive
+CsvAppointmentArchive .down.> CsvAdaptedAppointment
+CsvAdaptedAppointment ..> CsvAdaptedPatient
 @enduml
 
