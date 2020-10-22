@@ -14,7 +14,7 @@ Nuudle is a **desktop app for managing patient records and clinic appointments, 
 
 1. Ensure you have Java `11` or above installed in your Computer.
 
-1. Download the latest `nuudle.jar` from **here** ( Coming Soon ).
+1. Download the latest `nuudle.jar` from [here](https://github.com/ay2021s1-cs2103t-t12-4/tp/releases).
 
 1. Copy the file to the folder you want to use as the _home folder_ for Nuddle.
 
@@ -28,12 +28,15 @@ Nuudle is a **desktop app for managing patient records and clinic appointments, 
 
    * **`add`**`add n/John Doe i/S9730284G p/98765432 a/John street, block 123, #01-01` : Adds a patient named `John Doe` to the Patient Book.
 
-   * **`delete`**`3` : Deletes the 3rd patient shown in the current list.
-
    * **`edit`**`1 n/Betsy Crower p/91234567 a/College Avenue 8` : Edits the name, phone number, and address of the 1st patient in the list to be `Betsy`, `91234567`, and `College Avenue 8` respectively.
-   * **`find`**`alex david` : Returns `Alex Yeoh`, `David Li` if the two names are found in the list.
+   
+   * **`find`**`alex david` : Shows `Alex Yeoh` and `David Li` and their assigned appointments if the two names are found in the list.
+   
+   * **`assign`**`1 d/tomorrow t/12.30pm dur/30` : Creates an appointment for the 1st patient in the list from 12.30pm to 1pm, tomorrow, if there are no other appointments in that time period.
+   
+   * **`delete`**`d/tomorrow t/12.30pm` : Deletes the previously created appointment occurring at 12.30pm tomorrow.
 
-   * **`clear`** : Deletes all patients.
+   * **`clear`** : Deletes all appointments.
 
    * **`exit`** : Exits the app.
 
@@ -76,7 +79,7 @@ Adds a patient to the patient book.
 Format: `add n/NAME i/NRIC p/PHONE_NUMBER a/ADDRESS [t/TAG]…​`
 
 <div markdown="span" class="alert alert-primary">:bulb: **Tip:**
-Tags are used to indicate a patient's underlying medical conditions. A patient can also have any number of tags (including 0).
+Tags are used to indicate a patient's underlying medical conditions. A patient can have any number of tags (including 0).
 </div>
 
 * Adds a patient with the specified details. 
@@ -230,9 +233,10 @@ Format: `exit`
 
 Patients and appointments data are saved in the hard disk automatically after any command that changes the data. There is no need to save manually.
 
-### Archiving data files `[coming in v2.0]`
+### Archiving data files
 
-Upon starting up the app, past appointments will be automatically archived and saved into separate files. The data files are organised by months for future references.
+Upon starting up the app, past appointments will be automatically archived according to their months and saved into separate files.
+The files are saved in Comma Seperated Values (CSV) format and can be opened as an Excel file.
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -248,12 +252,13 @@ Date Formats | Time Formats | Natural Date | Natural Time
 :---------------:|:----------------:|:----------------:|:----------------:
 02/12/2020 | 2300 | Today | Morning (8AM)
 02-12-2020 | 11:00PM | Tomorrow | Noon (12PM)
-12/02/2020 | 11PM | Yesterday | Evening (7PM)
-12-02-2020 | | Upcoming day<br>of the week | Night (10PM)
+12/02/2020 | 11.00PM | Yesterday | Evening (7PM)
+12-02-2020 | 11PM | Upcoming day<br>of the week | Night (10PM)
 2020/12/02 | | | Midnight (11:59PM)
 2020-12-02 |
-02-Dec-2020 | 
+02-Dec-2020 |
 02-December-2020 |
+
 --------------------------------------------------------------------------------------------------------------------
 
 ## Command summary

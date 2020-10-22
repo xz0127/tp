@@ -64,7 +64,7 @@ The sections below give more details of each component.
 **API** :
 [`Ui.java`](https://github.com/se-edu/AY2021S1-CS2103T-T12-4/tp/tree/master/src/main/java/seedu/address/ui/Ui.java)
 
-The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `StatisticsDisplay`, `AppointmentListPanel`, 
+The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `StatisticsDisplay`, `AppointmentListPanel`,
 `PatientListPanel`, `StatusBarFooter` etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class.
 
 The `UI` component uses JavaFx UI framework. The layout of these UI parts are defined in matching `.fxml` files that are
@@ -142,7 +142,7 @@ The mark done feature allows users to mark a specific appointment in the address
 #### 1.1 Implementation
 Command: `done d/DATE t/TIME`
 
-Example Usage: 
+Example Usage:
 * `done d/Monday t/9am`
 * `done d/12-12-2020 t/12pm`
 
@@ -164,12 +164,12 @@ The following is an example usage scenario on how the mark as done mechanism wor
 
 6. `LogicManager` calls the `DoneCommand#execute(model)` method.
 
-7. `DoneCommand` obtains a copy of the `FilteredAppointmentList` by calling the `Model#getFilteredAppointmentList()` method. 
+7. `DoneCommand` obtains a copy of the `FilteredAppointmentList` by calling the `Model#getFilteredAppointmentList()` method.
 
-8. `DoneCommand` returns the appointment `toMark` in the `FilteredAppointmentList`, if there is an appointment in the list starts at the same time with the date and time indicated in the `DateTimeLoader`; Otherwise, throw an 
+8. `DoneCommand` returns the appointment `toMark` in the `FilteredAppointmentList`, if there is an appointment in the list starts at the same time with the date and time indicated in the `DateTimeLoader`; Otherwise, throw an
 `APPOINTMENT_DOES_NOT_EXISTS` exception.
 
-9. `DoneCommand` creates another instance of this appointment `doneAppointment` which has a `done` status. 
+9. `DoneCommand` creates another instance of this appointment `doneAppointment` which has a `done` status.
 
 10. `DoneCommand` replaces the `toMark` with the `doneAppointment` by calling the `Model#setAppointment(target, editedAppointment)`.
 
@@ -191,15 +191,15 @@ _{Explain here how the data archiving feature will be implemented}_
 
 `[written by: Xin Zhe]`
 
-The Edit Patient Feature allows the nurse to edit an existing `Patient` in the patient book. 
+The Edit Patient Feature allows the nurse to edit an existing `Patient` in the patient book.
 `Appointment` which involves the patient will be updated accordingly.
 
 #### 5.1 Implementation
 
-The Edit Patient Feature is facilitated by the `EditCommand`, which extends the abstract class `Command`, 
+The Edit Patient Feature is facilitated by the `EditCommand`, which extends the abstract class `Command`,
 and the `EditCommandParser`, which implements the `Parser` interface. All of these classes are part of the `Logic` component.
 
-This feature is supported by the `UniquePatientList` which stores the `patient` instances and the `UniqueAppointmentList` 
+This feature is supported by the `UniquePatientList` which stores the `patient` instances and the `UniqueAppointmentList`
 which stores the `appointment` instances. These classes are part of the `model` component.
 
 Additionally, a public static class `EditPatientDescriptor` is nested in `EditCommand` as a container class to store the details to edit the `Patient` with.
@@ -258,7 +258,7 @@ Step 14: Lastly, `EditCommand` creates a `CommandResult` with `SuccessMessage` a
 Namise is a hard working nurse working at a popular dental clinic situated in town and gets appointment calls on an hourly basis. Swarmed with incoming calls, Namise has to make new appointments for new and existing patients while keeping track of the doctor’s schedule at the same time 😞. With the need to juggle multiple tasks at once, Namise is also prone to making careless mistakes in his work due to fatigue.
 
 Being a tech-savvy nurse armed with a commendable experience in unix, Namise prefers to scribble down appointment schedules on paper while on call with his patients to maximise efficiency. This task is further exacerbated with the need to transfer these notes into an excel table manually later in the day.
- 
+
 **Target user profile summary**:
 *   Nurse working in a highly popular, small scale dental clinic
 *   Responsible for scheduling a large number of appointments daily
@@ -274,7 +274,7 @@ Being a tech-savvy nurse armed with a commendable experience in unix, Namise pre
 *   Prefers typing to mouse interactions
 *   Reasonably comfortable using CLI apps
 
-**Value proposition**: 
+**Value proposition**:
 
 Help nurses **handle and schedule dental appointments for patients** faster than a typical mouse/GUI driven app or excel scheduling
 
@@ -324,7 +324,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 * 1a. The given keywords are invalid.
 
     * 1a1. Nuudle shows an error message.
-    
+
       Use case ends.
 
 &nbsp;
@@ -345,7 +345,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 * 1a. The given keywords are invalid.
 
     * 1a1. Nuudle shows an error message.
-    
+
       Use case ends.
 
 * 2a. The list is empty.
@@ -355,7 +355,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 * 3a. The given index is invalid.
 
     * 3a1. Nuudle shows an error message.
-    
+
       Use case resumes at step 2.
 
 &nbsp;
@@ -422,7 +422,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 4.  Nuudle adds the appointment to the list of appointment records.
 
     Use case ends.
-    
+
 **Extensions**
 
 * 1a. The given keywords are invalid.
@@ -484,23 +484,23 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
     * 1a1. Nuudle shows an error message.
 
       Use case ends.
-      
+
 * 2a. User has no current appointments.
 
     * 2a1. Nuudle shows an error message.
 
       Use case ends.
-      
+
 * 5a. The given time slot is invalid (including empty input).
 
     * 5a1. Nuudle shows an error message.
 
       Use case resumes at step 4.
-    
+
 * 5b. The given keywords are invalid.
-      
+
      * 5b1. Nuudle shows an error message.
-      
+
        Use case ends.
 
 &nbsp;
@@ -538,7 +538,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 * 1a. The given keywords are invalid.
 
     * 1a1. Nuudle shows an error message.
-    
+
       Use case ends.
 
 * 1b. The given date is invalid.
@@ -577,15 +577,15 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 * 4a. No more time slot is available for that day.
 
     * 4a1. Nuudle shows the next available time slot on the nearest day.
-    
+
         * 4a1a. User uses the suggested time slot.
 
           Use case resumes at step 5.
 
         * 4a1b. User does not use the suggested time slot.
-        
+
           Use case resumes at step 3.
-        
+
 ### Non-Functional Requirements
 
 1.  Should work on any _mainstream OS_ as long as it has Java `11` or above installed.
