@@ -78,7 +78,7 @@ Format: `add n/NAME i/NRIC p/PHONE_NUMBER a/ADDRESS [t/TAG]…​`
 <div markdown="span" class="alert alert-primary">:bulb: **Tip:**
 Tags are used to indicate a patient's underlying medical conditions. A patient can also have any number of tags (including 0).
 </div>
-* Adds a patient with the specified details. 
+* Adds a patient with the specified details.
 * The following fields are compulsory and must be provided: `NAME, NRIC, PHONE_NUMBER, ADDRESS`.
 * It is optional to add `TAG`s for the patient. Tags can still be added with the edit command upon creating the patient entry in Nuudle.
 

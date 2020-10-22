@@ -106,12 +106,12 @@ The `Model`,
 
 * stores a `UserPref` object that represents the user’s preferences.
 * stores the patient book data and appointment book data.
-* exposes an unmodifiable `ObservableList<Patient>` and an unmodifiable `ObservableList<Appointment>` that can be 'observed' 
+* exposes an unmodifiable `ObservableList<Patient>` and an unmodifiable `ObservableList<Appointment>` that can be 'observed'
 e.g. the UI can be bound to these lists so that the UI automatically updates when the data in the list change.
 * does not depend on any of the other three components.
 
 
-<div markdown="span" class="alert alert-info">:information_source: **Note:** 
+<div markdown="span" class="alert alert-info">:information_source: **Note:**
 An alternative (arguably, a more OOP) Patient model is given below. It has a `Tag` list in the `PatientBook`, which `Patient` references. This allows `PatientBook` to only require one `Tag` object per unique `Tag`, instead of each `Patient` needing their own `Tag` object.<br>
 
 ![BetterModelClassDiagram](images/BetterModelClassDiagram.png)
@@ -228,7 +228,7 @@ This feature creates a new Appointment instance, which is stored in an instance 
 
 The feature is supported by the `AssignCommand` class which extends the abstract class `Command`, and `AssignmentCommandParser` which implements the `Parser` interface. These classes are part of the `logic` component.<br><br>
 
-The following class diagram showcases the relationship between the main classes that support this command and key attributes and methods: 
+The following class diagram showcases the relationship between the main classes that support this command and key attributes and methods:
 
 
 ![AssignLogicClassDiagram](images/AssignLogicClassDiagram.png)
@@ -293,7 +293,7 @@ _{more aspects and alternatives to be added}_
 Namise is a hard working nurse working at a popular dental clinic situated in town and gets appointment calls on an hourly basis. Swarmed with incoming calls, Namise has to make new appointments for new and existing patients while keeping track of the doctor’s schedule at the same time 😞. With the need to juggle multiple tasks at once, Namise is also prone to making careless mistakes in his work due to fatigue.
 
 Being a tech-savvy nurse armed with a commendable experience in unix, Namise prefers to scribble down appointment schedules on paper while on call with his patients to maximise efficiency. This task is further exacerbated with the need to transfer these notes into an excel table manually later in the day.
- 
+
 **Target user profile summary**:
 *   Nurse working in a highly popular, small scale dental clinic
 *   Responsible for scheduling a large number of appointments daily
@@ -309,7 +309,7 @@ Being a tech-savvy nurse armed with a commendable experience in unix, Namise pre
 *   Prefers typing to mouse interactions
 *   Reasonably comfortable using CLI apps
 
-**Value proposition**: 
+**Value proposition**:
 
 Help nurses **handle and schedule dental appointments for patients** faster than a typical mouse/GUI driven app or excel scheduling
 
@@ -359,7 +359,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 * 1a. The given keywords are invalid.
 
     * 1a1. Nuudle shows an error message.
-    
+
       Use case ends.
 
 &nbsp;
@@ -380,17 +380,17 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 * 1a. The given keywords are invalid.
 
     * 1a1. Nuudle shows an error message.
-    
+
       Use case ends.
 
 * 2a. The list is empty.
 
   Use case ends.
-  
+
 * 3a. The given index is invalid.
 
     * 3a1. Nuudle shows an error message.
-    
+
       Use case resumes at step 2.
 
 &nbsp;
@@ -457,7 +457,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 4.  Nuudle adds the appointment to the list of appointment records.
 
     Use case ends.
-    
+
 **Extensions**
 
 * 1a. The given keywords are invalid.
@@ -465,7 +465,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
     * 1a1. Nuudle shows an error message.
 
       Use case ends.
-      
+
 * 3a. The given time slot is invalid (including empty input).
 
     * 3a1. Nuudle shows an error message.
@@ -473,7 +473,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
       Use case resumes at step 2.
 
 &nbsp;
- 
+
 **Use case: UC06 - Delete an appointment**
 
 **MSS**
@@ -519,23 +519,23 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
     * 1a1. Nuudle shows an error message.
 
       Use case ends.
-      
+
 * 2a. User has no current appointments.
 
     * 2a1. Nuudle shows an error message.
 
       Use case ends.
-      
+
 * 5a. The given time slot is invalid (including empty input).
 
     * 5a1. Nuudle shows an error message.
 
       Use case resumes at step 4.
-    
+
 * 5b. The given keywords are invalid.
-      
+
      * 5b1. Nuudle shows an error message.
-      
+
        Use case ends.
 
 &nbsp;
@@ -573,7 +573,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 * 1a. The given keywords are invalid.
 
     * 1a1. Nuudle shows an error message.
-    
+
       Use case ends.
 
 * 1b. The given date is invalid.
@@ -612,15 +612,15 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 * 4a. No more time slot is available for that day.
 
     * 4a1. Nuudle shows the next available time slot on the nearest day.
-    
+
         * 4a1a. User uses the suggested time slot.
 
           Use case resumes at step 5.
 
         * 4a1b. User does not use the suggested time slot.
-        
+
           Use case resumes at step 3.
-        
+
 ### Non-Functional Requirements
 
 1.  Should work on any _mainstream OS_ as long as it has Java `11` or above installed.
