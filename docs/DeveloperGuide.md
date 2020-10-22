@@ -351,7 +351,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 * 2a. The list is empty.
 
   Use case ends.
-  
+
 * 3a. The given index is invalid.
 
     * 3a1. Nuudle shows an error message.
@@ -430,7 +430,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
     * 1a1. Nuudle shows an error message.
 
       Use case ends.
-      
+
 * 3a. The given time slot is invalid (including empty input).
 
     * 3a1. Nuudle shows an error message.
@@ -438,7 +438,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
       Use case resumes at step 2.
 
 &nbsp;
- 
+
 **Use case: UC06 - Delete an appointment**
 
 **MSS**

@@ -29,11 +29,11 @@ Nuudle is a **desktop app for managing patient records and clinic appointments, 
    * **`add`**`add n/John Doe i/S9730284G p/98765432 a/John street, block 123, #01-01` : Adds a patient named `John Doe` to the Patient Book.
 
    * **`edit`**`1 n/Betsy Crower p/91234567 a/College Avenue 8` : Edits the name, phone number, and address of the 1st patient in the list to be `Betsy`, `91234567`, and `College Avenue 8` respectively.
-   
+
    * **`find`**`alex david` : Shows `Alex Yeoh` and `David Li` and their assigned appointments if the two names are found in the list.
-   
+
    * **`assign`**`1 d/tomorrow t/12.30pm dur/30` : Creates an appointment for the 1st patient in the list from 12.30pm to 1pm, tomorrow, if there are no other appointments in that time period.
-   
+
    * **`delete`**`d/tomorrow t/12.30pm` : Deletes the previously created appointment occurring at 12.30pm tomorrow.
 
    * **`clear`** : Deletes all appointments.
@@ -82,7 +82,7 @@ Format: `add n/NAME i/NRIC p/PHONE_NUMBER a/ADDRESS [t/TAG]…​`
 Tags are used to indicate a patient's underlying medical conditions. A patient can have any number of tags (including 0).
 </div>
 
-* Adds a patient with the specified details. 
+* Adds a patient with the specified details.
 * The following fields are compulsory and must be provided: `NAME, NRIC, PHONE_NUMBER, ADDRESS`.
 * It is optional to add `TAG`s for the patient. Tags can still be added with the edit command upon creating the patient entry in Nuudle.
 
