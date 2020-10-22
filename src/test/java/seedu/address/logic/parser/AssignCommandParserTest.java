@@ -4,12 +4,16 @@ import static seedu.address.commons.core.Messages.MESSAGE_EXPIRED_DATE_TIME;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.commands.CommandTestUtil.ASSIGN_DATE;
 import static seedu.address.logic.commands.CommandTestUtil.ASSIGN_DATE_TIME;
+import static seedu.address.logic.commands.CommandTestUtil.ASSIGN_DURATION;
 import static seedu.address.logic.commands.CommandTestUtil.ASSIGN_TIME;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_DATE_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_DATE_DESC_EXPIRED;
+import static seedu.address.logic.commands.CommandTestUtil.INVALID_DURATION_NEGATIVE_DESC;
+import static seedu.address.logic.commands.CommandTestUtil.INVALID_DURATION_NON_INTEGER_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_TIME_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_TIME_DESC_CLOSED;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_DATE;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_DURATION;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TIME;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
@@ -19,9 +23,9 @@ import org.junit.jupiter.api.Test;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.AssignCommand;
-import seedu.address.logic.commands.DateTimeLoader;
+import seedu.address.logic.commands.AssignCommand.DurationSupporter;
 import seedu.address.model.appointment.Time;
-import seedu.address.testutil.DateTimeLoaderBuilder;
+import seedu.address.testutil.DurationSupporterBuilder;
 
 public class AssignCommandParserTest {
 
@@ -76,14 +80,19 @@ public class AssignCommandParserTest {
                 TimeParserUtil.MESSAGE_CONSTRAINTS);
         assertParseFailure(parser, "1" + INVALID_TIME_DESC_CLOSED + INVALID_DATE_DESC_EXPIRED,
                 Time.MESSAGE_CONSTRAINTS);
+        assertParseFailure(parser, "1" + ASSIGN_DATE + ASSIGN_DATE_TIME + INVALID_DURATION_NEGATIVE_DESC,
+                ParserUtil.MESSAGE_INVALID_DURATION);
+        assertParseFailure(parser, "1" + ASSIGN_DATE + ASSIGN_DATE_TIME + INVALID_DURATION_NON_INTEGER_DESC,
+                ParserUtil.MESSAGE_INVALID_DURATION);
     }
 
     @Test
     public void parse_allFieldsPresent_success() {
         Index targetIndex = INDEX_SECOND_PATIENT;
-        String userInput = targetIndex.getOneBased() + ASSIGN_DATE + ASSIGN_TIME;
+        String userInput = targetIndex.getOneBased() + ASSIGN_DATE + ASSIGN_TIME + ASSIGN_DURATION;
 
-        DateTimeLoader loader = new DateTimeLoaderBuilder().withDate(VALID_DATE).withTime(VALID_TIME).build();
+        DurationSupporter loader = new DurationSupporterBuilder()
+                .withDate(VALID_DATE).withTime(VALID_TIME).withDuration(VALID_DURATION).build();
 
         AssignCommand expectedCommand = new AssignCommand(targetIndex, loader);
 

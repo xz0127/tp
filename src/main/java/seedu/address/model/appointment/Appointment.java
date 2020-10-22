@@ -77,6 +77,10 @@ public class Appointment {
         return endTime;
     }
 
+    public Duration getDuration() {
+        return Duration.between(startTime.getTime(), endTime.getTime());
+    }
+
     public AppointmentId getAppointmentId() {
         return appointmentId;
     }

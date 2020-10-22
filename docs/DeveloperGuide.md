@@ -23,12 +23,15 @@ The ***Architecture Diagram*** given above explains the high-level design of the
 
 <div markdown="span" class="alert alert-primary">
 
-:bulb: **Tip:** The `.puml` files used to create diagrams in this document can be found in the [diagrams](https://github.com/se-edu/addressbook-level3/tree/master/docs/diagrams/) folder. Refer to the [_PlantUML Tutorial_ at se-edu/guides](https://se-education.org/guides/tutorials/plantUml.html) to learn how to create and edit diagrams.
+:bulb: **Tip:** The `.puml` files used to create diagrams in this document can be found in the [diagrams](https://github.com/AY2021S1-CS2103T-T12-4/tp/tree/master/docs/diagrams) folder. Refer to the [_PlantUML Tutorial_ at se-edu/guides](https://se-education.org/guides/tutorials/plantUml.html) to learn how to create and edit diagrams.
 
 </div>
 
-**`Main`** has two classes called [`Main`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/Main.java) and [`MainApp`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/MainApp.java). It is responsible for,
+**`Main`** has two classes called [`Main`](https://github.com/AY2021S1-CS2103T-T12-4/tp/blob/master/src/main/java/seedu/address/Main.java) 
+and [`MainApp`](https://github.com/AY2021S1-CS2103T-T12-4/tp/blob/master/src/main/java/seedu/address/MainApp.java). It is responsible for,
+
 * At app launch: Initializes the components in the correct sequence, and connects them up with each other.
+
 * At shut down: Shuts down the components and invokes cleanup methods where necessary.
 
 [**`Commons`**](#common-classes) represents a collection of classes used by multiple other components.
@@ -64,7 +67,7 @@ The sections below give more details of each component.
 **API** :
 [`Ui.java`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/ui/Ui.java)
 
-The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `PersonListPanel`, `StatusBarFooter` etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class.
+The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `PatientListPanel`, `AppointmentListPanel`, `StatusBarFooter` etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class.
 
 The `UI` component uses JavaFx UI framework. The layout of these UI parts are defined in matching `.fxml` files that are in the `src/main/resources/view` folder. For example, the layout of the [`MainWindow`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/ui/MainWindow.java) is specified in [`MainWindow.fxml`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/resources/view/MainWindow.fxml)
 
@@ -97,17 +100,20 @@ Given below is the Sequence Diagram for interactions within the `Logic` componen
 
 ![Structure of the Model Component](images/ModelClassDiagram.png)
 
-**API** : [`Model.java`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/model/Model.java)
+**API** : [`Model.java`](https://github.com/AY2021S1-CS2103T-T12-4/tp/blob/master/src/main/java/seedu/address/model/Model.java)
 
 The `Model`,
 
 * stores a `UserPref` object that represents the user’s preferences.
-* stores the patient book data.
-* exposes an unmodifiable `ObservableList<Person>` that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.
+* stores the patient book data and appointment book data.
+* exposes an unmodifiable `ObservableList<Patient>` and an unmodifiable `ObservableList<Appointment>` that can be 'observed'
+e.g. the UI can be bound to these lists so that the UI automatically updates when the data in the list change.
 * does not depend on any of the other three components.
 
 
-<div markdown="span" class="alert alert-info">:information_source: **Note:** An alternative (arguably, a more OOP) model is given below. It has a `Tag` list in the `PatientBook`, which `Person` references. This allows `PatientBook` to only require one `Tag` object per unique `Tag`, instead of each `Person` needing their own `Tag` object.<br>
+<div markdown="span" class="alert alert-info">:information_source: **Note:**
+An alternative (arguably, a more OOP) Patient model is given below. It has a `Tag` list in the `PatientBook`, which `Patient` references. This allows `PatientBook` to only require one `Tag` object per unique `Tag`, instead of each `Patient` needing their own `Tag` object.<br>
+
 ![BetterModelClassDiagram](images/BetterModelClassDiagram.png)
 
 </div>
@@ -211,11 +217,60 @@ The following activity diagram summarizes what happens when a user executes a ne
   * Pros: Will use less memory (e.g. for `delete`, just save the patient being deleted).
   * Cons: We must ensure that the implementation of each individual command are correct.
 
+
+### \[Proposed\] Assign Feature
+
+#### Implementation
+
+The `assign` feature is implemented to allow users to assign a specified patient into a specified appointment date and time. To avoid cyclic dependency, only an `Appointment` has an attribute of `Patient` object instead of `Appointment` object and `Patient` object refer to each other.<br><br>
+
+This feature creates a new Appointment instance, which is stored in an instance of `UniqueAppointmentList`, which in turn is stored in the `AppointmentBook`. These classes are part of the `model` component.<br><br>
+
+The feature is supported by the `AssignCommand` class which extends the abstract class `Command`, and `AssignmentCommandParser` which implements the `Parser` interface. These classes are part of the `logic` component.<br><br>
+
+The following class diagram showcases the relationship between the main classes that support this command and key attributes and methods:
+
+
+![AssignLogicClassDiagram](images/AssignLogicClassDiagram.png)
+
+![AssignModelClassDiagram](images/AssignModelClassDiagram.png)
+
+
+Here below is an example usage scenario and how the `assign` feature works at each step:
+1. User enters `assign 1 d/tomorrow...` into the app.
+2. The input is handled by the `LogicManage#execute(String)`, which then calls and passes the input to the `NuudleParser#parseCommand(String)` method.
+3. `NuudleParser` finds out the command word `assign` in the user input and creates an `AssignCommandParser`to parse the input according to the format specified for `AssignCommand`.
+4. `AssignCommandParser` parses the user input and checks the input validation for correct types (eg. `Integer` for `Index` and alphanumeric characters for `Name`) via the `AssignCommandParser#parser(String)` method.
+5. `AssignCommandParser#parse(String)` calls the constructor of `Index` and `DurationSupporter`, and creates a new `Index` instance and a new `DurationSupporter` object with the user input. It creates a new `AssignCommand` and passes the `Index` and `DurationSupporter` to it.
+6. `AssigCommand` returns the new `Command` instance to the `AssignCommandParser`, which in turn returns it to `LogicManager`.
+7. `LogicManager` calls the `AssignCommand#execute(Model)` method.
+8. The `AssigCommand#execute(Model)` method calls `AssignCommand#createAppointment()` to create an `Appointment`.
+9. This `Appointment` instance is added into the `Model` via `Model#addAppointment()`.
+10. The `Model#updateFilteredAppointmentList()` calls to update the `filteredAppointmentList` in the Model, and meanwhile checks if the `Date` and `Time` of added `Appointment` overlaps with other `Appointment` in the list.
+11.  Lastly, the `AssignCommand` creates a `CommandResult` with `MESSAGE_SUCCESS`, and returns it into `LogicManager`.
+
+![AssignSequenceDiagram](images/AssignSequenceDiagram.png)
+
+#### DesignConsiderations
+
+Aspect: How the `assign` command executes
+- Alternative 1 (current choice): Separate parsing from code execution
+    - Pros: Clear distinction between class responsibilities.
+    - Cons: More code, may increase coupling as objects are passed around between the classes.
+- Alternative 2: Parse and Execute in the same class
+    - Pros: Less code, less fields/objects are passed between classes.
+    - Cons: No separation between classes violates the Single Responsibility Principle. It also makes debugging harder since more functions are squeezed in one big class. Also, it may be harder for further developers to understand since the design would vary from the `Add` command for `Patient` (adapted from AddressBookLevel3).
+
+Aspect: How to store the `Appointment` instances
+- Alternative 1 (current choice): Store in a separate `UniqueAppointmentList` class
+    - Pros: It is easier to manage `Appointment` in a separate class since many additional methods can be implemented to empower the management. Thus, This is also beneficial for other `Appointment` related commands.
+    - Cons. Another class would lead to more memory usage. Since the target user needs to keep the app running, this could be disadvantageous.
+- Alternative 2: Store inside `Patient` instances, i.e. in `UniquePatientList`.
+    - Pros: Separating list is no longer needed and the usage of `UniquePatientList` would be enlarged. This might be better for hardware memory performance.
+    - Cons: It hardens the issue of maintaining `Appointment` instances since the logic is that a `Patient` could have multiple `Appointment` but not the other way. As such, it would be harder for `Patient` related commands (`find`) to find the `Patient` and all his `Appointment` at once.
+
 _{more aspects and alternatives to be added}_
 
-### \[Proposed\] Data archiving
-
-_{Explain here how the data archiving feature will be implemented}_
 
 
 --------------------------------------------------------------------------------------------------------------------
@@ -238,7 +293,7 @@ _{Explain here how the data archiving feature will be implemented}_
 Namise is a hard working nurse working at a popular dental clinic situated in town and gets appointment calls on an hourly basis. Swarmed with incoming calls, Namise has to make new appointments for new and existing patients while keeping track of the doctor’s schedule at the same time 😞. With the need to juggle multiple tasks at once, Namise is also prone to making careless mistakes in his work due to fatigue.
 
 Being a tech-savvy nurse armed with a commendable experience in unix, Namise prefers to scribble down appointment schedules on paper while on call with his patients to maximise efficiency. This task is further exacerbated with the need to transfer these notes into an excel table manually later in the day.
- 
+
 **Target user profile summary**:
 *   Nurse working in a highly popular, small scale dental clinic
 *   Responsible for scheduling a large number of appointments daily
@@ -254,7 +309,7 @@ Being a tech-savvy nurse armed with a commendable experience in unix, Namise pre
 *   Prefers typing to mouse interactions
 *   Reasonably comfortable using CLI apps
 
-**Value proposition**: 
+**Value proposition**:
 
 Help nurses **handle and schedule dental appointments for patients** faster than a typical mouse/GUI driven app or excel scheduling
 
@@ -304,7 +359,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 * 1a. The given keywords are invalid.
 
     * 1a1. Nuudle shows an error message.
-    
+
       Use case ends.
 
 &nbsp;
@@ -325,17 +380,17 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 * 1a. The given keywords are invalid.
 
     * 1a1. Nuudle shows an error message.
-    
+
       Use case ends.
 
 * 2a. The list is empty.
 
   Use case ends.
-  
+
 * 3a. The given index is invalid.
 
     * 3a1. Nuudle shows an error message.
-    
+
       Use case resumes at step 2.
 
 &nbsp;
@@ -402,7 +457,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 4.  Nuudle adds the appointment to the list of appointment records.
 
     Use case ends.
-    
+
 **Extensions**
 
 * 1a. The given keywords are invalid.
@@ -410,7 +465,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
     * 1a1. Nuudle shows an error message.
 
       Use case ends.
-      
+
 * 3a. The given time slot is invalid (including empty input).
 
     * 3a1. Nuudle shows an error message.
@@ -418,7 +473,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
       Use case resumes at step 2.
 
 &nbsp;
- 
+
 **Use case: UC06 - Delete an appointment**
 
 **MSS**
@@ -464,23 +519,23 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
     * 1a1. Nuudle shows an error message.
 
       Use case ends.
-      
+
 * 2a. User has no current appointments.
 
     * 2a1. Nuudle shows an error message.
 
       Use case ends.
-      
+
 * 5a. The given time slot is invalid (including empty input).
 
     * 5a1. Nuudle shows an error message.
 
       Use case resumes at step 4.
-    
+
 * 5b. The given keywords are invalid.
-      
+
      * 5b1. Nuudle shows an error message.
-      
+
        Use case ends.
 
 &nbsp;
@@ -518,7 +573,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 * 1a. The given keywords are invalid.
 
     * 1a1. Nuudle shows an error message.
-    
+
       Use case ends.
 
 * 1b. The given date is invalid.
@@ -557,15 +612,15 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 * 4a. No more time slot is available for that day.
 
     * 4a1. Nuudle shows the next available time slot on the nearest day.
-    
+
         * 4a1a. User uses the suggested time slot.
 
           Use case resumes at step 5.
 
         * 4a1b. User does not use the suggested time slot.
-        
+
           Use case resumes at step 3.
-        
+
 ### Non-Functional Requirements
 
 1.  Should work on any _mainstream OS_ as long as it has Java `11` or above installed.
