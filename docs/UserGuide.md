@@ -164,7 +164,7 @@ Format: `assign INDEX d/DATE t/TIME [dur/DURATION]`
 * The INDEX refers to the index number indicated in the patient list.
 * The INDEX **must be a positive integer** 1, 2, 3, …​
 * The `DATE` and `TIME` of the appointment must be included.
-* The `DURATION` is in unit of minute, with a default value of `60` when the term is omitted.
+* The 'DURATION' is measured in minutes and will be defaulted to 60 minutes if omitted.
 * The time slot indicated by `DATE` and `TIME` must be available.
 * The specified `DATE` and `TIME` must be in the future.
 
