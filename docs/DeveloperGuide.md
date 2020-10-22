@@ -122,7 +122,7 @@ e.g. the UI can be bound to these lists so that the UI automatically updates whe
 
 <div markdown="span" class="alert alert-info">:information_source: **Note:** 
 An alternative (arguably, a more OOP) Patient model is given below. It has a `Tag` list in the `PatientBook`, 
-which `Person` references. This allows `PatientBook` to only require one `Tag` object per unique `Tag`, 
+which `Patient` references. This allows `PatientBook` to only require one `Tag` object per unique `Tag`, 
 instead of each `Person` needing their own `Tag` object.<br>
 
 ![BetterModelClassDiagram](images/BetterModelClassDiagram.png)
@@ -237,10 +237,10 @@ The Assign feature is implemented to allow users to assign a specified patient i
 To avoid cyclic dependency, only an `Appointment` has an attribute of `Patient` object instead of `Appointment` object and 
 `Patient` object refer to each other.<br><br>
 
-This feature creates a new Appointment instance, which is stored in an instance of `UniqueAppointmentBook`, which in turn is stored 
+This feature creates a new Appointment instance, which is stored in an instance of `UniqueAppointmentList`, which in turn is stored 
 in the `AppointmentBook`. These classes are part of the `model` component.<br><br>
 
-The feature is supported by the AssignCommand class which extends the abstract class `Command`, and `AssignmentCommandParser` 
+The feature is supported by the `AssignCommand` class which extends the abstract class `Command`, and `AssignmentCommandParser` 
 which implements the `Parser` interface. These classes are part of the `logic` component.<br><br>
 
 The following class diagram showcases the relationship between the main classes that support this command and key attributes and methods: 
