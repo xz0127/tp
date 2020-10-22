@@ -17,6 +17,8 @@ import seedu.address.logic.Logic;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.AppointmentStatistics;
+
 
 /**
  * The Main Window. Provides the basic application layout containing
@@ -35,6 +37,7 @@ public class MainWindow extends UiPart<Stage> {
     private PatientListPanel patientListPanel;
     private AppointmentListPanel appointmentListPanel;
     private ResultDisplay resultDisplay;
+    private StatisticsDisplay statisticsDisplay;
     private HelpWindow helpWindow;
 
     @FXML
@@ -54,6 +57,9 @@ public class MainWindow extends UiPart<Stage> {
 
     @FXML
     private StackPane resultDisplayPlaceholder;
+
+    @FXML
+    private StackPane statisticsDisplayPlaceholder;
 
     @FXML
     private StackPane patientStatusbarPlaceholder;
@@ -127,6 +133,9 @@ public class MainWindow extends UiPart<Stage> {
 
         appointmentListPanel = new AppointmentListPanel(logic.getFilteredAppointmentList());
         appointmentListPanelPlaceholder.getChildren().add(appointmentListPanel.getRoot());
+
+        statisticsDisplay = new StatisticsDisplay(logic.getAppointmentBook().getAppointmentBookStatistics());
+        statisticsDisplayPlaceholder.getChildren().add(statisticsDisplay.getRoot());
 
         resultDisplay = new ResultDisplay();
         resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());
@@ -203,8 +212,11 @@ public class MainWindow extends UiPart<Stage> {
     private CommandResult executeCommand(String commandText) throws CommandException, ParseException {
         try {
             CommandResult commandResult = logic.execute(commandText);
+            AppointmentStatistics stats = logic.getAppointmentBook().getAppointmentBookStatistics();
+            assert (stats != null);
             logger.info("Result: " + commandResult.getFeedbackToUser());
-            resultDisplay.setFeedbackToUser(commandResult.getFeedbackToUser());
+            resultDisplay.setFeedbackToUser(commandResult.getFeedbackToUser() + "\n" + stats);
+            statisticsDisplay.setStatistics(stats.toString());
 
             if (commandResult.isShowHelp()) {
                 handleHelp();
@@ -217,7 +229,7 @@ public class MainWindow extends UiPart<Stage> {
             return commandResult;
         } catch (CommandException | ParseException e) {
             logger.info("Invalid command: " + commandText);
-            resultDisplay.setFeedbackToUser(e.getMessage());
+            resultDisplay.setFeedbackToUser(e.getMessage() + "\n");
             throw e;
         }
     }

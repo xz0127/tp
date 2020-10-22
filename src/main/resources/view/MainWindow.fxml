@@ -12,8 +12,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.stage.Stage?>
 
-<fx:root type="javafx.stage.Stage" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
-         title="Nuudle" minWidth="450" minHeight="600" onCloseRequest="#handleExit">
+<fx:root minHeight="600" minWidth="450" onCloseRequest="#handleExit" title="Nuudle" type="javafx.stage.Stage" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
   <icons>
     <Image url="@/images/nuudle_32.png" />
   </icons>
@@ -34,17 +33,25 @@
           </Menu>
         </MenuBar>
 
-        <StackPane fx:id="commandBoxPlaceholder" styleClass="pane-with-border" VBox.vgrow="NEVER">
+              <StackPane fx:id="commandBoxPlaceholder" prefHeight="100.0" prefWidth="213.0" styleClass="pane-with-border">
           <padding>
             <Insets bottom="5" left="10" right="10" top="5" />
           </padding>
         </StackPane>
-
-        <StackPane fx:id="resultDisplayPlaceholder" maxHeight="100" minHeight="100" prefHeight="100" styleClass="pane-with-border" VBox.vgrow="NEVER">
-          <padding>
-            <Insets bottom="5" left="10" right="10" top="5" />
-          </padding>
-        </StackPane>
+            <SplitPane fx:id="splitView1" dividerPositions="0.8" prefWidth="200.0">
+               <items>
+                    <StackPane fx:id="resultDisplayPlaceholder" maxHeight="100" minHeight="100" prefHeight="100" prefWidth="120.0" styleClass="pane-with-border">
+                <padding>
+                  <Insets bottom="5" left="10" right="10" top="5" />
+                </padding>
+              </StackPane>
+                 <StackPane fx:id="statisticsDisplayPlaceholder" maxHeight="100" minHeight="100" prefHeight="100" prefWidth="120.0" styleClass="pane-with-border">
+                   <padding>
+                     <Insets bottom="5" left="10" right="10" top="5" />
+                   </padding>
+                 </StackPane>
+               </items>
+            </SplitPane>
 
         <SplitPane fx:id="splitView" dividerPositions="0.29797979797979796" prefWidth="200.0" VBox.vgrow="ALWAYS">
           <items>
