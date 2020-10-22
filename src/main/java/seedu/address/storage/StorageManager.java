@@ -96,15 +96,14 @@ public class StorageManager implements Storage {
 
     @Override
     public Optional<ReadOnlyAppointmentBook> readAppointmentBook() throws DataConversionException, IOException {
-        return readAppointmentBook(appointmentBookStorage.getAppointmentBookFilePath(),
-                appointmentBookStorage.getAppointmentArchiveDirPath());
+        return readAppointmentBook(appointmentBookStorage.getAppointmentBookFilePath());
     }
 
     @Override
-    public Optional<ReadOnlyAppointmentBook> readAppointmentBook(Path filePath, Path archiveDirPath)
+    public Optional<ReadOnlyAppointmentBook> readAppointmentBook(Path filePath)
             throws DataConversionException, IOException {
         logger.fine("Attempting to read data from file: " + filePath);
-        return appointmentBookStorage.readAppointmentBook(filePath, archiveDirPath);
+        return appointmentBookStorage.readAppointmentBook(filePath);
     }
 
     @Override
@@ -116,6 +115,12 @@ public class StorageManager implements Storage {
     public void saveAppointmentBook(ReadOnlyAppointmentBook appointmentBook, Path filePath) throws IOException {
         logger.fine("Attempting to write to data file: " + filePath);
         appointmentBookStorage.saveAppointmentBook(appointmentBook, filePath);
+    }
+
+    @Override
+    public ReadOnlyAppointmentBook archivePastAppointments(ReadOnlyAppointmentBook appointmentBook) {
+        logger.fine("Attempting to archive data file");
+        return appointmentBookStorage.archivePastAppointments(appointmentBook);
     }
 
     @Override

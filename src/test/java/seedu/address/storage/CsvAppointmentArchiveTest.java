@@ -95,7 +95,7 @@ public class CsvAppointmentArchiveTest {
         AppointmentBook expectedAppointment = new AppointmentBook(appointmentBook);
         expectedAppointment.removeAppointment(expiredAppointment);
 
-        assertEquals(expectedAppointment, archive.archiveAppointmentBook(appointmentBook));
+        assertEquals(expectedAppointment, archive.archivePastAppointments(appointmentBook));
 
         Path archiveFile = testFolder.resolve("2010_MAY.csv");
         List<CsvAdaptedAppointment> csvData = archive.readAppointments(archiveFile);
@@ -114,7 +114,7 @@ public class CsvAppointmentArchiveTest {
     }
 
     private ReadOnlyAppointmentBook archiveAppointmentBook(ReadOnlyAppointmentBook appointmentBook) {
-        return new CsvAppointmentArchive(TEST_DATA_FOLDER).archiveAppointmentBook(appointmentBook);
+        return new CsvAppointmentArchive(TEST_DATA_FOLDER).archivePastAppointments(appointmentBook);
     }
 
     private List<CsvAdaptedAppointment> readArchive(String fileName) throws Exception {

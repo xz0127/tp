@@ -15,12 +15,12 @@ public interface AppointmentArchive {
     Path getArchiveDirectoryPath();
 
     /**
-     * Archive and remove expired appointments from the {@code appointmentBook}.
+     * Archive and remove past appointments from the {@code appointmentBook}.
      *
      * @param appointmentBook the appointment book.
-     * @return the appointment book without expired appointments.
+     * @return the appointment book without past appointments.
      */
-    ReadOnlyAppointmentBook archiveAppointmentBook(ReadOnlyAppointmentBook appointmentBook);
+    ReadOnlyAppointmentBook archivePastAppointments(ReadOnlyAppointmentBook appointmentBook);
 
 
     /**
@@ -51,4 +51,8 @@ public interface AppointmentArchive {
     void saveAppointments(List<CsvAdaptedAppointment> appointments, Path directoryPath)
             throws IOException;
 
+    /**
+     * Get archive statistics message.
+     */
+    String getArchiveStatistics();
 }

@@ -22,10 +22,12 @@ import seedu.address.model.appointment.Appointment;
  * A class to access archived appointment data stored as a csv file on the hard disk.
  */
 public class CsvAppointmentArchive implements AppointmentArchive {
+
     private static final Logger logger = LogsCenter.getLogger(CsvAppointmentArchive.class);
+
     // Statistics
-    private static int numberOfArchivedAppointments = 0;
-    private static int numberOfExpiredAppointments = 0;
+    private int numberOfArchivedAppointments = 0;
+    private int numberOfExpiredAppointments = 0;
 
     private final Path directoryPath;
 
@@ -38,7 +40,7 @@ public class CsvAppointmentArchive implements AppointmentArchive {
     }
 
     @Override
-    public ReadOnlyAppointmentBook archiveAppointmentBook(ReadOnlyAppointmentBook appointmentBook) {
+    public ReadOnlyAppointmentBook archivePastAppointments(ReadOnlyAppointmentBook appointmentBook) {
         requireNonNull(appointmentBook);
         List<Appointment> appointments = appointmentBook.getAppointmentList();
 
@@ -142,7 +144,7 @@ public class CsvAppointmentArchive implements AppointmentArchive {
         return date.getYear() + "_" + date.getMonth().toString() + ".csv";
     }
 
-    public static String getArchiveStatistics() {
+    public String getArchiveStatistics() {
         return String.format("%d %s archived, %d expired", numberOfArchivedAppointments,
                 numberOfArchivedAppointments > 1 ? "appointments" : "appointment", numberOfExpiredAppointments);
     }

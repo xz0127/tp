@@ -73,6 +73,7 @@ public class MainApp extends Application {
         logic = initLogicManager(model, storage);
         ui = new UiManager(logic);
     }
+
     /**
      * Returns a {@code ModelManager} with the data from {@code storage}'s patient book,
      * {@code storage}'s appointment book and {@code userPrefs}.
@@ -144,11 +145,15 @@ public class MainApp extends Application {
 
         try {
             appointmentBookOptional = storage.readAppointmentBook();
+
             if (appointmentBookOptional.isEmpty()) {
                 logger.info("Data file not found. Will be starting with a sample AppointmentBook");
+                initialAppointmentData = SampleDataUtil.getSampleAppointmentBook();
+            } else {
+                initialAppointmentData = appointmentBookOptional.map(storage::archivePastAppointments)
+                        .orElseGet(AppointmentBook::new);
             }
 
-            initialAppointmentData = appointmentBookOptional.orElseGet(SampleDataUtil::getSampleAppointmentBook);
         } catch (DataConversionException e) {
             logger.warning("Data file not in the correct format. Will be starting with an empty AppointmentBook");
             initialAppointmentData = new AppointmentBook();

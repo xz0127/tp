@@ -11,6 +11,7 @@ import static seedu.address.testutil.TypicalAppointments.getTypicalAppointmentBo
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.time.LocalDate;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
@@ -18,6 +19,8 @@ import org.junit.jupiter.api.io.TempDir;
 import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.model.AppointmentBook;
 import seedu.address.model.ReadOnlyAppointmentBook;
+import seedu.address.model.appointment.Appointment;
+import seedu.address.testutil.AppointmentBuilder;
 
 public class JsonAppointmentBookStorageTest {
     private static final Path TEST_DATA_FOLDER = Paths.get("src",
@@ -69,14 +72,14 @@ public class JsonAppointmentBookStorageTest {
 
         // Save in new file and read back
         jsonAppointmentBookStorage.saveAppointmentBook(original, filePath);
-        ReadOnlyAppointmentBook readBack = jsonAppointmentBookStorage.readAppointmentBook(filePath, archivePath).get();
+        ReadOnlyAppointmentBook readBack = jsonAppointmentBookStorage.readAppointmentBook(filePath).get();
         assertEquals(original, new AppointmentBook(readBack));
 
         // Modify data, overwrite exiting file, and read back
         original.addAppointment(HOON_APPOINTMENT);
         original.removeAppointment(ALICE_APPOINTMENT);
         jsonAppointmentBookStorage.saveAppointmentBook(original, filePath);
-        readBack = jsonAppointmentBookStorage.readAppointmentBook(filePath, archivePath).get();
+        readBack = jsonAppointmentBookStorage.readAppointmentBook(filePath).get();
         assertEquals(original, new AppointmentBook(readBack));
 
         // Save and read without specifying file path
@@ -106,7 +109,7 @@ public class JsonAppointmentBookStorageTest {
     private java.util.Optional<ReadOnlyAppointmentBook> readAppointmentBook(String filePath, String archivePath)
             throws Exception {
         return new JsonAppointmentBookStorage(Paths.get(filePath), Paths.get(archivePath))
-                .readAppointmentBook(addToTestDataPathIfNotNull(filePath), addToTestDataPathIfNotNull(archivePath));
+                .readAppointmentBook(addToTestDataPathIfNotNull(filePath));
     }
 
     /**
@@ -121,4 +124,32 @@ public class JsonAppointmentBookStorageTest {
         }
     }
 
+    @Test
+    public void archivePastAppointments_allInOrder_success() {
+        Path filePath = testFolder.resolve("TempAppointmentBook.json");
+        Path archivePath = testFolder.resolve("archive");
+        AppointmentBook expected = getTypicalAppointmentBook();
+
+        AppointmentBook original = new AppointmentBook(expected);
+        Appointment expiredAppointment = new AppointmentBuilder(HOON_APPOINTMENT)
+                .withDate(LocalDate.of(2019, 1, 1))
+                .build();
+        Appointment pastAppointment = new AppointmentBuilder(IDA_APPOINTMENT)
+                .withDate(LocalDate.of(2019, 5, 1))
+                .withDoneStatus(true).build();
+        original.addAppointment(expiredAppointment);
+        original.addAppointment(pastAppointment);
+
+        JsonAppointmentBookStorage jsonAppointmentBookStorage = new JsonAppointmentBookStorage(filePath, archivePath);
+
+        // Archive appointments
+        ReadOnlyAppointmentBook filteredBook = jsonAppointmentBookStorage.archivePastAppointments(original);
+
+        assertEquals(expected, new AppointmentBook(filteredBook));
+
+        // Check archive status message
+        String expectedMessage = "2 appointments archived, 1 expired";
+        assertEquals(expectedMessage, jsonAppointmentBookStorage.getArchiveStatus());
+
+    }
 }
