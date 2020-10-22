@@ -23,10 +23,7 @@ The ***Architecture Diagram*** given above explains the high-level design of the
 
 <div markdown="span" class="alert alert-primary">
 
-:bulb: **Tip:** The `.puml` files used to create diagrams in this document can be found in the 
-[diagrams](https://github.com/AY2021S1-CS2103T-T12-4/tp/tree/master/docs/diagrams) folder. Refer to the 
-[_PlantUML Tutorial_ at se-edu/guides](https://se-education.org/guides/tutorials/plantUml.html) to learn how to create 
-and edit diagrams.
+:bulb: **Tip:** The `.puml` files used to create diagrams in this document can be found in the [diagrams](https://github.com/AY2021S1-CS2103T-T12-4/tp/tree/master/docs/diagrams) folder. Refer to the [_PlantUML Tutorial_ at se-edu/guides](https://se-education.org/guides/tutorials/plantUml.html) to learn how to create and edit diagrams.
 
 </div>
 
@@ -57,8 +54,7 @@ For example, the `Logic` component (see the class diagram given below) defines i
 
 **How the architecture components interact with each other**
 
-The *Sequence Diagram* below shows how the components interact with each other for the scenario 
-where the user issues the command `delete 1`.
+The *Sequence Diagram* below shows how the components interact with each other for the scenario where the user issues the command `delete 1`.
 
 <img src="images/ArchitectureSequenceDiagram.png" width="574" />
 
@@ -71,14 +67,9 @@ The sections below give more details of each component.
 **API** :
 [`Ui.java`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/ui/Ui.java)
 
-The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, 
-`PersonListPanel`, `AppointmentListPanel`, `StatusBarFooter` etc. All these, including the `MainWindow`, 
-inherit from the abstract `UiPart` class.
+The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `PatientListPanel`, `AppointmentListPanel`, `StatusBarFooter` etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class.
 
-The `UI` component uses JavaFx UI framework. The layout of these UI parts are defined in matching 
-`.fxml` files that are in the `src/main/resources/view` folder. For example, the layout of the 
-[`MainWindow`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/ui/MainWindow.java) 
-is specified in [`MainWindow.fxml`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/resources/view/MainWindow.fxml)
+The `UI` component uses JavaFx UI framework. The layout of these UI parts are defined in matching `.fxml` files that are in the `src/main/resources/view` folder. For example, the layout of the [`MainWindow`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/ui/MainWindow.java) is specified in [`MainWindow.fxml`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/resources/view/MainWindow.fxml)
 
 The `UI` component,
 
@@ -121,9 +112,7 @@ e.g. the UI can be bound to these lists so that the UI automatically updates whe
 
 
 <div markdown="span" class="alert alert-info">:information_source: **Note:** 
-An alternative (arguably, a more OOP) Patient model is given below. It has a `Tag` list in the `PatientBook`, 
-which `Patient` references. This allows `PatientBook` to only require one `Tag` object per unique `Tag`, 
-instead of each `Person` needing their own `Tag` object.<br>
+An alternative (arguably, a more OOP) Patient model is given below. It has a `Tag` list in the `PatientBook`, which `Patient` references. This allows `PatientBook` to only require one `Tag` object per unique `Tag`, instead of each `Patient` needing their own `Tag` object.<br>
 
 ![BetterModelClassDiagram](images/BetterModelClassDiagram.png)
 
@@ -231,17 +220,13 @@ The following activity diagram summarizes what happens when a user executes a ne
 
 ### \[Proposed\] Assign Feature
 
-#### Proposed Implementation
+#### Implementation
 
-The Assign feature is implemented to allow users to assign a specified patient into a specified appointment date and time. 
-To avoid cyclic dependency, only an `Appointment` has an attribute of `Patient` object instead of `Appointment` object and 
-`Patient` object refer to each other.<br><br>
+The `assign` feature is implemented to allow users to assign a specified patient into a specified appointment date and time. To avoid cyclic dependency, only an `Appointment` has an attribute of `Patient` object instead of `Appointment` object and `Patient` object refer to each other.<br><br>
 
-This feature creates a new Appointment instance, which is stored in an instance of `UniqueAppointmentList`, which in turn is stored 
-in the `AppointmentBook`. These classes are part of the `model` component.<br><br>
+This feature creates a new Appointment instance, which is stored in an instance of `UniqueAppointmentList`, which in turn is stored in the `AppointmentBook`. These classes are part of the `model` component.<br><br>
 
-The feature is supported by the `AssignCommand` class which extends the abstract class `Command`, and `AssignmentCommandParser` 
-which implements the `Parser` interface. These classes are part of the `logic` component.<br><br>
+The feature is supported by the `AssignCommand` class which extends the abstract class `Command`, and `AssignmentCommandParser` which implements the `Parser` interface. These classes are part of the `logic` component.<br><br>
 
 The following class diagram showcases the relationship between the main classes that support this command and key attributes and methods: 
 
@@ -251,38 +236,38 @@ The following class diagram showcases the relationship between the main classes 
 ![AssignModelClassDiagram](images/AssignModelClassDiagram.png)
 
 
-Here below is an example usage scenario and how the `Assign` feature works at each step:<br>
-
+Here below is an example usage scenario and how the `assign` feature works at each step:
 1. User enters `assign 1 d/tomorrow...` into the app.
-
-2. The input is handled by the `LogicManage#execute(String)`, which then calls and passes the input to the 
-`NuudleParser#parseCommand(String)` method.
-
-3. `NuudleParser` finds out the command word `assign` in the user input and creates an `AssignCommandParser`
-to parse the input according to the format specified for `AssignCommand`.
-
-4. `AssignCommandParser` parses the user input and checks the input validation for correct types 
-(eg. `Integer` for `Index` and alphanumeric characters for `Name`) via the `AssignCommandParser#parser(String)` method.
-
-5. `AssignCommandParser#parse(String)` calls the constructor of `Index` and `DurationSupporter`, and creates a new 
-`Index` instance and a new `DurationSupporter` object with the user input. It creates a new `AssignCommand` and passes
-the `Index` and `DurationSupporter` to it.
-
+2. The input is handled by the `LogicManage#execute(String)`, which then calls and passes the input to the `NuudleParser#parseCommand(String)` method.
+3. `NuudleParser` finds out the command word `assign` in the user input and creates an `AssignCommandParser`to parse the input according to the format specified for `AssignCommand`.
+4. `AssignCommandParser` parses the user input and checks the input validation for correct types (eg. `Integer` for `Index` and alphanumeric characters for `Name`) via the `AssignCommandParser#parser(String)` method.
+5. `AssignCommandParser#parse(String)` calls the constructor of `Index` and `DurationSupporter`, and creates a new `Index` instance and a new `DurationSupporter` object with the user input. It creates a new `AssignCommand` and passes the `Index` and `DurationSupporter` to it.
 6. `AssigCommand` returns the new `Command` instance to the `AssignCommandParser`, which in turn returns it to `LogicManager`.
-
 7. `LogicManager` calls the `AssignCommand#execute(Model)` method.
-
 8. The `AssigCommand#execute(Model)` method calls `AssignCommand#createAppointment()` to create an `Appointment`.
-
 9. This `Appointment` instance is added into the `Model` via `Model#addAppointment()`.
-
-10. The `Model#updateFilteredAppointmentList()` calls to update the `filteredAppointmentList` in the Model, and 
-meanwhile checks if the `Date` and `Time` of added `Appointment` overlaps with other `Appointment` in the list.
-
+10. The `Model#updateFilteredAppointmentList()` calls to update the `filteredAppointmentList` in the Model, and meanwhile checks if the `Date` and `Time` of added `Appointment` overlaps with other `Appointment` in the list.
 11.  Lastly, the `AssignCommand` creates a `CommandResult` with `MESSAGE_SUCCESS`, and returns it into `LogicManager`.
 
-
 ![AssignSequenceDiagram](images/AssignSequenceDiagram.png)
+
+#### DesignConsiderations
+
+Aspect: How the `assign` command executes
+- Alternative 1 (current choice): Separate parsing from code execution
+    - Pros: Clear distinction between class responsibilities.
+    - Cons: More code, may increase coupling as objects are passed around between the classes.
+- Alternative 2: Parse and Execute in the same class
+    - Pros: Less code, less fields/objects are passed between classes.
+    - Cons: No separation between classes violates the Single Responsibility Principle. It also makes debugging harder since more functions are squeezed in one big class. Also, it may be harder for further developers to understand since the design would vary from the `Add` command for `Patient` (adapted from AddressBookLevel3).
+
+Aspect: How to store the `Appointment` instances
+- Alternative 1 (current choice): Store in a separate `UniqueAppointmentList` class
+    - Pros: It is easier to manage `Appointment` in a separate class since many additional methods can be implemented to empower the management. Thus, This is also beneficial for other `Appointment` related commands.
+    - Cons. Another class would lead to more memory usage. Since the target user needs to keep the app running, this could be disadvantageous.
+- Alternative 2: Store inside `Patient` instances, i.e. in `UniquePatientList`.
+    - Pros: Separating list is no longer needed and the usage of `UniquePatientList` would be enlarged. This might be better for hardware memory performance.
+    - Cons: It hardens the issue of maintaining `Appointment` instances since the logic is that a `Patient` could have multiple `Appointment` but not the other way. As such, it would be harder for `Patient` related commands (`find`) to find the `Patient` and all his `Appointment` at once.
 
 _{more aspects and alternatives to be added}_
 

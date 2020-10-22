@@ -78,7 +78,6 @@ Format: `add n/NAME i/NRIC p/PHONE_NUMBER a/ADDRESS [t/TAG]…​`
 <div markdown="span" class="alert alert-primary">:bulb: **Tip:**
 Tags are used to indicate a patient's underlying medical conditions. A patient can also have any number of tags (including 0).
 </div>
-
 * Adds a patient with the specified details. 
 * The following fields are compulsory and must be provided: `NAME, NRIC, PHONE_NUMBER, ADDRESS`.
 * It is optional to add `TAG`s for the patient. Tags can still be added with the edit command upon creating the patient entry in Nuudle.
@@ -252,7 +251,7 @@ Date Formats | Time Formats | Natural Date | Natural Time
 12-02-2020 | | Upcoming day<br>of the week | Night (10PM)
 2020/12/02 | | | Midnight (11:59PM)
 2020-12-02 |
-02-Dec-2020 | 
+02-Dec-2020 |
 02-December-2020 |
 --------------------------------------------------------------------------------------------------------------------
 
