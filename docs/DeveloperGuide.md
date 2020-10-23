@@ -191,6 +191,71 @@ The following activity diagram summarizes what happens when a user executes a ne
 
 _{Explain here how the data archiving feature will be implemented}_
 
+### 3. Assign Feature
+
+`[written by: Zhang Wanlin]`
+
+The assign feature will allow the user to create a new appointment that is attached to a patient.
+
+#### Implementation
+
+The `assign` feature is implemented to allow users to assign a specified patient into a specified appointment date and time. To avoid cyclic dependency, only an `Appointment` has an attribute of `Patient` object instead of `Appointment` object and `Patient` object refer to each other.<br><br>
+This feature creates a new Appointment instance, which is stored in an instance of `UniqueAppointmentList`, which in turn is stored in the `AppointmentBook`. These classes are part of the `model` component.<br><br>
+The feature is supported by the `AssignCommand` class which extends the abstract class `Command`, and `AssignmentCommandParser` which implements the `Parser` interface. These classes are part of the `logic` component.<br><br>
+The following class diagram showcases the relationship between the main classes that support this command and key attributes and methods:
+
+
+![AssignLogicClassDiagram](images/AssignLogicClassDiagram.png)
+
+![AssignModelClassDiagram](images/AssignModelClassDiagram.png)
+
+
+Here below is an example usage scenario and how the `assign` feature works at each step:
+1. User enters `assign 1 d/tomorrow...` into the app.
+
+2. The input is handled by the `LogicManage#execute(String)`, which then calls and passes the input to the `NuudleParser#parseCommand(String)` method.
+
+3. `NuudleParser` finds out the command word `assign` in the user input and creates an `AssignCommandParser`to parse the input according to the format specified for `AssignCommand`.
+
+4. `AssignCommandParser` parses the user input and checks the input validation for correct types (eg. `Integer` for `Index` and alphanumeric characters for `Name`) via the `AssignCommandParser#parser(String)` method.
+
+5. `AssignCommandParser#parse(String)` calls the constructor of `Index` and `DurationSupporter`, and creates a new `Index` instance and a new `DurationSupporter` object with the user input. It creates a new `AssignCommand` and passes the `Index` and `DurationSupporter` to it.
+
+6. `AssigCommand` returns the new `Command` instance to the `AssignCommandParser`, which in turn returns it to `LogicManager`.
+
+7. `LogicManager` calls the `AssignCommand#execute(Model)` method.
+
+8. The `AssigCommand#execute(Model)` method calls `AssignCommand#createAppointment()` to create an `Appointment`.
+
+9. This `Appointment` instance is added into the `Model` via `Model#addAppointment()`.
+
+10. The `Model#updateFilteredAppointmentList()` calls to update the `filteredAppointmentList` in the Model, and meanwhile checks if the `Date` and `Time` of added `Appointment` overlaps with other `Appointment` in the list.
+
+11.  Lastly, the `AssignCommand` creates a `CommandResult` with `MESSAGE_SUCCESS`, and returns it into `LogicManager`.
+
+![AssignSequenceDiagram](images/AssignSequenceDiagram.png)
+
+#### Design Considerations
+
+##### Aspect: How the `assign` command executes
+
+* **Alternative 1 (current choice):** Separate parsing from code execution
+    * Pros: Clear distinction between class responsibilities.
+    * Cons: More code, may increase coupling as objects are passed around between the classes.
+
+* **Alternative 2:** Parse and Execute in the same class
+    * Pros: Less code, less fields/objects are passed between classes.
+    * Cons: No separation between classes violates the Single Responsibility Principle. It also makes debugging harder since more functions are squeezed in one big class. Also, it may be harder for further developers to understand since the design would vary from the `Add` command for `Patient` (adapted from AddressBookLevel3).
+
+##### Aspect: How to store the `Appointment` instances
+
+* **Alternative 1 (current choice):** Store in a separate `UniqueAppointmentList` class
+    * Pros: It is easier to manage `Appointment` in a separate class since many additional methods can be implemented to empower the management. Thus, This is also beneficial for other `Appointment` related commands.
+    * Cons. Another class would lead to more memory usage. Since the target user needs to keep the app running, this could be disadvantageous.
+
+* **Alternative 2:** Store inside `Patient` instances, i.e. in `UniquePatientList`.
+    * Pros: Separating list is no longer needed and the usage of `UniquePatientList` would be enlarged. This might be better for hardware memory performance.
+    * Cons: It hardens the issue of maintaining `Appointment` instances since the logic is that a `Patient` could have multiple `Appointment` but not the other way. As such, it would be harder for `Patient` related commands (`find`) to find the `Patient` and all his `Appointment` at once.
 
 ### 5. Edit Patient Feature
 
@@ -243,57 +308,6 @@ Step 13: `EditCommand` updates the filtered list by calling `Model#updateFiltere
 
 Step 14: Lastly, `EditCommand` creates a `CommandResult` with `SuccessMessage` and `Patient` and returns it to `LogicManager`.
 
-
-### \[Proposed\] Assign Feature
-
-#### Implementation
-
-The `assign` feature is implemented to allow users to assign a specified patient into a specified appointment date and time. To avoid cyclic dependency, only an `Appointment` has an attribute of `Patient` object instead of `Appointment` object and `Patient` object refer to each other.<br><br>
-
-This feature creates a new Appointment instance, which is stored in an instance of `UniqueAppointmentList`, which in turn is stored in the `AppointmentBook`. These classes are part of the `model` component.<br><br>
-
-The feature is supported by the `AssignCommand` class which extends the abstract class `Command`, and `AssignmentCommandParser` which implements the `Parser` interface. These classes are part of the `logic` component.<br><br>
-
-The following class diagram showcases the relationship between the main classes that support this command and key attributes and methods:
-
-
-![AssignLogicClassDiagram](images/AssignLogicClassDiagram.png)
-
-![AssignModelClassDiagram](images/AssignModelClassDiagram.png)
-
-
-Here below is an example usage scenario and how the `assign` feature works at each step:
-1. User enters `assign 1 d/tomorrow...` into the app.
-2. The input is handled by the `LogicManage#execute(String)`, which then calls and passes the input to the `NuudleParser#parseCommand(String)` method.
-3. `NuudleParser` finds out the command word `assign` in the user input and creates an `AssignCommandParser`to parse the input according to the format specified for `AssignCommand`.
-4. `AssignCommandParser` parses the user input and checks the input validation for correct types (eg. `Integer` for `Index` and alphanumeric characters for `Name`) via the `AssignCommandParser#parser(String)` method.
-5. `AssignCommandParser#parse(String)` calls the constructor of `Index` and `DurationSupporter`, and creates a new `Index` instance and a new `DurationSupporter` object with the user input. It creates a new `AssignCommand` and passes the `Index` and `DurationSupporter` to it.
-6. `AssigCommand` returns the new `Command` instance to the `AssignCommandParser`, which in turn returns it to `LogicManager`.
-7. `LogicManager` calls the `AssignCommand#execute(Model)` method.
-8. The `AssigCommand#execute(Model)` method calls `AssignCommand#createAppointment()` to create an `Appointment`.
-9. This `Appointment` instance is added into the `Model` via `Model#addAppointment()`.
-10. The `Model#updateFilteredAppointmentList()` calls to update the `filteredAppointmentList` in the Model, and meanwhile checks if the `Date` and `Time` of added `Appointment` overlaps with other `Appointment` in the list.
-11.  Lastly, the `AssignCommand` creates a `CommandResult` with `MESSAGE_SUCCESS`, and returns it into `LogicManager`.
-
-![AssignSequenceDiagram](images/AssignSequenceDiagram.png)
-
-#### Design Considerations
-
-Aspect: How the `assign` command executes
-- Alternative 1 (current choice): Separate parsing from code execution
-    - Pros: Clear distinction between class responsibilities.
-    - Cons: More code, may increase coupling as objects are passed around between the classes.
-- Alternative 2: Parse and Execute in the same class
-    - Pros: Less code, less fields/objects are passed between classes.
-    - Cons: No separation between classes violates the Single Responsibility Principle. It also makes debugging harder since more functions are squeezed in one big class. Also, it may be harder for further developers to understand since the design would vary from the `Add` command for `Patient` (adapted from AddressBookLevel3).
-
-Aspect: How to store the `Appointment` instances
-- Alternative 1 (current choice): Store in a separate `UniqueAppointmentList` class
-    - Pros: It is easier to manage `Appointment` in a separate class since many additional methods can be implemented to empower the management. Thus, This is also beneficial for other `Appointment` related commands.
-    - Cons. Another class would lead to more memory usage. Since the target user needs to keep the app running, this could be disadvantageous.
-- Alternative 2: Store inside `Patient` instances, i.e. in `UniquePatientList`.
-    - Pros: Separating list is no longer needed and the usage of `UniquePatientList` would be enlarged. This might be better for hardware memory performance.
-    - Cons: It hardens the issue of maintaining `Appointment` instances since the logic is that a `Patient` could have multiple `Appointment` but not the other way. As such, it would be harder for `Patient` related commands (`find`) to find the `Patient` and all his `Appointment` at once.
 
 _{more aspects and alternatives to be added}_
 
