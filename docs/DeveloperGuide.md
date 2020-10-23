@@ -191,9 +191,9 @@ The following activity diagram summarizes what happens when a user executes a ne
 `[written by: Jin Hao]`
 
 The data archiving feature will archive all past appointments into an archive directory on starting the app.
-The appointment data will be archived according to the month and saved as a csv file.
+The appointment data will be archived according to their months and saved as a csv file.
 
-The data stored on the archive will be minimal and only contains the following columns: `date`, `startTime`, `endTime`, `isDone`, `name`, `phone`, `address`, remark`
+The data stored on the archive will be minimal and only contains the following columns: `date`, `startTime`, `endTime`, `isDone`, `name`, `phone`, `address` and `remark`.
 
 #### Implementation
 
@@ -202,33 +202,32 @@ It is stored internally within the `JsonAppointmentBookStorage` which in turn im
 
 `CsvAppointmentArchive` implements the following operations:
 
-* `AppointmentArchive#archivePastAppointments(ReadOnlyAppointmentBook)` — Removes all past appointments and archive them as a csv file. Returns the filtered `ReadOnlyAppointmentBook`.
-* `AppointmentArchive#saveAppointments(List<CsvAdaptedAppointment>, String)` — Saves the list of `CsvAdaptedAppointment` as a csv file to the archive directory with the given filename.
+* `AppointmentArchive#archivePastAppointments(ReadOnlyAppointmentBook)` — Removes all past appointments from the `ReadOnlyAppointmentBook` and archive them as a csv file.
+* `AppointmentArchive#saveAppointments(List<CsvAdaptedAppointment>, String)` — Saves the list of `CsvAdaptedAppointment` as a csv file in the archive directory with the given filename.
 * `AppointmentArchive#readAppointments(String)` — Reads the csv file with the given filename and returns the data as a `List<CsvAdaptedAppointment>`
-* `AppointmentArchive#getArchiveStatistics()` — Gets the status message of the archiver, which contains the number of appointments archived and the number of undone appointments archived.
+* `AppointmentArchive#getArchiveStatistics()` — Gets the status message of the archive mechanism.
 
-Of these three, only the `archivePastAppointments(ReadOnlyAppointmenBook)` and `getArchiveStatistics()` are exposed in
-the `AppointmentBookStorage` and `Storage` interfaces as methods with the same signature.
+Of these three, only the `archivePastAppointments(ReadOnlyAppointmenBook)` and `getArchiveStatistics()` are exposed in the `AppointmentBookStorage` and `Storage` interfaces as methods with the same signature.
 
-`CsvAdaptedAppointment` and `CsvAdaptedPatient` are used to represent the csv-adapted (serializable/deserializable) `Appointment` and `Patient` respectively.
+`CsvAdaptedAppointment` and `CsvAdaptedPatient` are used to represent the csv-adapted `Appointment` and `Patient` respectively.
 
 Given below is an example archive run scenario and how the archive mechanism behaves at each step.
 
-Step 1. The user launches the application with some existing appointment data (not launching for the first time).
+1. The user launches the application with some existing appointment data (not launching for the first time).
 
-Step 2. The `MainApp` calls the `Storage#readAppointmentBook()` method to get the `Optional<ReadOnlyAppointmentBook>` which may contains the book of existing appointment data.
+1. The `MainApp` calls the `Storage#readAppointmentBook()` method to get the `Optional<ReadOnlyAppointmentBook>` which may contains the book of existing appointment data.
 
-Step 3. The original `ReadOnlyAppointmentBook` is then passed to the `AppointmentArchive` through the `Storage` and `AppointmentBookStorage` by calling their respective `archivePastAppointments(ReadOnlyAppointmentBook)` methods.
+1. The original `ReadOnlyAppointmentBook` is then passed to the `AppointmentArchive` through the `Storage` and `AppointmentBookStorage` by calling their respective `archivePastAppointments(ReadOnlyAppointmentBook)` methods.
 
-Step 4. `AppointmentArchive#archivePastAppointments(ReadOnlyAppointmentBook)` then iterates through the `ReadOnlyAppointmentBook` and separates it into a `List<Appointment>`, which contains only the upcoming appointments, and `List<CsvAdaptedAppointment>`, which contains the appointments to be archived.
+1. `AppointmentArchive#archivePastAppointments(ReadOnlyAppointmentBook)` then iterates through the `ReadOnlyAppointmentBook` and separates it into a `List<Appointment>`, which contains only the upcoming appointments, and `List<CsvAdaptedAppointment>`, which contains the appointments to be archived.
 
-Step 5. For each `CsvAdaptedAppointment` in the same group (same month), the `AppointmentArchive` calls the `AppointmentArchive#saveAppointments(List<CsvAdaptedAppointment>, String)` method to save the appointment list.
+1. For each `CsvAdaptedAppointment` in the same group (same month), the `AppointmentArchive` calls the `AppointmentArchive#saveAppointments(List<CsvAdaptedAppointment>, String)` method to save the appointment list.
 
-Step 6. `AppointmentArchive#saveAppointments()` then calls the `CsvUtil::serializeObjectToCsvFile()` method to save and archive the past appointments.
+1. `AppointmentArchive#saveAppointments()` then calls the `CsvUtil::serializeObjectToCsvFile()` method to save and archive the past appointments.
 
-Step 7. The `List<Appointment>` containing only the upcoming appointments will then be returned to the user as a `ReadOnlyAppointmentBook`.
+1. The `List<Appointment>` containing only the upcoming appointments will then be returned to the user as a `ReadOnlyAppointmentBook`.
 
-Step 8. The `Ui` component will then call the `Logic#getArchiveStatus()` component on initialisation to get the archive status message from the `StorageManager`.
+1. The `Ui` component will then call the `Logic#getArchiveStatus()` component on initialisation to get the archive status message from the `StorageManager`.
 
 The above process is shown in the following sequence diagram:
 
@@ -243,14 +242,13 @@ The following sequence diagram shows how the archive status message is obtained 
 ##### Aspect: Type of data to save as csv format
 
 As the data is to be saved in a csv format, the data attributes of the Java Object cannot have complex data type such as a `set`, `list` or `map`.
-This means that the current `JsonAdaptedAppointment` and `JsonAdaptedPatient` cannot be directly saved into a csv file.
+`CsvAdaptedAppointment` and `CsvAdaptedPatient` classes are used to represent the archivable appointments and patient, so the consideration is to decide how and what data should be archived in the csv file.
 
-* **Alternative 1 (current choice):** Create Plain Old Java Object (POJO) classes for `Appointment` and `Patient` which contains only the necessary details that is needed for archiving.
-This means ignoring data such as `Set<Tags>` and sensitive data such as the patient's `Nric`
+* **Alternative 1 (current choice):** Only archive the necessary data and ignore certain data such as `Set<Tags>` and sensitive data such as the patient's `Nric`.
   * Pros: Straightforward to implement. Easy to add and remove fields to be archived.
   * Cons: Does not have the full appointment data and therefore `CsvAdaptedAppointment` cannot be used to recreate `Appointment`.
 
-* **Alternative 2:** Convert each complex data type to their string equivalent and have methods to convert them back to the original data. 
+* **Alternative 2:** Archive all appointment-related data. For complex data, convert them to their string equivalent and have methods to convert them back to the original state.
   * Pros: Full data is saved and therefore the actual `Appointment` can be recreated from the csv data file.
   * Cons: We must ensure that the implementation of the conversion is correct and that the content of the data does not affect the conversion.
 
