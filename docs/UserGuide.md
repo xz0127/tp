@@ -205,7 +205,7 @@ Example:
 * `view` shows the list of all upcoming appointments in chronological order.
 * `view d/4-Aug-2020` shows the list of appointments happening on 04/08/2020.
 
-### Mark an appointment as done : `done`
+### Marking an appointment as done : `done`
 
 Marks a specific appointment in the patient book as done.
 
@@ -218,6 +218,19 @@ Example:
 * `done d/02/12/2020 t/10am` marks the appointment happening on 02/12/2020, 10am as completed.
 * `done d/05-Nov-2020 t/1pm` marks the appointment happening on 05/11/2020, 1pm as completed.
 ![DoneCommand](images/DoneCommand.png)
+
+### Listing available time slots by date : `avail`
+
+Shows a list of all available(free) time slots within the operation time of the clinic on a specified date.
+
+Format: `avail d/DATE`
+
+* Outputs the list of all available time slots within the operation time of the clinic on a specified date based on the chronological order.
+* DATE must be today or in the future.
+
+Example:
+* `avail d/4-Aug-2020` shows the list of all available(free) time slots within the operation time of the clinic on 04/08/2020.
+![AvailableCommand](images/AvailableCommand.png)
 
 ### Clearing all appointment entries : `clear`
 
