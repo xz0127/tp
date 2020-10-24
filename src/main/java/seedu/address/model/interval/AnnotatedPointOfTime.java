@@ -6,8 +6,8 @@ import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
  * Represents a point of time with the annotation of type of this point of time.
  */
 public class AnnotatedPointOfTime implements Comparable<AnnotatedPointOfTime> {
-    private int timeValue;
-    private PointOfTimeType type;
+    private final int timeValue;
+    private final PointOfTimeType type;
 
     /**
      * Constructs an annotated point of time object.

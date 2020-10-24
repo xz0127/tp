@@ -6,8 +6,8 @@ import seedu.address.model.appointment.Time;
  * Represents a time interval.
  */
 public class TimeInterval {
-    private Time startTime;
-    private Time endTime;
+    private final Time startTime;
+    private final Time endTime;
 
     /**
      * Constructs an interval object.

@@ -12,7 +12,6 @@ import javafx.collections.ObservableList;
 import seedu.address.model.ScheduleManager;
 import seedu.address.model.appointment.exceptions.AppointmentNotFoundException;
 import seedu.address.model.appointment.exceptions.OverlappingAppointmentException;
-import seedu.address.model.interval.TimeInterval;
 import seedu.address.model.patient.Patient;
 
 /**
@@ -160,8 +159,8 @@ public class UniqueAppointmentList implements Iterable<Appointment> {
      */
     public String findAvailableTimeSlots(List<Appointment> appointmentList) {
         ScheduleManager scheduleManager = new ScheduleManager(appointmentList);
-        ArrayList<TimeInterval> availableTimeIntervals = scheduleManager.findFreeSlots();
-        return scheduleManager.outputAsString(availableTimeIntervals);
+        // ArrayList<TimeInterval> availableTimeIntervals = scheduleManager.findFreeSlots();
+        return scheduleManager.findFreeSlots();
     }
 
     @Override

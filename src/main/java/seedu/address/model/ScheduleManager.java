@@ -11,6 +11,7 @@ import seedu.address.model.appointment.Time;
 import seedu.address.model.interval.AnnotatedPointOfTime;
 import seedu.address.model.interval.PointOfTimeType;
 import seedu.address.model.interval.TimeInterval;
+import seedu.address.model.interval.TimeIntervalList;
 
 /**
  * Represents a schedule manager which finds available time slots.
@@ -43,26 +44,26 @@ public class ScheduleManager {
     /**
      * Constructs the operation time interval based on the operation time of the clinic.
      *
-     * @return a list containing the operation time intervals of the clinic.
+     * @return a TimeIntervalList containing the operation time intervals of the clinic.
      */
-    public ArrayList<TimeInterval> constructOperationTimeIntervals() {
+    public TimeIntervalList constructOperationTimeIntervals() {
         ArrayList<TimeInterval> operationTimeIntervals = new ArrayList<>();
         operationTimeIntervals.add(OPERATION_TIME);
-        return operationTimeIntervals;
+        return new TimeIntervalList(operationTimeIntervals);
     }
 
     /**
      * Constructs the appointment time intervals based on the appointment time on a specific date.
      *
-     * @return a list containing the appointment time intervals on a specific date.
+     * @return a TimeIntervalList containing the appointment time intervals on a specific date.
      */
-    public ArrayList<TimeInterval> constructAppointmentTimeInterval() {
+    public TimeIntervalList constructAppointmentTimeInterval() {
         ArrayList<TimeInterval> appointmentTimeIntervals = new ArrayList<>();
         for (Appointment appointment : appointmentList) {
             TimeInterval appointmentInterval = new TimeInterval(appointment.getStartTime(), appointment.getEndTime());
             appointmentTimeIntervals.add(appointmentInterval);
         }
-        return appointmentTimeIntervals;
+        return new TimeIntervalList(appointmentTimeIntervals);
     }
 
     /**
@@ -71,8 +72,8 @@ public class ScheduleManager {
      *
      * @param operationTimeIntervals list of time intervals of clinic operation time.
      */
-    public void annotateOperationTimeInterval(ArrayList<TimeInterval> operationTimeIntervals) {
-        for (TimeInterval operationInterval : operationTimeIntervals) {
+    public void annotateOperationTimeInterval(TimeIntervalList operationTimeIntervals) {
+        for (TimeInterval operationInterval : operationTimeIntervals.getTimeIntervals()) {
             annotatedPointList.add(new AnnotatedPointOfTime(
                 TimeConversionUtil.convertTimeToInt(
                     operationInterval.getStartTime()), PointOfTimeType.TimeIntervalStart));
@@ -88,8 +89,8 @@ public class ScheduleManager {
      *
      * @param appointmentTimeIntervals a list of appointment time intervals.
      */
-    public void annotateAppointmentTime(ArrayList<TimeInterval> appointmentTimeIntervals) {
-        for (TimeInterval appointmentTimeInterval : appointmentTimeIntervals) {
+    public void annotateAppointmentTime(TimeIntervalList appointmentTimeIntervals) {
+        for (TimeInterval appointmentTimeInterval : appointmentTimeIntervals.getTimeIntervals()) {
             annotatedPointList.add(new AnnotatedPointOfTime(
                 TimeConversionUtil.convertTimeToInt(
                     appointmentTimeInterval.getStartTime()), PointOfTimeType.AppointmentStart));
@@ -113,9 +114,9 @@ public class ScheduleManager {
      * Finds non-overlapping intervals in a queue of annotated points.
      *
      * @param queue queue of annotated points.
-     * @return an array list of intervals.
+     * @return a TimeIntervalList of intervals.
      */
-    public ArrayList<TimeInterval> findNonOverlappingIntervals(ArrayList<AnnotatedPointOfTime> queue) {
+    public TimeIntervalList findNonOverlappingIntervals(ArrayList<AnnotatedPointOfTime> queue) {
         ArrayList<TimeInterval> nonOverLappingIntervals = new ArrayList<>();
 
         // iterate over the queue
@@ -161,53 +162,23 @@ public class ScheduleManager {
                 break;
             }
         }
-        return nonOverLappingIntervals;
-    }
-
-    /**
-     * Clears the empty intervals in the list of time intervals.
-     *
-     * @param timeIntervals lists of time intervals.
-     * @return a list of time intervals with no empty intervals.
-     */
-    public ArrayList<TimeInterval> clearZeroIntervals(ArrayList<TimeInterval> timeIntervals) {
-        ArrayList<TimeInterval> noZeroIntervalList = new ArrayList<>();
-        for (TimeInterval timeInterval : timeIntervals) {
-            if (!timeInterval.isZeroInterval()) {
-                noZeroIntervalList.add(timeInterval);
-            }
-        }
-        return noZeroIntervalList;
+        return new TimeIntervalList(nonOverLappingIntervals);
     }
 
     /**
      * Finds the available time slots based on the appointment list of a specified date.
      *
-     * @return List of available time intervals.
+     * @return a string message of available time intervals.
      */
-    public ArrayList<TimeInterval> findFreeSlots() {
-        ArrayList<TimeInterval> operationTimeIntervals = constructOperationTimeIntervals();
-        ArrayList<TimeInterval> appointmentTimeIntervals = constructAppointmentTimeInterval();
+    public String findFreeSlots() {
+        TimeIntervalList operationTimeIntervals = constructOperationTimeIntervals();
+        TimeIntervalList appointmentTimeIntervals = constructAppointmentTimeInterval();
 
         annotateOperationTimeInterval(operationTimeIntervals);
         annotateAppointmentTime(appointmentTimeIntervals);
 
         queueAnnotatedPoints();
-        ArrayList<TimeInterval> availableTimeSlots = findNonOverlappingIntervals(annotatedPointList);
-        return clearZeroIntervals(availableTimeSlots);
-    }
-
-    /**
-     * Output the free time slots as a string message.
-     *
-     * @param freeTimeIntervals list of available time intervals.
-     * @return a string message of the free time slots.
-     */
-    public String outputAsString(ArrayList<TimeInterval> freeTimeIntervals) {
-        StringBuilder message = new StringBuilder();
-        for (TimeInterval freeTimeInterval : freeTimeIntervals) {
-            message.append(freeTimeInterval.toString()).append("\n");
-        }
-        return message.toString();
+        TimeIntervalList availableTimeSlots = findNonOverlappingIntervals(annotatedPointList);
+        return availableTimeSlots.clearZeroIntervals().toString();
     }
 }
