@@ -28,8 +28,17 @@ public class TimeInterval {
         return endTime;
     }
 
+    /**
+     * Check whether the interval is an empty interval.
+     *
+     * @return true if the start time is same as the end time and false otherwise.
+     */
+    public boolean isZeroInterval() {
+        return startTime.equals(endTime);
+    }
+
     @Override
     public String toString() {
-        return "(" + startTime + "," + endTime + ")";
+        return startTime + " to " + endTime;
     }
 }

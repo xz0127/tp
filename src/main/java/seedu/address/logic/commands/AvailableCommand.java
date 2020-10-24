@@ -23,7 +23,7 @@ public class AvailableCommand extends Command {
         + "Example: " + COMMAND_WORD + " "
         + PREFIX_DATE + "12-Apr-2021 ";
 
-    public static final String MESSAGE_SUCCESS = "Listing all available time slots";
+    public static final String MESSAGE_SUCCESS = "Listing all available time slots: \n";
 
     private final Predicate<Appointment> predicate;
 

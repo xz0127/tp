@@ -129,6 +129,18 @@ public class AppointmentBook implements ReadOnlyAppointmentBook {
         appointments.deleteAppointmentsWithPatients(target);
     }
 
+    // Scheduling operation
+
+    /**
+     * Finds the available time slots on a specific date based on the {@code appointmentList}.
+     *
+     * @param appointmentList the list of appointments on a specific date.
+     */
+    public String findAvailableTimeSlots(List<Appointment> appointmentList) {
+        requireNonNull(appointmentList);
+        return appointments.findAvailableTimeSlots(appointmentList);
+    }
+
     // util methods
 
     @Override
