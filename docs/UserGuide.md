@@ -147,13 +147,30 @@ Adds a remark to an existing patient in the patient book for nurses to store add
 
 Format: `remark INDEX r/REMARK`
 
-* Creates and adds a remark for the patient at the specified `INDEX`. The index refers to the index number shown in the displayed patient list. The index **must be a positive integer** 1, 2, 3, …​
-* A remark serves as an optional field for a patient and can be modified using the edit command after it has been created.
+<div markdown="span" class="alert alert-primary">:bulb: **Tip:**
+We implemented our Remarks feature with the hopes of empowering you with the ability to add extra information to a patient's bio data! 
+So don't be shy and feel free to add anything under the sun that you feel apt for the patient. :smile:
+</div>
 
-Examples:
+![result for 'Add remark'](images/addRemark.jpg)
+
+* Creates and **adds a remark** for the patient at the specified `INDEX`. The index here refers to the index number shown on the left side of the displayed patient list. 
+* Please note that the index used **must be a positive integer** 1, 2, 3, …​
+* A remark serves as an **optional field** for adding extra info to a patient's bio data and can be left blank if it is not applicable.  modified using the edit/remark command after it has been created.
+* A patient will have `NIL` displayed as his/her remark status if it was left empty.
+* To **override** a remark, simply use the remark/edit command as you would when creating the remark for the patient for the first time with the new remark content.
+* If you wish to **delete** the remark for a patient at a specific `INDEX`, simply enter either of the following commands:
+    * `remark INDEX`
+    * `remark INDEX r/`
+    ![result for 'Delete remark'](images/deleteRemark.jpg)
+
+Examples to add remarks:
 *  `remark 2 r/Has been visiting Dr John` Adds a remark `Has been visiting Dr John` to the patient currently displayed second from the top in the patient list.
 *  `remark 1 r/Can only converse in mandarin` Adds a remark `Can only converse in mandarin` to the patient currently displayed at the top of the patient list.
 
+Examples to delete the remark for a patient at `INDEX` 1:
+* `remark 1 r/`
+* `remark 1`
 
 ### Adding an appointment : `assign`
 
@@ -179,12 +196,37 @@ Deletes the specified appointment at the date and time indicated from the appoin
 Format `cancel d/DATE t/TIME`
 
 * Deletes the appointment at the specified `DATE` and `TIME`.
-* The `DATE` and `TIME` indicated must take place in the future.
+* The specified `DATE` and `TIME` indicated must take place in the future.
 * An appointment with the corresponding `DATE` and `TIME` must exist in the appointment book.
 
 Example:
 * `cancel d/02/12/2020 t/10am` deletes the appointment happening on 02/12/2020 10am.
 * `cancel 05-Nov-2020 t/1pm` deletes the appointment happening on 05/11/2020 1pm.
+
+### Reschedules and existing appointment for a patient : `change`
+
+Reschedules or modifies an existing appointment with a new date, time and duration.
+
+Format: `change INDEX d/DATE t/TIME dur/DURATION`
+
+<div markdown="span" class="alert alert-primary">:bulb: **Tip:**
+Do note that the duration used here is measured in minutes!
+</div>
+
+* Reschedules an appointment at the specified `INDEX` for the patient it is tagged to. 
+The index here refers to the index number shown on the left side of the displayed appointment list on the right side of the UI. 
+* Please note that the index used **must be a positive integer** 1, 2, 3, …
+* Please note that the `DATE` and `TIME` used for rescheduling must take place in the future.
+* If you wish to **modify** the duration of an existing appointment, simply call the command in the following format:
+    * `change 1 d/ORIGINAL_DATE t/ORIGINAL_TIME dur/NEW_DURATION` Extends the duration of the appointment at `INDEX` 1 to the new `DURATION` with the same date and start time.
+* If you wish to **reschedule** the appointment with new `DATE`/`TIME`:
+    * `change 1 d/NEW_DATE t/ORIGINAL_TIME dur/NEW_DURATION`
+    * `change 1 d/ORIGINAL_DATE t/NEW_TIME dur/NEW_DURATION`
+    * `change 1 d/NEW_DATE t/NEW_TIME dur/NEW_DURATION`
+
+Examples to reschedule appointments:
+*  `change 3 d/02-03-2021 t/1130 dur/30` Reschedules an appointment at INDEX 3 of the appointment list to 2nd March 2021, 11:30AM with a duration of 30 minutes with it's original patient.
+*  `remark 2 d/12-05-2021 t/1530 dur/60` Reschedules an appointment at INDEX 2 of the appointment list to 12th May 2021, 3:30PM with a duration of 1 hour with it's original patient.
 
 ### Listing upcoming appointments by date : `view`
 
@@ -264,9 +306,10 @@ Action | Format, Examples
 **Edit** | `edit INDEX [n/NAME] [p/PHONE_NUMBER] [i/NRIC] [a/ADDRESS] [t/TAG]…`<br> e.g.,`edit 2 n/James Lee a/College Avenue 8`
 **Find** | `find KEYWORD [MORE_KEYWORDS]`<br> e.g., `find James Jake`
 **List** | `list`
-**Remark** | `remark INDEX r/REMARK` e.g., `remark 2 r/Has been visiting Dr John`
+**Remark** | `remark INDEX [r/REMARK]` e.g., `remark 2 r/Has been visiting Dr John`, `remark 2`
 **Assign** | `assign INDEX d/DATE t/TIME`<br> e.g., `assign 3 d/tomorrow t/3pm`
 **Cancel** | `cancel d/DATE t/TIME`<br> e.g., `cancel d/today t/4pm`
+**Change** | 
 **View** | `view [d/DATE]`<br> e.g., `view d/today`
 **Done** | `done d/DATE t/TIME`<br> e.g., `done d/23-Aug t/10.30am`
 **Clear** | `clear`
