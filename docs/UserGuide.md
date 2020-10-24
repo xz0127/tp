@@ -10,7 +10,7 @@ Nuudle is a **desktop app for managing patient and clinic appointments, optimize
 
 --------------------------------------------------------------------------------------------------------------------
 
-## Quick start ( Coming Soon )
+## Quick start
 
 1. Ensure you have Java `11` or above installed in your Computer.
 
@@ -26,7 +26,7 @@ Nuudle is a **desktop app for managing patient and clinic appointments, optimize
 
    * **`list`** : Lists all patients.
 
-   * **`add`**`add n/John Doe i/S9730284G p/98765432 a/John street, block 123, #01-01` : Adds a patient named `John Doe` to the Patient Book.
+   * **`add`**` n/John Doe i/S9730284G p/98765432 a/John street, block 123, #01-01` : Adds a patient named `John Doe` to the Patient Book.
 
    * **`edit`**`1 n/Betsy Crower p/91234567 a/College Avenue 8` : Edits the name, phone number, and address of the 1st patient in the list to be `Betsy`, `91234567`, and `College Avenue 8` respectively.
 
@@ -124,10 +124,11 @@ Format: `find KEYWORD [MORE_KEYWORDS]`
 * Only full words will be matched e.g. `Han` will not match `Hans`
 * Patients matching at least one keyword will be returned (i.e. `OR` search).
   e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
+* The respective appointments of patients matching at least one keyword will also be returned. 
 
 Examples:
-* `find John` returns `john` and `John Doe`
-* `find alex david` returns `Alex Yeoh`, `David Li`<br>
+* `find John` returns `john` and `John Doe` and their respective appointments
+* `find alex david` returns `Alex Yeoh`, `David Li` and their respective appointments<br>
   ![result for 'find alex david'](images/findAlexDavidResult.png)
 
 ### Deleting a patient : `delete`
