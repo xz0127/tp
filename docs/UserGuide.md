@@ -151,9 +151,9 @@ Format: `remark INDEX [r/REMARK]`
 We implemented our Remarks feature with the hopes of empowering you with the ability to add extra information to a patient's bio data! 
 So don't be shy and feel free to add anything under the sun that you feel apt for the patient. :smile:
 </div>
-
+<br> 
 ![result for 'Add remark'](images/addRemark.jpg)
-
+<br>
 * Creates and **adds a remark** for the patient at the specified `INDEX`. The index here refers to the index number shown on the left side of the displayed patient list. 
 * Please note that the index used **must be a positive integer** 1, 2, 3, …​
 * A remark serves as an **optional field** for adding extra info to a patient's bio data and can be left blank if it is not applicable.  modified using the edit/remark command after it has been created.
@@ -162,8 +162,10 @@ So don't be shy and feel free to add anything under the sun that you feel apt fo
 * If you wish to **delete** the remark for a patient at a specific `INDEX`, simply enter either of the following commands:
     * `remark INDEX`
     * `remark INDEX r/`
-    ![result for 'Delete remark'](images/deleteRemark.jpg)
-
+    <br>
+    ![result for 'Delete remark'](images/deleteRemark.jpg) 
+    <br>
+    
 Examples to add remarks:
 *  `remark 2 r/Has been visiting Dr John` Adds a remark `Has been visiting Dr John` to the patient currently displayed second from the top in the patient list.
 *  `remark 1 r/Can only converse in mandarin` Adds a remark `Can only converse in mandarin` to the patient currently displayed at the top of the patient list.
@@ -309,7 +311,7 @@ Action | Format, Examples
 **Remark** | `remark INDEX [r/REMARK]` e.g., `remark 2 r/Has been visiting Dr John`, `remark 2`
 **Assign** | `assign INDEX d/DATE t/TIME`<br> e.g., `assign 3 d/tomorrow t/3pm`
 **Cancel** | `cancel d/DATE t/TIME`<br> e.g., `cancel d/today t/4pm`
-**Change** | 
+**Change** | `change INDEX d/DATE t/TIME dur/DURATION` <br> e.g., `change 3 d/02-03-2021 t/1130 dur/30`
 **View** | `view [d/DATE]`<br> e.g., `view d/today`
 **Done** | `done d/DATE t/TIME`<br> e.g., `done d/23-Aug t/10.30am`
 **Clear** | `clear`
