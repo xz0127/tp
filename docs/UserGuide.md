@@ -98,7 +98,7 @@ Format: `list`
 
 ### Editing a patient : `edit`
 
-Edits an existing patient in the patient book.
+Edits an existing patient in the patient book. Existing appointments which include the edited patient will be updated accordingly.
 
 Format: `edit INDEX [n/NAME] [i/NRIC] [p/PHONE_NUMBER] [a/ADDRESS] [t/TAG]…​`
 
@@ -107,6 +107,7 @@ Format: `edit INDEX [n/NAME] [i/NRIC] [p/PHONE_NUMBER] [a/ADDRESS] [t/TAG]…​
 * Existing values will be updated to the input values.
 * When editing tags, the existing tags of the patient will be removed i.e adding of tags is not cumulative.
 * You can remove all the patients' tags by typing `t/` without specifying any tags after it.
+* Existing appointments which include the edited patient will be updated accordingly.
 
 Examples:
 *  `edit 1 p/91234567 a/College Avenue 8` Edits the phone number and email address of the 1st patient to be `91234567` and `College Avenue 8` respectively.
