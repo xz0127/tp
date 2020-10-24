@@ -72,7 +72,6 @@ Shows a message explaining how to access the help page of Nuudle.
 
 Format: `help`
 
-![HelpCommand](images/HelpCommand.png)
 
 ### Adding a patient : `add`
 
