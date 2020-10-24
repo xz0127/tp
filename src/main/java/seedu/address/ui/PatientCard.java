@@ -52,7 +52,11 @@ public class PatientCard extends UiPart<Region> {
         id.setText(displayedIndex + ". ");
         name.setText(patient.getName().fullName);
         nric.setText("NRIC: " + patient.getNric().value);
-        remark.setText("Remark: " + patient.getRemark().value);
+        if (patient.getRemark().value.isEmpty()) {
+            remark.setText("Remark: NIL");
+        } else {
+            remark.setText("Remark: " + patient.getRemark().value);
+        }
         phone.setText("Phone: " + patient.getPhone().value);
         address.setText("Address: " + patient.getAddress().value);
         patient.getTags().stream()
