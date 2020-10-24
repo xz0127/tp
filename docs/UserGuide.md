@@ -188,8 +188,8 @@ Format `cancel d/DATE t/TIME`
 * An appointment with the corresponding `DATE` and `TIME` must exist in the appointment book.
 
 Example:
-* `cancel d/02/12/2020 t/10am` deletes the appointment happening on 02/12/2020 10am.
-* `cancel 05-Nov-2020 t/1pm` deletes the appointment happening on 05/11/2020 1pm.
+* `cancel d/02/12/2020 t/10am` deletes the appointment happening on 02/12/2020, 10am.
+* `cancel 05-Nov-2020 t/1pm` deletes the appointment happening on 05/11/2020, 1pm.
 
 ### Listing upcoming appointments by date : `view`
 
@@ -212,11 +212,12 @@ Marks a specific appointment in the patient book as done.
 Format: `done d/DATE t/TIME`
 
 * Marks the appointment with the specified `DATE` and `TIME` as done.
-* An appointment with the corresponding `DATE` and `TIME` must exist in the appointment book.
+* The appointment with the corresponding `DATE` and `TIME` must exist in the appointment book.
 
 Example:
-* `done d/02/12/2020 t/10am` marks the appointment happening on 02/12/2020 10am as completed.
-* `done 05-Nov-2020 t/1pm` marks the appointment happening on 05/11/2020 1pm as completed.
+* `done d/02/12/2020 t/10am` marks the appointment happening on 02/12/2020, 10am as completed.
+* `done d/05-Nov-2020 t/1pm` marks the appointment happening on 05/11/2020, 1pm as completed.
+![DoneCommand](images/DoneCommand.png)
 
 ### Clearing all appointment entries : `clear`
 
