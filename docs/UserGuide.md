@@ -145,7 +145,7 @@ Examples:
 
 Adds a remark to an existing patient in the patient book for nurses to store additional data unique to the patient.
 
-Format: `remark INDEX r/REMARK`
+Format: `remark INDEX [r/REMARK]`
 
 <div markdown="span" class="alert alert-primary">:bulb: **Tip:**
 We implemented our Remarks feature with the hopes of empowering you with the ability to add extra information to a patient's bio data! 
