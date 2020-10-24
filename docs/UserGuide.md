@@ -6,14 +6,14 @@ Welcome to Nuudle’s User Guide! :smiley: :ramen:
 
 Nuudle is a **desktop app that helps nurses manage patient records and schedule appointments** in an accurate and efficient manner.
 
-We hope that this document will help you in your journey in exploring the wonders of Nuudle app and redefine the way you schedule appointments for your patients. :smirk: To begin your journey, head down to our [Quick Start](#qu...) or explore the various [features](#...) that we offer. The document will provide you with all the necessary information you need to start your journey.
+We hope that this document will help you in your journey in exploring the wonders of Nuudle app and redefine the way you schedule appointments for your patients. :smirk: To begin your journey, head down to our [quick start](#quick-start) or explore the various [features](#features) that we offer. The document will provide you with all the necessary information you need to start your journey.
 
 * Table of Contents
 {:toc}
 
 --------------------------------------------------------------------------------------------------------------------
 
-## Quick start ( Coming Soon )
+## Quick start
 
 1. Ensure you have Java `11` or above installed in your Computer.
 
@@ -40,7 +40,7 @@ We hope that this document will help you in your journey in exploring the wonder
 
    * **`exit`** : Exits the app.
 
-1. Refer to the [Features](#features) below for details of each command.
+1. Refer to the [features](#features) below for details of each command.
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -197,7 +197,7 @@ Deletes the specified appointment at the date and time indicated from the appoin
 Format `cancel d/DATE t/TIME`
 
 * Deletes the appointment at the specified `DATE` and `TIME`.
-* The `DATE` and `TIME` indicated must take place in the future.
+* The `DATE` and `TIME` indicated must be in the future.
 * An appointment with the corresponding `DATE` and `TIME` must exist in the appointment book.
 
 Example:
