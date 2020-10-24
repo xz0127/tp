@@ -15,10 +15,10 @@ box Model MODEL_COLOR_T1
 participant ":Model" as Model MODEL_COLOR
 end box
 
-[-> LogicManager : execute("assign 1 d/tomorrow...")
+[-> LogicManager : execute()
 activate LogicManager
 
-LogicManager -> NuudleParser : parseCommand("assign 1 d/tomorrow...")
+LogicManager -> NuudleParser : parseCommand()
 activate NuudleParser
 
 create AssignCommandParser
@@ -28,7 +28,7 @@ activate AssignCommandParser
 AssignCommandParser --> NuudleParser
 deactivate AssignCommandParser
 
-NuudleParser -> AssignCommandParser : parse("1 d/tomorrow...")
+NuudleParser -> AssignCommandParser : parse()
 activate AssignCommandParser
 
 create AssignCommand
@@ -79,7 +79,7 @@ Model --> AssignCommand
 deactivate Model
 
 create CommandResult
-AssignCommand -> CommandResult: CommandResult(MESSAGE_SUCCESS)
+AssignCommand -> CommandResult: MESSAGE_SUCCESS
 activate CommandResult
 
 CommandResult --> AssignCommand

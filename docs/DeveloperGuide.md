@@ -115,6 +115,7 @@ e.g. the UI can be bound to these lists so that the UI automatically updates whe
 <div markdown="span" class="alert alert-info">:information_source: **Note:**
 An alternative (arguably, a more OOP) Patient model is given below. It has a `Tag` list in the `PatientBook`, which `Patient` references. This allows `PatientBook` to only require one `Tag` object per unique `Tag`, instead of each `Patient` needing their own `Tag` object.<br>
 
+
 ![BetterModelClassDiagram](images/BetterModelClassDiagram.png)
 
 </div>
@@ -213,7 +214,7 @@ The following class diagram showcases the relationship between the main classes 
 Here below is an example usage scenario and how the `assign` feature works at each step:
 1. User enters `assign 1 d/tomorrow...` into the app.
 
-2. The input is handled by the `LogicManage#execute(String)`, which then calls and passes the input to the `NuudleParser#parseCommand(String)` method.
+2. The input is handled by the `LogicManager#execute(String)`, which then calls and passes the input to the `NuudleParser#parseCommand(String)` method.
 
 3. `NuudleParser` finds out the command word `assign` in the user input and creates an `AssignCommandParser`to parse the input according to the format specified for `AssignCommand`.
 
