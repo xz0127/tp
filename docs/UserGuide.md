@@ -3,18 +3,18 @@ layout: page
 title: User Guide
 ---
 
-Nuudle is a **desktop app for managing patient records and clinic appointments, optimized for use via a Command Line Interface (CLI)** while still having the benefits of a Graphical User Interface (GUI). If you can type fast, Nuudle can get your patient and appointment scheduling tasks done faster than traditional GUI apps.
+Nuudle is a **desktop app for managing patient and clinic appointments, optimized for use via a Command Line Interface (CLI)** while still having the benefits of a Graphical User Interface (GUI). If you can type fast, Nuudle can get your patient and appointment scheduling tasks done faster than traditional GUI apps.
 
 * Table of Contents
 {:toc}
 
 --------------------------------------------------------------------------------------------------------------------
 
-## Quick start ( Coming Soon )
+## Quick start
 
 1. Ensure you have Java `11` or above installed in your Computer.
 
-1. Download the latest `nuudle.jar` from **here** ( Coming Soon ).
+1. Download the latest `nuudle.jar` from [here](https://github.com/ay2021s1-cs2103t-t12-4/tp/releases).
 
 1. Copy the file to the folder you want to use as the _home folder_ for Nuddle.
 
@@ -26,14 +26,17 @@ Nuudle is a **desktop app for managing patient records and clinic appointments, 
 
    * **`list`** : Lists all patients.
 
-   * **`add`**`add n/John Doe i/S9730284G p/98765432 a/John street, block 123, #01-01` : Adds a patient named `John Doe` to the Patient Book.
-
-   * **`delete`**`3` : Deletes the 3rd patient shown in the current list.
+   * **`add`**` n/John Doe i/S9730284G p/98765432 a/John street, block 123, #01-01` : Adds a patient named `John Doe` to the Patient Book.
 
    * **`edit`**`1 n/Betsy Crower p/91234567 a/College Avenue 8` : Edits the name, phone number, and address of the 1st patient in the list to be `Betsy`, `91234567`, and `College Avenue 8` respectively.
-   * **`find`**`alex david` : Returns `Alex Yeoh`, `David Li` if the two names are found in the list.
 
-   * **`clear`** : Deletes all patients.
+   * **`find`**`alex david` : Shows `Alex Yeoh` and `David Li` and their assigned appointments if the two names are found in the list.
+
+   * **`assign`**`1 d/tomorrow t/12.30pm dur/30` : Creates an appointment for the 1st patient in the list from 12.30pm to 1pm, tomorrow, if there are no other appointments in that time period.
+
+   * **`delete`**`d/tomorrow t/12.30pm` : Deletes the previously created appointment occurring at 12.30pm tomorrow.
+
+   * **`clear`** : Deletes all appointments.
 
    * **`exit`** : Exits the app.
 
@@ -76,10 +79,10 @@ Adds a patient to the patient book.
 Format: `add n/NAME i/NRIC p/PHONE_NUMBER a/ADDRESS [t/TAG]…​`
 
 <div markdown="span" class="alert alert-primary">:bulb: **Tip:**
-Tags are used to indicate a patient's underlying medical conditions. A patient can also have any number of tags (including 0).
+Tags are used to indicate a patient's underlying medical conditions. A patient can have any number of tags (including 0).
 </div>
 
-* Adds a patient with the specified details. 
+* Adds a patient with the specified details.
 * The following fields are compulsory and must be provided: `NAME, NRIC, PHONE_NUMBER, ADDRESS`.
 * It is optional to add `TAG`s for the patient. Tags can still be added with the edit command upon creating the patient entry in Nuudle.
 
@@ -121,10 +124,11 @@ Format: `find KEYWORD [MORE_KEYWORDS]`
 * Only full words will be matched e.g. `Han` will not match `Hans`
 * Patients matching at least one keyword will be returned (i.e. `OR` search).
   e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
+* The respective appointments of patients matching at least one keyword will also be returned. 
 
 Examples:
-* `find John` returns `john` and `John Doe`
-* `find alex david` returns `Alex Yeoh`, `David Li`<br>
+* `find John` returns `john` and `John Doe` and their respective appointments
+* `find alex david` returns `Alex Yeoh`, `David Li` and their respective appointments<br>
   ![result for 'find alex david'](images/findAlexDavidResult.png)
 
 ### Deleting a patient : `delete`
@@ -138,7 +142,7 @@ Format: `delete INDEX`
 * The index **must be a positive integer** 1, 2, 3, …​
 
 Examples:
-* `list` followed by `delete 2` deletes the 2nd patient in the patient book.
+* `list` followed by `delete 2` deletes the 2nd patient in the displayed patient list.
 * `find Betsy` followed by `delete 1` deletes the 1st patient in the results of the `find` command.
 
 ### Adding a remark for a patient : `remark`
@@ -159,18 +163,19 @@ Examples:
 
 Assign the specified patient into the specified appointment date and time.
 
-Format: `assign INDEX d/DATE t/TIME`
+Format: `assign INDEX d/DATE t/TIME [dur/DURATION]`
 
 * Puts the patient at the specified INDEX into an appointment time slot.
 * The INDEX refers to the index number indicated in the patient list.
 * The INDEX **must be a positive integer** 1, 2, 3, …​
 * The `DATE` and `TIME` of the appointment must be included.
-* The timeslot indicated by `DATE` and `TIME` must be available.
+* The 'DURATION' is measured in minutes and will be defaulted to 60 minutes if omitted.
+* The time slot indicated by `DATE` and `TIME` must be available.
 * The specified `DATE` and `TIME` must be in the future.
 
 Examples:
-* `assign 1 d/Sunday t/2am` books an appointment at the upcoming Sunday, 2am for the 1st patient in the list.
-* `assign 3 d/02-03-2021 t/1130` books an appointment on 02/03/2021, 11:30am for the 3rd patient in the list.
+* `assign 1 d/Sunday t/2am dur/40` books an appointment of 40 minutes on the upcoming Sunday, 2am for the 1st patient in the list.
+* `assign 3 d/02-03-2021 t/1130` books an appointment of 60 minutes on 02/03/2021, 11:30am for the 3rd patient in the list.
 
 ### Canceling an appointment : `cancel`
 
@@ -183,8 +188,8 @@ Format `cancel d/DATE t/TIME`
 * An appointment with the corresponding `DATE` and `TIME` must exist in the appointment book.
 
 Example:
-* `cancel d/02/12/2020 t/10am` deletes the appointment happening on 02/12/2020 10am.
-* `cancel 05-Nov-2020 t/1pm` deletes the appointment happening on 05/11/2020 1pm.
+* `cancel d/02/12/2020 t/10am` deletes the appointment happening on 02/12/2020, 10am.
+* `cancel 05-Nov-2020 t/1pm` deletes the appointment happening on 05/11/2020, 1pm.
 
 ### Listing upcoming appointments by date : `view`
 
@@ -207,11 +212,12 @@ Marks a specific appointment in the patient book as done.
 Format: `done d/DATE t/TIME`
 
 * Marks the appointment with the specified `DATE` and `TIME` as done.
-* An appointment with the corresponding `DATE` and `TIME` must exist in the appointment book.
+* The appointment with the corresponding `DATE` and `TIME` must exist in the appointment book.
 
 Example:
-* `done d/02/12/2020 t/10am` marks the appointment happening on 02/12/2020 10am as completed.
-* `done 05-Nov-2020 t/1pm` marks the appointment happening on 05/11/2020 1pm as completed.
+* `done d/02/12/2020 t/10am` marks the appointment happening on 02/12/2020, 10am as completed.
+* `done d/05-Nov-2020 t/1pm` marks the appointment happening on 05/11/2020, 1pm as completed.
+![DoneCommand](images/DoneCommand.png)
 
 ### Clearing all appointment entries : `clear`
 
@@ -229,9 +235,10 @@ Format: `exit`
 
 Patients and appointments data are saved in the hard disk automatically after any command that changes the data. There is no need to save manually.
 
-### Archiving data files `[coming in v2.0]`
+### Archiving data files
 
-Upon starting up the app, past appointments will be automatically archived and saved into separate files. The data files are organised by months for future references.
+Upon starting up the app, past appointments will be automatically archived according to their months and saved into separate files.
+The files are saved in Comma-Separated Values (CSV) format and can be opened as an Excel file.
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -247,12 +254,13 @@ Date Formats | Time Formats | Natural Date | Natural Time
 :---------------:|:----------------:|:----------------:|:----------------:
 02/12/2020 | 2300 | Today | Morning (8AM)
 02-12-2020 | 11:00PM | Tomorrow | Noon (12PM)
-12/02/2020 | 11PM | Yesterday | Evening (7PM)
-12-02-2020 | | Upcoming day<br>of the week | Night (10PM)
+12/02/2020 | 11.00PM | Yesterday | Evening (7PM)
+12-02-2020 | 11PM | Upcoming day<br>of the week | Night (10PM)
 2020/12/02 | | | Midnight (11:59PM)
 2020-12-02 |
-02-Dec-2020 | 
+02-Dec-2020 |
 02-December-2020 |
+
 --------------------------------------------------------------------------------------------------------------------
 
 ## Command summary
@@ -265,7 +273,7 @@ Action | Format, Examples
 **Find** | `find KEYWORD [MORE_KEYWORDS]`<br> e.g., `find James Jake`
 **List** | `list`
 **Remark** | `remark INDEX r/REMARK` e.g., `remark 2 r/Has been visiting Dr John`
-**Assign** | `assign INDEX d/DATE t/TIME`<br> e.g., `assign 3 d/tomorrow t/3pm`
+**Assign** | `assign INDEX d/DATE t/TIME [dur/DURATION]`<br> e.g., `assign 3 d/tomorrow t/3pm dur/30`
 **Cancel** | `cancel d/DATE t/TIME`<br> e.g., `cancel d/today t/4pm`
 **View** | `view [d/DATE]`<br> e.g., `view d/today`
 **Done** | `done d/DATE t/TIME`<br> e.g., `done d/23-Aug t/10.30am`
