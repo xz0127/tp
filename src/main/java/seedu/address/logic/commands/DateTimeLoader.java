@@ -16,7 +16,7 @@ public class DateTimeLoader {
     public DateTimeLoader() {}
 
     /**
-     * Copy constructor.
+     * Copies constructor.
      */
     public DateTimeLoader(DateTimeLoader toCopy) {
         setAppointmentDate(toCopy.date);
@@ -24,28 +24,28 @@ public class DateTimeLoader {
     }
 
     /**
-     * Sets {@code date} of this AssignAppointmentBuilder object.
+     * Sets {@code Date} of this {@code DateTimeBuilder} object.
      */
     public void setAppointmentDate(Date date) {
         this.date = date;
     }
 
     /**
-     * Gets {@code date} of this AssignAppointmentBuilder object.
+     * Gets {@code Date} of this {@code DateTimeBuilder} object.
      */
     public Optional<Date> getDate() {
         return Optional.ofNullable(date);
     }
 
     /**
-     * Sets {@code time} of this AssignAppointmentBuilder object.
+     * Sets {@code Time} of this {@code DateTimeBuilder} object.
      */
     public void setAppointmentTime(Time time) {
         this.time = time;
     }
 
     /**
-     * Gets {@code time} of this AssignAppointmentBuilder object.
+     * Gets {@code Time} of this {@code DateTimeBuilder} object.
      */
     public Optional<Time> getTime() {
         return Optional.ofNullable(time);

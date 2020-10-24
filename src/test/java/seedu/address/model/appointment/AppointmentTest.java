@@ -266,6 +266,44 @@ public class AppointmentTest {
     }
 
     @Test
+    public void isInSameWeek() {
+        // null check
+        assertThrows(NullPointerException.class, () -> ALICE_APPOINTMENT.isInSameWeek(null));
+
+        // same object -> returns true
+        assertTrue(ALICE_APPOINTMENT.isInSameWeek(ALICE_APPOINTMENT.getDate()));
+
+        // earlier date -> returns true
+        Appointment editedOne = new AppointmentBuilder(ALICE_APPOINTMENT)
+                .withDate(ALICE_APPOINTMENT.getDate().getDate().minusDays(1))
+                .build();
+        assertTrue(ALICE_APPOINTMENT.isInSameWeek(editedOne.getDate()));
+
+        // earlier start time, same date (not overlapping) -> returns true
+        editedOne = new AppointmentBuilder(ALICE_APPOINTMENT)
+                .withTime(ALICE_APPOINTMENT.getStartTime().getTime().minusHours(1))
+                .build();
+        assertTrue(ALICE_APPOINTMENT.isInSameWeek(editedOne.getDate()));
+
+        // earlier start time, same date (overlapping) -> returns true
+        editedOne = new AppointmentBuilder(ALICE_APPOINTMENT)
+                .withTime(ALICE_APPOINTMENT.getStartTime().getTime().minusMinutes(30))
+                .build();
+        assertTrue(ALICE_APPOINTMENT.isInSameWeek(editedOne.getDate()));
+
+        // earlier date -> returns false
+        editedOne = new AppointmentBuilder(ALICE_APPOINTMENT)
+                .withDate(ALICE_APPOINTMENT.getDate().getDate().plusDays(2))
+                .build();
+        assertFalse(ALICE_APPOINTMENT.isInSameWeek(editedOne.getDate()));
+
+        // earlier date -> returns true
+        editedOne = new AppointmentBuilder(ALICE_APPOINTMENT)
+                .withDate(ALICE_APPOINTMENT.getDate().getDate().plusDays(1))
+                .build();
+        assertTrue(ALICE_APPOINTMENT.isInSameWeek(editedOne.getDate()));
+    }
+    @Test
     public void equals() {
         // same values -> returns true
         Appointment appointmentOneCopy = new AppointmentBuilder(ALICE_APPOINTMENT).build();

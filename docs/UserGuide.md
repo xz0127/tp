@@ -31,7 +31,6 @@ Nuudle is a **desktop app for managing patient records and clinic appointments, 
    * **`delete`**`3` : Deletes the 3rd patient shown in the current list.
 
    * **`edit`**`1 n/Betsy Crower p/91234567 a/College Avenue 8` : Edits the name, phone number, and address of the 1st patient in the list to be `Betsy`, `91234567`, and `College Avenue 8` respectively.
-   
    * **`find`**`alex david` : Returns `Alex Yeoh`, `David Li` if the two names are found in the list.
 
    * **`clear`** : Deletes all patients.
@@ -160,18 +159,19 @@ Examples:
 
 Assign the specified patient into the specified appointment date and time.
 
-Format: `assign INDEX d/DATE t/TIME`
+Format: `assign INDEX d/DATE t/TIME [dur/DURATION]`
 
 * Puts the patient at the specified INDEX into an appointment time slot.
 * The INDEX refers to the index number indicated in the patient list.
 * The INDEX **must be a positive integer** 1, 2, 3, …​
 * The `DATE` and `TIME` of the appointment must be included.
-* The timeslot indicated by `DATE` and `TIME` must be available.
+* The 'DURATION' is measured in minutes and will be defaulted to 60 minutes if omitted.
+* The time slot indicated by `DATE` and `TIME` must be available.
 * The specified `DATE` and `TIME` must be in the future.
 
 Examples:
-* `assign 1 d/Sunday t/2am` books an appointment at the upcoming Sunday, 2am for the 1st patient in the list.
-* `assign 3 d/02-03-2021 t/1130` books an appointment on 02/03/2021, 11:30am for the 3rd patient in the list.
+* `assign 1 d/Sunday t/2am dur/40` books an appointment of 40 minutes on the upcoming Sunday, 2am for the 1st patient in the list.
+* `assign 3 d/02-03-2021 t/1130` books an appointment of 60 minutes on 02/03/2021, 11:30am for the 3rd patient in the list.
 
 ### Canceling an appointment : `cancel`
 
@@ -253,9 +253,7 @@ Date Formats | Time Formats | Natural Date | Natural Time
 2020/12/02 | | | Midnight (11:59PM)
 2020-12-02 |
 02-Dec-2020 | 
-02-December-2020 | 
-
-
+02-December-2020 |
 --------------------------------------------------------------------------------------------------------------------
 
 ## Command summary
@@ -268,7 +266,7 @@ Action | Format, Examples
 **Find** | `find KEYWORD [MORE_KEYWORDS]`<br> e.g., `find James Jake`
 **List** | `list`
 **Remark** | `remark INDEX r/REMARK` e.g., `remark 2 r/Has been visiting Dr John`
-**Assign** | `assign INDEX d/DATE t/TIME`<br> e.g., `assign 3 d/tomorrow t/3pm`
+**Assign** | `assign INDEX d/DATE t/TIME [dur/DURATION]`<br> e.g., `assign 3 d/tomorrow t/3pm dur/30`
 **Cancel** | `cancel d/DATE t/TIME`<br> e.g., `cancel d/today t/4pm`
 **View** | `view [d/DATE]`<br> e.g., `view d/today`
 **Done** | `done d/DATE t/TIME`<br> e.g., `done d/23-Aug t/10.30am`
