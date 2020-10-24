@@ -138,6 +138,8 @@ Classes used by multiple components are in the `seedu.patientbook.commons` packa
 This section describes some noteworthy details on how certain features are implemented.
 
 ### 1. Done feature
+`[written by: Yang Yue]`
+
 The mark done feature allows users to mark a specific appointment in the address book as done using `d/` tag and `t/` tag to specify the appointment at a certain time slot.
 #### 1.1 Implementation
 Command: `done d/DATE t/TIME`
@@ -162,7 +164,7 @@ The following is an example usage scenario on how the mark as done mechanism wor
 
 5. The `DoneCommandParser` creates a new `DoneCommand` instance with the newly created `DateTimeLoader` object and returns it to `NuudleParser`, which in turn returns it to `LogicManager`.
 
-6. `LogicManager` calls the `DoneCommand#execute(model)` method.
+6. `LogicManager` calls the `DoneCommand#execute(Model)` method.
 
 7. `DoneCommand` obtains a copy of the `FilteredAppointmentList` by calling the `Model#getFilteredAppointmentList()` method. 
 
@@ -171,7 +173,7 @@ The following is an example usage scenario on how the mark as done mechanism wor
 
 9. `DoneCommand` creates another instance of this appointment `doneAppointment` which has a `done` status. 
 
-10. `DoneCommand` replaces the `toMark` with the `doneAppointment` by calling the `Model#setAppointment(target, editedAppointment)`.
+10. `DoneCommand` replaces the `toMark` with the `doneAppointment` by calling the `Model#setAppointment(Appointment, Appointment)`.
 
 11. Lastly, `DoneCommand` creates a `CommandResult` with a `SuccessMessage` and returns it to `LogicManager`.
 
