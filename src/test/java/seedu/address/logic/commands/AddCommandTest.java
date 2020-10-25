@@ -213,6 +213,56 @@ public class AddCommandTest {
         public ObservableList<Appointment> getFilteredAppointmentList() {
             return null;
         }
+
+        @Override
+        public boolean canUndoAppointmentBook() {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public boolean canUndoPatientBook() {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public boolean canRedoAppointmentBook() {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public boolean canRedoPatientBook() {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public void undoAppointmentBook() {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public void undoPatientBook() {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public void redoAppointmentBook() {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public void redoPatientBook() {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public void commitAppointmentBook() {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public void commitPatientBook() {
+            throw new AssertionError("This method should not be called.");
+        }
     }
 
     /**
@@ -249,6 +299,16 @@ public class AddCommandTest {
         public void addPatient(Patient patient) {
             requireNonNull(patient);
             patientsAdded.add(patient);
+        }
+
+        @Override
+        public void commitAppointmentBook() {
+            // called by {@code AddCommand#execute()}
+        }
+
+        @Override
+        public void commitPatientBook() {
+            // called by {@code AddCommand#execute()}
         }
 
         @Override

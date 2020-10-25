@@ -67,6 +67,8 @@ public class DoneCommand extends Command {
         Appointment doneAppointment = toMark.markAsDone();
 
         model.setAppointment(toMark, doneAppointment);
+        model.commitPatientBook();
+        model.commitAppointmentBook();
         return new CommandResult(String.format(MESSAGE_MARK_DONE_SUCCESS, toMark));
     }
 

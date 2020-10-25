@@ -36,7 +36,8 @@ public class DoneCommandTest {
         ModelManager expectedModel = new ModelManager(model.getPatientBook(),
                 model.getAppointmentBook(), new UserPrefs());
         expectedModel.setAppointment(appointmentToMark, markedAppointment);
-
+        expectedModel.commitPatientBook();
+        expectedModel.commitAppointmentBook();
         assertCommandSuccess(doneCommand, model, expectedMessage, expectedModel);
     }
 
