@@ -3,6 +3,8 @@ package seedu.address.storage;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static seedu.address.testutil.Assert.assertThrows;
+import static seedu.address.testutil.TypicalAppointments.ALICE_APPOINTMENT;
+import static seedu.address.testutil.TypicalAppointments.CARL_APPOINTMENT_2;
 import static seedu.address.testutil.TypicalAppointments.HOON_APPOINTMENT;
 import static seedu.address.testutil.TypicalAppointments.IDA_APPOINTMENT;
 import static seedu.address.testutil.TypicalAppointments.getTypicalAppointmentBook;
@@ -10,6 +12,7 @@ import static seedu.address.testutil.TypicalAppointments.getTypicalAppointmentBo
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.time.LocalTime;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
@@ -17,6 +20,8 @@ import org.junit.jupiter.api.io.TempDir;
 import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.model.AppointmentBook;
 import seedu.address.model.ReadOnlyAppointmentBook;
+import seedu.address.model.appointment.Appointment;
+import seedu.address.testutil.AppointmentBuilder;
 
 public class JsonAppointmentBookStorageTest {
     private static final Path TEST_DATA_FOLDER = Paths.get("src",
@@ -41,18 +46,31 @@ public class JsonAppointmentBookStorageTest {
     }
 
     @Test
-    public void readAppointmentBook_invalidAppointmentBook_throwDataConversionException() {
-        assertThrows(DataConversionException.class, () -> readAppointmentBook("invalidAppointmentBook.json"));
+    public void readAppointmentBook_allInvalidAppointmentBook_returnEmptyBook() throws Exception {
+        ReadOnlyAppointmentBook bookFromFile = readAppointmentBook("invalidAppointmentBook.json").get();
+        assertEquals(bookFromFile, new AppointmentBook());
     }
 
     @Test
-    public void readAppointmentBook_invalidAndValidAppointmentBook_throwDataConversionException() {
-        assertThrows(DataConversionException.class, () -> readAppointmentBook("invalidAndValidAppointmentBook.json"));
+    public void readAppointmentBook_invalidAndValidAppointmentBook_returnUncorruptedValidBook() throws Exception {
+        ReadOnlyAppointmentBook bookFromFile = readAppointmentBook("invalidAndValidAppointmentBook.json").get();
+
+        AppointmentBook expectedBook = new AppointmentBook();
+        expectedBook.addAppointment(CARL_APPOINTMENT_2);
+
+        assertEquals(bookFromFile, expectedBook);
     }
 
     @Test
-    public void readAppointmentBook_overlappingAppointmentBook_throwDataConversionException() {
-        assertThrows(DataConversionException.class, () -> readAppointmentBook("overlappingAppointmentBook.json"));
+    public void readAppointmentBook_overlappingAppointmentBook_returnBookWithFirstOverlapped() throws Exception {
+        ReadOnlyAppointmentBook bookFromFile = readAppointmentBook("overlappingAppointmentBook.json").get();
+
+        AppointmentBook expectedBook = new AppointmentBook();
+        Appointment firstAppointment = new AppointmentBuilder(ALICE_APPOINTMENT)
+                .withTime(LocalTime.of(10, 0)).build();
+        expectedBook.addAppointment(firstAppointment);
+
+        assertEquals(bookFromFile, expectedBook);
     }
 
     @Test

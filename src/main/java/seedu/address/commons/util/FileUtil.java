@@ -91,6 +91,13 @@ public class FileUtil {
         Files.copy(from, to, StandardCopyOption.REPLACE_EXISTING, StandardCopyOption.COPY_ATTRIBUTES);
     }
 
+    /**
+     * Creates a backup of the indicated file in a nested folder of the same directory.
+     * The created backup file will have the same name as the original file.
+     *
+     * @param folderName the name of the backup folder.
+     * @param filePath   the file to create a backup of.
+     */
     public static void backupFileToFolder(Path filePath, String folderName) throws IOException {
         Path backupFilePath;
         if (filePath.getNameCount() == 1) {

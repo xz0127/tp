@@ -4,6 +4,9 @@ package seedu.address.model;
  * Collects related statistics of appointment book.
  */
 public class AppointmentStatistics {
+
+    public static final String STATISTICS_MESSAGE = "Today: %d upcoming | %d done\nThis Week: %d upcoming | %d done";
+
     private int numOfDoneApptInToday;
     private int numOfUpcomingApptInToday;
     private int numOfDoneApptInThisWeek;
@@ -51,10 +54,8 @@ public class AppointmentStatistics {
 
     @Override
     public String toString() {
-        return "Today: " + getNumOfUpcomingApptInToday()
-                + " upcoming  |  " + getNumOfDoneApptInToday() + " done \n"
-                + "This Week: " + getNumOfUpcomingApptInThisWeek()
-                + " upcoming  |  " + getNumOfDoneApptInThisWeek() + " done";
+        return String.format(STATISTICS_MESSAGE, getNumOfUpcomingApptInToday(), getNumOfDoneApptInToday(),
+                getNumOfUpcomingApptInThisWeek(), getNumOfDoneApptInThisWeek());
     }
 
     @Override
