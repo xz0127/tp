@@ -265,8 +265,8 @@ Shows a list of all upcoming appointments entries or only the list of upcoming a
 Format `view [d/DATE]`
 
 * Outputs the list of all upcoming appointments happening on the specified date in chronological order.
-* `DATE` must be in the future.
-* If `DATE` is not included, outputs the list of all upcoming appointments in chronological order.
+* The specified `DATE` must be in the future.
+* If `DATE` is not specified, `view` will outputs the list of **all** upcoming appointments in chronological order.
 
 Example:
 * `view` shows the list of all upcoming appointments in chronological order.
@@ -290,18 +290,16 @@ Example:
 
 ### Listing available time slots by date : `avail`
 
-Shows a list of all available(free) time slots within the operation time of the clinic on a specified date.
+Shows a list of all available (free) time slots within the operation time of the clinic on a specified date.
 
 Format: `avail d/DATE`
 
-* Outputs the list of all available time slots within the operation time of the clinic on a specified date based on the chronological order.
-* DATE must be today or in the future.
+* Outputs the list of all available time slots within the operation time of the clinic on a specified date in chronological order.
+* `DATE` must be today or in the future.
 
 Example:
-* `avail d/4-Aug-2020` shows the list of all available(free) time slots within the operation time of the clinic on 04/08/2020.
+* `avail d/4-Aug-2020` shows the list of all available (free) time slots within the operation time of the clinic on 04/08/2020.
 ![AvailableCommand](images/AvailableCommand.png)
-
-![DoneCommand](images/DoneCommand.png)
 
 ### Clearing all appointment entries : `clear`
 
@@ -356,7 +354,7 @@ Action | Format, Examples
 **Edit** | `edit INDEX [n/NAME] [p/PHONE_NUMBER] [i/NRIC] [a/ADDRESS] [t/TAG]…`<br> e.g.,`edit 2 n/James Lee a/College Avenue 8`
 **Find** | `find KEYWORD [MORE_KEYWORDS]`<br> e.g., `find James Jake`
 **List** | `list`
-**Remark** | `remark INDEX [r/REMARK]` e.g., `remark 2 r/Has been visiting Dr John`, `remark 2`
+**Remark** | `remark INDEX [r/REMARK]`<br> e.g., `remark 2 r/Has been visiting Dr John`, `remark 2`
 **Assign** | `assign INDEX d/DATE t/TIME`<br> e.g., `assign 3 d/tomorrow t/3pm`
 **Cancel** | `cancel d/DATE t/TIME`<br> e.g., `cancel d/today t/4pm`
 **Change** | `change INDEX d/DATE t/TIME dur/DURATION` <br> e.g., `change 3 d/02-03-2021 t/1130 dur/30`
