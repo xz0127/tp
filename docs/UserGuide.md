@@ -156,7 +156,7 @@ So don't be shy and feel free to add anything under the sun that you feel apt fo
 <br>
 * Creates and **adds a remark** for the patient at the specified `INDEX`. The index here refers to the index number shown on the left side of the displayed patient list. 
 * Please note that the index used **must be a positive integer** 1, 2, 3, …​
-* A remark serves as an **optional field** for adding extra info to a patient's bio data and can be left blank if it is not applicable.  modified using the edit/remark command after it has been created.
+* A remark serves as an **optional field** for adding extra info to a patient's bio data and can be left blank if it is not applicable.
 * A patient will have `NIL` displayed as his/her remark status if it was left empty.
 * To **override** a remark, simply use the remark/edit command as you would when creating the remark for the patient for the first time with the new remark content.
 * If you wish to **delete** the remark for a patient at a specific `INDEX`, simply enter either of the following commands:
