@@ -1,0 +1,16 @@
+@startuml
+start
+:User executes command;
+:Check input;
+if() then ([user input is valid])
+    :Create done command;
+    :Find the appointment to mark
+     in the appointment book;
+    :Replace it by the appointment
+     marked as done;
+    :Show success message to user;
+else([user input is invalid])
+    :Show error message to user;
+endif
+stop
+@enduml

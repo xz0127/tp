@@ -1,0 +1,54 @@
+@startuml
+!include style.puml
+
+box Ui UI_COLOR_T1
+participant ":UiManager" as UiManager UI_COLOR_T3
+participant ":MainWindow" as MainWindow UI_COLOR_T3
+participant ":ResultDisplay" as ResultDisplay UI_COLOR_T3
+end box
+
+box Logic LOGIC_COLOR_T1
+participant ":LogicManager" as LogicManager LOGIC_COLOR_T3
+end box
+
+box Storage STORAGE_COLOR_T1
+participant ":StorageManager" as StorageManager STORAGE_COLOR_T3
+end box
+
+[-> UiManager : start()
+activate UiManager
+create MainWindow
+
+UiManager -> MainWindow : new
+activate MainWindow
+
+MainWindow -[hidden]-> UiManager
+deactivate MainWindow
+
+UiManager -> MainWindow : fillInnerParts()
+activate MainWindow
+
+MainWindow -> LogicManager : getArchiveStatus()
+activate LogicManager
+
+LogicManager -> StorageManager : getArchiveStatus()
+activate StorageManager
+
+StorageManager --> LogicManager : message
+deactivate StorageManager
+
+LogicManager --> MainWindow : message
+deactivate LogicManager
+
+MainWindow -> ResultDisplay : setFeedbackToUser(message)
+activate ResultDisplay
+
+ResultDisplay --> MainWindow
+deactivate ResultDisplay
+
+MainWindow --> UiManager
+deactivate MainWindow
+
+UiManager -->[
+deactivate UiManager
+@enduml
