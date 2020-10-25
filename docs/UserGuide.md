@@ -98,7 +98,7 @@ Format: `list`
 
 ### Editing a patient : `edit`
 
-Edits an existing patient in the patient book.
+Edits an existing patient in the patient book. Existing appointments which include the edited patient will be updated accordingly.
 
 Format: `edit INDEX [n/NAME] [i/NRIC] [p/PHONE_NUMBER] [a/ADDRESS] [t/TAG]…​`
 
@@ -107,6 +107,7 @@ Format: `edit INDEX [n/NAME] [i/NRIC] [p/PHONE_NUMBER] [a/ADDRESS] [t/TAG]…​
 * Existing values will be updated to the input values.
 * When editing tags, the existing tags of the patient will be removed i.e adding of tags is not cumulative.
 * You can remove all the patients' tags by typing `t/` without specifying any tags after it.
+* Existing appointments which include the edited patient will be updated accordingly.
 
 Examples:
 *  `edit 1 p/91234567 a/College Avenue 8` Edits the phone number and email address of the 1st patient to be `91234567` and `College Avenue 8` respectively.
@@ -205,7 +206,7 @@ Example:
 * `view` shows the list of all upcoming appointments in chronological order.
 * `view d/4-Aug-2020` shows the list of appointments happening on 04/08/2020.
 
-### Mark an appointment as done : `done`
+### Marking an appointment as done : `done`
 
 Marks a specific appointment in the patient book as done.
 
@@ -218,6 +219,19 @@ Example:
 * `done d/02/12/2020 t/10am` marks the appointment happening on 02/12/2020, 10am as completed.
 * `done d/05-Nov-2020 t/1pm` marks the appointment happening on 05/11/2020, 1pm as completed.
 ![DoneCommand](images/DoneCommand.png)
+
+### Listing available time slots by date : `avail`
+
+Shows a list of all available(free) time slots within the operation time of the clinic on a specified date.
+
+Format: `avail d/DATE`
+
+* Outputs the list of all available time slots within the operation time of the clinic on a specified date based on the chronological order.
+* DATE must be today or in the future.
+
+Example:
+* `avail d/4-Aug-2020` shows the list of all available(free) time slots within the operation time of the clinic on 04/08/2020.
+![AvailableCommand](images/AvailableCommand.png)
 
 ### Clearing all appointment entries : `clear`
 
@@ -277,6 +291,7 @@ Action | Format, Examples
 **Cancel** | `cancel d/DATE t/TIME`<br> e.g., `cancel d/today t/4pm`
 **View** | `view [d/DATE]`<br> e.g., `view d/today`
 **Done** | `done d/DATE t/TIME`<br> e.g., `done d/23-Aug t/10.30am`
+**Available** | `avail d/DATE`<br> e.g., `avail d/12-Apr-2021`
 **Clear** | `clear`
 **Help** | `help`
 **Exit** | `exit`
