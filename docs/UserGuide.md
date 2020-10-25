@@ -317,10 +317,9 @@ Format: `exit`
 
 Patients and appointments data are saved in the hard disk automatically after any command that changes the data. There is no need to save manually.
 
-### Archiving data files
+### Archiving past appointments
 
-Upon starting up the app, past appointments will be automatically archived according to their months and saved into separate files.
-The files are saved in Comma-Separated Values (CSV) format and can be opened as an Excel file.
+Past appointments are automatically archived and neatly organised in an archive folder for future reference. This is done automatically everytime you start up the Nuudle app. The appointments are organised by their appointment months and are saved in Comma-Separated Values (CSV) format. CSV files can be opened and viewed as a typical Excel file.
 
 --------------------------------------------------------------------------------------------------------------------
 
