@@ -77,6 +77,10 @@ public class Appointment {
         return endTime;
     }
 
+    public Duration getDuration() {
+        return Duration.between(startTime.getTime(), endTime.getTime());
+    }
+
     public AppointmentId getAppointmentId() {
         return appointmentId;
     }
@@ -168,6 +172,18 @@ public class Appointment {
         return getDate().isAfter(otherAppointment.getDate())
                 || (getDate().equals(otherAppointment.getDate())
                     && !(otherAppointment.getEndTime().isAfter(getStartTime()))); // End2 <= Start1
+    }
+
+    /**
+     * Checks if this appointment is in the same week to week of the given date.
+     *
+     * @param date the given date to check against.
+     * @return true if this appointment is in the same week of the given date, false otherwise.
+     */
+    public boolean isInSameWeek(Date date) {
+        requireNonNull(date);
+
+        return getDate().isInSameWeek(date);
     }
 
     /**

@@ -1,6 +1,7 @@
 # Nuudle :ramen:
 
 [![CI Status](https://github.com/AY2021S1-CS2103T-T12-4/tp/workflows/Java%20CI/badge.svg)](https://github.com/AY2021S1-CS2103T-T12-4/tp/actions)
+[![CodeCov](https://codecov.io/gh/AY2021S1-CS2103T-T12-4/tp/branch/master/graph/badge.svg)](https://codecov.io/gh/AY2021S1-CS2103T-T12-4/tp)
 
 ![Ui](docs/images/Ui.png)
 

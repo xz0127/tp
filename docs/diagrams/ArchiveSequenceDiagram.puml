@@ -1,0 +1,62 @@
+@startuml
+!include style.puml
+
+box Storage STORAGE_COLOR_T1
+participant ":StorageManager" as Storage STORAGE_COLOR_T3
+participant ":JsonAppointmentBookStorage" as AppointmentBookStorage STORAGE_COLOR_T3
+participant ":CsvAppointmentArchive" as AppointmentArchive STORAGE_COLOR_T3
+participant ":CsvAdaptedAppointment" as CsvAdaptedAppointment STORAGE_COLOR_T3
+end box
+
+[-> Storage : readAppointmentBook()
+activate Storage
+
+Storage -> AppointmentBookStorage : readAppointmentBook(filePath)
+activate AppointmentBookStorage
+
+AppointmentBookStorage --> Storage
+deactivate AppointmentBookStorage
+
+Storage -->[ : optionalAb
+deactivate Storage
+
+[-> Storage : archivePastAppointments(ab)
+activate Storage
+
+Storage -> AppointmentBookStorage : archivePastAppointments(ab)
+activate AppointmentBookStorage
+
+AppointmentBookStorage -> AppointmentArchive : archivePastAppointments(ab)
+activate AppointmentArchive
+
+loop for all Appointments in ab
+    alt appointment is before today's date
+        create CsvAdaptedAppointment
+        AppointmentArchive -> CsvAdaptedAppointment : new
+        activate CsvAdaptedAppointment
+
+        CsvAdaptedAppointment --> AppointmentArchive
+        deactivate CsvAdaptedAppointment
+    end
+
+    opt different appointment month
+        AppointmentArchive -> AppointmentArchive : saveAppointments()
+        activate AppointmentArchive
+        deactivate AppointmentArchive
+    end
+end
+
+AppointmentArchive -> AppointmentArchive : saveAppointments()
+activate AppointmentArchive
+deactivate AppointmentArchive
+
+AppointmentArchive --> AppointmentBookStorage : upcomingAppointmentBook
+deactivate AppointmentArchive
+
+AppointmentBookStorage --> Storage : upcomingAppointmentBook
+deactivate AppointmentBookStorage
+
+Storage -->[ : upcomingAppointmentBook
+deactivate Storage
+
+@enduml

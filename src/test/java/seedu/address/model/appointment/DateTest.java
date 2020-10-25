@@ -66,6 +66,22 @@ public class DateTest {
     }
 
     @Test
+    public void isInSameWeek() {
+        Date testDate = new Date(2020, 10, 19);
+
+        // date is after input --> true
+        assertTrue(testDate.isInSameWeek(new Date(2020, 10, 19)));
+        assertTrue(testDate.isInSameWeek(new Date(2020, 10, 25)));
+
+
+        // date is before input --> false
+        assertFalse(testDate.isInSameWeek(new Date(2020, 7, 6)));
+        assertFalse(testDate.isInSameWeek(new Date(2020, 6, 7)));
+        assertFalse(testDate.isInSameWeek(new Date(2020, 10, 18)));
+        assertFalse(testDate.isInSameWeek(new Date(2020, 10, 26)));
+    }
+
+    @Test
     public void equals() {
         Date dateTest = new Date(2020, 10, 10);
 

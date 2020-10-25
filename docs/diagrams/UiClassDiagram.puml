@@ -11,8 +11,11 @@ Class UiManager
 Class MainWindow
 Class HelpWindow
 Class ResultDisplay
-Class PersonListPanel
-Class PersonCard
+Class StatisticsDisplay
+Class PatientListPanel
+Class AppointmentListPanel
+Class AppointmentCard
+Class PatientCard
 Class StatusBarFooter
 Class CommandBox
 }
@@ -32,28 +35,38 @@ UiManager .left.|> Ui
 UiManager -down-> MainWindow
 MainWindow --> HelpWindow
 MainWindow *-down-> CommandBox
+MainWindow *-down-> StatisticsDisplay
 MainWindow *-down-> ResultDisplay
-MainWindow *-down-> PersonListPanel
+MainWindow *-down-> PatientListPanel
+MainWindow *-down-> AppointmentListPanel
 MainWindow *-down-> StatusBarFooter
 
-PersonListPanel -down-> PersonCard
+PatientListPanel -down-> PatientCard
+AppointmentListPanel -down-> AppointmentCard
 
 MainWindow -left-|> UiPart
 
 ResultDisplay --|> UiPart
+StatisticsDisplay --|> UiPart
+AppointmentListPanel --|> UiPart
+AppointmentCard --|> UiPart
 CommandBox --|> UiPart
-PersonListPanel --|> UiPart
-PersonCard --|> UiPart
+
+PatientListPanel --|> UiPart
+PatientCard --|> UiPart
 StatusBarFooter --|> UiPart
 HelpWindow -down-|> UiPart
 
-PersonCard ..> Model
+PatientCard ..> Model
+AppointmentCard ..> Model
 UiManager -right-> Logic
 MainWindow -left-> Logic
 
-PersonListPanel -[hidden]left- HelpWindow
+PatientListPanel -[hidden]left- HelpWindow
+
 HelpWindow -[hidden]left- CommandBox
-CommandBox -[hidden]left- ResultDisplay
+CommandBox -[hidden]left- StatisticsDisplay
+StatisticsDisplay -[hidden]left- ResultDisplay
 ResultDisplay -[hidden]left- StatusBarFooter
 
 MainWindow -[hidden]-|> UiPart
