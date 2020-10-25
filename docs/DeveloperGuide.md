@@ -166,7 +166,7 @@ The following is an example usage scenario on how the mark as done mechanism wor
 
 5. The `DoneCommandParser` creates a new `DoneCommand` instance with the newly created `DateTimeLoader` object and returns it to `NuudleParser`, which in turn returns it to `LogicManager`.
 
-6. `LogicManager` calls the `DoneCommand#execute(model)` method.
+6. `LogicManager` calls the `DoneCommand#execute(Model)` method.
 
 7. `DoneCommand` obtains a copy of the `FilteredAppointmentList` by calling the `Model#getFilteredAppointmentList()` method.
 
@@ -175,7 +175,7 @@ The following is an example usage scenario on how the mark as done mechanism wor
 
 9. `DoneCommand` creates another instance of this appointment `doneAppointment` which has a `done` status.
 
-10. `DoneCommand` replaces the `toMark` with the `doneAppointment` by calling the `Model#setAppointment(target, editedAppointment)`.
+10. `DoneCommand` replaces the `toMark` with the `doneAppointment` by calling the `Model#setAppointment(Appointment, Appointment)`.
 
 11. Lastly, `DoneCommand` creates a `CommandResult` with a `SuccessMessage` and returns it to `LogicManager`.
 

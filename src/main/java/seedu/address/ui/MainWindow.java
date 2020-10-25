@@ -215,7 +215,7 @@ public class MainWindow extends UiPart<Stage> {
             AppointmentStatistics stats = logic.getAppointmentBook().getAppointmentBookStatistics();
             assert (stats != null);
             logger.info("Result: " + commandResult.getFeedbackToUser());
-            resultDisplay.setFeedbackToUser(commandResult.getFeedbackToUser() + "\n" + stats);
+            resultDisplay.setFeedbackToUser(commandResult.getFeedbackToUser() + "\n");
             statisticsDisplay.setStatistics(stats.toString());
 
             if (commandResult.isShowHelp()) {
