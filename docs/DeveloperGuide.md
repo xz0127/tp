@@ -143,11 +143,15 @@ Classes used by multiple components are in the `seedu.patientbook.commons` packa
 This section describes some noteworthy details on how certain features are implemented.
 
 ### 1. Done feature
+
+`[written by: Yang Yue]`
+
 The mark done feature allows users to mark a specific appointment in the address book as done using `d/` tag and `t/` tag to specify the appointment at a certain time slot.
+
 #### 1.1 Implementation
 Command: `done d/DATE t/TIME`
 
-Example Usage: 
+Example Usage:
 * `done d/Monday t/9am`
 * `done d/12-12-2020 t/12pm`
 
@@ -167,16 +171,16 @@ The following is an example usage scenario on how the mark as done mechanism wor
 
 5. The `DoneCommandParser` creates a new `DoneCommand` instance with the newly created `DateTimeLoader` object and returns it to `NuudleParser`, which in turn returns it to `LogicManager`.
 
-6. `LogicManager` calls the `DoneCommand#execute(model)` method.
+6. `LogicManager` calls the `DoneCommand#execute(Model)` method.
 
-7. `DoneCommand` obtains a copy of the `FilteredAppointmentList` by calling the `Model#getFilteredAppointmentList()` method. 
+7. `DoneCommand` obtains a copy of the `FilteredAppointmentList` by calling the `Model#getFilteredAppointmentList()` method.
 
-8. `DoneCommand` returns the appointment `toMark` in the `FilteredAppointmentList`, if there is an appointment in the list starts at the same time with the date and time indicated in the `DateTimeLoader`; Otherwise, throw an 
+8. `DoneCommand` returns the appointment `toMark` in the `FilteredAppointmentList`, if there is an appointment in the list starts at the same time with the date and time indicated in the `DateTimeLoader`; Otherwise, throw an
 `APPOINTMENT_DOES_NOT_EXISTS` exception.
 
-9. `DoneCommand` creates another instance of this appointment `doneAppointment` which has a `done` status. 
+9. `DoneCommand` creates another instance of this appointment `doneAppointment` which has a `done` status.
 
-10. `DoneCommand` replaces the `toMark` with the `doneAppointment` by calling the `Model#setAppointment(target, editedAppointment)`.
+10. `DoneCommand` replaces the `toMark` with the `doneAppointment` by calling the `Model#setAppointment(Appointment, Appointment)`.
 
 11. Lastly, `DoneCommand` creates a `CommandResult` with a `SuccessMessage` and returns it to `LogicManager`.
 
@@ -186,9 +190,71 @@ The above process is shown in the following sequence diagram:
 The following activity diagram summarizes what happens when a user executes a new command:
 ![DoneCommandActivityDiagram](images/DoneCommandActivityDiagram.png)
 
-### \[Proposed\] Data archiving
+### 2. Data archiving
 
-_{Explain here how the data archiving feature will be implemented}_
+`[written by: Jin Hao]`
+
+The data archiving feature will archive all past appointments into an archive directory on starting the app.
+The appointment data will be archived according to their months and saved as a csv file.
+
+The data stored on the archive will be minimal and only contains the following columns: `date`, `startTime`, `endTime`, `isDone`, `name`, `phone`, `address` and `remark`.
+
+#### Implementation
+
+The archive mechanism is facilitated by `CsvAppointmentArchive` which implements the `AppointmentArchive` interface.
+It is stored internally within the `JsonAppointmentBookStorage` which in turn implements the `AppointmentBookStorage` interface.
+
+`CsvAppointmentArchive` implements the following operations:
+
+* `AppointmentArchive#archivePastAppointments(ReadOnlyAppointmentBook)` — Removes all past appointments from the `ReadOnlyAppointmentBook` and archive them as a csv file.
+* `AppointmentArchive#saveAppointments(List<CsvAdaptedAppointment>, String)` — Saves the list of `CsvAdaptedAppointment` as a csv file in the archive directory with the given filename.
+* `AppointmentArchive#readAppointments(String)` — Reads the csv file with the given filename and returns the data as a `List<CsvAdaptedAppointment>`
+* `AppointmentArchive#getArchiveStatistics()` — Gets the status message of the archive mechanism.
+
+Of these three, only the `archivePastAppointments(ReadOnlyAppointmenBook)` and `getArchiveStatistics()` are exposed in the `AppointmentBookStorage` and `Storage` interfaces as methods with the same signature.
+
+`CsvAdaptedAppointment` and `CsvAdaptedPatient` are used to represent the csv-adapted `Appointment` and `Patient` respectively.
+
+Given below is an example archive run scenario and how the archive mechanism behaves at each step.
+
+1. The user launches the application with some existing appointment data (not launching for the first time).
+
+1. The `MainApp` calls the `Storage#readAppointmentBook()` method to get the `Optional<ReadOnlyAppointmentBook>` which may contains the book of existing appointment data.
+
+1. The original `ReadOnlyAppointmentBook` is then passed to the `AppointmentArchive` through the `Storage` and `AppointmentBookStorage` by calling their respective `archivePastAppointments(ReadOnlyAppointmentBook)` methods.
+
+1. `AppointmentArchive#archivePastAppointments(ReadOnlyAppointmentBook)` then iterates through the `ReadOnlyAppointmentBook` and separates it into a `List<Appointment>`, which contains only the upcoming appointments, and `List<CsvAdaptedAppointment>`, which contains the appointments to be archived.
+
+1. For each `CsvAdaptedAppointment` in the same group (same month), the `AppointmentArchive` calls the `AppointmentArchive#saveAppointments(List<CsvAdaptedAppointment>, String)` method to save the appointment list.
+
+1. `AppointmentArchive#saveAppointments()` then calls the `CsvUtil::serializeObjectToCsvFile()` method to save and archive the past appointments.
+
+1. The `List<Appointment>` containing only the upcoming appointments will then be returned to the user as a `ReadOnlyAppointmentBook`.
+
+1. The `Ui` component will then call the `Logic#getArchiveStatus()` component on initialisation to get the archive status message from the `StorageManager`.
+
+The above process is shown in the following sequence diagram:
+
+![ArchiveSequenceDiagram](images/ArchiveSequenceDiagram.png)
+
+The following sequence diagram shows how the archive status message is obtained and shown to the user:
+
+![ArchiveStatusDiagram](images/ArchiveStatusDiagram.png)
+
+#### Design consideration:
+
+##### Aspect: Type of data to save as csv format
+
+As the data is to be saved in a csv format, the data attributes of the Java Object cannot have complex data type such as a `set`, `list` or `map`.
+`CsvAdaptedAppointment` and `CsvAdaptedPatient` classes are used to represent the archivable appointments and patient, so the consideration is to decide how and what data should be archived in the csv file.
+
+* **Alternative 1 (current choice):** Only archive the necessary data and ignore certain data such as `Set<Tags>` and sensitive data such as the patient's `Nric`.
+  * Pros: Straightforward to implement. Easy to add and remove fields to be archived.
+  * Cons: Does not have the full appointment data and therefore `CsvAdaptedAppointment` cannot be used to recreate `Appointment`.
+
+* **Alternative 2:** Archive all appointment-related data. For complex data, convert them to their string equivalent and have methods to convert them back to the original state.
+  * Pros: Full data is saved and therefore the actual `Appointment` can be recreated from the csv data file.
+  * Cons: We must ensure that the implementation of the conversion is correct and that the content of the data does not affect the conversion.
 
 ### 3. Assign Feature
 
@@ -260,15 +326,15 @@ Here below is an example usage scenario and how the `assign` feature works at ea
 
 `[written by: Xin Zhe]`
 
-The Edit Patient Feature allows the nurse to edit an existing `Patient` in the patient book. 
+The Edit Patient Feature allows the nurse to edit an existing `Patient` in the patient book.
 `Appointment` which involves the patient will be updated accordingly.
 
 #### 5.1 Implementation
 
-The Edit Patient Feature is facilitated by the `EditCommand`, which extends the abstract class `Command`, 
+The Edit Patient Feature is facilitated by the `EditCommand`, which extends the abstract class `Command`,
 and the `EditCommandParser`, which implements the `Parser` interface. All of these classes are part of the `Logic` component.
 
-This feature is supported by the `UniquePatientList` which stores the `patient` instances and the `UniqueAppointmentList` 
+This feature is supported by the `UniquePatientList` which stores the `patient` instances and the `UniqueAppointmentList`
 which stores the `appointment` instances. These classes are part of the `model` component.
 
 Additionally, a public static class `EditPatientDescriptor` is nested in `EditCommand` as a container class to store the details to edit the `Patient` with.
