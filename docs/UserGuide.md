@@ -2,8 +2,11 @@
 layout: page
 title: User Guide
 ---
+Welcome to Nuudle’s User Guide! :smiley: :ramen:
 
-Nuudle is a **desktop app for managing patient and clinic appointments, optimized for use via a Command Line Interface (CLI)** while still having the benefits of a Graphical User Interface (GUI). If you can type fast, Nuudle can get your patient and appointment scheduling tasks done faster than traditional GUI apps.
+Nuudle is a **desktop app that helps nurses manage patient records and schedule appointments** in an accurate and efficient manner.
+
+We hope that this document will help you in your journey in exploring the wonders of Nuudle app and redefine the way you schedule appointments for your patients. :smirk: To begin your journey, head down to our [quick start](#quick-start) or explore the various [features](#features) that we offer. The document will provide you with all the necessary information you need to start your journey.
 
 * Table of Contents
 {:toc}
@@ -40,7 +43,7 @@ Nuudle is a **desktop app for managing patient and clinic appointments, optimize
 
    * **`exit`** : Exits the app.
 
-1. Refer to the [Features](#features) below for details of each command.
+1. Refer to the [features](#features) below for details of each command.
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -72,6 +75,7 @@ Shows a message explaining how to access the help page of Nuudle.
 
 Format: `help`
 
+
 ### Adding a patient : `add`
 
 Adds a patient to the patient book.
@@ -81,7 +85,6 @@ Format: `add n/NAME i/NRIC p/PHONE_NUMBER a/ADDRESS [t/TAG]…​`
 <div markdown="span" class="alert alert-primary">:bulb: **Tip:**
 Tags are used to indicate a patient's underlying medical conditions. A patient can have any number of tags (including 0).
 </div>
-
 * Adds a patient with the specified details.
 * The following fields are compulsory and must be provided: `NAME, NRIC, PHONE_NUMBER, ADDRESS`.
 * It is optional to add `TAG`s for the patient. Tags can still be added with the edit command upon creating the patient entry in Nuudle.
@@ -90,11 +93,15 @@ Examples:
 * `add n/John Doe i/S9730284G p/98765432 a/John street, block 123, #01-01`
 * `add n/Betsy Crowe i/S9123456G t/friend a/NUS Utown p/1234567 t/asthma`
 
+![AddCommand](images/AddCommand.png)
+
 ### Listing all patients : `list`
 
 Shows a list of all patients in the patient book.
 
 Format: `list`
+
+![ListCommand](images/ListCommand.png)
 
 ### Editing a patient : `edit`
 
@@ -113,6 +120,8 @@ Examples:
 *  `edit 1 p/91234567 a/College Avenue 8` Edits the phone number and email address of the 1st patient to be `91234567` and `College Avenue 8` respectively.
 *  `edit 2 n/Betsy Crower t/` Edits the name of the 2nd patient to be `Betsy Crower` and clears all existing tags.
 
+![EditCommand](images/EditCommand.png)
+
 ### Locating patients by name : `find`
 
 Finds patients whose names contain any of the given keywords.
@@ -128,9 +137,10 @@ Format: `find KEYWORD [MORE_KEYWORDS]`
 * The respective appointments of patients matching at least one keyword will also be returned. 
 
 Examples:
-* `find John` returns `john` and `John Doe` and their respective appointments
-* `find alex david` returns `Alex Yeoh`, `David Li` and their respective appointments<br>
-  ![result for 'find alex david'](images/findAlexDavidResult.png)
+* `find John` returns `john` and `John Doe`
+* `find alex david` returns `Alex Yeoh`, `David Li`<br>
+
+![FindCommand](images/FindCommand.png)
 
 ### Deleting a patient : `delete`
 
@@ -141,10 +151,13 @@ Format: `delete INDEX`
 * Deletes the patient at the specified `INDEX`.
 * The index refers to the index number shown in the displayed patient list.
 * The index **must be a positive integer** 1, 2, 3, …​
+* Deleting a patient will also deletes all the appointments of the person.
 
 Examples:
 * `list` followed by `delete 2` deletes the 2nd patient in the displayed patient list.
 * `find Betsy` followed by `delete 1` deletes the 1st patient in the results of the `find` command.
+
+![DeleteCommand](images/DeleteCommand.png)
 
 ### Adding a remark for a patient : `remark`
 
@@ -159,6 +172,7 @@ Examples:
 *  `remark 2 r/Has been visiting Dr John` Adds a remark `Has been visiting Dr John` to the patient currently displayed second from the top in the patient list.
 *  `remark 1 r/Can only converse in mandarin` Adds a remark `Can only converse in mandarin` to the patient currently displayed at the top of the patient list.
 
+![RemardCommand](images/RemarkCommand.png)
 
 ### Adding an appointment : `assign`
 
@@ -167,16 +181,18 @@ Assign the specified patient into the specified appointment date and time.
 Format: `assign INDEX d/DATE t/TIME [dur/DURATION]`
 
 * Puts the patient at the specified INDEX into an appointment time slot.
-* The INDEX refers to the index number indicated in the patient list.
-* The INDEX **must be a positive integer** 1, 2, 3, …​
+* The `INDEX` refers to the index number indicated in the patient list.
+* The `INDEX` **must be a positive integer** 1, 2, 3, …​
 * The `DATE` and `TIME` of the appointment must be included.
-* The 'DURATION' is measured in minutes and will be defaulted to 60 minutes if omitted.
+* The `DURATION` is measured in minutes and will be defaulted to 60 minutes if omitted.
 * The time slot indicated by `DATE` and `TIME` must be available.
 * The specified `DATE` and `TIME` must be in the future.
 
 Examples:
-* `assign 1 d/Sunday t/2am dur/40` books an appointment of 40 minutes on the upcoming Sunday, 2am for the 1st patient in the list.
+* `assign 1 d/Sunday t/2pm dur/40` books an appointment of 40 minutes on the upcoming Sunday, 2am for the 1st patient in the list.
 * `assign 3 d/02-03-2021 t/1130` books an appointment of 60 minutes on 02/03/2021, 11:30am for the 3rd patient in the list.
+
+![AssignCommand](images/AssignCommand.png)
 
 ### Canceling an appointment : `cancel`
 
@@ -185,12 +201,14 @@ Deletes the specified appointment at the date and time indicated from the appoin
 Format `cancel d/DATE t/TIME`
 
 * Deletes the appointment at the specified `DATE` and `TIME`.
-* The `DATE` and `TIME` indicated must take place in the future.
+* The `DATE` and `TIME` indicated must be in the future.
 * An appointment with the corresponding `DATE` and `TIME` must exist in the appointment book.
 
 Example:
 * `cancel d/02/12/2020 t/10am` deletes the appointment happening on 02/12/2020, 10am.
 * `cancel 05-Nov-2020 t/1pm` deletes the appointment happening on 05/11/2020, 1pm.
+
+![AssignCommand](images/CancelCommand.png)
 
 ### Listing upcoming appointments by date : `view`
 
@@ -205,6 +223,8 @@ Format `view [d/DATE]`
 Example:
 * `view` shows the list of all upcoming appointments in chronological order.
 * `view d/4-Aug-2020` shows the list of appointments happening on 04/08/2020.
+
+![AssignCommand](images/ViewCommand.png)
 
 ### Marking an appointment as done : `done`
 
@@ -232,6 +252,8 @@ Format: `avail d/DATE`
 Example:
 * `avail d/4-Aug-2020` shows the list of all available(free) time slots within the operation time of the clinic on 04/08/2020.
 ![AvailableCommand](images/AvailableCommand.png)
+
+![DoneCommand](images/DoneCommand.png)
 
 ### Clearing all appointment entries : `clear`
 

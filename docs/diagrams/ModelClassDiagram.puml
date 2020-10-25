@@ -6,22 +6,34 @@ skinparam classBackgroundColor MODEL_COLOR
 
 Package Model <<Rectangle>>{
 Interface ReadOnlyPatientBook <<Interface>>
+Interface ReadOnlyAppointmentBook <<Interface>>
 Interface Model <<Interface>>
 Interface ObservableList <<Interface>>
 Class PatientBook
+Class AppointmentBook
 Class ReadOnlyPatientBook
+Class ReadOnlyAppointmentBook
 Class Model
 Class ModelManager
 Class UserPrefs
 Class ReadOnlyUserPrefs
 
-Package Person {
-Class Person
+Package Patient {
+Class Patient
 Class Address
-Class Email
+Class Nric
+Class Remark
 Class Name
 Class Phone
-Class UniquePersonList
+Class UniquePatientList
+}
+
+Package Appointment {
+Class Appointment
+Class AppointmentId
+Class Date
+Class Time
+Class UniqueAppointmentList
 }
 
 Package Tag {
@@ -33,24 +45,34 @@ Class HiddenOutside #FFFFFF
 HiddenOutside ..> Model
 
 PatientBook .up.|> ReadOnlyPatientBook
+AppointmentBook .down.|> ReadOnlyAppointmentBook
 
 ModelManager .up.|> Model
 Model .right.> ObservableList
 ModelManager o--> "1" PatientBook
+ModelManager o--> "1" AppointmentBook
 ModelManager o-left-> "1" UserPrefs
 UserPrefs .up.|> ReadOnlyUserPrefs
 
-PatientBook *--> "1" UniquePersonList
-UniquePersonList o--> "*" Person
-Person *--> Name
-Person *--> Phone
-Person *--> Email
-Person *--> Address
-Person *--> "*" Tag
+PatientBook *-left-> "1" UniquePatientList
+UniquePatientList o--> "*" Patient
+Patient *--> Name
+Patient *--> Phone
+Patient *--> Nric
+Patient *--> Remark
+Patient *--> Address
+Patient *--> "*" Tag
+
+AppointmentBook *-right-* "1" UniqueAppointmentList
+UniqueAppointmentList o--> "*" Appointment
+Appointment *--> Date
+Appointment *--> Time
+Appointment *--> AppointmentId
 
 Name -[hidden]right-> Phone
 Phone -[hidden]right-> Address
-Address -[hidden]right-> Email
 
-ModelManager -->"1" Person : filtered list
+
+ModelManager -->"1" Patient : filtered list
+ModelManager -->"1" Appointment : filtered list
 @enduml

@@ -1,0 +1,93 @@
+@startuml
+!include style.puml
+
+box Logic LOGIC_COLOR_T1
+participant ":LogicManager" as LogicManager LOGIC_COLOR
+participant ":NuudleParser" as NuudleParser LOGIC_COLOR
+participant ":AssignCommandParser" as AssignCommandParser LOGIC_COLOR
+participant ":AssignCommand" as AssignCommand LOGIC_COLOR
+participant ":CommandResult" as CommandResult LOGIC_COLOR
+
+end box
+
+box Model MODEL_COLOR_T1
+participant ":Appointment" as Appointment MODEL_COLOR
+participant ":Model" as Model MODEL_COLOR
+end box
+
+[-> LogicManager : execute()
+activate LogicManager
+
+LogicManager -> NuudleParser : parseCommand()
+activate NuudleParser
+
+create AssignCommandParser
+NuudleParser -> AssignCommandParser: AssignCommandParser()
+activate AssignCommandParser
+
+AssignCommandParser --> NuudleParser
+deactivate AssignCommandParser
+
+NuudleParser -> AssignCommandParser : parse()
+activate AssignCommandParser
+
+create AssignCommand
+AssignCommandParser -> AssignCommand: AssignCommand()
+note left: Input Validation \n \n AssignCommand() needs Index and \n DurationSupporter objects
+activate AssignCommand
+
+AssignCommand --> AssignCommandParser: Command
+deactivate AssignCommand
+
+AssignCommandParser --> NuudleParser: Command
+deactivate AssignCommandParser
+'Hidden arrow to position the destroy marker below the end of the activation bar.
+AssignCommandParser -[hidden]-> NuudleParser
+destroy AssignCommandParser
+
+NuudleParser --> LogicManager: Command
+deactivate NuudleParser
+
+LogicManager -> AssignCommand : execute()
+activate AssignCommand
+
+AssignCommand -> AssignCommand
+activate AssignCommand
+
+create Appointment
+AssignCommand -> Appointment: createAppointment()
+activate Appointment
+
+Appointment --> AssignCommand
+deactivate Appointment
+
+AssignCommand --> AssignCommand
+deactivate AssignCommand
+
+AssignCommand -> Model : addAppointment()
+activate Model
+
+Model --> AssignCommand
+deactivate Model
+
+AssignCommand -> Model : updateFilteredAppointmentList()
+activate Model
+
+note left: updateFilteredAppointmentList() \n also checks whether \n the appointment date \n and time overlaps with \n other appointments.
+
+Model --> AssignCommand
+deactivate Model
+
+create CommandResult
+AssignCommand -> CommandResult: CommandResult()
+activate CommandResult
+
+CommandResult --> AssignCommand
+deactivate CommandResult
+
+AssignCommand --> LogicManager : Result
+deactivate AssignCommand
+
+[<--LogicManager
+deactivate LogicManager
+@enduml
