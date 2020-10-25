@@ -291,6 +291,7 @@ Action | Format, Examples
 **Cancel** | `cancel d/DATE t/TIME`<br> e.g., `cancel d/today t/4pm`
 **View** | `view [d/DATE]`<br> e.g., `view d/today`
 **Done** | `done d/DATE t/TIME`<br> e.g., `done d/23-Aug t/10.30am`
+**Available** | `avail d/DATE`<br> e.g., `avail d/12-Apr-2021`
 **Clear** | `clear`
 **Help** | `help`
 **Exit** | `exit`
