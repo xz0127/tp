@@ -165,14 +165,14 @@ Examples to add remarks:
 *  `remark 2 r/Has been visiting Dr John` Adds a remark `Has been visiting Dr John` to the patient currently displayed second from the top in the patient list.
 *  `remark 1 r/Can only converse in mandarin` Adds a remark `Can only converse in mandarin` to the patient currently displayed at the top of the patient list.
 
-![result for 'Add remark'](images/addRemark.jpg)
+![result for 'Add remark'](images/addRemark.png)
 <br>
 
 Examples to delete the remark for a patient at `INDEX` 1:
 * `remark 1 r/`
 * `remark 1`
 
-![result for 'Delete remark'](images/deleteRemark.jpg) 
+![result for 'Empty remark'](images/nullRemark.png) 
 <br>
 
 ### Adding an appointment : `assign`
@@ -223,14 +223,17 @@ The index here refers to the index number shown on the left side of the displaye
 
 * If you wish to **modify** the duration of an existing appointment, simply call the command in the following format:
     * `change 1 d/ORIGINAL_DATE t/ORIGINAL_TIME dur/NEW_DURATION` Extends the duration of the appointment at `INDEX` 1 to the new `DURATION` with the same date and start time.
+
 * If you wish to **reschedule** the appointment with new `DATE`/`TIME`:
     * `change 1 d/NEW_DATE t/ORIGINAL_TIME dur/NEW_DURATION`
     * `change 1 d/ORIGINAL_DATE t/NEW_TIME dur/NEW_DURATION`
     * `change 1 d/NEW_DATE t/NEW_TIME dur/NEW_DURATION`
 
 Examples to reschedule appointments:
-*  `change 3 d/02-03-2021 t/1130 dur/30` <br> Reschedules an appointment at INDEX 3 of the appointment list to 2nd March 2021, 11:30AM with a duration of 30 minutes with it's original patient.
-*  `remark 2 d/12-05-2021 t/1530 dur/60` <br> Reschedules an appointment at INDEX 2 of the appointment list to 12th May 2021, 3:30PM with a duration of 1 hour with it's original patient.
+*  `change 3 d/02-03-2021 t/1130 dur/30` <br> Reschedules an appointment at `INDEX` 3 of the appointment list to 2nd March 2021, 11:30AM with a duration of 30 minutes with it's original patient.
+*  `change 2 d/12-05-2021 t/1530 dur/60` <br> Reschedules an appointment at `INDEX` 2 of the appointment list to 12th May 2021, 3:30PM with a duration of 1 hour with it's original patient.
+
+![ChangeCommand](images/ChangeCommand.png)
 
 ### Listing upcoming appointments by date : `view`
 
