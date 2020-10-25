@@ -51,9 +51,9 @@ public class AppointmentStatistics {
 
     @Override
     public String toString() {
-        return "Today: \n" + getNumOfUpcomingApptInToday()
+        return "Today: " + getNumOfUpcomingApptInToday()
                 + " upcoming  |  " + getNumOfDoneApptInToday() + " done \n"
-                + "This Week:\n" + getNumOfUpcomingApptInThisWeek()
+                + "This Week: " + getNumOfUpcomingApptInThisWeek()
                 + " upcoming  |  " + getNumOfDoneApptInThisWeek() + " done";
     }
 

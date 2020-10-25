@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.stage.Stage?>
 
-<fx:root minHeight="600" minWidth="450" onCloseRequest="#handleExit" title="Nuudle" type="javafx.stage.Stage" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<fx:root minHeight="600" minWidth="450" onCloseRequest="#handleExit" title="Nuudle" type="javafx.stage.Stage" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
   <icons>
     <Image url="@/images/nuudle_32.png" />
   </icons>
@@ -33,25 +33,27 @@
           </Menu>
         </MenuBar>
 
-              <StackPane fx:id="commandBoxPlaceholder" prefHeight="100.0" prefWidth="213.0" styleClass="pane-with-border">
+        <StackPane fx:id="commandBoxPlaceholder" prefHeight="100.0" prefWidth="213.0" styleClass="pane-with-border">
           <padding>
             <Insets bottom="5" left="10" right="10" top="5" />
           </padding>
         </StackPane>
-            <SplitPane fx:id="splitView1" dividerPositions="0.8" prefWidth="200.0">
-               <items>
-                    <StackPane fx:id="resultDisplayPlaceholder" maxHeight="100" minHeight="100" prefHeight="100" prefWidth="120.0" styleClass="pane-with-border">
-                <padding>
-                  <Insets bottom="5" left="10" right="10" top="5" />
-                </padding>
-              </StackPane>
-                 <StackPane fx:id="statisticsDisplayPlaceholder" maxHeight="100" minHeight="100" prefHeight="100" prefWidth="120.0" styleClass="pane-with-border">
-                   <padding>
-                     <Insets bottom="5" left="10" right="10" top="5" />
-                   </padding>
-                 </StackPane>
-               </items>
-            </SplitPane>
+        <SplitPane fx:id="splitView1" dividerPositions="0.8" prefWidth="200.0">
+          <items>
+            <StackPane fx:id="resultDisplayPlaceholder" maxHeight="100" minHeight="100" prefHeight="100"
+                       prefWidth="120.0" styleClass="pane-with-border">
+              <padding>
+                <Insets bottom="5" left="10" right="10" top="5" />
+              </padding>
+            </StackPane>
+            <StackPane fx:id="statisticsDisplayPlaceholder" maxHeight="100" minHeight="100" prefHeight="100"
+                       prefWidth="120.0" styleClass="pane-with-border">
+              <padding>
+                <Insets bottom="5" left="10" right="10" top="5" />
+              </padding>
+            </StackPane>
+          </items>
+        </SplitPane>
 
         <SplitPane fx:id="splitView" dividerPositions="0.29797979797979796" prefWidth="200.0" VBox.vgrow="ALWAYS">
           <items>
@@ -59,8 +61,8 @@
               <children>
                 <VBox fx:id="patientList" alignment="TOP_CENTER" minWidth="170.0" prefWidth="170.0" styleClass="pane-with-border" VBox.vgrow="ALWAYS">
                   <padding>
-                      <Insets bottom="10" left="10" right="10" top="10" />
-                    </padding>
+                    <Insets bottom="10" left="10" right="10" top="10" />
+                  </padding>
                   <StackPane fx:id="patientListPanelPlaceholder" VBox.vgrow="ALWAYS" />
                 </VBox>
                 <StackPane fx:id="patientStatusbarPlaceholder" VBox.vgrow="NEVER" />
@@ -70,8 +72,8 @@
               <children>
                 <VBox fx:id="appointmentList" alignment="TOP_CENTER" minWidth="170.0" prefWidth="170.0" styleClass="pane-with-border" VBox.vgrow="ALWAYS">
                   <padding>
-                      <Insets bottom="10" left="10" right="10" top="10" />
-                    </padding>
+                    <Insets bottom="10" left="10" right="10" top="10" />
+                  </padding>
                   <children>
                     <StackPane fx:id="appointmentListPanelPlaceholder" VBox.vgrow="ALWAYS" />
                   </children>

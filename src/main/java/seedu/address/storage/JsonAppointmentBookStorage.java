@@ -9,7 +9,6 @@ import java.util.logging.Logger;
 
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.exceptions.DataConversionException;
-import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.FileUtil;
 import seedu.address.commons.util.JsonUtil;
 import seedu.address.model.ReadOnlyAppointmentBook;
@@ -51,12 +50,12 @@ public class JsonAppointmentBookStorage implements AppointmentBookStorage {
             return Optional.empty();
         }
 
-        try {
-            return Optional.of(jsonAppointmentBook.get().toModelType());
-        } catch (IllegalValueException ive) {
-            logger.info("Illegal values found in " + filePath + ": " + ive.getMessage());
-            throw new DataConversionException(ive);
-        }
+        // try {
+        return jsonAppointmentBook.map(JsonSerializableAppointmentBook::toModelType);
+        // } catch (IllegalValueException ive) {
+        //     logger.info("Illegal values found in " + filePath + ": " + ive.getMessage());
+        //     throw new DataConversionException(ive);
+        // }
     }
 
     @Override
@@ -75,6 +74,15 @@ public class JsonAppointmentBookStorage implements AppointmentBookStorage {
 
         FileUtil.createIfMissing(filePath);
         JsonUtil.saveJsonFile(new JsonSerializableAppointmentBook(appointmentBook), filePath);
+    }
+
+    @Override
+    public void backupData(String folderName) throws IOException {
+        requireNonNull(folderName);
+
+        if (FileUtil.isFileExists(filePath)) {
+            FileUtil.backupFileToFolder(filePath, folderName);
+        }
     }
 
 }

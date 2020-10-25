@@ -2,12 +2,14 @@ package seedu.address.storage;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonRootName;
 
+import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.PatientBook;
 import seedu.address.model.ReadOnlyPatientBook;
@@ -19,7 +21,9 @@ import seedu.address.model.patient.Patient;
 @JsonRootName(value = "patientbook")
 class JsonSerializablePatientBook {
 
-    public static final String MESSAGE_DUPLICATE_PATIENT = "Patients list contains duplicate patient(s).";
+    public static final String MESSAGE_DUPLICATE_PATIENT = "Patient list contains duplicate patient(s).";
+
+    private static final Logger logger = LogsCenter.getLogger(JsonSerializablePatientBook.class);
 
     private final List<JsonAdaptedPatient> patients = new ArrayList<>();
 
@@ -42,17 +46,31 @@ class JsonSerializablePatientBook {
 
     /**
      * Converts this patient book into the model's {@code PatientBook} object.
-     *
-     * @throws IllegalValueException if there were any data constraints violated.
      */
-    public PatientBook toModelType() throws IllegalValueException {
+    public PatientBook toModelType() {
         PatientBook patientBook = new PatientBook();
+        int nDataViolations = 0;
+
         for (JsonAdaptedPatient jsonAdaptedPatient : patients) {
-            Patient patient = jsonAdaptedPatient.toModelType();
-            if (patientBook.hasPatient(patient)) {
-                throw new IllegalValueException(MESSAGE_DUPLICATE_PATIENT);
+            Patient patient;
+            try {
+                patient = jsonAdaptedPatient.toModelType();
+            } catch (IllegalValueException ive) {
+                logger.info("Data constraints violated: " + ive.getMessage());
+                nDataViolations++;
+                continue;
             }
+
+            if (patientBook.hasPatient(patient)) {
+                logger.info(MESSAGE_DUPLICATE_PATIENT);
+                nDataViolations++;
+                continue;
+            }
+
             patientBook.addPatient(patient);
+        }
+        if (nDataViolations > 0) {
+            logger.warning("Failed to read " + nDataViolations + " patient data!");
         }
         return patientBook;
     }
