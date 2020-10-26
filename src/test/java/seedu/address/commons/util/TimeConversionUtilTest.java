@@ -29,7 +29,7 @@ public class TimeConversionUtilTest {
     }
 
     @Test
-    public void convertIntToTime_returnTrue() {
+    public void convertIntToTime_correctTime() {
 
         //normal operating time
         assertEquals(convertIntToTime(1320), CLOSING_TIME);
@@ -40,7 +40,7 @@ public class TimeConversionUtilTest {
     }
 
     @Test
-    public void convertTimeToInt_returnTrue() {
+    public void convertTimeToInt_correctValue() {
 
         //integer within normal operating time
         assertEquals(convertTimeToInt(CLOSING_TIME), 1320);

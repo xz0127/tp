@@ -1,5 +1,7 @@
 package seedu.address.model.interval;
 
+import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
+
 import seedu.address.model.appointment.Time;
 
 /**
@@ -16,8 +18,21 @@ public class TimeInterval {
      * @param endTime end time of the interval.
      */
     public TimeInterval(Time startTime, Time endTime) {
+        requireAllNonNull(startTime, endTime);
+
         this.startTime = startTime;
         this.endTime = endTime;
+    }
+
+    /**
+     * Checks if the given {@code test} is valid.
+     * The {@code LocalTime} is valid if the ending time is no prior to the starting time.
+     *
+     * @param test the time interval to test.
+     * @return true if is valid, false otherwise.
+     */
+    public static boolean isValidInterval(TimeInterval test) {
+        return !(test.endTime.isBefore(test.startTime));
     }
 
     public Time getStartTime() {
@@ -40,5 +55,13 @@ public class TimeInterval {
     @Override
     public String toString() {
         return startTime + " to " + endTime;
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+            || (other instanceof TimeInterval // instanceof handles nulls
+            && startTime.equals(((TimeInterval) other).startTime)
+            && endTime.equals(((TimeInterval) other).endTime)); // state check
     }
 }
