@@ -55,6 +55,7 @@ public class AddCommand extends Command {
         }
 
         model.addPatient(toAdd);
+        model.updateFilteredAppointmentList(Model.PREDICATE_SHOW_ALL_APPOINTMENTS);
         return new CommandResult(String.format(MESSAGE_SUCCESS, toAdd));
     }
 
