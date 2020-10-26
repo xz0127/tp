@@ -28,9 +28,6 @@ public class TimeConversionUtil {
      * @return the time object which is equivalent to the time value.
      */
     public static Time convertIntToTime(int timeValue) {
-        assert timeValue < 1440;
-        assert timeValue >= 0;
-
         int hours = timeValue / 60;
         int minutes = timeValue % 60;
         return new Time(hours, minutes);
