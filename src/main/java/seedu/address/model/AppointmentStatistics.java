@@ -5,7 +5,8 @@ package seedu.address.model;
  */
 public class AppointmentStatistics {
 
-    public static final String STATISTICS_MESSAGE = "Today: %d upcoming | %d done\nThis Week: %d upcoming | %d done";
+    public static final String STATISTICS_MESSAGE = "Today: %d upcoming | %d done\n"
+            + "This Week: %d upcoming | %d done";
 
     private int numOfDoneApptInToday;
     private int numOfUpcomingApptInToday;
