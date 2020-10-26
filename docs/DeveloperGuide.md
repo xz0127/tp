@@ -31,7 +31,6 @@ The ***Architecture Diagram*** given above explains the high-level design of the
 and [`MainApp`](https://github.com/AY2021S1-CS2103T-T12-4/tp/blob/master/src/main/java/seedu/address/MainApp.java). It is responsible for,
 
 * At app launch: Initializes the components in the correct sequence, and connects them up with each other.
-
 * At shut down: Shuts down the components and invokes cleanup methods where necessary.
 
 [**`Commons`**](#common-classes) represents a collection of classes used by multiple other components.
@@ -65,11 +64,12 @@ The sections below give more details of each component.
 ![Structure of the UI Component](images/UiClassDiagram.png)
 
 **API** :
-[`Ui.java`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/ui/Ui.java)
+[`Ui.java`](https://github.com/AY2021S1-CS2103T-T12-4/tp/blob/master/src/main/java/seedu/address/ui/Ui.java)
 
-The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `PatientListPanel`, `AppointmentListPanel`, `StatusBarFooter` etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class.
+The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `StatisticsDisplay`, `AppointmentListPanel`, `PatientListPanel`, `StatusBarFooter` etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class.
 
-The `UI` component uses JavaFx UI framework. The layout of these UI parts are defined in matching `.fxml` files that are in the `src/main/resources/view` folder. For example, the layout of the [`MainWindow`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/ui/MainWindow.java) is specified in [`MainWindow.fxml`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/resources/view/MainWindow.fxml)
+The `UI` component uses JavaFx UI framework. The layout of these UI parts are defined in matching `.fxml` files that are
+ in the `src/main/resources/view` folder. For example, the layout of the [`MainWindow`](https://github.com/AY2021S1-CS2103T-T12-4/tp/blob/master/src/main/java/seedu/address/ui/MainWindow.java) is specified in [`MainWindow.fxml`](https://github.com/AY2021S1-CS2103T-T12-4/tp/blob/master/src/main/resources/view/MainWindow.fxml)
 
 The `UI` component,
 
@@ -81,11 +81,11 @@ The `UI` component,
 ![Structure of the Logic Component](images/LogicClassDiagram.png)
 
 **API** :
-[`Logic.java`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/logic/Logic.java)
+[`Logic.java`](https://github.com/AY2021S1-CS2103T-T12-4/tp/blob/master/src/main/java/seedu/address/logic/Logic.java)
 
-1. `Logic` uses the `NuudleParser` class to parse the user command.
-1. This results in a `Command` object which is executed by the `LogicManager`.
-1. The command execution can affect the `Model` (e.g. adding a patient).
+1. `LogicManager` implements the `Logic` interface and uses the `NuudleParser` class to parse the user command with the `execute` method.
+1. This results in a `Command` object which is then executed by the `LogicManager`.
+1. The command execution can affect the `Model` (e.g. adding or deleting a patient).
 1. The result of the command execution is encapsulated as a `CommandResult` object which is passed back to the `Ui`.
 1. In addition, the `CommandResult` object can also instruct the `Ui` to perform certain actions, such as displaying help to the user.
 
@@ -114,6 +114,7 @@ e.g. the UI can be bound to these lists so that the UI automatically updates whe
 <div markdown="span" class="alert alert-info">:information_source: **Note:**
 An alternative (arguably, a more OOP) Patient model is given below. It has a `Tag` list in the `PatientBook`, which `Patient` references. This allows `PatientBook` to only require one `Tag` object per unique `Tag`, instead of each `Patient` needing their own `Tag` object.<br>
 
+
 ![BetterModelClassDiagram](images/BetterModelClassDiagram.png)
 
 </div>
@@ -123,11 +124,13 @@ An alternative (arguably, a more OOP) Patient model is given below. It has a `Ta
 
 ![Structure of the Storage Component](images/StorageClassDiagram.png)
 
-**API** : [`Storage.java`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/storage/Storage.java)
+**API** : [`Storage.java`](https://github.com/AY2021S1-CS2103T-T12-4/tp/tree/master/src/main/java/seedu/address/storage/Storage.java)
 
 The `Storage` component,
 * can save `UserPref` objects in json format and read it back.
 * can save the patient book data in json format and read it back.
+* can save the appointment data in json format and read it back.
+* can save the appointment data in csv format for archiving.
 
 ### Common classes
 
@@ -139,95 +142,131 @@ Classes used by multiple components are in the `seedu.patientbook.commons` packa
 
 This section describes some noteworthy details on how certain features are implemented.
 
-### \[Proposed\] Undo/redo feature
+### 1. Done feature
 
-#### Proposed Implementation
+`[written by: Yang Yue]`
 
-The proposed undo/redo mechanism is facilitated by `VersionedPatientBook`. It extends `PatientBook` with an undo/redo history, stored internally as an `patientBookStateList` and `currentStatePointer`. Additionally, it implements the following operations:
+The mark done feature allows users to mark a specific appointment in the address book as done using `d/` tag and `t/` tag to specify the appointment at a certain time slot.
 
-* `VersionedPatientBook#commit()` — Saves the current patient book state in its history.
-* `VersionedPatientBook#undo()` — Restores the previous patient book state from its history.
-* `VersionedPatientBook#redo()` — Restores a previously undone patient book state from its history.
+#### 1.1 Implementation
+Command: `done d/DATE t/TIME`
 
-These operations are exposed in the `Model` interface as `Model#commitPatientBook()`, `Model#undoPatientBook()` and `Model#redoPatientBook()` respectively.
+Example Usage:
+* `done d/Monday t/9am`
+* `done d/12-12-2020 t/12pm`
 
-Given below is an example usage scenario and how the undo/redo mechanism behaves at each step.
+The mark appointments as Done feature is facilitated by the `DoneCommand`, which extends the abstract class `Command`, and
+the `DoneCommandParser`, which implements the `Parser` interface. Both of these classes are part of the `Logic` component.
+Additionally, the command takes in a `DateTimeLoader`, which contains the date and time information of the appointment to mark.
 
-Step 1. The user launches the application for the first time. The `VersionedPatientBook` will be initialized with the initial patient book state, and the `currentStatePointer` pointing to that single patient book state.
+The following is an example usage scenario on how the mark as done mechanism works in each step:
 
-![UndoRedoState0](images/UndoRedoState0.png)
+1. User types `done d/DATE t/TIME` into the app.
 
-Step 2. The user executes `delete 5` command to delete the 5th patient in the patient book. The `delete` command calls `Model#commitPatientBook()`, causing the modified state of the patient book after the `delete 5` command executes to be saved in the `PatientBookStateList`, and the `currentStatePointer` is shifted to the newly inserted patient book state.
+2. The request is handled by `LogicManager#execute(String)`, which then calls and passes the input to the `NuudleParser#parseCommand(String)` method.
 
-![UndoRedoState1](images/UndoRedoState1.png)
+3. `NuudleParser` detects the command word `done` in the input string and creates a new `DoneCommandParser` to parse inputs according to the format specified for `DoneCommand`.
 
-Step 3. The user executes `add n/David …​` to add a new patient. The `add` command also calls `Model#commitPatientBook()`, causing another modified patient book state to be saved into the `patientBookStateList`.
+4. Input is parsed using the `DoneCommandParser#parse(String)` method, which also performs input validation. The method creates a `DateTimeLoader` using the parsed inputs by calling the constructor of the class `DateTimeLoader`.
 
-![UndoRedoState2](images/UndoRedoState2.png)
+5. The `DoneCommandParser` creates a new `DoneCommand` instance with the newly created `DateTimeLoader` object and returns it to `NuudleParser`, which in turn returns it to `LogicManager`.
 
-<div markdown="span" class="alert alert-info">:information_source: **Note:** If a command fails its execution, it will not call `Model#commitPatientBook()`, so the patient book state will not be saved into the `patientBookStateList`.
+6. `LogicManager` calls the `DoneCommand#execute(Model)` method.
 
-</div>
+7. `DoneCommand` obtains a copy of the `FilteredAppointmentList` by calling the `Model#getFilteredAppointmentList()` method.
 
-Step 4. The user now decides that adding the patient was a mistake, and decides to undo that action by executing the `undo` command. The `undo` command will call `Model#undoPatientBook()`, which will shift the `currentStatePointer` once to the left, pointing it to the previous patient book state, and restores the patient book to that state.
+8. `DoneCommand` returns the appointment `toMark` in the `FilteredAppointmentList`, if there is an appointment in the list starts at the same time with the date and time indicated in the `DateTimeLoader`; Otherwise, throw an
+`APPOINTMENT_DOES_NOT_EXISTS` exception.
 
-![UndoRedoState3](images/UndoRedoState3.png)
+9. `DoneCommand` creates another instance of this appointment `doneAppointment` which has a `done` status.
 
-<div markdown="span" class="alert alert-info">:information_source: **Note:** If the `currentStatePointer` is at index 0, pointing to the initial PatientBook state, then there are no previous PatientBook states to restore. The `undo` command uses `Model#canUndoPatientBook()` to check if this is the case. If so, it will return an error to the user rather
-than attempting to perform the undo.
+10. `DoneCommand` replaces the `toMark` with the `doneAppointment` by calling the `Model#setAppointment(Appointment, Appointment)`.
 
-</div>
+11. Lastly, `DoneCommand` creates a `CommandResult` with a `SuccessMessage` and returns it to `LogicManager`.
 
-The following sequence diagram shows how the undo operation works:
-
-![UndoSequenceDiagram](images/UndoSequenceDiagram.png)
-
-<div markdown="span" class="alert alert-info">:information_source: **Note:** The lifeline for `UndoCommand` should end at the destroy marker (X) but due to a limitation of PlantUML, the lifeline reaches the end of diagram.
-
-</div>
-
-The `redo` command does the opposite — it calls `Model#redoPatientBook()`, which shifts the `currentStatePointer` once to the right, pointing to the previously undone state, and restores the patient book to that state.
-
-<div markdown="span" class="alert alert-info">:information_source: **Note:** If the `currentStatePointer` is at index `patientBookStateList.size() - 1`, pointing to the latest patient book state, then there are no undone PatientBook states to restore. The `redo` command uses `Model#canRedoPatientBook()` to check if this is the case. If so, it will return an error to the user rather than attempting to perform the redo.
-
-</div>
-
-Step 5. The user then decides to execute the command `list`. Commands that do not modify the patient book, such as `list`, will usually not call `Model#commitAddressBook()`, `Model#undoAddressBook()` or `Model#redoAddressBook()`. Thus, the `addressBookStateList` remains unchanged.
-
-![UndoRedoState4](images/UndoRedoState4.png)
-
-Step 6. The user executes `clear`, which calls `Model#commitAddressBook()`. Since the `currentStatePointer` is not pointing at the end of the `addressBookStateList`, all patient book states after the `currentStatePointer` will be purged. Reason: It no longer makes sense to redo the `add n/David …​` command. This is the behavior that most modern desktop applications follow.
-
-![UndoRedoState5](images/UndoRedoState5.png)
+The above process is shown in the following sequence diagram:
+![DoneSequenceDiagram](images/DoneSequenceDiagram.png)
 
 The following activity diagram summarizes what happens when a user executes a new command:
+![DoneCommandActivityDiagram](images/DoneCommandActivityDiagram.png)
 
-![CommitActivityDiagram](images/CommitActivityDiagram.png)
+### 2. Data archiving
+
+`[written by: Jin Hao]`
+
+The data archiving feature will archive all past appointments into an archive directory on starting the app.
+The appointment data will be archived according to their months and saved as a csv file.
+
+The data stored on the archive will be minimal and only contains the following columns: `date`, `startTime`, `endTime`, `isDone`, `name`, `phone`, `address` and `remark`.
+
+#### Implementation
+
+The archive mechanism is facilitated by `CsvAppointmentArchive` which implements the `AppointmentArchive` interface.
+It is stored internally within the `JsonAppointmentBookStorage` which in turn implements the `AppointmentBookStorage` interface.
+
+`CsvAppointmentArchive` implements the following operations:
+
+* `AppointmentArchive#archivePastAppointments(ReadOnlyAppointmentBook)` — Removes all past appointments from the `ReadOnlyAppointmentBook` and archive them as a csv file.
+* `AppointmentArchive#saveAppointments(List<CsvAdaptedAppointment>, String)` — Saves the list of `CsvAdaptedAppointment` as a csv file in the archive directory with the given filename.
+* `AppointmentArchive#readAppointments(String)` — Reads the csv file with the given filename and returns the data as a `List<CsvAdaptedAppointment>`
+* `AppointmentArchive#getArchiveStatistics()` — Gets the status message of the archive mechanism.
+
+Of these three, only the `archivePastAppointments(ReadOnlyAppointmenBook)` and `getArchiveStatistics()` are exposed in the `AppointmentBookStorage` and `Storage` interfaces as methods with the same signature.
+
+`CsvAdaptedAppointment` and `CsvAdaptedPatient` are used to represent the csv-adapted `Appointment` and `Patient` respectively.
+
+Given below is an example archive run scenario and how the archive mechanism behaves at each step.
+
+1. The user launches the application with some existing appointment data (not launching for the first time).
+
+1. The `MainApp` calls the `Storage#readAppointmentBook()` method to get the `Optional<ReadOnlyAppointmentBook>` which may contains the book of existing appointment data.
+
+1. The original `ReadOnlyAppointmentBook` is then passed to the `AppointmentArchive` through the `Storage` and `AppointmentBookStorage` by calling their respective `archivePastAppointments(ReadOnlyAppointmentBook)` methods.
+
+1. `AppointmentArchive#archivePastAppointments(ReadOnlyAppointmentBook)` then iterates through the `ReadOnlyAppointmentBook` and separates it into a `List<Appointment>`, which contains only the upcoming appointments, and `List<CsvAdaptedAppointment>`, which contains the appointments to be archived.
+
+1. For each `CsvAdaptedAppointment` in the same group (same month), the `AppointmentArchive` calls the `AppointmentArchive#saveAppointments(List<CsvAdaptedAppointment>, String)` method to save the appointment list.
+
+1. `AppointmentArchive#saveAppointments()` then calls the `CsvUtil::serializeObjectToCsvFile()` method to save and archive the past appointments.
+
+1. The `List<Appointment>` containing only the upcoming appointments will then be returned to the user as a `ReadOnlyAppointmentBook`.
+
+1. The `Ui` component will then call the `Logic#getArchiveStatus()` component on initialisation to get the archive status message from the `StorageManager`.
+
+The above process is shown in the following sequence diagram:
+
+![ArchiveSequenceDiagram](images/ArchiveSequenceDiagram.png)
+
+The following sequence diagram shows how the archive status message is obtained and shown to the user:
+
+![ArchiveStatusDiagram](images/ArchiveStatusDiagram.png)
 
 #### Design consideration:
 
-##### Aspect: How undo & redo executes
+##### Aspect: Type of data to save as csv format
 
-* **Alternative 1 (current choice):** Saves the entire patient book.
-  * Pros: Easy to implement.
-  * Cons: May have performance issues in terms of memory usage.
+As the data is to be saved in a csv format, the data attributes of the Java Object cannot have complex data type such as a `set`, `list` or `map`.
+`CsvAdaptedAppointment` and `CsvAdaptedPatient` classes are used to represent the archivable appointments and patient, so the consideration is to decide how and what data should be archived in the csv file.
 
-* **Alternative 2:** Individual command knows how to undo/redo by
-  itself.
-  * Pros: Will use less memory (e.g. for `delete`, just save the patient being deleted).
-  * Cons: We must ensure that the implementation of each individual command are correct.
+* **Alternative 1 (current choice):** Only archive the necessary data and ignore certain data such as `Set<Tags>` and sensitive data such as the patient's `Nric`.
+  * Pros: Straightforward to implement. Easy to add and remove fields to be archived.
+  * Cons: Does not have the full appointment data and therefore `CsvAdaptedAppointment` cannot be used to recreate `Appointment`.
 
+* **Alternative 2:** Archive all appointment-related data. For complex data, convert them to their string equivalent and have methods to convert them back to the original state.
+  * Pros: Full data is saved and therefore the actual `Appointment` can be recreated from the csv data file.
+  * Cons: We must ensure that the implementation of the conversion is correct and that the content of the data does not affect the conversion.
 
-### \[Proposed\] Assign Feature
+### 3. Assign Feature
+
+`[written by: Zhang Wanlin]`
+
+The assign feature will allow the user to create a new appointment that is attached to a patient.
 
 #### Implementation
 
 The `assign` feature is implemented to allow users to assign a specified patient into a specified appointment date and time. To avoid cyclic dependency, only an `Appointment` has an attribute of `Patient` object instead of `Appointment` object and `Patient` object refer to each other.<br><br>
-
 This feature creates a new Appointment instance, which is stored in an instance of `UniqueAppointmentList`, which in turn is stored in the `AppointmentBook`. These classes are part of the `model` component.<br><br>
-
 The feature is supported by the `AssignCommand` class which extends the abstract class `Command`, and `AssignmentCommandParser` which implements the `Parser` interface. These classes are part of the `logic` component.<br><br>
-
 The following class diagram showcases the relationship between the main classes that support this command and key attributes and methods:
 
 
@@ -237,41 +276,105 @@ The following class diagram showcases the relationship between the main classes 
 
 
 Here below is an example usage scenario and how the `assign` feature works at each step:
-1. User enters `assign 1 d/tomorrow...` into the app.
-2. The input is handled by the `LogicManage#execute(String)`, which then calls and passes the input to the `NuudleParser#parseCommand(String)` method.
+1. User enters respective input into the app.
+
+2. The input is handled by the `LogicManager#execute(String)`, which then calls and passes the input to the `NuudleParser#parseCommand(String)` method.
+
 3. `NuudleParser` finds out the command word `assign` in the user input and creates an `AssignCommandParser`to parse the input according to the format specified for `AssignCommand`.
+
 4. `AssignCommandParser` parses the user input and checks the input validation for correct types (eg. `Integer` for `Index` and alphanumeric characters for `Name`) via the `AssignCommandParser#parser(String)` method.
+
 5. `AssignCommandParser#parse(String)` calls the constructor of `Index` and `DurationSupporter`, and creates a new `Index` instance and a new `DurationSupporter` object with the user input. It creates a new `AssignCommand` and passes the `Index` and `DurationSupporter` to it.
+
 6. `AssigCommand` returns the new `Command` instance to the `AssignCommandParser`, which in turn returns it to `LogicManager`.
+
 7. `LogicManager` calls the `AssignCommand#execute(Model)` method.
+
 8. The `AssigCommand#execute(Model)` method calls `AssignCommand#createAppointment()` to create an `Appointment`.
+
 9. This `Appointment` instance is added into the `Model` via `Model#addAppointment()`.
+
 10. The `Model#updateFilteredAppointmentList()` calls to update the `filteredAppointmentList` in the Model, and meanwhile checks if the `Date` and `Time` of added `Appointment` overlaps with other `Appointment` in the list.
+
 11.  Lastly, the `AssignCommand` creates a `CommandResult` with `MESSAGE_SUCCESS`, and returns it into `LogicManager`.
 
 ![AssignSequenceDiagram](images/AssignSequenceDiagram.png)
 
-#### DesignConsiderations
+#### Design Considerations
 
-Aspect: How the `assign` command executes
-- Alternative 1 (current choice): Separate parsing from code execution
-    - Pros: Clear distinction between class responsibilities.
-    - Cons: More code, may increase coupling as objects are passed around between the classes.
-- Alternative 2: Parse and Execute in the same class
-    - Pros: Less code, less fields/objects are passed between classes.
-    - Cons: No separation between classes violates the Single Responsibility Principle. It also makes debugging harder since more functions are squeezed in one big class. Also, it may be harder for further developers to understand since the design would vary from the `Add` command for `Patient` (adapted from AddressBookLevel3).
+##### Aspect: How the `assign` command executes
 
-Aspect: How to store the `Appointment` instances
-- Alternative 1 (current choice): Store in a separate `UniqueAppointmentList` class
-    - Pros: It is easier to manage `Appointment` in a separate class since many additional methods can be implemented to empower the management. Thus, This is also beneficial for other `Appointment` related commands.
-    - Cons. Another class would lead to more memory usage. Since the target user needs to keep the app running, this could be disadvantageous.
-- Alternative 2: Store inside `Patient` instances, i.e. in `UniquePatientList`.
-    - Pros: Separating list is no longer needed and the usage of `UniquePatientList` would be enlarged. This might be better for hardware memory performance.
-    - Cons: It hardens the issue of maintaining `Appointment` instances since the logic is that a `Patient` could have multiple `Appointment` but not the other way. As such, it would be harder for `Patient` related commands (`find`) to find the `Patient` and all his `Appointment` at once.
+* **Alternative 1 (current choice):** Separate parsing from code execution
+    * Pros: Clear distinction between class responsibilities.
+    * Cons: More code, may increase coupling as objects are passed around between the classes.
+
+* **Alternative 2:** Parse and Execute in the same class
+    * Pros: Less code, less fields/objects are passed between classes.
+    * Cons: No separation between classes violates the Single Responsibility Principle. It also makes debugging harder since more functions are squeezed in one big class. Also, it may be harder for further developers to understand since the design would vary from the `Add` command for `Patient` (adapted from AddressBookLevel3).
+
+##### Aspect: How to store the `Appointment` instances
+
+* **Alternative 1 (current choice):** Store in a separate `UniqueAppointmentList` class
+    * Pros: It is easier to manage `Appointment` in a separate class since many additional methods can be implemented to empower the management. Thus, This is also beneficial for other `Appointment` related commands.
+    * Cons. Another class would lead to more memory usage. Since the target user needs to keep the app running, this could be disadvantageous.
+
+* **Alternative 2:** Store inside `Patient` instances, i.e. in `UniquePatientList`.
+    * Pros: Separating list is no longer needed and the usage of `UniquePatientList` would be enlarged. This might be better for hardware memory performance.
+    * Cons: It hardens the issue of maintaining `Appointment` instances since the logic is that a `Patient` could have multiple `Appointment` but not the other way. As such, it would be harder for `Patient` related commands (`find`) to find the `Patient` and all his `Appointment` at once.
+
+### 5. Edit Patient Feature
+
+`[written by: Xin Zhe]`
+
+The Edit Patient Feature allows the nurse to edit an existing `Patient` in the patient book.
+`Appointment` which involves the patient will be updated accordingly.
+
+#### 5.1 Implementation
+
+The Edit Patient Feature is facilitated by the `EditCommand`, which extends the abstract class `Command`,
+and the `EditCommandParser`, which implements the `Parser` interface. All of these classes are part of the `Logic` component.
+
+This feature is supported by the `UniquePatientList` which stores the `patient` instances and the `UniqueAppointmentList`
+which stores the `appointment` instances. These classes are part of the `model` component.
+
+Additionally, a public static class `EditPatientDescriptor` is nested in `EditCommand` as a container class to store the details to edit the `Patient` with.
+It also implements the following operations:
+
+* `EditCommand#createEditedPatient(Patient patientToEdit, EditPatientDescriptor editPatientDescriptor)` — 
+Creates a `patient` with the details of `patientToEdit` edited with `editPatientDescriptor`.
+
+Given below is an example usage scenario and how the edit mechanism behaves at each step.
+
+Step 1: The user types `edit INDEX [n/NAME] [p/PHONE] [i/NRIC] [a/ADDRESS] [t/TAG]…` into Nuudle.
+
+Step 2: The request is handled by `LogicManager#execute(String)`, which then calls and passes the input to the `NuudleParser#parseCommand(String)` method.
+
+Step 3: `NuudleParser` detects the command word `edit` in the input string and creates a new `EditCommandParser` to parse inputs according to the format specified for `EditCommand`.
+
+Step 4: Input is parsed using the EditCommandParser#parse(String) method, which also performs input validation. The method creates a `EditPatientDescriptor` using the parsed inputs by calling the static constructor inside `EditCommand`.
+
+Step 5: The `EditCommandParser` creates a new `EditCommand` instance with the given index and newly created `EditPatientDescriptor` object and returns it to `NuudleParser`, which in turn returns it to `LogicManager`.
+
+Step 6: `LogicManager` calls the `EditCommand#execute(Model)` method.
+
+Step 7: `EditCommand` obtains a copy of the `FilteredPatientList` by calling the `Model#getFilteredPatientList()` method. This is used to check if the `patient` index supplied by the user exists in Nuudle.
+
+Step 8: `EditCommand` creates a new `patient` specified by the `EditPatientDescriptor` by calling its own private static method `EditCommand#createEditedPatient(Patient patientToEdit, EditPatientDescriptor editPatientDescriptor)`.
+
+Step 9: `EditCommand` checks whether there are duplicate patients in the patient book by calling `Model#hasPatient(Patient)` method.
+
+Step 10: `EditCommand` edits the `patient` at a given index by calling `Model#setPatient(Patient, Patient)`;
+
+Step 11: `EditCommand` edits the `appointment` in the `UniqueAppointmentList` which contains the edited patient by calling `Model#updateAppointmentsWithPatient(Patient, Patient)` method.
+
+Step 12: `EditCommand` updates the filtered list by calling `Model#updateFilteredPatientList(Predicate)` method.
+
+Step 13: `EditCommand` updates the filtered list by calling `Model#updateFilteredAppointmentList(Predicate)` method.
+
+Step 14: Lastly, `EditCommand` creates a `CommandResult` with `SuccessMessage` and `Patient` and returns it to `LogicManager`.
+
 
 _{more aspects and alternatives to be added}_
-
-
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -330,17 +433,17 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 | `* * *`  | nurse               | view the entire appointment list for the certain day| update my dentists of the itinerary for the day          |
 | `* * *`  | nurse               | mark the appointment as complete if the patient completes his/her appointment| have an accurate representation of the remaining appointments|
 | `* *`    | nurse               | add diagnosis to a completed appointment| have a record of the patient’s visit                                 |
-| `* *`    | nurse               | check the record of the patient      | view the appointment history of the patient easily                      |
 | `* *`    | administrative nurse| search for patient by phone number   | locate a patient easily                                                 |
 | `* *`    | administrative nurse| search for patient by name           | locate a patient easily                                                 |
 | `* *`    | administrative nurse| change the patient’s appointment if they call to postpone their appointment| update the appointment easily     |
-| `* *`    | administrative nurse| update patient’s details             | keep the information of patients up-to-date                             |
-| `* *`    | nurse               | add an event slot to indicate that the doctor is not available at that time period| avoid arranging an appointment to that time slot|
-| `* *`    | nurse               | get the available time slots of a day| inform my patient of the available times for that day                   |
+| `* *`    | administrative nurse| edit patient’s details               | keep the information of patients up-to-date                             |
+| `* *`    | nurse               | get the available time slots for a day| inform my patient of the available times for that day                  |
 | `*`      | nurse               | get the next available time slot     | inform my patient of the next available timing should their original preferred choice be filled|
-| `*`      | nurse               | check the earliest available slot for the clinic| automatically assign patient who does not have any preference for a specific doctor|
-| `* *`    | nurse handling multiple patient records| archive records of past appointments| review them in the future                             |
+| `* *`    | nurse handling multiple appointments| archive records of past appointments| review them in the future                                |
+| `*`      | nurse               | record the patient's existing medical condition | confirm if the medicine prescribed are suitable              |
 | `*`      | nurse               | check the patient’s drug allergy     | confirm if the medicines prescribed are not in the list                 |
+| `*`      | nurse               | get the number of appointments for the day | know how many appointments to expect today                        |
+| `*`      | nurse               | get the number of appointments for the week | know how busy the clinic is for the week                         |
 
 
 ### Use cases
@@ -452,7 +555,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 **MSS**
 
 1.  User requests to find an available time slot.
-2.  Nuudle shows a list of available time slots.
+2.  Nuudle shows the available time slots.
 3.  User requests to add an appointment to a specific time slot.
 4.  Nuudle adds the appointment to the list of appointment records.
 
@@ -506,7 +609,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 1.  User requests to list all appointments.
 2.  Nuudle shows a list of appointments.
 3.  User requests to find an available time slot.
-4.  Nuudle shows a list of available time slots.
+4.  Nuudle shows the available time slots.
 5.  User requests to change a specific appointment to another time.
 6.  Nuudle changes the appointment.
 
@@ -595,7 +698,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 1. User requests to create a <u>new patient (UC01)</u>.
 2. Nuudle creates the new patient.
 3. User requests for an available time slot on a preferred day.
-4. Nuudle shows the list of available time slots.
+4. Nuudle shows the available time slots.
 5. User requests to add an appointment for the new patient.
 6. Nuudle creates the appointment.
 

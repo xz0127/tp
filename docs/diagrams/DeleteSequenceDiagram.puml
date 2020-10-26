@@ -48,13 +48,19 @@ deactivate NuudleParser
 LogicManager -> DeleteCommand : execute()
 activate DeleteCommand
 
-DeleteCommand -> Model : deletePatient(1)
+ -> Model : getFilteredPatientList()
+activate Model
+
+Model --> DeleteCommand : lastShownList
+deactivate Model
+
+DeleteCommand -> Model : deletePatient(patientToDelete)
 activate Model
 
 Model --> DeleteCommand
 deactivate Model
 
-DeleteCommand -> Model : deleteAppointmentsWithPatient(1)
+DeleteCommand -> Model : deleteAppointmentsWithPatient(patientToDelete)
 activate Model
 
 Model --> DeleteCommand

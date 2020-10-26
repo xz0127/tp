@@ -9,6 +9,7 @@ import static seedu.address.testutil.TypicalAppointments.getTypicalAppointmentBo
 import static seedu.address.testutil.TypicalPatients.ALICE;
 import static seedu.address.testutil.TypicalPatients.BENSON;
 
+import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Arrays;
 import java.util.Collection;
@@ -130,6 +131,23 @@ public class AppointmentBookTest {
         assertThrows(UnsupportedOperationException.class, () -> appointmentBook.getAppointmentList().remove(0));
     }
 
+    @Test
+    public void getAppointmentBookStatistics_patientInAppointmentBook_returnsTrue() {
+        List<Appointment> newAppointments = Arrays.asList(ALICE_APPOINTMENT);
+        AppointmentBookStub newData = new AppointmentBookStub(newAppointments);
+        assertTrue(appointmentBook.getAppointmentBookStatistics().equals(newData.getAppointmentBookStatistics()));
+    }
+
+    @Test
+    public void getAppointmentBookStatistics_patientInAppointmentBook_returnsFalse() {
+        Appointment editedAppointmentOne = new AppointmentBuilder(ALICE_APPOINTMENT)
+                .withDate(LocalDate.now().plusDays(4)).build();
+        appointmentBook.addAppointment(editedAppointmentOne);
+        List<Appointment> newAppointments = Arrays.asList(ALICE_APPOINTMENT, editedAppointmentOne);
+        AppointmentBookStub newData = new AppointmentBookStub(newAppointments);
+        assertFalse(appointmentBook.getAppointmentBookStatistics().equals(newData.getAppointmentBookStatistics()));
+    }
+
     /**
      * A stub ReadOnlyAppointmentBook whose appointments list can violate interface constraints.
      */
@@ -143,6 +161,11 @@ public class AppointmentBookTest {
         @Override
         public ObservableList<Appointment> getAppointmentList() {
             return appointments;
+        }
+
+        @Override
+        public AppointmentStatistics getAppointmentBookStatistics() {
+            return new AppointmentStatistics(0, 0, 0, 0);
         }
     }
 
