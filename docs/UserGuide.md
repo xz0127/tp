@@ -169,9 +169,7 @@ Format: `remark INDEX [r/REMARK]`
 We implemented our Remarks feature with the hopes of empowering you with the ability to add extra information to a patient's bio data! 
 So don't be shy and feel free to add anything under the sun that you feel apt for the patient. :smile:
 </div>
-<br> 
-![result for 'Add remark'](images/addRemark.jpg)
-<br>
+
 * Creates and **adds a remark** for the patient at the specified `INDEX`. The index here refers to the index number shown on the left side of the displayed patient list. 
 * Please note that the index used **must be a positive integer** 1, 2, 3, …​
 * A remark serves as an **optional field** for adding extra info to a patient's bio data and can be left blank if it is not applicable.
@@ -180,17 +178,20 @@ So don't be shy and feel free to add anything under the sun that you feel apt fo
 * If you wish to **delete** the remark for a patient at a specific `INDEX`, simply enter either of the following commands:
     * `remark INDEX`
     * `remark INDEX r/`
-    <br>
-    ![result for 'Delete remark'](images/deleteRemark.jpg) 
-    <br>
     
 Examples to add remarks:
 *  `remark 2 r/Has been visiting Dr John` Adds a remark `Has been visiting Dr John` to the patient currently displayed second from the top in the patient list.
 *  `remark 1 r/Can only converse in mandarin` Adds a remark `Can only converse in mandarin` to the patient currently displayed at the top of the patient list.
 
+![result for 'Add remark'](images/addRemark.png)
+<br>
+
 Examples to delete the remark for a patient at `INDEX` 1:
 * `remark 1 r/`
 * `remark 1`
+
+![result for 'Empty remark'](images/nullRemark.png) 
+<br>
 
 ### Adding an appointment : `assign`
 
@@ -228,7 +229,7 @@ Example:
 
 ![AssignCommand](images/CancelCommand.png)
 
-### Reschedules and existing appointment for a patient : `change`
+### Reschedules an appointment for a patient : `change`
 
 Reschedules or modifies an existing appointment with a new date, time and duration.
 
@@ -242,16 +243,20 @@ Do note that the duration used here is measured in minutes!
 The index here refers to the index number shown on the left side of the displayed appointment list on the right side of the UI. 
 * Please note that the index used **must be a positive integer** 1, 2, 3, …
 * Please note that the `DATE` and `TIME` used for rescheduling must take place in the future.
+
 * If you wish to **modify** the duration of an existing appointment, simply call the command in the following format:
     * `change 1 d/ORIGINAL_DATE t/ORIGINAL_TIME dur/NEW_DURATION` Extends the duration of the appointment at `INDEX` 1 to the new `DURATION` with the same date and start time.
+
 * If you wish to **reschedule** the appointment with new `DATE`/`TIME`:
     * `change 1 d/NEW_DATE t/ORIGINAL_TIME dur/NEW_DURATION`
     * `change 1 d/ORIGINAL_DATE t/NEW_TIME dur/NEW_DURATION`
     * `change 1 d/NEW_DATE t/NEW_TIME dur/NEW_DURATION`
 
 Examples to reschedule appointments:
-*  `change 3 d/02-03-2021 t/1130 dur/30` Reschedules an appointment at INDEX 3 of the appointment list to 2nd March 2021, 11:30AM with a duration of 30 minutes with it's original patient.
-*  `remark 2 d/12-05-2021 t/1530 dur/60` Reschedules an appointment at INDEX 2 of the appointment list to 12th May 2021, 3:30PM with a duration of 1 hour with it's original patient.
+*  `change 3 d/02-03-2021 t/1130 dur/30` <br> Reschedules an appointment at `INDEX` 3 of the appointment list to 2nd March 2021, 11:30AM with a duration of 30 minutes with it's original patient.
+*  `change 2 d/12-05-2021 t/1530 dur/60` <br> Reschedules an appointment at `INDEX` 2 of the appointment list to 12th May 2021, 3:30PM with a duration of 1 hour with it's original patient.
+
+![ChangeCommand](images/ChangeCommand.png)
 
 ### Listing upcoming appointments by date : `view`
 
@@ -260,8 +265,8 @@ Shows a list of all upcoming appointments entries or only the list of upcoming a
 Format `view [d/DATE]`
 
 * Outputs the list of all upcoming appointments happening on the specified date in chronological order.
-* `DATE` must be in the future.
-* If `DATE` is not included, outputs the list of all upcoming appointments in chronological order.
+* The specified `DATE` must be in the future.
+* If `DATE` is not specified, `view` will outputs the list of **all** upcoming appointments in chronological order.
 
 Example:
 * `view` shows the list of all upcoming appointments in chronological order.
@@ -285,18 +290,16 @@ Example:
 
 ### Listing available time slots by date : `avail`
 
-Shows a list of all available(free) time slots within the operation time of the clinic on a specified date.
+Shows a list of all available (free) time slots within the operation time of the clinic on a specified date.
 
 Format: `avail d/DATE`
 
-* Outputs the list of all available time slots within the operation time of the clinic on a specified date based on the chronological order.
-* DATE must be today or in the future.
+* Outputs the list of all available time slots within the operation time of the clinic on a specified date in chronological order.
+* `DATE` must be today or in the future.
 
 Example:
-* `avail d/4-Aug-2020` shows the list of all available(free) time slots within the operation time of the clinic on 04/08/2020.
+* `avail d/4-Aug-2020` shows the list of all available (free) time slots within the operation time of the clinic on 04/08/2020.
 ![AvailableCommand](images/AvailableCommand.png)
-
-![DoneCommand](images/DoneCommand.png)
 
 ### Clearing all appointment entries : `clear`
 
@@ -314,10 +317,9 @@ Format: `exit`
 
 Patients and appointments data are saved in the hard disk automatically after any command that changes the data. There is no need to save manually.
 
-### Archiving data files
+### Archiving past appointments
 
-Upon starting up the app, past appointments will be automatically archived according to their months and saved into separate files.
-The files are saved in Comma-Separated Values (CSV) format and can be opened as an Excel file.
+Past appointments are automatically archived and neatly organised in an archive folder for future reference. This is done automatically everytime you start up the Nuudle app. The appointments are organised by their appointment months and are saved in Comma-Separated Values (CSV) format. CSV files can be opened and viewed as a typical Excel file.
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -351,7 +353,7 @@ Action | Format, Examples
 **Edit** | `edit INDEX [n/NAME] [p/PHONE_NUMBER] [i/NRIC] [a/ADDRESS] [t/TAG]…`<br> e.g.,`edit 2 n/James Lee a/College Avenue 8`
 **Find** | `find KEYWORD [MORE_KEYWORDS]`<br> e.g., `find James Jake`
 **List** | `list`
-**Remark** | `remark INDEX [r/REMARK]` e.g., `remark 2 r/Has been visiting Dr John`, `remark 2`
+**Remark** | `remark INDEX [r/REMARK]`<br> e.g., `remark 2 r/Has been visiting Dr John`, `remark 2`
 **Assign** | `assign INDEX d/DATE t/TIME`<br> e.g., `assign 3 d/tomorrow t/3pm`
 **Cancel** | `cancel d/DATE t/TIME`<br> e.g., `cancel d/today t/4pm`
 **Change** | `change INDEX d/DATE t/TIME dur/DURATION` <br> e.g., `change 3 d/02-03-2021 t/1130 dur/30`
