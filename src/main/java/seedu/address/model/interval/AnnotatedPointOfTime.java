@@ -16,6 +16,8 @@ public class AnnotatedPointOfTime implements Comparable<AnnotatedPointOfTime> {
      * @param type type of the point of time.
      */
     public AnnotatedPointOfTime(int timeValue, PointOfTimeType type) {
+        requireAllNonNull(timeValue, type);
+
         this.timeValue = timeValue;
         this.type = type;
     }
