@@ -1,6 +1,7 @@
 package seedu.address.model;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static seedu.address.model.AppointmentStatistics.STATISTICS_MESSAGE;
 
 import org.junit.jupiter.api.Test;
 
@@ -9,10 +10,8 @@ public class AppointmentStatisticsTest {
     public void toStringBasedOn() {
         AppointmentBook newAppointmentBook = new AppointmentBook();
 
-        assertEquals("Today: \n"
-                + "0 upcoming  |  "
-                + "0 done \n" + "This Week:\n" + "0 upcoming  |  "
-                + "0 done", newAppointmentBook.getAppointmentBookStatistics().toString());
+        assertEquals(String.format(STATISTICS_MESSAGE, 0, 0, 0, 0),
+                newAppointmentBook.getAppointmentBookStatistics().toString());
     }
 
     @Test

@@ -32,7 +32,7 @@ public class SampleDataUtil {
                 getTagSet("asthma"), new Nric("S9234567Q"), new Remark("Friendly guy")),
             new Patient(new Name("Bernice Yu"), new Phone("99272758"),
                 new Address("Blk 30 Lorong 3 Serangoon Gardens, #07-18"),
-                getTagSet("asthma", "hypertension"), new Nric("S9345678P"), new Remark("is")),
+                getTagSet("asthma", "hypertension"), new Nric("S9345678P"), new Remark("")),
             new Patient(new Name("Charlotte Oliveiro"), new Phone("93210283"),
                 new Address("Blk 11 Ang Mo Kio Street 74, #11-04"),
                 getTagSet("asthma"), new Nric("S9456789L"), new Remark("next door store owner")),
