@@ -41,6 +41,14 @@ public class ScheduleManager {
         this.appointmentList = (ObservableList<Appointment>) appointmentList;
     }
 
+    public ArrayList<AnnotatedPointOfTime> getAnnotatedPointList() {
+        return annotatedPointList;
+    }
+
+    public ObservableList<Appointment> getAppointmentList() {
+        return appointmentList;
+    }
+
     /**
      * Constructs the operation time interval based on the operation time of the clinic.
      *

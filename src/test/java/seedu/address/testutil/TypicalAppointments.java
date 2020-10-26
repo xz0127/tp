@@ -67,10 +67,30 @@ public class TypicalAppointments {
         return ab;
     }
 
+    /**
+     * Returns an {@code AppointmentBook} with all the typical Appointments except BENSON_APPOINTMENT_2.
+     */
+    public static AppointmentBook getSecondTypicalAppointmentBook() {
+        AppointmentBook ab = new AppointmentBook();
+        for (Appointment appointment : getSecondTypicalAppointments()) {
+            ab.addAppointment(appointment);
+        }
+        return ab;
+    }
+
     public static List<Appointment> getTypicalAppointments() {
         List<Appointment> appointmentList = Arrays.asList(
                 ALICE_APPOINTMENT, BENSON_APPOINTMENT, CARL_APPOINTMENT,
                 CARL_APPOINTMENT_2, ALICE_APPOINTMENT_2, BENSON_APPOINTMENT_2
+        );
+        appointmentList.sort(new AppointmentComparator());
+        return appointmentList;
+    }
+
+    public static List<Appointment> getSecondTypicalAppointments() {
+        List<Appointment> appointmentList = Arrays.asList(
+            ALICE_APPOINTMENT, BENSON_APPOINTMENT, CARL_APPOINTMENT,
+            CARL_APPOINTMENT_2, ALICE_APPOINTMENT_2
         );
         appointmentList.sort(new AppointmentComparator());
         return appointmentList;
