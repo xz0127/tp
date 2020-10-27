@@ -52,14 +52,14 @@ public class AvailableCommandTest {
 
     @Test
     public void constructor_nullPredicate_throwsNullPointerException() {
-        assertThrows(NullPointerException.class, () -> new AvailableCommand(null));
+        assertThrows(NullPointerException.class, () -> new AvailableCommand(null, (Boolean) null));
     }
 
     @Test
     public void execute_multipleSlotsAvailable_availableSuccessful() {
         String expectedMessage = MESSAGE_AVAILABLE_TIME_SLOTS;
         DateMatchesPredicate predicate = preparePredicate(LocalDate.of(2050, 1, 1));
-        AvailableCommand command = new AvailableCommand(predicate);
+        AvailableCommand command = new AvailableCommand(predicate, false);
 
         TimeInterval intervalOne = new TimeInterval(new Time(8, 0), new Time(9, 0));
         TimeInterval intervalTwo = new TimeInterval(new Time(10, 0), new Time(20, 0));
@@ -79,7 +79,7 @@ public class AvailableCommandTest {
     public void execute_entireDayAvailable_availableSuccessful() {
         String expectedMessage = MESSAGE_AVAILABLE_TIME_SLOTS;
         DateMatchesPredicate predicate = preparePredicate(LocalDate.of(2088, 3, 3));
-        AvailableCommand command = new AvailableCommand(predicate);
+        AvailableCommand command = new AvailableCommand(predicate, false);
 
         TimeInterval interval = new TimeInterval(new Time(Time.OPENING_TIME), new Time(Time.CLOSING_TIME));
         ArrayList<TimeInterval> intervals = new ArrayList<>();
@@ -103,14 +103,14 @@ public class AvailableCommandTest {
         DateMatchesPredicate firstPredicateCopy =
             new DateMatchesPredicate(ParserUtil.parseDate(VALID_DATE));
 
-        AvailableCommand firstAvailableCommand = new AvailableCommand(firstPredicate);
-        AvailableCommand secondAvailableCommand = new AvailableCommand(secondPredicate);
+        AvailableCommand firstAvailableCommand = new AvailableCommand(firstPredicate, false);
+        AvailableCommand secondAvailableCommand = new AvailableCommand(secondPredicate, false);
 
         // same object -> returns true
         assertTrue(firstAvailableCommand.equals(firstAvailableCommand));
 
         // same values -> returns true
-        AvailableCommand firstAvailableCommandCopy = new AvailableCommand(firstPredicateCopy);
+        AvailableCommand firstAvailableCommandCopy = new AvailableCommand(firstPredicateCopy, false);
         assertTrue(firstAvailableCommand.equals(firstAvailableCommandCopy));
 
         // different types -> returns false

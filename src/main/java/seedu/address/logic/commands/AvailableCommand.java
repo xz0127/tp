@@ -26,15 +26,18 @@ public class AvailableCommand extends Command {
 
     private final Predicate<Appointment> predicate;
 
+    private final boolean isToday;
+
     /**
      * Creates a AvailableCommand to find all available time slots on a date.
      *
      * @param predicate date of the appointments.
      */
-    public AvailableCommand(Predicate<Appointment> predicate) {
+    public AvailableCommand(Predicate<Appointment> predicate, boolean isToday) {
         requireNonNull(predicate);
 
         this.predicate = predicate;
+        this.isToday = isToday;
     }
 
     @Override
@@ -43,7 +46,7 @@ public class AvailableCommand extends Command {
         model.updateFilteredAppointmentList(predicate);
 
         List<Appointment> lastShownAppointmentList = model.getFilteredAppointmentList();
-        String timeSlotsMessage = model.findAvailableTimeSlots(lastShownAppointmentList);
+        String timeSlotsMessage = model.findAvailableTimeSlots(lastShownAppointmentList, isToday);
 
         return new CommandResult(MESSAGE_SUCCESS + timeSlotsMessage);
     }
@@ -52,6 +55,7 @@ public class AvailableCommand extends Command {
     public boolean equals(Object other) {
         return other == this
             || (other instanceof AvailableCommand
-            && predicate.equals(((AvailableCommand) other).predicate));
+            && (predicate.equals(((AvailableCommand) other).predicate)
+            && isToday == ((AvailableCommand) other).isToday));
     }
 }

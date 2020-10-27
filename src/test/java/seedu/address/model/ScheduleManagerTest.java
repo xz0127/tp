@@ -17,10 +17,10 @@ import seedu.address.testutil.TypicalTimeIntervals;
 public class ScheduleManagerTest {
 
     private ScheduleManager scheduleManager = new ScheduleManager(
-        TypicalAppointments.getSecondTypicalAppointmentBook().getAppointmentList());
+        TypicalAppointments.getSecondTypicalAppointmentBook().getAppointmentList(), false);
 
     private ScheduleManager secondScheduleManager = new ScheduleManager(
-        TypicalAppointments.getThirdTypicalAppointmentBook().getAppointmentList());
+        TypicalAppointments.getThirdTypicalAppointmentBook().getAppointmentList(), false);
 
     private TimeIntervalList intervals = TypicalTimeIntervals.getTypicalTimeIntervalList();
 

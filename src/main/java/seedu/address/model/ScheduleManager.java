@@ -1,5 +1,6 @@
 package seedu.address.model;
 
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -32,15 +33,19 @@ public class ScheduleManager {
 
     private TimeIntervalList availableTimeSlots;
 
+    private boolean isToday;
+
     /**
      * Constructs a schedule manager to find available time slots.
      *
      * @param appointmentList a list of appointment.
+     * @param isToday whether the scheduling is for today.
      */
-    public ScheduleManager(List<Appointment> appointmentList) {
+    public ScheduleManager(List<Appointment> appointmentList, boolean isToday) {
         this.annotatedPointList = new ArrayList<>();
         this.availableTimeSlots = new TimeIntervalList();
         this.appointmentList = (ObservableList<Appointment>) appointmentList;
+        this.isToday = isToday;
     }
 
     public ArrayList<AnnotatedPointOfTime> getAnnotatedPointList() {
@@ -62,7 +67,14 @@ public class ScheduleManager {
      */
     public TimeIntervalList constructOperationTimeIntervals() {
         ArrayList<TimeInterval> operationTimeIntervals = new ArrayList<>();
-        operationTimeIntervals.add(OPERATION_TIME);
+        if (isToday) {
+            LocalTime currentTime = LocalTime.now();
+            Time current = new Time(currentTime.getHour(), currentTime.getMinute());
+            TimeInterval todayInterval = new TimeInterval(current, CLOSE_TIME);
+            operationTimeIntervals.add(todayInterval);
+        } else {
+            operationTimeIntervals.add(OPERATION_TIME);
+        }
         return new TimeIntervalList(operationTimeIntervals);
     }
 

@@ -176,7 +176,7 @@ public class AddCommandTest {
         }
 
         @Override
-        public String findAvailableTimeSlots(List<Appointment> appointmentList) {
+        public String findAvailableTimeSlots(List<Appointment> appointmentList, boolean isToday) {
             throw new AssertionError("This method should not be called.");
         }
 

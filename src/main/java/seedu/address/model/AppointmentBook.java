@@ -135,10 +135,11 @@ public class AppointmentBook implements ReadOnlyAppointmentBook {
      * Finds the available time slots on a specific date based on the {@code appointmentList}.
      *
      * @param appointmentList the list of appointments on a specific date.
+     * @param isToday whether the date is today.
      */
-    public String findAvailableTimeSlots(List<Appointment> appointmentList) {
+    public String findAvailableTimeSlots(List<Appointment> appointmentList, boolean isToday) {
         requireNonNull(appointmentList);
-        return appointments.findAvailableTimeSlots(appointmentList);
+        return appointments.findAvailableTimeSlots(appointmentList, isToday);
     }
 
     // util methods

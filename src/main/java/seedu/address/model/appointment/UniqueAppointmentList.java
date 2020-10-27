@@ -157,8 +157,8 @@ public class UniqueAppointmentList implements Iterable<Appointment> {
      * Finds the available time slots based on the {@code appointmentList} on a specified date
      * and output as a string message.
      */
-    public String findAvailableTimeSlots(List<Appointment> appointmentList) {
-        ScheduleManager scheduleManager = new ScheduleManager(appointmentList);
+    public String findAvailableTimeSlots(List<Appointment> appointmentList, boolean isToday) {
+        ScheduleManager scheduleManager = new ScheduleManager(appointmentList, isToday);
         // ArrayList<TimeInterval> availableTimeIntervals = scheduleManager.findFreeSlots();
         return scheduleManager.findFreeSlots();
     }

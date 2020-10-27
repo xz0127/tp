@@ -35,7 +35,7 @@ public class AvailableCommandParserTest {
 
     @Test
     public void parse_validArgs_returnsAvailableCommand() throws ParseException {
-        AvailableCommand expectedCommand = new AvailableCommand(preparePredicate(VALID_DATE));
+        AvailableCommand expectedCommand = new AvailableCommand(preparePredicate(VALID_DATE), false);
         assertParseSuccess(parser, ASSIGN_DATE, expectedCommand);
     }
 

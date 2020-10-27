@@ -137,7 +137,7 @@ public interface Model {
      * Appointments in {@code appointmentList} must take place on the same date.
      * Returns the available time slots in string format.
      */
-    String findAvailableTimeSlots(List<Appointment> appointmentList);
+    String findAvailableTimeSlots(List<Appointment> appointmentList, boolean isToday);
 
     /** Returns an unmodifiable view of the filtered patient list */
     ObservableList<Patient> getFilteredPatientList();
