@@ -76,9 +76,7 @@ public class Patient {
         }
 
         return otherPatient != null
-                && otherPatient.getName().equals(getName())
-                && otherPatient.getNric().equals(getNric())
-                && (otherPatient.getPhone().equals(getPhone()));
+                && otherPatient.getNric().equals(getNric());
     }
 
     /**

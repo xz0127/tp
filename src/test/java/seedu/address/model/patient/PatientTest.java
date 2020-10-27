@@ -31,16 +31,16 @@ public class PatientTest {
         // null -> returns false
         assertFalse(ALICE.isSamePatient(null));
 
-        // different phone -> returns false
+        // different phone -> returns true
         Patient editedAlice = new PatientBuilder(ALICE).withPhone(VALID_PHONE_BOB).build();
-        assertFalse(ALICE.isSamePatient(editedAlice));
+        assertTrue(ALICE.isSamePatient(editedAlice));
 
-        // different name -> returns false
+        // different name -> returns true
         editedAlice = new PatientBuilder(ALICE).withName(VALID_NAME_BOB).build();
-        assertFalse(ALICE.isSamePatient(editedAlice));
+        assertTrue(ALICE.isSamePatient(editedAlice));
 
         // different nric -> returns false
-        editedAlice = new PatientBuilder(ALICE).withName(VALID_NRIC_BOB).build();
+        editedAlice = new PatientBuilder(ALICE).withNric(VALID_NRIC_BOB).build();
         assertFalse(ALICE.isSamePatient(editedAlice));
 
         // same name, same phone, same nric, different attributes -> returns true
