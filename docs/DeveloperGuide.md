@@ -429,7 +429,10 @@ extends the abstract class `Command`. A `RemarkCommandParser` which implements t
 to instantiate a `RemarkCommand` from the user input. The classes mentioned above in this paragraph resides in our 
 `logic` component.
 
-The following is a step by step illustration of how the remark command mechanism works for an example scenario:
+#### 6.2 Implementation Illustration
+<br>![RemarkSequenceDiagram](images/RemarkSequenceDiagram.png)
+
+The following is a step by step illustration of how the remark command mechanism works for an example scenario based on the sequence diagram above:
 
 1. The user executes the `remark 1 r/Can only converse in chinese` command to add the remark `Can only ...` to the first patient
 in the patient list currently displayed to the user.
@@ -442,15 +445,13 @@ in the input string and creates a new `RemarkCommandParser`.
 4. The `RemarkCommandParser#parse(String)` method is then subsequently called to parse the rest of the input string according to the format specified for 
 `RemarkCommand`. Input validation for the appropriate `Index` and `Remark` format is performed here by calling the 
 `ParserUtil#parseIndex` and `ParserUtil#parseRemark` methods respectively. <br>
-<br>The above process is shown in the following sequence diagram:
+<br>The process described in step 4 is shown in the following sequence diagram:
 ![RemarkParserRefSequenceDiagram](images/RemarkParserRefSequenceDiagram.png)
 
 5. The `RemarkCommandParser` then instantiates a new `RemarkCommand` with the appropriate `Index` and `Remark` object.
 This new `RemarkCommand` is then returned to `NuudleParser` and subsequently `LogicManager` at the end of the `NuudleParser#parseCommand(String)` execution.
 
 6. `LogicManager` proceeds to call the `RemarkCommand#execute(Model)` method.
-<br><br>The above process is shown in the following sequence diagram:
-![RemarkSequenceDiagram](images/RemarkSequenceDiagram.png)
 
 7. `RemarkCommand` obtains a copy of the `FilteredPatientList` by calling the `Model#getFilteredPatientList()` method.
 
@@ -462,7 +463,7 @@ This new `RemarkCommand` is then returned to `NuudleParser` and subsequently `Lo
 
 11. `Model#updateFilteredPatientList` is then called to update the `FilteredPatientList` displayed by the UI.
 <br><br>The above process is shown in the following sequence diagram:
-![RemarkModelSequenceDiagram](images/RemarkModelSequenceDiagram.png)
+<br>![RemarkModelSequenceDiagram](images/RemarkModelSequenceDiagram.png)
 12. Lastly, the `RemarkCommand` creates a `CommandResult` with a `SuccessMessage` and returns it to `LogicManager`.
 
 13. The `SuccessMessage` is then displayed to the user via the GUI.
