@@ -390,6 +390,7 @@ which is in turn stored in the `PatientBook`. These classes are a part of the `M
 in the class diagram below. 
 
 ![RemarkLogicClassDiagram](images/RemarkLogicClassDiagram.png)
+<br>*Diagram 6.1.1: Class diagram for classes involved in the remark feature of the Model component *
  
 Additionally, to facilitate greater convenience for our users, we have implemented our remark feature to support the following pathways:
 
