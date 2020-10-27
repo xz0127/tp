@@ -5,6 +5,12 @@ title: Developer Guide
 * Table of Contents
 {:toc}
 
+## **Introduction**
+
+This document is the developer guide for Nuudle, an appointment scheduling app for nurses.
+
+This developer guide serves to provide developers with an understanding on how Nuudle is designed.
+
 --------------------------------------------------------------------------------------------------------------------
 
 ## **Setting up, getting started**
@@ -14,6 +20,8 @@ Refer to the guide [_Setting up and getting started_](SettingUp.md).
 --------------------------------------------------------------------------------------------------------------------
 
 ## **Design**
+
+This section describes the design & implementation of Nuudle using a top-down design.
 
 ### Architecture
 
