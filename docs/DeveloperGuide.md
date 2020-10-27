@@ -376,6 +376,95 @@ Step 14: Lastly, `EditCommand` creates a `CommandResult` with `SuccessMessage` a
 
 _{more aspects and alternatives to be added}_
 
+### 6. Remark feature
+
+`[written by: Low Ming Lim]`
+
+The remark feature allows users to add a custom note to a new or existing patient using the `r/` tag in multiple commands.
+This provides our users with the flexibility and freedom to store extra notes or bio data for a patient apart from the compulsory 
+fields such as name, phone number, etc.
+
+#### 6.1 Implementation
+This feature creates a `Remark` instance which is stored internally in Nuudle as a variable of a `Patient` object
+which is in turn stored in the `PatientBook`. These classes are a part of the `Model` component and are illustrated
+in the class diagram below. 
+
+
+ 
+Additionally, to facilitate greater convenience for our users, we have implemented our remark feature to support the following pathways:
+
+1. Adding a remark via the `AddCommand` for a new `Patient`: 
+    
+    Command syntax: `add n/NAME i/NRIC p/PHONE_NUMBER a/ADDRESS [r/REMARK] [t/TAG]…​`
+    
+    Example Usage:
+    * `done d/Monday t/9am`
+    * `done d/12-12-2020 t/12pm`
+
+1. Adding a remark via the RemarkCommand for an existing `Patient`:
+    
+    Command syntax: `remark INDEX [r/REMARK]`
+    
+    Example Usage:
+    * `remark 2 r/Has been visiting Dr John`
+    * `remark 1 r/Can only converse in mandarin`
+
+1.  Or via the `EditCommand`:
+ 
+    Command syntax: `edit INDEX [r/REMARK]`
+    
+    Example Usage:
+    * `edit 1 r/Can only converse in mandarin`
+    * `edit 2 n/Betsy r/Has been visiting Dr John`
+
+This segment will focus on the implementation details for the `RemarkCommand` pathway. The implementation for the 
+alternative `AddCommand` and `EditCommand` pathway can be found as another segment in our Developer's Guide.
+
+ 
+The addition of a remark via the remark command pathway is mainly facilitated by the `RemarkCommand` class which
+extends the abstract class `Command`. A `RemarkCommandParser` which implements the `Parser` interface is required 
+to instantiate a `RemarkCommand` from the user input. The classes mentioned above in this paragraph resides in our 
+`logic` component.
+
+The following is a step by step illustration of how the remark command mechanism works for an example scenario:
+
+1. The user executes the `remark 1 r/Can only converse in chinese` command to add the remark `Can only ...` to the first patient
+in the patient list currently displayed to the user.
+
+2. This request is handled by `LogicManager#execute(String)`, which then calls and passes the input over to the `NuudleParser#parseCommand(String)` method.
+
+3. During the execution of the `NuudleParser#parseCommand(String)` method, `NuudleParser` detects the command word `remark` 
+in the input string and creates a new `RemarkCommandParser`.
+
+4. The `RemarkCommandParser#parse(String)` method is then subsequently called to parse the rest of the input string according to the format specified for 
+`RemarkCommand`. Input validation for the appropriate `Index` and `Remark` format is performed here by calling the 
+`ParserUtil#parseIndex` and `ParserUtil#parseRemark` methods respectively.
+
+5. The `RemarkCommandParser` then instantiates a new `RemarkCommand` with the appropriate `Index` and `Remark` object.
+This new `RemarkCommand` is then returned to `NuudleParser` and subsequently `LogicManager` at the end of the `NuudleParser#parseCommand(String)` execution.
+
+6. `LogicManager` proceeds to call the `RemarkCommand#execute(Model)` method.
+
+7. `RemarkCommand` obtains a copy of the `FilteredPatientList` by calling the `Model#getFilteredPatientList()` method.
+
+8. The `patientToEdit` is then identified from the `FilteredPatientList` based on the `Index` provided. 
+
+9. A new `editedPatient` is then created with the input `Remark` while the rest of its particulars are duplicated from the `patientToEdit`.
+
+10. After all is done, the `editedPatient` is set to replace the `patientToEdit` in the `Model` via the `Model#setPatient(Patient, Patient)` method.
+
+11. `Model#updateFilteredPatientList` is then called to update the `FilteredPatientList` displayed by the UI.
+
+12. Lastly, the `RemarkCommand` creates a `CommandResult` with a `SuccessMessage` and returns it to `LogicManager`.
+
+13. The `SuccessMessage` is then displayed to the user via the GUI.
+
+The above process is shown in the following sequence diagram:
+![DoneSequenceDiagram](images/DoneSequenceDiagram.png)
+
+The following activity diagram summarizes what happens when a user executes a new command:
+![DoneCommandActivityDiagram](images/DoneCommandActivityDiagram.png)
+
 --------------------------------------------------------------------------------------------------------------------
 
 ## **Documentation, logging, testing, configuration, dev-ops**
