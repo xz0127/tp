@@ -389,7 +389,7 @@ This feature creates a `Remark` instance which is stored internally in Nuudle as
 which is in turn stored in the `PatientBook`. These classes are a part of the `Model` component and are illustrated
 in the class diagram below. 
 
-
+![RemarkLogicClassDiagram](images/RemarkLogicClassDiagram.png)
  
 Additionally, to facilitate greater convenience for our users, we have implemented our remark feature to support the following pathways:
 
@@ -398,10 +398,10 @@ Additionally, to facilitate greater convenience for our users, we have implement
     Command syntax: `add n/NAME i/NRIC p/PHONE_NUMBER a/ADDRESS [r/REMARK] [t/TAG]…​`
     
     Example Usage:
-    * `done d/Monday t/9am`
-    * `done d/12-12-2020 t/12pm`
+    * `add n/Betsy i/S9123456G t/friend a/NUS Utown p/1234567 r/Prefers Dr John`
+    * `add n/John Doe i/S9730284G p/98765432 a/John street, block 123, #01-01 r/Regular customer`
 
-1. Adding a remark via the RemarkCommand for an existing `Patient`:
+1. Adding a remark via the `RemarkCommand` for an existing `Patient`:
     
     Command syntax: `remark INDEX [r/REMARK]`
     
@@ -411,14 +411,17 @@ Additionally, to facilitate greater convenience for our users, we have implement
 
 1.  Or via the `EditCommand`:
  
-    Command syntax: `edit INDEX [r/REMARK]`
+    Command syntax: `edit INDEX [n/NAME] [i/NRIC] [p/PHONE_NUMBER] [a/ADDRESS] [r/REMARK] [t/TAG]…`
     
     Example Usage:
     * `edit 1 r/Can only converse in mandarin`
     * `edit 2 n/Betsy r/Has been visiting Dr John`
 
+Refer to the following activity diagram for a summary of the above pathways.
+![RemarkPathwaysActivityDiagram](images/RemarkPathwaysActivityDiagram.png)
+
 This segment will focus on the implementation details for the `RemarkCommand` pathway. The implementation for the 
-alternative `AddCommand` and `EditCommand` pathway can be found as another segment in our Developer's Guide.
+alternative `AddCommand` and `EditCommand` pathways can be found in another segment of our Developer's Guide.
 
  
 The addition of a remark via the remark command pathway is mainly facilitated by the `RemarkCommand` class which
@@ -438,12 +441,16 @@ in the input string and creates a new `RemarkCommandParser`.
 
 4. The `RemarkCommandParser#parse(String)` method is then subsequently called to parse the rest of the input string according to the format specified for 
 `RemarkCommand`. Input validation for the appropriate `Index` and `Remark` format is performed here by calling the 
-`ParserUtil#parseIndex` and `ParserUtil#parseRemark` methods respectively.
+`ParserUtil#parseIndex` and `ParserUtil#parseRemark` methods respectively. <br>
+<br>The above process is shown in the following sequence diagram:
+![RemarkParserRefSequenceDiagram](images/RemarkParserRefSequenceDiagram.png)
 
 5. The `RemarkCommandParser` then instantiates a new `RemarkCommand` with the appropriate `Index` and `Remark` object.
 This new `RemarkCommand` is then returned to `NuudleParser` and subsequently `LogicManager` at the end of the `NuudleParser#parseCommand(String)` execution.
 
 6. `LogicManager` proceeds to call the `RemarkCommand#execute(Model)` method.
+<br><br>The above process is shown in the following sequence diagram:
+![RemarkSequenceDiagram](images/RemarkSequenceDiagram.png)
 
 7. `RemarkCommand` obtains a copy of the `FilteredPatientList` by calling the `Model#getFilteredPatientList()` method.
 
@@ -454,16 +461,15 @@ This new `RemarkCommand` is then returned to `NuudleParser` and subsequently `Lo
 10. After all is done, the `editedPatient` is set to replace the `patientToEdit` in the `Model` via the `Model#setPatient(Patient, Patient)` method.
 
 11. `Model#updateFilteredPatientList` is then called to update the `FilteredPatientList` displayed by the UI.
-
+<br><br>The above process is shown in the following sequence diagram:
+![RemarkModelSequenceDiagram](images/RemarkModelSequenceDiagram.png)
 12. Lastly, the `RemarkCommand` creates a `CommandResult` with a `SuccessMessage` and returns it to `LogicManager`.
 
 13. The `SuccessMessage` is then displayed to the user via the GUI.
 
-The above process is shown in the following sequence diagram:
-![DoneSequenceDiagram](images/DoneSequenceDiagram.png)
+The following activity diagram summarizes the above steps when a user uses the remark command pathway:
 
-The following activity diagram summarizes what happens when a user executes a new command:
-![DoneCommandActivityDiagram](images/DoneCommandActivityDiagram.png)
+![RemarkCommandActivityDiagram](images/RemarkCommandActivityDiagram.png)
 
 --------------------------------------------------------------------------------------------------------------------
 

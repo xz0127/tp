@@ -1,0 +1,17 @@
+@startuml
+start
+:User wants to add a remark for a patient;
+:Is the patient an existing patient in the system?;
+if() then ([yes])
+    :Does the user want to modify any other
+    details of the patient?;
+    if() then ([yes])
+        : User adopts the EditCommand Pathway;
+    else ([no])
+        : User adopts the RemarkCommand Pathway;
+        endif
+else ([no, he/she is a new patient])
+    :User adopts the AddCommand pathway;
+endif
+stop
+@enduml
