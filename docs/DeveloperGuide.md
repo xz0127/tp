@@ -472,6 +472,24 @@ The following activity diagram summarizes the above steps when a user uses the r
 
 ![RemarkCommandActivityDiagram](images/RemarkCommandActivityDiagram.png)
 
+#### 6.3 Design Considerations
+
+##### Aspect: How the `remark` command executes
+
+* **Alternative 1 (current choice):** Separate parsing from code execution
+    * Pros: Responsibilities of classes are clearly distinguished. Adherence to the Single Responsibility Principle 
+    helps improve code cohesion. Changes to either the parser or execution will no longer affect each other.
+        
+    * Cons: Increases the code base, may increase coupling as objects are passed around between the classes. 
+    More tests have to be written for the respective classes, thus increasing the cost of testing.
+
+* **Alternative 2:** Parse and Execute in the same class
+    * Pros: Size of code base is reduced. Fewer objects are passed between classes thereby reducing coupling.
+    
+    * Cons: Violates the Single Responsibility Principle and reduces code readability. 
+    Harder for team members to maintain the code base. Increases code cohesion. 
+    Code design will also differ from other commands such as `Add` and `Edit` which are adapted from AddressBookLevel3.
+
 --------------------------------------------------------------------------------------------------------------------
 
 ## **Documentation, logging, testing, configuration, dev-ops**
