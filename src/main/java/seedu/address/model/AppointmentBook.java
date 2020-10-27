@@ -2,10 +2,13 @@ package seedu.address.model;
 
 import static java.util.Objects.requireNonNull;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import javafx.collections.ObservableList;
 import seedu.address.model.appointment.Appointment;
+import seedu.address.model.appointment.Date;
+import seedu.address.model.appointment.DateMatchesPredicate;
 import seedu.address.model.appointment.UniqueAppointmentList;
 import seedu.address.model.patient.Patient;
 
@@ -143,6 +146,24 @@ public class AppointmentBook implements ReadOnlyAppointmentBook {
     }
 
     @Override
+    public AppointmentStatistics getAppointmentBookStatistics() {
+        Date today = new Date(LocalDate.now());
+        ObservableList<Appointment> thisWeek = appointments.asUnmodifiableObservableList()
+                .filtered(appointment -> appointment.isInSameWeek(today));
+        int totalThisWeek = thisWeek.size();
+        int upcomingThisWeek = thisWeek
+                .filtered(appointment -> !appointment.getIsDoneStatus()).size();
+        int doneThisWeek = totalThisWeek - upcomingThisWeek;
+        DateMatchesPredicate p = new DateMatchesPredicate(today);
+        ObservableList<Appointment> listOfAppointmentsInToday = appointments.asUnmodifiableObservableList().filtered(p);
+        int totalToday = listOfAppointmentsInToday.size();
+        int doneToday = listOfAppointmentsInToday.filtered(appointment -> appointment.getIsDoneStatus()).size();
+        int upcomingToday = totalToday - doneToday;
+        return new AppointmentStatistics(doneToday, upcomingToday, doneThisWeek, upcomingThisWeek);
+    }
+
+
+    @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof AppointmentBook // instanceof handles nulls
@@ -153,4 +174,5 @@ public class AppointmentBook implements ReadOnlyAppointmentBook {
     public int hashCode() {
         return appointments.hashCode();
     }
+
 }
