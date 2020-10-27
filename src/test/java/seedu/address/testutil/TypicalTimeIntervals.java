@@ -22,6 +22,9 @@ public class TypicalTimeIntervals {
     public static final TimeInterval INTERVAL_FIVE = new TimeInterval(
         new Time(17, 0), new Time(17, 0));
 
+    public static final TimeInterval INTERVAL_SIX = new TimeInterval(
+        new Time(8, 0), new Time(22, 0));
+
     public static ArrayList<TimeInterval> getTypicalTimeIntervals() {
         ArrayList<TimeInterval> intervals = new ArrayList<>();
         intervals.add(INTERVAL_ONE);

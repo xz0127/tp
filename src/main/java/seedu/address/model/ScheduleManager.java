@@ -25,11 +25,11 @@ public class ScheduleManager {
     // Constructs a time interval based on the opening time and closing time.
     public static final TimeInterval OPERATION_TIME = new TimeInterval(OPEN_TIME, CLOSE_TIME);
 
-    //    public static final TimeConversionUtil TIME_CONVERTER = new TimeConversionUtil();
-
     private ArrayList<AnnotatedPointOfTime> annotatedPointList;
 
     private ObservableList<Appointment> appointmentList;
+
+    private TimeIntervalList availableTimeSlots;
 
     /**
      * Constructs a schedule manager to find available time slots.
@@ -38,6 +38,7 @@ public class ScheduleManager {
      */
     public ScheduleManager(List<Appointment> appointmentList) {
         this.annotatedPointList = new ArrayList<>();
+        this.availableTimeSlots = new TimeIntervalList();
         this.appointmentList = (ObservableList<Appointment>) appointmentList;
     }
 
@@ -47,6 +48,10 @@ public class ScheduleManager {
 
     public ObservableList<Appointment> getAppointmentList() {
         return appointmentList;
+    }
+
+    public TimeIntervalList getAvailableTimeSlots() {
+        return availableTimeSlots;
     }
 
     /**
@@ -186,7 +191,24 @@ public class ScheduleManager {
         annotateAppointmentTime(appointmentTimeIntervals);
 
         queueAnnotatedPoints();
-        TimeIntervalList availableTimeSlots = findNonOverlappingIntervals(annotatedPointList);
+        availableTimeSlots = findNonOverlappingIntervals(annotatedPointList);
         return availableTimeSlots.clearZeroIntervals().toString();
+    }
+
+    /**
+     * Finds the next available time slot for 1 hour appointment on a specified date.
+     *
+     * @return a string message of the next available time.
+     */
+    public String getNextAvailableSlot(TimeIntervalList availableTimeSlots) {
+        for (TimeInterval timeInterval : availableTimeSlots.getTimeIntervals()) {
+            if (timeInterval.isAtLeastOneHour()) {
+                Time startTime = timeInterval.getStartTime();
+                Time endTime = new Time(startTime.getTime().plusHours(1));
+                TimeInterval nextInterval = new TimeInterval(startTime, endTime);
+                return nextInterval.toString();
+            }
+        }
+        return "Sorry we cannot find any slot available for 1 hour appointment.";
     }
 }

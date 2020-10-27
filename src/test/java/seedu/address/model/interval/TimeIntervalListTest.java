@@ -48,4 +48,18 @@ public class TimeIntervalListTest {
         timeIntervalList.add(TypicalTimeIntervals.INTERVAL_FOUR);
         assertTrue(intervals.equalsTo(timeIntervalList));
     }
+
+    @Test
+    public void isAtLeastOneHour_returnTrue() {
+        assertTrue(TypicalTimeIntervals.INTERVAL_ONE.isAtLeastOneHour());
+        assertTrue(TypicalTimeIntervals.INTERVAL_SIX.isAtLeastOneHour());
+    }
+
+    @Test
+    public void isAtLeastOneHour_returnFalse() {
+        assertFalse(TypicalTimeIntervals.INTERVAL_TWO.isAtLeastOneHour());
+        assertFalse(TypicalTimeIntervals.INTERVAL_THREE.isAtLeastOneHour());
+        assertFalse(TypicalTimeIntervals.INTERVAL_FOUR.isAtLeastOneHour());
+        assertFalse(TypicalTimeIntervals.INTERVAL_FIVE.isAtLeastOneHour());
+    }
 }

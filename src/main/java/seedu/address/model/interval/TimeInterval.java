@@ -2,6 +2,7 @@ package seedu.address.model.interval;
 
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
+import seedu.address.commons.util.TimeConversionUtil;
 import seedu.address.model.appointment.Time;
 
 /**
@@ -41,6 +42,16 @@ public class TimeInterval {
 
     public Time getEndTime() {
         return endTime;
+    }
+
+    /**
+     * Checks if a specific time interval last for more than 60 minutes.
+     * @return true if the interval is at least one hour and false otherwise.
+     */
+    public boolean isAtLeastOneHour() {
+        int endTimeInInt = TimeConversionUtil.convertTimeToInt(endTime);
+        int startTimeInInt = TimeConversionUtil.convertTimeToInt(startTime);
+        return (endTimeInInt - startTimeInInt) >= 60;
     }
 
     /**

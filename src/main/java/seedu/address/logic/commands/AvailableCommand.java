@@ -24,6 +24,8 @@ public class AvailableCommand extends Command {
 
     public static final String MESSAGE_SUCCESS = "Listing all available time slots: \n";
 
+    public static final String MESSAGE_NEXT = "Next available time slot for appointment: \n";
+
     private final Predicate<Appointment> predicate;
 
     /**
