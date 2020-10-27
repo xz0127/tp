@@ -1,8 +1,5 @@
 package seedu.address.ui;
 
-import static javafx.scene.input.KeyCode.DOWN;
-import static javafx.scene.input.KeyCode.UP;
-
 import java.util.List;
 
 import javafx.collections.ObservableList;
