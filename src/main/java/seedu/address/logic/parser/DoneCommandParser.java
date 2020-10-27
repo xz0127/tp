@@ -34,7 +34,6 @@ public class DoneCommandParser implements Parser<DoneCommand> {
         if (argMultimap.getValue(PREFIX_TIME).isEmpty()) {
             throw new ParseException(DoneCommand.TIME_MISSING);
         }
-
         DateTimeLoader dateTimeLoader = new DateTimeLoader();
         Date date = ParserUtil.parseDate(argMultimap.getValue(PREFIX_DATE).get());
         Time time = ParserUtil.parseTime(argMultimap.getValue(PREFIX_TIME).get());

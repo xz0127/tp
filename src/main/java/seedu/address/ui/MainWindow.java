@@ -1,9 +1,15 @@
 package seedu.address.ui;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.logging.Logger;
 
+import javafx.animation.Animation;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.SplitPane;
 import javafx.scene.control.TextInputControl;
@@ -11,12 +17,15 @@ import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.logic.Logic;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.AppointmentStatistics;
+
 
 /**
  * The Main Window. Provides the basic application layout containing
@@ -35,6 +44,7 @@ public class MainWindow extends UiPart<Stage> {
     private PatientListPanel patientListPanel;
     private AppointmentListPanel appointmentListPanel;
     private ResultDisplay resultDisplay;
+    private StatisticsDisplay statisticsDisplay;
     private HelpWindow helpWindow;
 
     @FXML
@@ -42,6 +52,9 @@ public class MainWindow extends UiPart<Stage> {
 
     @FXML
     private MenuItem helpMenuItem;
+
+    @FXML
+    private Label dateTime;
 
     @FXML
     private SplitPane splitView;
@@ -54,6 +67,9 @@ public class MainWindow extends UiPart<Stage> {
 
     @FXML
     private StackPane resultDisplayPlaceholder;
+
+    @FXML
+    private StackPane statisticsDisplayPlaceholder;
 
     @FXML
     private StackPane patientStatusbarPlaceholder;
@@ -128,6 +144,9 @@ public class MainWindow extends UiPart<Stage> {
         appointmentListPanel = new AppointmentListPanel(logic.getFilteredAppointmentList());
         appointmentListPanelPlaceholder.getChildren().add(appointmentListPanel.getRoot());
 
+        statisticsDisplay = new StatisticsDisplay(logic.getAppointmentBook().getAppointmentBookStatistics());
+        statisticsDisplayPlaceholder.getChildren().add(statisticsDisplay.getRoot());
+
         resultDisplay = new ResultDisplay();
         resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());
         resultDisplay.setFeedbackToUser(logic.getArchiveStatus());
@@ -141,7 +160,19 @@ public class MainWindow extends UiPart<Stage> {
         CommandBox commandBox = new CommandBox(this::executeCommand);
         commandBoxPlaceholder.getChildren().add(commandBox.getRoot());
 
+        initClock();
+
         setSplitViewPosition(logic.getGuiSettings());
+    }
+
+    // Reused from https://stackoverflow.com/q/42383857 with minor modifications.
+    private void initClock() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("EEE, dd MMM uuuu h:mm a");
+        Timeline clock = new Timeline(new KeyFrame(Duration.ZERO, event -> {
+            dateTime.setText(LocalDateTime.now().format(formatter));
+        }), new KeyFrame(Duration.seconds(15)));
+        clock.setCycleCount(Animation.INDEFINITE);
+        clock.play();
     }
 
     private void setSplitViewPosition(GuiSettings guiSettings) {
@@ -204,8 +235,11 @@ public class MainWindow extends UiPart<Stage> {
     private CommandResult executeCommand(String commandText) throws CommandException, ParseException {
         try {
             CommandResult commandResult = logic.execute(commandText);
+            AppointmentStatistics stats = logic.getAppointmentBook().getAppointmentBookStatistics();
+            assert (stats != null);
             logger.info("Result: " + commandResult.getFeedbackToUser());
-            resultDisplay.setFeedbackToUser(commandResult.getFeedbackToUser());
+            resultDisplay.setFeedbackToUser(commandResult.getFeedbackToUser() + "\n");
+            statisticsDisplay.setStatistics(stats.toString());
 
             if (commandResult.isShowHelp()) {
                 handleHelp();
@@ -218,7 +252,7 @@ public class MainWindow extends UiPart<Stage> {
             return commandResult;
         } catch (CommandException | ParseException e) {
             logger.info("Invalid command: " + commandText);
-            resultDisplay.setFeedbackToUser(e.getMessage());
+            resultDisplay.setFeedbackToUser(e.getMessage() + "\n");
             throw e;
         }
     }

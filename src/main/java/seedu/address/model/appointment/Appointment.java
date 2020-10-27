@@ -168,6 +168,18 @@ public class Appointment {
     }
 
     /**
+     * Checks if this appointment is in the same week to week of the given date.
+     *
+     * @param date the given date to check against.
+     * @return true if this appointment is in the same week of the given date, false otherwise.
+     */
+    public boolean isInSameWeek(Date date) {
+        requireNonNull(date);
+
+        return getDate().isInSameWeek(date);
+    }
+
+    /**
      * Returns true if both appointments have the same identity and data fields.
      * This defines a stronger notion of equality between two patients.
      */
