@@ -390,7 +390,7 @@ which is in turn stored in the `PatientBook`. These classes are a part of the `M
 in the class diagram below. 
 
 ![RemarkLogicClassDiagram](images/RemarkLogicClassDiagram.png)
-<br>*Diagram 6.1.1: Class diagram for classes involved in the remark feature of the Model component *
+<br>**Diagram 6.1.1: Class diagram for classes involved in the remark feature of the Model component**
  
 Additionally, to facilitate greater convenience for our users, we have implemented our remark feature to support the following pathways:
 
@@ -420,6 +420,7 @@ Additionally, to facilitate greater convenience for our users, we have implement
 
 Refer to the following activity diagram for a summary of the above pathways.
 ![RemarkPathwaysActivityDiagram](images/RemarkPathwaysActivityDiagram.png)
+<br>**Diagram 6.1.2: Architecture diagram showcasing available pathways to create a remark**
 
 This segment will focus on the implementation details for the `RemarkCommand` pathway. The implementation for the 
 alternative `AddCommand` and `EditCommand` pathways can be found in another segment of our Developer's Guide.
@@ -432,6 +433,7 @@ to instantiate a `RemarkCommand` from the user input. The classes mentioned abov
 
 #### 6.2 Implementation Illustration
 <br>![RemarkSequenceDiagram](images/RemarkSequenceDiagram.png)
+<br>**Diagram 6.2.1: Remark Command sequence diagram**
 
 The following is a step by step illustration of how the remark command mechanism works for an example scenario based on the sequence diagram above:
 
@@ -448,6 +450,7 @@ in the input string and creates a new `RemarkCommandParser`.
 `ParserUtil#parseIndex` and `ParserUtil#parseRemark` methods respectively. <br>
 <br>The process described in step 4 is shown in the following sequence diagram:
 ![RemarkParserRefSequenceDiagram](images/RemarkParserRefSequenceDiagram.png)
+<br>**Diagram 6.2.2: RemarkParserRef sequence diagram**
 
 5. The `RemarkCommandParser` then instantiates a new `RemarkCommand` with the appropriate `Index` and `Remark` object.
 This new `RemarkCommand` is then returned to `NuudleParser` and subsequently `LogicManager` at the end of the `NuudleParser#parseCommand(String)` execution.
@@ -465,6 +468,8 @@ This new `RemarkCommand` is then returned to `NuudleParser` and subsequently `Lo
 11. `Model#updateFilteredPatientList` is then called to update the `FilteredPatientList` displayed by the UI.
 <br><br>The above process is shown in the following sequence diagram:
 <br>![RemarkModelSequenceDiagram](images/RemarkModelSequenceDiagram.png)
+<br>**Diagram 6.2.3: RemarkModel sequence diagram**
+
 12. Lastly, the `RemarkCommand` creates a `CommandResult` with a `SuccessMessage` and returns it to `LogicManager`.
 
 13. The `SuccessMessage` is then displayed to the user via the GUI.
@@ -472,6 +477,7 @@ This new `RemarkCommand` is then returned to `NuudleParser` and subsequently `Lo
 The following activity diagram summarizes the above steps when a user uses the remark command pathway:
 
 ![RemarkCommandActivityDiagram](images/RemarkCommandActivityDiagram.png)
+<br>**Diagram 6.2.4: Architecture diagram showcasing the Remark Command execution flow**
 
 #### 6.3 Design Considerations
 
