@@ -1,19 +1,24 @@
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.commons.core.Messages.MESSAGE_EXPIRED_DATE_TIME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DATE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DURATION;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TIME;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_APPOINTMENTS;
+import static seedu.address.model.appointment.Appointment.CREATION_OFFSET_MINUTES;
 
 import java.time.Duration;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;
 
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.CollectionUtil;
+import seedu.address.commons.util.DateTimeUtil;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.Model;
 import seedu.address.model.appointment.Appointment;
 import seedu.address.model.appointment.Date;
@@ -53,8 +58,9 @@ public class ChangeCommand extends Command {
     private final EditAppointmentDescriptor editAppointmentDescriptor;
 
     /**
-     * @param index of the appointment in the filtered appointment list to edit
-     * @param editAppointmentDescriptor details to edit the appointment with
+     * Creates a ChangeCommand with an {@code Index} and {@code EditAppointmentDescriptor}.
+     * @param index of the appointment in the filtered appointment list to edit.
+     * @param editAppointmentDescriptor details to edit the appointment with.
      */
     public ChangeCommand(Index index, EditAppointmentDescriptor editAppointmentDescriptor) {
         requireNonNull(index);
@@ -91,23 +97,52 @@ public class ChangeCommand extends Command {
     }
 
     /**
-     * Creates and returns an {@code Appointment} with the details of {@code appointmentToEdit}
+     * Creates and returns an {@code Appointment} with the details of {@code appointmentToEdit}.
      * edited with {@code editAppointmentDescriptor}.
      */
     private static Appointment createEditedAppointment(Appointment appointmentToEdit,
-                                                       EditAppointmentDescriptor editAppointmentDescriptor) {
+                                                       EditAppointmentDescriptor editAppointmentDescriptor) throws CommandException {
         assert appointmentToEdit != null;
         assert editAppointmentDescriptor != null;
-        assert editAppointmentDescriptor.duration != null;
-        assert editAppointmentDescriptor.date != null;
-        assert editAppointmentDescriptor.startTime != null;
+//        assert editAppointmentDescriptor.duration != null;
+//        assert editAppointmentDescriptor.date != null;
+//        assert editAppointmentDescriptor.startTime != null;
 
-        Date date = editAppointmentDescriptor.getDate().get();
-        Time startTime = editAppointmentDescriptor.getStartTime().get();
-        Duration duration = editAppointmentDescriptor.getDuration().get();
-        Time endTime = new Time(startTime.getTime().plus(duration));
+        Date date;
+        Time startTime;
+        Duration duration;
+        Time endTime;
 
+        if (editAppointmentDescriptor.date != null) {
+            date = editAppointmentDescriptor.getDate().get();
+        } else {
+            date = appointmentToEdit.getDate();
+        }
+
+        if (editAppointmentDescriptor.startTime != null) {
+            startTime = editAppointmentDescriptor.getStartTime().get();
+        } else {
+            startTime = appointmentToEdit.getStartTime();
+        }
+
+        if (editAppointmentDescriptor.duration != null) {
+            duration = editAppointmentDescriptor.getDuration().get();
+        } else {
+            duration = appointmentToEdit.getDuration();
+        }
+        endTime = new Time(startTime.getTime().plus(duration));
         Patient patient = appointmentToEdit.getPatient();
+
+        assert date != null;
+        assert startTime != null;
+        assert endTime != null;
+        assert patient != null;
+
+        LocalTime timeWithLeeway = startTime.getTime().plusMinutes(CREATION_OFFSET_MINUTES);
+        if (DateTimeUtil.isExpired(date.getDate(), timeWithLeeway)) {
+            throw new CommandException(MESSAGE_EXPIRED_DATE_TIME);
+        }
+
         return new Appointment(date, startTime, endTime, patient);
     }
 
@@ -137,6 +172,12 @@ public class ChangeCommand extends Command {
         private Date date;
         private Time startTime;
         private Duration duration;
+
+        public EditAppointmentDescriptor() {
+            this.startTime = null;
+            this.date = null;
+            this.duration = null;
+        }
 
         /**
          * Creates an EditAppointmentDescriptor object to store the new appointment details.

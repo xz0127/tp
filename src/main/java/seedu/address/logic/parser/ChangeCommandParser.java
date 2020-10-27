@@ -44,27 +44,29 @@ public class ChangeCommandParser implements Parser<ChangeCommand> {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, ChangeCommand.MESSAGE_USAGE), pe);
         }
 
-        if (argMultimap.getValue(PREFIX_DATE).isEmpty()) {
-            throw new ParseException(ChangeCommand.DATE_MISSING);
+        EditAppointmentDescriptor editAppointmentDescriptor = new EditAppointmentDescriptor();
+
+        if (argMultimap.getValue(PREFIX_DATE).isPresent()) {
+            editAppointmentDescriptor.setDate(ParserUtil.parseDate(argMultimap.getValue(PREFIX_DATE).get()));
         }
-        if (argMultimap.getValue(PREFIX_TIME).isEmpty()) {
-            throw new ParseException(ChangeCommand.TIME_MISSING);
+        if (argMultimap.getValue(PREFIX_TIME).isPresent()) {
+            editAppointmentDescriptor.setStartTime(ParserUtil.parseTime(argMultimap.getValue(PREFIX_TIME).get()));
         }
-        if (argMultimap.getValue(PREFIX_DURATION).isEmpty()) {
-            throw new ParseException(ChangeCommand.DURATION_MISSING);
+        if (argMultimap.getValue(PREFIX_DURATION).isPresent()) {
+            editAppointmentDescriptor.setDuration(ParserUtil.parseDuration(argMultimap.getValue(PREFIX_DURATION).get()));
         }
 
-        Date date = ParserUtil.parseDate(argMultimap.getValue(PREFIX_DATE).get());
-        Time time = ParserUtil.parseTime(argMultimap.getValue(PREFIX_TIME).get());
-        Duration duration = ParserUtil.parseDuration(argMultimap.getValue(PREFIX_DURATION).get());
+//        Date date = ParserUtil.parseDate(argMultimap.getValue(PREFIX_DATE).get());
+//        Time time = ParserUtil.parseTime(argMultimap.getValue(PREFIX_TIME).get());
+//        Duration duration = ParserUtil.parseDuration(argMultimap.getValue(PREFIX_DURATION).get());
 
         // Expired date time can only be confirmed when date and time are put together.
-        LocalTime timeWithLeeway = time.getTime().plusMinutes(CREATION_OFFSET_MINUTES);
-        if (DateTimeUtil.isExpired(date.getDate(), timeWithLeeway)) {
-            throw new ParseException(MESSAGE_EXPIRED_DATE_TIME);
-        }
+//        LocalTime timeWithLeeway = time.getTime().plusMinutes(CREATION_OFFSET_MINUTES);
+//        if (DateTimeUtil.isExpired(date.getDate(), timeWithLeeway)) {
+//            throw new ParseException(MESSAGE_EXPIRED_DATE_TIME);
+//        }
 
-        EditAppointmentDescriptor editAppointmentDescriptor = new EditAppointmentDescriptor(date, time, duration);
+//        EditAppointmentDescriptor editAppointmentDescriptor = new EditAppointmentDescriptor(date, time, duration);
 
         return new ChangeCommand(index, editAppointmentDescriptor);
     }
