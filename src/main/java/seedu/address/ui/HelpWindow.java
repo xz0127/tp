@@ -16,13 +16,30 @@ import seedu.address.commons.core.LogsCenter;
 public class HelpWindow extends UiPart<Stage> {
 
     public static final String USERGUIDE_URL = "https://ay2021s1-cs2103t-t12-4.github.io/tp/UserGuide.html";
-    public static final String HELP_MESSAGE = "Refer to the user guide: " + USERGUIDE_URL;
+
+    public static final String COMMON_COMMANDS = "Add a patient ---"
+            + "add n/NAME i/NRIC p/PHONE_NUMBER a/ADDRESS [t/TAG]…\n"
+            + "Edit a patient --- edit INDEX [n/NAME] [i/NRIC] [p/PHONE_NUMBER] [a/ADDRESS] [t/TAG]…\n"
+            + "Delete a patient --- delete INDEX\n"
+            + "List all patients --- list\n\n"
+            + "Assign a patient to an appointment --- assign INDEX d/DATE t/TIME [dur/DURATION]\n"
+            + "Change an appointment time --- change INDEX [d/DATE] [t/TIME] [dur/DURATION]\n"
+            + "Cancel an appointment --- cancel d/DATE t/TIME\n"
+            + "Mark an appointment as done --- done d/DATE t/TIME\n"
+            + "Find available time slots --- avail d/DATE\n"
+            + "View appointments by date --- view [d/DATE]\n\n"
+            + "Undo a previous command --- undo\n"
+            + "Redo a previous command --- redo\n";
+    public static final String HELP_MESSAGE = "Refer to the user guide for more commands: " + USERGUIDE_URL;
 
     private static final Logger logger = LogsCenter.getLogger(HelpWindow.class);
     private static final String FXML = "HelpWindow.fxml";
 
     @FXML
     private Button copyButton;
+
+    @FXML
+    private Label commonUsage;
 
     @FXML
     private Label helpMessage;
@@ -34,6 +51,7 @@ public class HelpWindow extends UiPart<Stage> {
      */
     public HelpWindow(Stage root) {
         super(FXML, root);
+        commonUsage.setText(COMMON_COMMANDS);
         helpMessage.setText(HELP_MESSAGE);
     }
 
