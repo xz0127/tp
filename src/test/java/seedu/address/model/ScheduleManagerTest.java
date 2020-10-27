@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
 
+import seedu.address.commons.core.Messages;
 import seedu.address.model.appointment.Time;
 import seedu.address.model.interval.PointOfTimeType;
 import seedu.address.model.interval.TimeInterval;
@@ -80,6 +81,8 @@ public class ScheduleManagerTest {
         timeIntervalList.add(new TimeInterval(new Time(10, 0), new Time(20, 0)));
         timeIntervalList.add(new TimeInterval(new Time(21, 0), new Time(22, 0)));
         String expectedMessage = timeIntervalList.toString();
+        expectedMessage += Messages.MESSAGE_NEXT_AVAILABLE_TIME_SLOT;
+        expectedMessage += new TimeInterval(new Time(8, 0), new Time(9, 0)).toString();
         assertEquals(actualMessage, expectedMessage);
 
         String actualMessageTwo = secondScheduleManager.findFreeSlots();
@@ -87,6 +90,8 @@ public class ScheduleManagerTest {
         timeIntervalListTwo.add(new TimeInterval(new Time(8, 0), new Time(14, 0)));
         timeIntervalListTwo.add(new TimeInterval(new Time(16, 0), new Time(22, 0)));
         String expectedMessageTwo = timeIntervalListTwo.toString();
+        expectedMessageTwo += Messages.MESSAGE_NEXT_AVAILABLE_TIME_SLOT;
+        expectedMessageTwo += new TimeInterval(new Time(8, 0), new Time(9, 0)).toString();
         assertEquals(actualMessageTwo, expectedMessageTwo);
     }
 }

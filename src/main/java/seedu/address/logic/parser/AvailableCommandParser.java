@@ -14,7 +14,7 @@ import seedu.address.model.appointment.DateMatchesPredicate;
 public class AvailableCommandParser implements Parser<AvailableCommand> {
 
     /**
-     * Parse the given {@code String} of arguments in the context of AvailableCommand
+     * Parses the given {@code String} of arguments in the context of AvailableCommand
      * and returns an AvailableCommand for execution.
      * @param userInput full user input string
      * @return an AvailableCommand object

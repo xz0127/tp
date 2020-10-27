@@ -12,4 +12,5 @@ public class Messages {
     public static final String MESSAGE_APPOINTMENTS_OVERVIEW = "%1$d appointments" + " listed!";
     public static final String MESSAGE_EXPIRED_DATE_TIME = "The appointment date and time should be an upcoming one.";
     public static final String MESSAGE_AVAILABLE_TIME_SLOTS = "Listing all available time slots: \n";
+    public static final String MESSAGE_NEXT_AVAILABLE_TIME_SLOT = "Next available time slot: \n";
 }

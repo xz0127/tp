@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.commons.core.Messages.MESSAGE_AVAILABLE_TIME_SLOTS;
+import static seedu.address.commons.core.Messages.MESSAGE_NEXT_AVAILABLE_TIME_SLOT;
 import static seedu.address.logic.commands.CommandTestUtil.DIFF_DATE;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_DATE;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
@@ -68,7 +69,8 @@ public class AvailableCommandTest {
 
         expectedModel.updateFilteredAppointmentList(predicate);
         expectedMessage += intervalList.toString();
-
+        expectedMessage += MESSAGE_NEXT_AVAILABLE_TIME_SLOT;
+        expectedMessage += new TimeInterval(new Time(8, 0), new Time(9, 0)).toString();
         assertCommandSuccess(command, model, expectedMessage, expectedModel);
         assertEquals(model.getFilteredAppointmentList(), expectedModel.getFilteredAppointmentList());
     }
@@ -86,6 +88,8 @@ public class AvailableCommandTest {
 
         expectedModel.updateFilteredAppointmentList(predicate);
         expectedMessage += intervalList.toString();
+        expectedMessage += MESSAGE_NEXT_AVAILABLE_TIME_SLOT;
+        expectedMessage += new TimeInterval(new Time(8, 0), new Time(9, 0)).toString();
         assertCommandSuccess(command, model, expectedMessage, expectedModel);
         assertEquals(model.getFilteredAppointmentList(), expectedModel.getFilteredAppointmentList());
     }

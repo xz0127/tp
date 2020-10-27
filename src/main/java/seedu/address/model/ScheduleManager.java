@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.List;
 
 import javafx.collections.ObservableList;
+import seedu.address.commons.core.Messages;
 import seedu.address.commons.util.TimeConversionUtil;
 import seedu.address.model.appointment.Appointment;
 import seedu.address.model.appointment.Time;
@@ -98,7 +99,7 @@ public class ScheduleManager {
     }
 
     /**
-     * Add a list of annotated points to the annotated point list based on the appointments time.
+     * Adds a list of annotated points to the annotated point list based on the appointments time.
      *
      * @param appointmentTimeIntervals a list of appointment time intervals.
      */
@@ -115,7 +116,7 @@ public class ScheduleManager {
     }
 
     /**
-     * Arrange the list of annotated points for scheduling.
+     * Arranges the list of annotated points for scheduling.
      */
     public void queueAnnotatedPoints() {
         // sort all the points in the list
@@ -181,7 +182,7 @@ public class ScheduleManager {
     /**
      * Finds the available time slots based on the appointment list of a specified date.
      *
-     * @return a string message of available time intervals.
+     * @return a string message of available time intervals and the upcoming available time slot on a specified date.
      */
     public String findFreeSlots() {
         TimeIntervalList operationTimeIntervals = constructOperationTimeIntervals();
@@ -192,7 +193,11 @@ public class ScheduleManager {
 
         queueAnnotatedPoints();
         availableTimeSlots = findNonOverlappingIntervals(annotatedPointList);
-        return availableTimeSlots.clearZeroIntervals().toString();
+        TimeIntervalList noEmptyIntervalList = availableTimeSlots.clearZeroIntervals();
+        String message = noEmptyIntervalList.toString();
+        message += Messages.MESSAGE_NEXT_AVAILABLE_TIME_SLOT;
+        message += getNextAvailableSlot(noEmptyIntervalList);
+        return message;
     }
 
     /**
