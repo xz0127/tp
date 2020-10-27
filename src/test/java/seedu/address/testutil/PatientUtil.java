@@ -1,17 +1,13 @@
 package seedu.address.testutil;
 
-import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_NRIC;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
-
 import java.util.Set;
 
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.EditCommand.EditPatientDescriptor;
 import seedu.address.model.patient.Patient;
 import seedu.address.model.tag.Tag;
+
+import static seedu.address.logic.parser.CliSyntax.*;
 
 /**
  * A utility class for Patient.
@@ -34,6 +30,7 @@ public class PatientUtil {
         sb.append(PREFIX_NRIC + patient.getNric().value + " ");
         sb.append(PREFIX_PHONE + patient.getPhone().value + " ");
         sb.append(PREFIX_ADDRESS + patient.getAddress().value + " ");
+        sb.append(PREFIX_REMARK + patient.getRemark().value + " ");
         patient.getTags().stream().forEach(
             s -> sb.append(PREFIX_TAG + s.tagName + " ")
         );
