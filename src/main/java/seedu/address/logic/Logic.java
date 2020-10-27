@@ -69,12 +69,12 @@ public interface Logic {
     GuiSettings getGuiSettings();
 
     /**
-     * Set the user prefs' GUI settings.
+     * Sets the user prefs' GUI settings.
      */
     void setGuiSettings(GuiSettings guiSettings);
 
     /**
-     * Get the archive status message.
+     * Gets the archive status message.
      */
     String getArchiveStatus();
 }

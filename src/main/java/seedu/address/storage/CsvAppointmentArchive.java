@@ -5,8 +5,10 @@ import static java.util.Objects.requireNonNull;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.time.LocalDate;
+import java.time.format.TextStyle;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.logging.Logger;
 
 import seedu.address.commons.core.LogsCenter;
@@ -96,8 +98,10 @@ public class CsvAppointmentArchive implements AppointmentArchive {
     }
 
     /**
-     * Same as {@link #saveAppointments(List, String)}.
+     * Saves the given list of {@code CsvAdaptedAppointment}.
+     * Similar to {@link #saveAppointments(List, String)}.
      *
+     * @param appointments the appointments to archive.
      * @param filePath location of the data. Cannot be null.
      * @throws IOException if there is an error writing to file.
      */
@@ -118,6 +122,7 @@ public class CsvAppointmentArchive implements AppointmentArchive {
     }
 
     /**
+     * Returns the archived data as a list of {@link CsvAdaptedAppointment}.
      * Similar to {@link #readAppointments(String)}.
      *
      * @param filePath location of the archived data. Cannot be null.
@@ -133,7 +138,7 @@ public class CsvAppointmentArchive implements AppointmentArchive {
     }
 
     /**
-     * Create filename from {@code LocalDate}.
+     * Creates filename from {@code LocalDate}.
      * The filename has details on year and month.
      *
      * @param date the reference date
@@ -141,12 +146,21 @@ public class CsvAppointmentArchive implements AppointmentArchive {
      */
     public String getFileName(LocalDate date) {
         requireNonNull(date);
-        return date.getYear() + "_" + date.getMonth().toString() + ".csv";
+        return date.getYear() + "_"
+                + date.getMonth().getDisplayName(TextStyle.SHORT, Locale.ENGLISH).toUpperCase()
+                + ".csv";
     }
 
     public String getArchiveStatistics() {
-        return String.format("%d %s archived, %d expired", numberOfArchivedAppointments,
-                numberOfArchivedAppointments > 1 ? "appointments" : "appointment", numberOfExpiredAppointments);
+        String output = String.format("%d %s archived", numberOfArchivedAppointments,
+                numberOfArchivedAppointments > 1 ? "appointments" : "appointment");
+
+        if (numberOfExpiredAppointments > 0) {
+            output += String.format(", of which %d %s not done", numberOfExpiredAppointments,
+                    numberOfExpiredAppointments > 1 ? "are" : "is");
+        }
+
+        return output;
     }
 
 }

@@ -38,6 +38,9 @@ public class JsonAppointmentBookStorage implements AppointmentBookStorage {
         return filePath;
     }
 
+    /**
+     * Returns the {@code Path} to the archive directory.
+     */
     public Path getAppointmentArchiveDirPath() {
         return csvArchive.getArchiveDirectoryPath();
     }

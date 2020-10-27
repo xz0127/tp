@@ -15,7 +15,7 @@ public interface AppointmentArchive {
     Path getArchiveDirectoryPath();
 
     /**
-     * Archive and remove past appointments from the {@code appointmentBook}.
+     * Archives and removes past appointments from the {@code appointmentBook}.
      *
      * @param appointmentBook the appointment book.
      * @return the appointment book without past appointments.
@@ -24,21 +24,20 @@ public interface AppointmentArchive {
 
 
     /**
-     * Returns AppointmentBook data as a {@link ReadOnlyAppointmentBook}.
-     * Returns {@code Optional.empty()} if storage file is not found.
-     * Archives past appointment.
+     * Returns the archived data as a list of {@link CsvAdaptedAppointment}.
      *
+     * @param fileName the name of the archive file in the archive storage.
      * @throws DataConversionException if the data in storage is not in the expected format.
      */
     List<CsvAdaptedAppointment> readAppointments(String fileName) throws DataConversionException;
 
     /**
-     * @see #readAppointments(String)  ()
+     * @see #readAppointments(String)
      */
     List<CsvAdaptedAppointment> readAppointments(Path filePath) throws DataConversionException;
 
     /**
-     * Archive the given list of {@code CsvAdaptedAppointment}.
+     * Saves the given list of {@code CsvAdaptedAppointment}.
      *
      * @param appointments the appointments to archive.
      * @param fileName     name of the archive data file. Cannot be null.
@@ -52,7 +51,7 @@ public interface AppointmentArchive {
             throws IOException;
 
     /**
-     * Get archive statistics message.
+     * Gets archive statistics message.
      */
     String getArchiveStatistics();
 }
