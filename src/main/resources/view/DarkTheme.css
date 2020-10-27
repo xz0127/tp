@@ -324,6 +324,10 @@
     -fx-text-fill: #F70D1A;
 }
 
+#dateTime {
+    -fx-font-size: 10pt;
+}
+
 #commandTextField {
     -fx-background-color: transparent #383838 transparent #383838;
     -fx-background-insets: 0;
