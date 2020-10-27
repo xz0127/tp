@@ -812,5 +812,5 @@ testers are expected to do more *exploratory* testing.
       The app safely launches. The previously edited appointment is not in the appointment list.
       The Command Result display indicates that 1 appointment is archived.
       
-   1. Locate the appointment archive at `.\data\archives\2019_MAY.csv`. 
+   1. Locate the appointment csv archive file at `.\data\archives\2019_May.csv`. 
       The previously edited appointment should be reflected as an archived appointment.
