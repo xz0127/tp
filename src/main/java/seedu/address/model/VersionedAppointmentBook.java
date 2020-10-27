@@ -3,6 +3,12 @@ package seedu.address.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import seedu.address.model.exceptions.NoRedoableStateException;
+import seedu.address.model.exceptions.NoUndoableStateException;
+
+/**
+ * Stores the states of the appointment book after executing undoable and redoable commands.
+ */
 public class VersionedAppointmentBook extends AppointmentBook {
     private final List<ReadOnlyAppointmentBook> appointmentBookStateList;
     private int currentStatePointer;
@@ -37,7 +43,8 @@ public class VersionedAppointmentBook extends AppointmentBook {
      */
     public void undo() {
         if (!canUndo()) {
-            throw new NoUndoableStateException();
+            throw new NoUndoableStateException("Current state pointer at start of appointmentBookState list, "
+                    + "unable to undo.");
         }
         currentStatePointer--;
         resetData(appointmentBookStateList.get(currentStatePointer));
@@ -48,7 +55,8 @@ public class VersionedAppointmentBook extends AppointmentBook {
      */
     public void redo() {
         if (!canRedo()) {
-            throw new NoRedoableStateException();
+            throw new NoRedoableStateException("Current state pointer at end of appointmentBookState list, "
+                    + "unable to redo.");
         }
         currentStatePointer++;
         resetData(appointmentBookStateList.get(currentStatePointer));
@@ -86,23 +94,5 @@ public class VersionedAppointmentBook extends AppointmentBook {
         return super.equals(versionedAppointmentBook)
                 && appointmentBookStateList.equals(versionedAppointmentBook.appointmentBookStateList)
                 && currentStatePointer == versionedAppointmentBook.currentStatePointer;
-    }
-
-    /**
-     * Thrown when trying to {@code undo()} but can't.
-     */
-    public static class NoUndoableStateException extends RuntimeException {
-        private NoUndoableStateException() {
-            super("Current state pointer at start of appointmentBookState list, unable to undo.");
-        }
-    }
-
-    /**
-     * Thrown when trying to {@code redo()} but can't.
-     */
-    public static class NoRedoableStateException extends RuntimeException {
-        private NoRedoableStateException() {
-            super("Current state pointer at end of appointmentBookState list, unable to redo.");
-        }
     }
 }

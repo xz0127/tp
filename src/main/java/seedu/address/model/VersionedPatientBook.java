@@ -3,6 +3,12 @@ package seedu.address.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import seedu.address.model.exceptions.NoRedoableStateException;
+import seedu.address.model.exceptions.NoUndoableStateException;
+
+/**
+ * Stores the states of the patient book after executing undoable and redoable commands.
+ */
 public class VersionedPatientBook extends PatientBook {
     private final List<ReadOnlyPatientBook> patientBookStateList;
     private int currentStatePointer;
@@ -37,7 +43,8 @@ public class VersionedPatientBook extends PatientBook {
      */
     public void undo() {
         if (!canUndo()) {
-            throw new NoUndoableStateException();
+            throw new NoUndoableStateException("Current state pointer at start of patientBookState list,"
+                    + " unable to undo.");
         }
         currentStatePointer--;
         resetData(patientBookStateList.get(currentStatePointer));
@@ -48,7 +55,8 @@ public class VersionedPatientBook extends PatientBook {
      */
     public void redo() {
         if (!canRedo()) {
-            throw new NoRedoableStateException();
+            throw new NoRedoableStateException("Current state pointer at end of patientBookState list, "
+                    + "unable to redo.");
         }
         currentStatePointer++;
         resetData(patientBookStateList.get(currentStatePointer));
@@ -88,21 +96,4 @@ public class VersionedPatientBook extends PatientBook {
                 && currentStatePointer == versionedPatientBook.currentStatePointer;
     }
 
-    /**
-     * Thrown when trying to {@code undo()} but can't.
-     */
-    public static class NoUndoableStateException extends RuntimeException {
-        private NoUndoableStateException() {
-            super("Current state pointer at start of patientBookState list, unable to undo.");
-        }
-    }
-
-    /**
-     * Thrown when trying to {@code redo()} but can't.
-     */
-    public static class NoRedoableStateException extends RuntimeException {
-        private NoRedoableStateException() {
-            super("Current state pointer at end of patientBookState list, unable to redo.");
-        }
-    }
 }

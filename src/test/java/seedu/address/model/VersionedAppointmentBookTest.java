@@ -14,6 +14,8 @@ import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
+import seedu.address.model.exceptions.NoRedoableStateException;
+import seedu.address.model.exceptions.NoUndoableStateException;
 import seedu.address.testutil.AppointmentBookBuilder;
 
 public class VersionedAppointmentBookTest {
@@ -162,7 +164,7 @@ public class VersionedAppointmentBookTest {
     public void undo_singleAppointmentBook_throwsNoUndoableStateException() {
         VersionedAppointmentBook versionedAppointmentBook = prepareAppointmentBookList(emptyAppointmentBook);
 
-        assertThrows(VersionedAppointmentBook.NoUndoableStateException.class, versionedAppointmentBook::undo);
+        assertThrows(NoUndoableStateException.class, versionedAppointmentBook::undo);
     }
 
     @Test
@@ -171,7 +173,7 @@ public class VersionedAppointmentBookTest {
                 emptyAppointmentBook, appointmentBookWithAmy, appointmentBookWithBob);
         shiftCurrentStatePointerLeftwards(versionedAppointmentBook, 2);
 
-        assertThrows(VersionedAppointmentBook.NoUndoableStateException.class, versionedAppointmentBook::undo);
+        assertThrows(NoUndoableStateException.class, versionedAppointmentBook::undo);
     }
 
     @Test
@@ -204,7 +206,7 @@ public class VersionedAppointmentBookTest {
     public void redo_singleAppointmentBook_throwsNoRedoableStateException() {
         VersionedAppointmentBook versionedAppointmentBook = prepareAppointmentBookList(emptyAppointmentBook);
 
-        assertThrows(VersionedAppointmentBook.NoRedoableStateException.class, versionedAppointmentBook::redo);
+        assertThrows(NoRedoableStateException.class, versionedAppointmentBook::redo);
     }
 
     @Test
@@ -212,7 +214,7 @@ public class VersionedAppointmentBookTest {
         VersionedAppointmentBook versionedAppointmentBook = prepareAppointmentBookList(
                 emptyAppointmentBook, appointmentBookWithAmy, appointmentBookWithBob);
 
-        assertThrows(VersionedAppointmentBook.NoRedoableStateException.class, versionedAppointmentBook::redo);
+        assertThrows(NoRedoableStateException.class, versionedAppointmentBook::redo);
     }
 
     @Test

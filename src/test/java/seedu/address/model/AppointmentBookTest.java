@@ -142,7 +142,7 @@ public class AppointmentBookTest {
     public void getAppointmentBookStatistics_patinetInAppointmentBook_returnsFalse() {
         //Todo: change the date to a date in this week.
         Appointment editedAppointmentOne = new AppointmentBuilder(ALICE_APPOINTMENT)
-                .withDate(LocalDate.of(2020, 10, 22)).build();
+                .withDate(LocalDate.of(2020, 10, 27)).build();
         appointmentBook.addAppointment(editedAppointmentOne);
         List<Appointment> newAppointments = Arrays.asList(ALICE_APPOINTMENT, editedAppointmentOne);
         AppointmentBookStub newData = new AppointmentBookStub(newAppointments);

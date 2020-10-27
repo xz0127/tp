@@ -14,6 +14,8 @@ import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
+import seedu.address.model.exceptions.NoRedoableStateException;
+import seedu.address.model.exceptions.NoUndoableStateException;
 import seedu.address.testutil.PatientBookBuilder;
 
 public class VersionedPatientBookTest {
@@ -154,7 +156,7 @@ public class VersionedPatientBookTest {
     public void undo_singlPatientBook_throwsNoUndoableStateException() {
         VersionedPatientBook versionedPatientBook = preparePatientBookList(emptyPatientBook);
 
-        assertThrows(VersionedPatientBook.NoUndoableStateException.class, versionedPatientBook::undo);
+        assertThrows(NoUndoableStateException.class, versionedPatientBook::undo);
     }
 
     @Test
@@ -163,7 +165,7 @@ public class VersionedPatientBookTest {
                 emptyPatientBook, patientBookWithAmy, patientBookWithBob);
         shiftCurrentStatePointerLeftwards(versionedPatientBook, 2);
 
-        assertThrows(VersionedPatientBook.NoUndoableStateException.class, versionedPatientBook::undo);
+        assertThrows(NoUndoableStateException.class, versionedPatientBook::undo);
     }
 
     @Test
@@ -195,7 +197,7 @@ public class VersionedPatientBookTest {
     public void redo_singlPatientBook_throwsNoRedoableStateException() {
         VersionedPatientBook versionedPatientBook = preparePatientBookList(emptyPatientBook);
 
-        assertThrows(VersionedPatientBook.NoRedoableStateException.class, versionedPatientBook::redo);
+        assertThrows(NoRedoableStateException.class, versionedPatientBook::redo);
     }
 
     @Test
@@ -203,7 +205,7 @@ public class VersionedPatientBookTest {
         VersionedPatientBook versionedPatientBook = preparePatientBookList(
                 emptyPatientBook, patientBookWithAmy, patientBookWithBob);
 
-        assertThrows(VersionedPatientBook.NoRedoableStateException.class, versionedPatientBook::redo);
+        assertThrows(NoRedoableStateException.class, versionedPatientBook::redo);
     }
 
     @Test
