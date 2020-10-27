@@ -1,8 +1,14 @@
 package seedu.address.ui;
 
+import static javafx.scene.input.KeyCode.DOWN;
+import static javafx.scene.input.KeyCode.UP;
+
+import java.util.List;
+
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Region;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
@@ -17,6 +23,8 @@ public class CommandBox extends UiPart<Region> {
     private static final String FXML = "CommandBox.fxml";
 
     private final CommandExecutor commandExecutor;
+    private List<String> commandHistory;
+    private int historyPointer;
 
     @FXML
     private TextField commandTextField;
@@ -24,11 +32,66 @@ public class CommandBox extends UiPart<Region> {
     /**
      * Creates a {@code CommandBox} with the given {@code CommandExecutor}.
      */
-    public CommandBox(CommandExecutor commandExecutor) {
+    public CommandBox(List<String> commandHistory, CommandExecutor commandExecutor) {
         super(FXML);
         this.commandExecutor = commandExecutor;
         // calls #setStyleToDefault() whenever there is a change to the text of the command box.
         commandTextField.textProperty().addListener((unused1, unused2, unused3) -> setStyleToDefault());
+        resetHistory(commandHistory);
+    }
+
+    private void resetHistory(List<String> commandHistory) {
+        this.commandHistory = commandHistory;
+        this.historyPointer = commandHistory.size();
+    }
+
+    private boolean hasPreviousHistory() {
+        return historyPointer > 0;
+    }
+
+    /**
+     * Get previous command input.
+     */
+    private void getPreviousHistory() {
+        if (hasPreviousHistory()) {
+            historyPointer--;
+            setInput(commandHistory.get(historyPointer));
+        }
+    }
+
+    private boolean hasNextHistory() {
+        return historyPointer < commandHistory.size() - 1;
+    }
+
+    /**
+     * Get next command input.
+     */
+    private void getNextHistory() {
+        if (hasNextHistory()) {
+            historyPointer++;
+            setInput(commandHistory.get(historyPointer));
+        } else {
+            setInput("");
+        }
+    }
+
+    private void setInput(String input) {
+        commandTextField.setText(input);
+        commandTextField.positionCaret(input.length());
+    }
+
+    @FXML
+    private void handleKeyPressed(KeyEvent event) {
+        switch (event.getCode()) {
+        case UP:
+            getPreviousHistory();
+            break;
+        case DOWN:
+            getNextHistory();
+            break;
+        default:
+            break;
+        }
     }
 
     /**
@@ -39,6 +102,7 @@ public class CommandBox extends UiPart<Region> {
         try {
             commandExecutor.execute(commandTextField.getText());
             commandTextField.setText("");
+            resetHistory(commandHistory);
         } catch (CommandException | ParseException e) {
             setStyleToIndicateCommandFailure();
         }
