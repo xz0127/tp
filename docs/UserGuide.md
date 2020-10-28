@@ -33,7 +33,7 @@ We hope that this document will help you in your journey in exploring the wonder
 
    * **`edit`**`1 n/Betsy Crower p/91234567 a/College Avenue 8` : Edits the name, phone number, and address of the 1st patient in the list to be `Betsy`, `91234567`, and `College Avenue 8` respectively.
 
-   * **`find`**`alex david` : Shows `Alex Yeoh` and `David Li` and their assigned appointments if the two names are found in the list.
+   * **`find`**`n/alex p/99998888 i/S1234567I` returns patients whose name contains `Alex`, or whose phone number is `99998888`, or whose nric number is `S1234567I`.
 
    * **`assign`**`1 d/tomorrow t/12.30pm dur/30` : Creates an appointment for the 1st patient in the list from 12.30pm to 1pm, tomorrow, if there are no other appointments in that time period.
 
@@ -126,19 +126,20 @@ Examples:
 
 Finds patients whose names contain any of the given keywords.
 
-Format: `find KEYWORD [MORE_KEYWORDS]`
+Format: `find [n/NAME [MORE_NAMES]] [i/NRIC [MORE_NRICS]] [p/PHONE_NUMBER [MORE_PHONE_NUMBERS]] `
 
 * The search is case-insensitive. e.g `hans` will match `Hans`
 * The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
-* Only the name is searched.
+* Only the name, nric, and phone number are searched.
 * Only full words will be matched e.g. `Han` will not match `Hans`
 * Patients matching at least one keyword will be returned (i.e. `OR` search).
   e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
 * The respective appointments of patients matching at least one keyword will also be returned. 
+* The command cannot be empty, i.e. `find`. At least one among searching by name, nric, or phone number needs to be given.
 
 Examples:
-* `find John` returns `john` and `John Doe`
-* `find alex david` returns `Alex Yeoh`, `David Li`<br>
+* `find n/John` returns patients whose name contains `john`.
+* `find n/alex p/99998888 i/S1234567I` returns patients whose name contains `Alex`, or whose phone number is `99998888`, or whose nric number is `S1234567I`.<br>
 
 ![FindCommand](images/FindCommand.png)
 
@@ -151,7 +152,7 @@ Format: `delete INDEX`
 * Deletes the patient at the specified `INDEX`.
 * The index refers to the index number shown in the displayed patient list.
 * The index **must be a positive integer** 1, 2, 3, …​
-* Deleting a patient will also deletes all the appointments of the person.
+* Deleting a patient will also delete all the appointments of the person.
 
 Examples:
 * `list` followed by `delete 2` deletes the 2nd patient in the displayed patient list.
@@ -195,7 +196,7 @@ Examples to delete the remark for a patient at `INDEX` 1:
 
 ### Adding an appointment : `assign`
 
-Assign the specified patient into the specified appointment date and time.
+Assigns the specified patient into the specified appointment date and time.
 
 Format: `assign INDEX d/DATE t/TIME [dur/DURATION]`
 
@@ -266,7 +267,7 @@ Format `view [d/DATE]`
 
 * Outputs the list of all upcoming appointments happening on the specified date in chronological order.
 * The specified `DATE` must be in the future.
-* If `DATE` is not specified, `view` will outputs the list of **all** upcoming appointments in chronological order.
+* If `DATE` is not specified, `view` will output the list of **all** upcoming appointments in chronological order.
 
 Example:
 * `view` shows the list of all upcoming appointments in chronological order.

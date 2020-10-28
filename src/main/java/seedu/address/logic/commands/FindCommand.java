@@ -1,6 +1,9 @@
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_NRIC;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 
 import java.util.Arrays;
 import java.util.List;
@@ -24,9 +27,12 @@ public class FindCommand extends Command {
     public static final String COMMAND_WORD = "find";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds all patients whose names contain any of "
-            + "the specified keywords (case-insensitive) and displays them as a list with index numbers.\n"
-            + "Parameters: KEYWORD [MORE_KEYWORDS]...\n"
-            + "Example: " + COMMAND_WORD + " alice bob charlie";
+            + "the specified keywords (case-insensitive),"
+            + "or whose phone number or nric matches and displays them as a list with index numbers.\n"
+            + "Parameters: [" + PREFIX_NAME + "NAME [MORE_NAMES]] "
+            + "[" + PREFIX_NRIC + "NRIC [MORE_NRICS]] "
+            + "[" + PREFIX_PHONE + "PHONE_NUMBER [MORE_PHONE_NUMBERS]]\n"
+            + "Example: " + COMMAND_WORD + " n/alex p/99998888 i/S1234567I";
 
     public static final String MESSAGE_NO_FIND = "At least one field to edit must be provided";
     private final FindPatientDescriptor descriptor;
