@@ -1,0 +1,116 @@
+@startuml
+!include style.puml
+
+box Logic LOGIC_COLOR_T1
+participant ":LogicManager" as LogicManager LOGIC_COLOR
+participant ":NuudleParser" as NuudleParser LOGIC_COLOR
+participant ":EditCommandParser" as EditCommandParser LOGIC_COLOR
+participant ":EditCommand" as EditCommand LOGIC_COLOR
+participant ":CommandResult" as CommandResult LOGIC_COLOR
+
+end box
+
+box Model MODEL_COLOR_T1
+participant ":Patient" as Patient MODEL_COLOR
+participant ":Model" as Model MODEL_COLOR
+end box
+
+[-> LogicManager : execute(String)
+activate LogicManager
+
+LogicManager -> NuudleParser : parseCommand(String)
+activate NuudleParser
+
+create EditCommandParser
+NuudleParser -> EditCommandParser: EditCommandParser()
+activate EditCommandParser
+
+EditCommandParser --> NuudleParser
+deactivate EditCommandParser
+
+NuudleParser -> EditCommandParser : parse(String)
+activate EditCommandParser
+
+create EditCommand
+EditCommandParser -> EditCommand: EditCommand(Index, EditPatientDescriptor)
+note left: Input Validation \n \n EditCommand() needs Index and \n EditPatientDescriptor objects
+activate EditCommand
+
+EditCommand --> EditCommandParser: Command
+deactivate EditCommand
+
+EditCommandParser --> NuudleParser: Command
+deactivate EditCommandParser
+'Hidden arrow to position the destroy marker below the end of the activation bar.
+EditCommandParser -[hidden]-> NuudleParser
+destroy EditCommandParser
+
+NuudleParser --> LogicManager: Command
+deactivate NuudleParser
+
+LogicManager -> EditCommand : execute(model)
+activate EditCommand
+
+EditCommand -> Model : getFilteredPatientList()
+activate Model
+
+Model --> EditCommand : lastShownList
+deactivate Model
+
+note left: lastShownList checks whether \n the patient index input is valid.
+
+EditCommand -> EditCommand
+activate EditCommand
+
+create Patient
+EditCommand -> Patient: createEditedPatient(Patient, EditPatientDescriptor)
+activate Patient
+
+Patient --> EditCommand
+deactivate Patient
+
+EditCommand --> EditCommand
+deactivate EditCommand
+
+EditCommand -> Model : hasPatient(Patient)
+activate Model
+
+note left: hasPatient(Patient) checks whether \n the edited patient is same as the patient before editing.
+
+EditCommand -> Model : setPatient(Patient, Patient)
+activate Model
+
+Model --> EditCommand
+deactivate Model
+
+EditCommand -> Model : updateAppointmentsWithPatient(Patient, Patient)
+activate Model
+
+Model --> EditCommand
+deactivate Model
+
+EditCommand -> Model : updateFilteredPatientList()
+activate Model
+
+Model --> EditCommand
+deactivate Model
+
+EditCommand -> Model : updateFilteredAppointmentList()
+activate Model
+
+Model --> EditCommand
+deactivate Model
+
+create CommandResult
+EditCommand -> CommandResult: CommandResult(String)
+activate CommandResult
+
+CommandResult --> EditCommand
+deactivate CommandResult
+
+EditCommand --> LogicManager : Result
+deactivate EditCommand
+
+[<--LogicManager
+deactivate LogicManager
+@enduml

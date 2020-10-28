@@ -354,7 +354,7 @@ Creates a `patient` with the details of `patientToEdit` edited with `editPatient
 
 Given below is an example usage scenario and how the edit mechanism behaves at each step.
 
-1: The user types `edit INDEX [n/NAME] [p/PHONE] [i/NRIC] [a/ADDRESS] [t/TAG]…` into Nuudle.
+1: The user types `edit INDEX [n/NAME] [p/PHONE] [i/NRIC] [a/ADDRESS] [r/REMARK] [t/TAG]…` into Nuudle.
 
 2: The request is handled by `LogicManager#execute(String)`, which then calls and passes the input to the `NuudleParser#parseCommand(String)` method.
 
@@ -381,6 +381,16 @@ Given below is an example usage scenario and how the edit mechanism behaves at e
 13: `EditCommand` updates the filtered list by calling `Model#updateFilteredAppointmentList(Predicate)` method.
 
 14: Lastly, `EditCommand` creates a `CommandResult` with `SuccessMessage` and `Patient` and returns it to `LogicManager`.
+
+The above process is shown in the following sequence diagram:
+
+![EditSequenceDiagram](images/EditSequenceDiagram.png)
+<br>**Diagram 5.2.1: Sequence diagram showcasing the Edit Command process**
+
+The following activity diagram summarises the general workflow for the Edit Command:
+
+![EditCommandActivityDiagram](images/EditCommandActivityDiagram.png)
+<br>**Diagram 5.2.2: Activity diagram showcasing the Edit Command execution flow**
 
 #### 5.3 Design Considerations
 

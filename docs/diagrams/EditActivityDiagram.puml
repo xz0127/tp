@@ -1,0 +1,24 @@
+@startuml
+start
+:User executes command;
+:Check input;
+if() then ([user input is valid])
+    :Create edit command;
+    if() then ([input index is valid])
+        :Find the patient to edit in the patient book;
+        :Duplicate the patient to edit with the new information input;
+        if() then ([the duplicated patient is exactly the same as the patient to edit])
+            :Show error message to user;
+        else([the duplicated patient is different from the patient to edit])
+            :Replace it with the edited patient in the model;
+            :Update the appointments in the appointment book which involves the patient;
+            :Show success message to user;
+        endif
+    else([input index is invalid])
+        :Show error message to user;
+    endif
+else([user input is invalid])
+    :Show error message to user;
+endif
+stop
+@enduml
