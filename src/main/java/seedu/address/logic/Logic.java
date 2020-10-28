@@ -77,4 +77,7 @@ public interface Logic {
      * Gets the storage load status message.
      */
     String getStorageStatus();
+
+    /** Returns an unmodifiable view of the command history list */
+    ObservableList<String> getCommandHistory();
 }

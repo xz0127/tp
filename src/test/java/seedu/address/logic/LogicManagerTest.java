@@ -115,6 +115,11 @@ public class LogicManagerTest {
     }
 
     @Test
+    public void getCommandHistory_modifyList_throwsUnsupportedOperationException() {
+        assertThrows(UnsupportedOperationException.class, () -> logic.getCommandHistory().add("Test"));
+    }
+
+    @Test
     public void setGuiSettings_validGuiSettings_setsGuiSettings() {
         GuiSettings guiSettings = new GuiSettings(1, 2, 3, 4, 0.5);
         logic.setGuiSettings(guiSettings);
