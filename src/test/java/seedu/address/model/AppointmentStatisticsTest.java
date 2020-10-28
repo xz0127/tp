@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 
 public class AppointmentStatisticsTest {
     @Test
-    public void toStringBasedOn() {
+    public void toString_allOk() {
         AppointmentBook newAppointmentBook = new AppointmentBook();
 
         assertEquals(String.format(STATISTICS_MESSAGE, 0, 0, 0, 0),

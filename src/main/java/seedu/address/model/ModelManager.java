@@ -191,6 +191,7 @@ public class ModelManager implements Model {
     }
 
     //=========== Filtered Appointment List Accessors =================================================================
+
     /**
      * Returns an unmodifiable view of the list of {@code Appointment} backed by the internal list of
      * {@code versionedAppointmentBook}
@@ -247,15 +248,17 @@ public class ModelManager implements Model {
     //=========== Model Validation =============================================================
 
     /**
-     * Checks if the {@code readOnlyPatientBook} is consistent with the {@code appointmentBook} data.
+     * Checks if the {@code readOnlyPatientBook} is consistent with the {@code readOnlyAppointmentBook} data.
      *
-     * @param readOnlyPatientBook the patients data
-     * @param appointmentBook the appointments data
-     * @return true if the two books are valid, false otherwise
+     * @param readOnlyPatientBook     the patients data.
+     * @param readOnlyAppointmentBook the appointments data.
+     * @return true if the two books are valid, false otherwise.
      */
     public static boolean isValidModel(ReadOnlyPatientBook readOnlyPatientBook,
-                                       ReadOnlyAppointmentBook appointmentBook) {
-        List<Appointment> appointmentList = appointmentBook.getAppointmentList();
+                                       ReadOnlyAppointmentBook readOnlyAppointmentBook) {
+        requireAllNonNull(readOnlyPatientBook, readOnlyAppointmentBook);
+
+        List<Appointment> appointmentList = readOnlyAppointmentBook.getAppointmentList();
         PatientBook patientBook = new PatientBook(readOnlyPatientBook);
 
         for (Appointment appointment : appointmentList) {
@@ -264,5 +267,30 @@ public class ModelManager implements Model {
             }
         }
         return true;
+    }
+
+    /**
+     * Makes an appointment book that only consists of appointment data that is consistent
+     * with {@code readOnlyPatientBook}.
+     *
+     * @param readOnlyPatientBook     the patients data.
+     * @param readOnlyAppointmentBook the appointments data.
+     * @return the Appointment Book that consists of the appointments that are consistent with the Patient Book.
+     */
+    public static ReadOnlyAppointmentBook getSyncedAppointmentBook(ReadOnlyPatientBook readOnlyPatientBook,
+                                                   ReadOnlyAppointmentBook readOnlyAppointmentBook) {
+        requireAllNonNull(readOnlyPatientBook, readOnlyAppointmentBook);
+        assert !isValidModel(readOnlyPatientBook, readOnlyAppointmentBook);
+
+        List<Appointment> appointmentList = readOnlyAppointmentBook.getAppointmentList();
+        AppointmentBook appointmentBook = new AppointmentBook();
+        PatientBook patientBook = new PatientBook(readOnlyPatientBook);
+
+        for (Appointment appointment : appointmentList) {
+            if (patientBook.hasPatient(appointment.getPatient())) {
+                appointmentBook.addAppointment(appointment);
+            }
+        }
+        return appointmentBook;
     }
 }

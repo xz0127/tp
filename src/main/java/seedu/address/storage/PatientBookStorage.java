@@ -20,18 +20,19 @@ public interface PatientBookStorage {
     /**
      * Returns PatientBook data as a {@link ReadOnlyPatientBook}.
      * Returns {@code Optional.empty()} if storage file is not found.
-     * @throws DataConversionException if the data in storage is not in the expected format.
-     * @throws IOException             if there was any problem when reading from the storage.
+     *
+     * @throws DataConversionException if there was any problem when reading from the storage.
      */
-    Optional<ReadOnlyPatientBook> readPatientBook() throws DataConversionException, IOException;
+    Optional<ReadOnlyPatientBook> readPatientBook() throws DataConversionException;
 
     /**
      * @see #getPatientBookFilePath()
      */
-    Optional<ReadOnlyPatientBook> readPatientBook(Path filePath) throws DataConversionException, IOException;
+    Optional<ReadOnlyPatientBook> readPatientBook(Path filePath) throws DataConversionException;
 
     /**
      * Saves the given {@link ReadOnlyPatientBook} to the storage.
+     *
      * @param patientBook cannot be null.
      * @throws IOException if there was any problem writing to the file.
      */
@@ -41,5 +42,13 @@ public interface PatientBookStorage {
      * @see #savePatientBook(ReadOnlyPatientBook)
      */
     void savePatientBook(ReadOnlyPatientBook patientBook, Path filePath) throws IOException;
+
+    /**
+     * Makes a backup of the patient storage file.
+     *
+     * @param folderName the name of the backup folder.
+     * @throws IOException if there was any problem writing to the backup file.
+     */
+    void backupData(String folderName) throws IOException;
 
 }
