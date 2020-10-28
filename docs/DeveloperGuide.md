@@ -405,7 +405,7 @@ The following activity diagram summarises the general workflow for the Edit Comm
     * Cons: No separation between classes violates the Single Responsibility Principle. Compromises the readability of the code and 
     increases the difficulty of debugging and maintaining the code base. 
     
-##### Aspect: How to update corresponding `appointment` instances
+##### Aspect: How to update corresponding `appointment` instance
 
 * **Alternative 1 (current choice):** Separate updating `appointment` from editing `patient`
     * Pros: Draws clear distinction between the responsibilities of `appointmentBook` and `patientBook`. Reduces the coupling.
