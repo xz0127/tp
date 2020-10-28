@@ -97,6 +97,8 @@ public class ChangeCommand extends Command {
             throw new CommandException(APPOINTMENT_OVERLAP);
         }
         model.updateFilteredAppointmentList(PREDICATE_SHOW_ALL_APPOINTMENTS);
+        model.commitPatientBook();
+        model.commitAppointmentBook();
         return new CommandResult(String.format(MESSAGE_EDIT_APPOINTMENT_SUCCESS, editedAppointment));
     }
 
