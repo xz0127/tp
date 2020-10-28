@@ -423,7 +423,8 @@ Refer to the following activity diagram for a summary of the above pathways.
 <br>**Diagram 5.1.2: Activity diagram showcasing available pathways to create a remark**
 
 This segment will focus on the implementation details for the `RemarkCommand` pathway. The implementation for the 
-alternative `AddCommand` and `EditCommand` pathways can be found in another segment of our Developer's Guide.
+alternative `EditCommand` pathway can be found in another segment of our Developer's Guide while the implementation
+ for the `AddCommand` pathway is inherited from the original AB3-Addressbook.
 
  
 The addition of a remark via the remark command pathway is mainly facilitated by the `RemarkCommand` class which
