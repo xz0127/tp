@@ -74,12 +74,13 @@ public class CommandBox extends UiPart<Region> {
             historyPointer++;
             setInput(commandHistory.get(historyPointer));
         } else {
+            historyPointer = commandHistory.size();
             setInput("");
         }
     }
 
     private void setInput(String input) {
-        commandTextField.setText(input);
+        commandTextField.setText(historyPointer + " : " + input);
         commandTextField.positionCaret(input.length());
     }
 
