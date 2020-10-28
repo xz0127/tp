@@ -171,4 +171,54 @@ public interface Model {
      * Returns an unmodifiable view of the filtered appointment list
      */
     ObservableList<Appointment> getFilteredAppointmentList();
+
+    /**
+     * Returns true if the model has previous appointment book states to restore.
+     */
+    boolean canUndoAppointmentBook();
+
+    /**
+     * Returns true if the model has previous patient book states to restore.
+     */
+    boolean canUndoPatientBook();
+
+    /**
+     * Returns true if the model has undone appointment book states to restore.
+     */
+    boolean canRedoAppointmentBook();
+
+    /**
+     * Returns true if the model has undone patient book states to restore.
+     */
+    boolean canRedoPatientBook();
+
+    /**
+     * Restores the model's appointment book to its previous state.
+     */
+    void undoAppointmentBook();
+
+    /**
+     * Restores the model's patient book to its previous state.
+     */
+    void undoPatientBook();
+
+    /**
+     * Restores the model's appointment book to its previously undone state.
+     */
+    void redoAppointmentBook();
+
+    /**
+     * Restores the model's patient book to its previously undone state.
+     */
+    void redoPatientBook();
+
+    /**
+     * Saves the current appointment book state for undo/redo.
+     */
+    void commitAppointmentBook();
+
+    /**
+     * Saves the current patient book state for undo/redo.
+     */
+    void commitPatientBook();
 }

@@ -49,6 +49,8 @@ class RemarkCommandTest {
         Model expectedModel = new ModelManager(new PatientBook(model.getPatientBook()),
                 new AppointmentBook(model.getAppointmentBook()), new UserPrefs());
         expectedModel.setPatient(firstPatient, editedPatient);
+        expectedModel.commitPatientBook();
+        expectedModel.commitAppointmentBook();
 
         assertCommandSuccess(remarkCommand, model, expectedMessage, expectedModel);
     }
@@ -66,6 +68,8 @@ class RemarkCommandTest {
         Model expectedModel = new ModelManager(new PatientBook(model.getPatientBook()),
                 new AppointmentBook(model.getAppointmentBook()), new UserPrefs());
         expectedModel.setPatient(firstPatient, editedPatient);
+        expectedModel.commitPatientBook();
+        expectedModel.commitAppointmentBook();
 
         assertCommandSuccess(remarkCommand, model, expectedMessage, expectedModel);
     }
@@ -87,7 +91,8 @@ class RemarkCommandTest {
         Model expectedModel = new ModelManager(new PatientBook(model.getPatientBook()),
                 new AppointmentBook(model.getAppointmentBook()), new UserPrefs());
         expectedModel.setPatient(firstPatient, editedPatient);
-
+        expectedModel.commitPatientBook();
+        expectedModel.commitAppointmentBook();
         assertCommandSuccess(remarkCommand, model, expectedMessage, expectedModel);
     }
 

@@ -78,6 +78,8 @@ public class AssignCommand extends Command {
 
         model.addAppointment(appointment);
         model.updateFilteredAppointmentList(PREDICATE_SHOW_ALL_APPOINTMENTS);
+        model.commitAppointmentBook();
+        model.commitPatientBook();
         return new CommandResult(String.format(MESSAGE_SUCCESS, appointment));
     }
 
