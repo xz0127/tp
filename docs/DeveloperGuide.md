@@ -212,17 +212,19 @@ The data stored on the archive will be minimal and only contains the following c
 
 The archive mechanism is facilitated by `CsvAppointmentArchive` which implements the `AppointmentArchive` interface.
 It is stored internally within the `JsonAppointmentBookStorage` which in turn implements the `AppointmentBookStorage` interface.
-
+<br>
 `CsvAppointmentArchive` implements the following operations:
 
-* `AppointmentArchive#archivePastAppointments(ReadOnlyAppointmentBook)` — Removes all past appointments from the `ReadOnlyAppointmentBook` and archive them as a csv file.
-* `AppointmentArchive#saveAppointments(List<CsvAdaptedAppointment>, String)` — Saves the list of `CsvAdaptedAppointment` as a csv file in the archive directory with the given filename.
-* `AppointmentArchive#readAppointments(String)` — Reads the csv file with the given filename and returns the data as a `List<CsvAdaptedAppointment>`
-* `AppointmentArchive#getArchiveStatistics()` — Gets the status message of the archive mechanism.
+* `archivePastAppointments(ReadOnlyAppointmentBook)` — Removes all past appointments from the `ReadOnlyAppointmentBook` and archive them as a csv file.
+* `saveAppointments(List<CsvAdaptedAppointment>, String)` — Saves the list of `CsvAdaptedAppointment` as a csv file in the archive directory with the given filename.
+* `readAppointments(String)` — Reads the csv file with the given filename and returns the data as a `List<CsvAdaptedAppointment>`
+* `getArchiveStatistics()` — Gets the status message of the archive mechanism.
 
 Of these three, only the `archivePastAppointments(ReadOnlyAppointmenBook)` and `getArchiveStatistics()` are exposed in the `AppointmentBookStorage` and `Storage` interfaces as methods with the same signature.
 
+<br>
 `CsvAdaptedAppointment` and `CsvAdaptedPatient` are used to represent the csv-adapted `Appointment` and `Patient` respectively.
+<br>
 
 Given below is an example archive run scenario and how the archive mechanism behaves at each step.
 
@@ -812,5 +814,5 @@ testers are expected to do more *exploratory* testing.
       The app safely launches. The previously edited appointment is not in the appointment list.
       The Command Result display indicates that 1 appointment is archived.
       
-   1. Locate the appointment csv archive file at `.\data\archives\2019_May.csv`. 
+   1. Locate the appointment csv archive file at `.\data\archives\2019_MAY.csv`. 
       The previously edited appointment should be reflected as an archived appointment.
