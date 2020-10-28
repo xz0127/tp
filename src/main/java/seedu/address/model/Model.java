@@ -60,11 +60,23 @@ public interface Model {
     void setAppointmentBookFilePath(Path appointmentBookFilePath);
 
     /**
+     * Returns the user prefs' appointment directory path.
+     */
+    Path getArchiveDirPath();
+
+    /**
+     * Sets the user prefs' archive directory path.
+     */
+    void setArchiveDirPath(Path archiveDirPath);
+
+    /**
      * Replaces patient book data with the data in {@code patientBook}.
      */
     void setPatientBook(ReadOnlyPatientBook patientBook);
 
-    /** Returns the PatientBook */
+    /**
+     * Returns the PatientBook
+     */
     ReadOnlyPatientBook getPatientBook();
 
     /**
@@ -140,7 +152,9 @@ public interface Model {
      */
     String findAvailableTimeSlots(List<Appointment> appointmentList, boolean isToday);
 
-    /** Returns an unmodifiable view of the filtered patient list */
+    /**
+     * Returns an unmodifiable view of the filtered patient list.
+     */
     ObservableList<Patient> getFilteredPatientList();
 
     /**
@@ -163,12 +177,12 @@ public interface Model {
     void setAppointmentBook(ReadOnlyAppointmentBook appointmentBook);
 
     /**
-     * Returns the AppointmentBook
+     * Returns the AppointmentBook.
      */
     ReadOnlyAppointmentBook getAppointmentBook();
 
     /**
-     * Returns an unmodifiable view of the filtered appointment list
+     * Returns an unmodifiable view of the filtered appointment list.
      */
     ObservableList<Appointment> getFilteredAppointmentList();
 

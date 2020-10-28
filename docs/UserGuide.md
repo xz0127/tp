@@ -80,7 +80,7 @@ Format: `help`
 
 Adds a patient to the patient book.
 
-Format: `add n/NAME i/NRIC p/PHONE_NUMBER a/ADDRESS [t/TAG]…​`
+Format: `add n/NAME i/NRIC p/PHONE_NUMBER a/ADDRESS [r/REMARK] [t/TAG]…​`
 
 <div markdown="span" class="alert alert-primary">:bulb: **Tip:**
 Tags are used to indicate a patient's underlying medical conditions. A patient can have any number of tags (including 0).
@@ -107,7 +107,7 @@ Format: `list`
 
 Edits an existing patient in the patient book. Existing appointments which include the edited patient will be updated accordingly.
 
-Format: `edit PATIENT_INDEX [n/NAME] [i/NRIC] [p/PHONE_NUMBER] [a/ADDRESS] [t/TAG]…​`
+Format: `edit PATIENT_INDEX [n/NAME] [i/NRIC] [p/PHONE_NUMBER] [a/ADDRESS] [r/REMARK] [t/TAG]…​`
 
 * Edits the patient at the specified `PATIENT_INDEX`. The index refers to the index number shown in the displayed patient list. The index **must be a positive integer** 1, 2, 3, …​
 * At least one of the optional fields must be provided.
@@ -363,6 +363,10 @@ Examples:
   `redo` (reapplies the `cancel 1` command)
   `undo` (reapplies the `clear` command)
 
+### Searching through entered commands
+
+Pressing the :arrow_up: and :arrow_down: arrows in the command box will display the previous and next input respectively.
+
 ### Exiting the program : `exit`
 
 Exits Nuudle.
@@ -377,9 +381,10 @@ Patients and appointments data are saved in the hard disk automatically after an
 
 Past appointments are automatically archived and neatly organised in an archive folder for future reference. This is done automatically everytime you start up the Nuudle app. The appointments are organised by their appointment months and are saved in Comma-Separated Values (CSV) format. CSV files can be opened and viewed as a typical Excel file.
 
-### Searching through entered commands
+### Backing up files
 
-Pressing the :arrow_up: and :arrow_down: arrows in the command box will display the previous and next input respectively.
+The core data files of the previous session are automatically saved in a folder called `backup`. The backup data will be updated everytime you start up the Nuudle app.  
+This backup files allow you to completely revert your data to the version in the previous session. This is especially useful if your data was unintentionally corrupted and you need to manually update the data.
 
 --------------------------------------------------------------------------------------------------------------------
 

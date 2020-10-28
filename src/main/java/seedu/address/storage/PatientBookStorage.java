@@ -51,4 +51,5 @@ public interface PatientBookStorage {
      */
     void backupData(String folderName) throws IOException;
 
+    StorageStatsManager getStatsManager();
 }

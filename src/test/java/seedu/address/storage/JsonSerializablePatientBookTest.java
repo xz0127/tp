@@ -23,7 +23,7 @@ public class JsonSerializablePatientBookTest {
     public void toModelType_typicalPatientsFile_success() throws Exception {
         JsonSerializablePatientBook dataFromFile = JsonUtil.readJsonFile(TYPICAL_PATIENTS_FILE,
                 JsonSerializablePatientBook.class).get();
-        PatientBook patientBookFromFile = dataFromFile.toModelType();
+        PatientBook patientBookFromFile = dataFromFile.toModelType(new StorageStatsManager());
         PatientBook typicalPatientsPatientBook = TypicalPatients.getTypicalPatientBook();
         assertEquals(patientBookFromFile, typicalPatientsPatientBook);
     }
@@ -32,7 +32,7 @@ public class JsonSerializablePatientBookTest {
     public void toModelType_invalidPatientFile_returnsEmptyPatientBook() throws Exception {
         JsonSerializablePatientBook dataFromFile = JsonUtil.readJsonFile(INVALID_PATIENT_FILE,
                 JsonSerializablePatientBook.class).get();
-        PatientBook patientBookFromFile = dataFromFile.toModelType();
+        PatientBook patientBookFromFile = dataFromFile.toModelType(new StorageStatsManager());
         PatientBook expectedPatientBook = new PatientBook();
         assertEquals(patientBookFromFile, expectedPatientBook);
     }
@@ -41,7 +41,7 @@ public class JsonSerializablePatientBookTest {
     public void toModelType_duplicatePatients_returnsOnePatientInBook() throws Exception {
         JsonSerializablePatientBook dataFromFile = JsonUtil.readJsonFile(DUPLICATE_PATIENT_FILE,
                 JsonSerializablePatientBook.class).get();
-        PatientBook patientBookFromFile = dataFromFile.toModelType();
+        PatientBook patientBookFromFile = dataFromFile.toModelType(new StorageStatsManager());
         PatientBook expectedPatientBook = new PatientBook();
         expectedPatientBook.addPatient(ALICE);
         assertEquals(patientBookFromFile, expectedPatientBook);

@@ -125,6 +125,16 @@ public class AddCommandTest {
         }
 
         @Override
+        public Path getArchiveDirPath() {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public void setArchiveDirPath(Path archiveDirPath) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
         public void addPatient(Patient patient) {
             throw new AssertionError("This method should not be called.");
         }

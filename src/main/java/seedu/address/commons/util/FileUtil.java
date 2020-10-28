@@ -6,6 +6,7 @@ import java.nio.file.InvalidPathException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.nio.file.StandardOpenOption;
 
 /**
  * Writes and reads files
@@ -19,7 +20,7 @@ public class FileUtil {
     }
 
     /**
-     * Returns true if {@code path} can be converted into a {@code Path} via {@link Paths#get(String)},
+     * Returns true if {@code path} can be converted into a {@code Path} via {@link Paths#get(String, String...)},
      * otherwise returns false.
      *
      * @param path A string representing the file path. Cannot be null.
@@ -81,6 +82,18 @@ public class FileUtil {
      */
     public static void writeToFile(Path file, String content) throws IOException {
         Files.write(file, content.getBytes(CHARSET));
+    }
+
+    /**
+     * Writes given string to a file by appending it onto the last line of the file.
+     * Will create the file if it does not exist yet.
+     */
+    public static void appendToFile(Path file, String content) throws IOException {
+        StandardOpenOption openOption = isFileExists(file)
+                ? StandardOpenOption.APPEND
+                : StandardOpenOption.CREATE;
+
+        Files.write(file, content.getBytes(CHARSET), openOption);
     }
 
     /**
