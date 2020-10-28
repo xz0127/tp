@@ -11,7 +11,7 @@ Class Patient
 Class Remark
 }
 
-Patient *-left-> "0..1" Remark : contains >
+Patient "1" *-left-> "0..1" Remark : contains >
 PatientBook "1" -left-> "*" Patient : contains >
 PatientBook .down.|> ReadOnlyPatientBook
 
