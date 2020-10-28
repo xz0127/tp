@@ -78,7 +78,8 @@ public class ChangeCommand extends Command {
         Appointment appointmentToEdit = lastShownList.get(index.getZeroBased());
         Appointment editedAppointment = createEditedAppointment(appointmentToEdit, editAppointmentDescriptor);
 
-        if (appointmentToEdit.equals(editedAppointment) && model.hasAppointment(editedAppointment)) {
+        if (!appointmentToEdit.startAtSameTime(editedAppointment.getDate(), editedAppointment.getStartTime())
+                && model.hasAppointment(editedAppointment)) {
             throw new CommandException(MESSAGE_DUPLICATE_APPOINTMENT);
         }
         model.deleteAppointment(appointmentToEdit);
