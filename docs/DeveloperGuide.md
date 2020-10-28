@@ -354,36 +354,68 @@ Creates a `patient` with the details of `patientToEdit` edited with `editPatient
 
 Given below is an example usage scenario and how the edit mechanism behaves at each step.
 
-Step 1: The user types `edit INDEX [n/NAME] [p/PHONE] [i/NRIC] [a/ADDRESS] [t/TAG]…` into Nuudle.
+1: The user types `edit INDEX [n/NAME] [p/PHONE] [i/NRIC] [a/ADDRESS] [r/REMARK] [t/TAG]…` into Nuudle.
 
-Step 2: The request is handled by `LogicManager#execute(String)`, which then calls and passes the input to the `NuudleParser#parseCommand(String)` method.
+2: The request is handled by `LogicManager#execute(String)`, which then calls and passes the input to the `NuudleParser#parseCommand(String)` method.
 
-Step 3: `NuudleParser` detects the command word `edit` in the input string and creates a new `EditCommandParser` to parse inputs according to the format specified for `EditCommand`.
+3: `NuudleParser` detects the command word `edit` in the input string and creates a new `EditCommandParser` to parse inputs according to the format specified for `EditCommand`.
 
-Step 4: Input is parsed using the EditCommandParser#parse(String) method, which also performs input validation. The method creates a `EditPatientDescriptor` using the parsed inputs by calling the static constructor inside `EditCommand`.
+4: Input is parsed using the ·EditCommandParser#parse(String)· method, which also performs input validation. The method creates a `EditPatientDescriptor` using the parsed inputs by calling the static constructor inside `EditCommand`.
 
-Step 5: The `EditCommandParser` creates a new `EditCommand` instance with the given index and newly created `EditPatientDescriptor` object and returns it to `NuudleParser`, which in turn returns it to `LogicManager`.
+5: The `EditCommandParser` creates a new `EditCommand` instance with the given index and newly created `EditPatientDescriptor` object and returns it to `NuudleParser`, which in turn returns it to `LogicManager`.
 
-Step 6: `LogicManager` calls the `EditCommand#execute(Model)` method.
+6: `LogicManager` calls the `EditCommand#execute(Model)` method.
 
-Step 7: `EditCommand` obtains a copy of the `FilteredPatientList` by calling the `Model#getFilteredPatientList()` method. This is used to check if the `patient` index supplied by the user exists in Nuudle.
+7: `EditCommand` obtains a copy of the `FilteredPatientList` by calling the `Model#getFilteredPatientList()` method. This is used to check if the `patient` index supplied by the user exists in Nuudle.
 
-Step 8: `EditCommand` creates a new `patient` specified by the `EditPatientDescriptor` by calling its own private static method `EditCommand#createEditedPatient(Patient patientToEdit, EditPatientDescriptor editPatientDescriptor)`.
+8: `EditCommand` creates a new `patient` specified by the `EditPatientDescriptor` by calling its own private static method `EditCommand#createEditedPatient(Patient, EditPatientDescriptor)`.
 
-Step 9: `EditCommand` checks whether there are duplicate patients in the patient book by calling `Model#hasPatient(Patient)` method.
+9: `EditCommand` checks whether there are duplicate patients in the patient book by calling `Model#hasPatient(Patient)` method.
 
-Step 10: `EditCommand` edits the `patient` at a given index by calling `Model#setPatient(Patient, Patient)`;
+10: `EditCommand` edits the `patient` at a given index by calling `Model#setPatient(Patient, Patient)`;
 
-Step 11: `EditCommand` edits the `appointment` in the `UniqueAppointmentList` which contains the edited patient by calling `Model#updateAppointmentsWithPatient(Patient, Patient)` method.
+11: `EditCommand` edits the `appointment` in the `UniqueAppointmentList` which contains the edited patient by calling `Model#updateAppointmentsWithPatient(Patient, Patient)` method.
 
-Step 12: `EditCommand` updates the filtered list by calling `Model#updateFilteredPatientList(Predicate)` method.
+12: `EditCommand` updates the filtered list by calling `Model#updateFilteredPatientList(Predicate)` method.
 
-Step 13: `EditCommand` updates the filtered list by calling `Model#updateFilteredAppointmentList(Predicate)` method.
+13: `EditCommand` updates the filtered list by calling `Model#updateFilteredAppointmentList(Predicate)` method.
 
-Step 14: Lastly, `EditCommand` creates a `CommandResult` with `SuccessMessage` and `Patient` and returns it to `LogicManager`.
+14: Lastly, `EditCommand` creates a `CommandResult` with `SuccessMessage` and `Patient` and returns it to `LogicManager`.
 
+The above process is shown in the following sequence diagram:
 
-_{more aspects and alternatives to be added}_
+![EditSequenceDiagram](images/EditSequenceDiagram.png)
+<br>**Diagram 5.2.1: Sequence diagram showcasing the Edit Command process**
+
+The following activity diagram summarises the general workflow for the Edit Command:
+
+![EditCommandActivityDiagram](images/EditCommandActivityDiagram.png)
+<br>**Diagram 5.2.2: Activity diagram showcasing the Edit Command execution flow**
+
+#### 5.3 Design Considerations
+
+##### Aspect: How the `edit` command executes
+
+* **Alternative 1 (current choice):** Separate parsing from code execution
+    * Pros: Separate the responsibilities clearly between classes and adhere to the Single Responsibility Principle.
+    * Cons: Increases numbers of lines of code and may increase coupling as objects are passed around between the classes.
+
+* **Alternative 2:** Parse and Execute in the same class
+    * Pros: Fewer lines of code, less fields/objects are passed between classes which reduces the coupling.
+    * Cons: No separation between classes violates the Single Responsibility Principle. Compromises the readability of the code and 
+    increases the difficulty of debugging and maintaining the code base. 
+    
+##### Aspect: How to update corresponding `appointment` instance
+
+* **Alternative 1 (current choice):** Separate updating `appointment` from editing `patient`
+    * Pros: Draws clear distinction between the responsibilities of `appointmentBook` and `patientBook`. Reduces the coupling.
+    * Cons: Increases numbers of lines of code and increases the cost of testing since more tests have to be carried out.
+
+* **Alternative 2:** Update `appointment` together with `edit` patient in one function
+    * Pros: Fewer lines of code. Lower cost of testing.
+    * Cons: No separation between classes violates the Single Responsibility Principle. Compromises the readability of the code and 
+    increases the difficulty of debugging and maintaining the code base. Increases the coupling.
+
 
 ### 5. Remark feature
 
