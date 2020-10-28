@@ -5,49 +5,49 @@
     "nric" : "S1234567I",
     "phone" : "94351253",
     "address" : "123, Jurong West Ave 6, #08-111",
-    "remark" : "",
+    "remark" : "This is a test remark :)",
     "tagged" : [ "friends" ]
   }, {
     "name" : "Benson Meier",
     "nric" : "S1234567O",
     "phone" : "98765432",
     "address" : "311, Clementi Ave 2, #02-25",
-    "remark" : "",
+    "remark" : "He can't take beer!",
     "tagged" : [ "owesMoney", "friends" ]
   }, {
     "name" : "Carl Kurz",
     "nric" : "S1234567P",
     "phone" : "95352563",
     "address" : "wall street",
-    "remark" : "",
+    "remark" : "This is a test remark :)",
     "tagged" : [ ]
   }, {
     "name" : "Daniel Meier",
     "nric" : "S1234567L",
     "phone" : "87652533",
     "address" : "10th street",
-    "remark" : "",
+    "remark" : "This is a test remark :)",
     "tagged" : [ "friends" ]
   }, {
     "name" : "Elle Meyer",
     "nric" : "T1234567P",
     "phone" : "9482224",
     "address" : "michegan ave",
-    "remark" : "",
+    "remark" : "This is a test remark :)",
     "tagged" : [ ]
   }, {
     "name" : "Fiona Kunz",
     "nric" : "T0234567P",
     "phone" : "9482427",
     "address" : "little tokyo",
-    "remark" : "",
+    "remark" : "This is a test remark :)",
     "tagged" : [ ]
   }, {
     "name" : "George Best",
     "nric" : "T0034567P",
     "phone" : "9482442",
     "address" : "4th street",
-    "remark" : "",
+    "remark" : "This is a test remark :)",
     "tagged" : [ ]
   } ]
 }
