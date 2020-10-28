@@ -67,10 +67,48 @@ public class TypicalAppointments {
         return ab;
     }
 
+    /**
+     * Returns an {@code AppointmentBook} with all the typical Appointments happening on 1-Jan-2050.
+     */
+    public static AppointmentBook getSecondTypicalAppointmentBook() {
+        AppointmentBook ab = new AppointmentBook();
+        for (Appointment appointment : getSecondTypicalAppointments()) {
+            ab.addAppointment(appointment);
+        }
+        return ab;
+    }
+
+    /**
+     * Returns an {@code AppointmentBook} with all the typical Appointments happening on 22-May-2050.
+     */
+    public static AppointmentBook getThirdTypicalAppointmentBook() {
+        AppointmentBook ab = new AppointmentBook();
+        for (Appointment appointment : getThirdTypicalAppointments()) {
+            ab.addAppointment(appointment);
+        }
+        return ab;
+    }
+
     public static List<Appointment> getTypicalAppointments() {
         List<Appointment> appointmentList = Arrays.asList(
                 ALICE_APPOINTMENT, BENSON_APPOINTMENT, CARL_APPOINTMENT,
                 CARL_APPOINTMENT_2, ALICE_APPOINTMENT_2, BENSON_APPOINTMENT_2
+        );
+        appointmentList.sort(new AppointmentComparator());
+        return appointmentList;
+    }
+
+    public static List<Appointment> getSecondTypicalAppointments() {
+        List<Appointment> appointmentList = Arrays.asList(
+            ALICE_APPOINTMENT, CARL_APPOINTMENT
+        );
+        appointmentList.sort(new AppointmentComparator());
+        return appointmentList;
+    }
+
+    public static List<Appointment> getThirdTypicalAppointments() {
+        List<Appointment> appointmentList = Arrays.asList(
+            ALICE_APPOINTMENT_2, CARL_APPOINTMENT_2
         );
         appointmentList.sort(new AppointmentComparator());
         return appointmentList;

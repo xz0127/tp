@@ -25,6 +25,7 @@ Class "{abstract}\nCommand" as Command
 
 Interface Logic <<Interface>>
 Class LogicManager
+Class CommandHistory
 }
 
 package Model{
@@ -35,6 +36,7 @@ Class HiddenOutside #FFFFFF
 HiddenOutside ..> Logic
 
 LogicManager .up.|> Logic
+LogicManager -left->"1" CommandHistory
 LogicManager -->"1" NuudleParser
 NuudleParser .left.> XYZCommandParser: creates >
 

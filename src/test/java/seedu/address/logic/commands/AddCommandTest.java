@@ -9,13 +9,16 @@ import static seedu.address.testutil.Assert.assertThrows;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.function.Predicate;
 
 import org.junit.jupiter.api.Test;
 
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.AppointmentBook;
 import seedu.address.model.Model;
 import seedu.address.model.PatientBook;
 import seedu.address.model.ReadOnlyAppointmentBook;
@@ -77,7 +80,8 @@ public class AddCommandTest {
     }
 
     /**
-     * A default model stub that have all of the methods failing.
+     * A default model stub that have all of the methods failing other than
+     * {@code updateFilteredAppointmentList}.
      */
     private class ModelStub implements Model {
         @Override
@@ -175,6 +179,11 @@ public class AddCommandTest {
         }
 
         @Override
+        public String findAvailableTimeSlots(List<Appointment> appointmentList, boolean isToday) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
         public void updateAppointmentsWithPatient(Patient target, Patient editedPatient) {
             throw new AssertionError("This method should not be called.");
         }
@@ -196,7 +205,11 @@ public class AddCommandTest {
 
         @Override
         public void updateFilteredAppointmentList(Predicate<Appointment> predicate) {
-            throw new AssertionError("This method should not be called.");
+            requireNonNull(predicate);
+            FilteredList<Appointment> filteredAppointments =
+                    new FilteredList<>(new AppointmentBook().getAppointmentList());
+
+            filteredAppointments.setPredicate(predicate);
         }
 
         @Override
@@ -212,6 +225,56 @@ public class AddCommandTest {
         @Override
         public ObservableList<Appointment> getFilteredAppointmentList() {
             return null;
+        }
+
+        @Override
+        public boolean canUndoAppointmentBook() {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public boolean canUndoPatientBook() {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public boolean canRedoAppointmentBook() {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public boolean canRedoPatientBook() {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public void undoAppointmentBook() {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public void undoPatientBook() {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public void redoAppointmentBook() {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public void redoPatientBook() {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public void commitAppointmentBook() {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public void commitPatientBook() {
+            throw new AssertionError("This method should not be called.");
         }
     }
 
@@ -249,6 +312,16 @@ public class AddCommandTest {
         public void addPatient(Patient patient) {
             requireNonNull(patient);
             patientsAdded.add(patient);
+        }
+
+        @Override
+        public void commitAppointmentBook() {
+            // called by {@code AddCommand#execute()}
+        }
+
+        @Override
+        public void commitPatientBook() {
+            // called by {@code AddCommand#execute()}
         }
 
         @Override

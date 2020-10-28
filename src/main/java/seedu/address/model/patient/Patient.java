@@ -76,9 +76,7 @@ public class Patient {
         }
 
         return otherPatient != null
-                && otherPatient.getName().equals(getName())
-                && otherPatient.getNric().equals(getNric())
-                && (otherPatient.getPhone().equals(getPhone()));
+                && otherPatient.getNric().equals(getNric());
     }
 
     /**
@@ -100,6 +98,7 @@ public class Patient {
                 && otherPatient.getPhone().equals(getPhone())
                 && otherPatient.getAddress().equals(getAddress())
                 && otherPatient.getTags().equals(getTags())
+                && otherPatient.getRemark().equals(getRemark())
                 && otherPatient.getNric().equals(getNric());
     }
 

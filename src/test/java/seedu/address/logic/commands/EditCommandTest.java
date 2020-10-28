@@ -40,7 +40,7 @@ public class EditCommandTest {
 
     @Test
     public void execute_allFieldsSpecifiedUnfilteredList_success() {
-        Patient editedPatient = new PatientBuilder().build();
+        Patient editedPatient = new PatientBuilder().withRemark("This is a test remark :)").build();
         EditPatientDescriptor descriptor = new EditPatientDescriptorBuilder(editedPatient).build();
         EditCommand editCommand = new EditCommand(INDEX_FIRST_PATIENT, descriptor);
 
@@ -60,6 +60,8 @@ public class EditCommandTest {
             .get(INDEX_FIRST_APPOINTMENT.getZeroBased()), firstEditedAppointment);
         expectedModel.setAppointment(model.getFilteredAppointmentList()
             .get(INDEX_SIXTH_APPOINTMENT.getZeroBased()), secondEditedAppointment);
+        expectedModel.commitPatientBook();
+        expectedModel.commitAppointmentBook();
         assertCommandSuccess(editCommand, model, expectedMessage, expectedModel);
     }
 
@@ -81,7 +83,8 @@ public class EditCommandTest {
         Model expectedModel = new ModelManager(new PatientBook(model.getPatientBook()),
                 new AppointmentBook(model.getAppointmentBook()), new UserPrefs());
         expectedModel.setPatient(lastPatient, editedPatient);
-
+        expectedModel.commitPatientBook();
+        expectedModel.commitAppointmentBook();
         assertCommandSuccess(editCommand, model, expectedMessage, expectedModel);
     }
 
@@ -103,7 +106,8 @@ public class EditCommandTest {
         Model expectedModel = new ModelManager(new PatientBook(model.getPatientBook()),
             new AppointmentBook(model.getAppointmentBook()), new UserPrefs());
         expectedModel.setPatient(lastPatient, editedPatient);
-
+        expectedModel.commitPatientBook();
+        expectedModel.commitAppointmentBook();
         assertCommandSuccess(editCommand, model, expectedMessage, expectedModel);
     }
 
@@ -116,7 +120,8 @@ public class EditCommandTest {
 
         Model expectedModel = new ModelManager(new PatientBook(model.getPatientBook()),
                 new AppointmentBook(model.getAppointmentBook()), new UserPrefs());
-
+        expectedModel.commitPatientBook();
+        expectedModel.commitAppointmentBook();
         assertCommandSuccess(editCommand, model, expectedMessage, expectedModel);
     }
 
@@ -144,7 +149,8 @@ public class EditCommandTest {
             .get(INDEX_FIRST_APPOINTMENT.getZeroBased()), firstEditedAppointment);
         expectedModel.setAppointment(model.getFilteredAppointmentList()
             .get(INDEX_SIXTH_APPOINTMENT.getZeroBased()), secondEditedAppointment);
-
+        expectedModel.commitPatientBook();
+        expectedModel.commitAppointmentBook();
         assertCommandSuccess(editCommand, model, expectedMessage, expectedModel);
     }
 
