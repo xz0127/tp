@@ -80,7 +80,7 @@ public class CommandBox extends UiPart<Region> {
     }
 
     private void setInput(String input) {
-        commandTextField.setText(historyPointer + " : " + input);
+        commandTextField.setText(input);
         commandTextField.positionCaret(input.length());
     }
 

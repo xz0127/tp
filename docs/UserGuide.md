@@ -310,6 +310,59 @@ Clears all appointment and patients entries.
 
 Format: `clear`
 
+### Undoing previous command : `undo`
+
+Restores the patient and appointment book to the state before the previous *undoable* command was executed.
+
+Format: `undo`
+
+<div markdown="span" class="alert alert-primary">:information_source: **Tip:**
+Undoable commands refers to commands that modifies the patient or appointment list contents. (**add**, **edit**, **delete**, **remark**, **assign**, **change**, **cancel**, **done** and **clear**)
+</div>
+
+* There must be at least one previously executed undoable command.
+* Multiple calls to `redo` will reverse multiple undoable command execution, starting from the most recent command.
+
+Examples:
+* `delete 1` 
+  `list`
+  `undo` (reverses the `delete 1` command)
+* `view d/today`
+  `list`
+  `undo`
+   The `undo` command fails as there is no previous undoable command to reverse.
+* `cancel 1`
+  `clear`
+  `undo` (reverses the `clear` command)
+  `undo` (reverses the `cancel 1` command)
+
+### Redoing the previously undone command : `redo`
+
+Reverses the most recent `undo` command.
+
+Format: `redo`
+
+* There must be at least one previously executed `undo` command.
+* The previously executed `undo` command should be the most recent command that modifies the lists' data.
+* Multiple call to `redo` will reverse multiple `undo` command, starting from the most recent `undo` command. 
+
+Examples:
+* `cancel 1` 
+  `undo` (reverses the `cancel 1` command)
+  `list`
+  `redo` (reapplies the `cancel 1` command)
+* `cancel 1`
+  `undo` (reverses the `cancel 1` command)
+  `cancel 2`
+  `redo`
+   The `redo` command fails as there are no `undo` commands executed previously.
+* `cancel 1`
+  `clear`
+  `undo` (reverses the `clear` command)
+  `undo` (reverses the `cancel 1` command)
+  `redo` (reapplies the `cancel 1` command)
+  `undo` (reapplies the `clear` command)
+
 ### Exiting the program : `exit`
 
 Exits Nuudle.
@@ -323,6 +376,10 @@ Patients and appointments data are saved in the hard disk automatically after an
 ### Archiving past appointments
 
 Past appointments are automatically archived and neatly organised in an archive folder for future reference. This is done automatically everytime you start up the Nuudle app. The appointments are organised by their appointment months and are saved in Comma-Separated Values (CSV) format. CSV files can be opened and viewed as a typical Excel file.
+
+### Searching through entered commands
+
+Pressing the :arrow_up: and :arrow_down: arrows in the command box will display the previous and next input respectively.
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -345,7 +402,7 @@ Date Formats | Time Formats | Natural Date | Natural Time
 02-Dec-2020 |
 02-December-2020 |
 
-**Q**: My data was accidentally deleted and I can't undo it? How do I restore it?<br>
+**Q**: My data was accidentally deleted and I can't undo it. How do I restore my data?<br>
 **A**: Look for the `data` folder in the home directory of Nuudle and then look for a `backup` folder. Copy the 2 data files in the `backup` folder and paste them into the previous folder (`data`). 
 The previous session's data will then be restored by overwriting the current data files with the backup data files.
 
@@ -368,5 +425,7 @@ Action | Format, Examples
 **Done** | `done APPT_INDEX`<br> e.g., `done 2`
 **Available** | `avail d/DATE`<br> e.g., `avail d/12-Apr-2021`
 **Clear** | `clear`
+**Undo** | `undo`
+**Redo** | `redo`
 **Help** | `help`
 **Exit** | `exit`
