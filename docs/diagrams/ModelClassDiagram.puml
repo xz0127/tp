@@ -30,7 +30,6 @@ Class UniquePatientList
 
 Package Appointment {
 Class Appointment
-Class AppointmentId
 Class Date
 Class Time
 Class UniqueAppointmentList
@@ -42,19 +41,19 @@ Class Tag
 }
 
 Class HiddenOutside #FFFFFF
-HiddenOutside ..> Model
+HiddenOutside .down.> Model
 
-PatientBook .up.|> ReadOnlyPatientBook
-AppointmentBook .down.|> ReadOnlyAppointmentBook
+PatientBook .left.|> ReadOnlyPatientBook
+AppointmentBook .left.|> ReadOnlyAppointmentBook
 
-ModelManager .up.|> Model
+ModelManager .right.|> Model
 Model .right.> ObservableList
 ModelManager o--> "1" PatientBook
 ModelManager o--> "1" AppointmentBook
 ModelManager o-left-> "1" UserPrefs
-UserPrefs .up.|> ReadOnlyUserPrefs
+UserPrefs .left.|> ReadOnlyUserPrefs
 
-PatientBook *-left-> "1" UniquePatientList
+PatientBook *--> "1" UniquePatientList
 UniquePatientList o--> "*" Patient
 Patient *--> Name
 Patient *--> Phone
@@ -63,11 +62,12 @@ Patient *--> Remark
 Patient *--> Address
 Patient *--> "*" Tag
 
-AppointmentBook *-right-* "1" UniqueAppointmentList
+AppointmentBook *--> "1" UniqueAppointmentList
 UniqueAppointmentList o--> "*" Appointment
+UniqueAppointmentList -[hidden]down-> Appointment
 Appointment *--> Date
-Appointment *--> Time
-Appointment *--> AppointmentId
+Appointment *--> "2" Time
+Appointment --> Patient
 
 Name -[hidden]right-> Phone
 Phone -[hidden]right-> Address
