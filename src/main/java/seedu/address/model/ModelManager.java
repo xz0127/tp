@@ -176,6 +176,13 @@ public class ModelManager implements Model {
     }
 
     @Override
+    public String findAvailableTimeSlots(List<Appointment> appointmentList, boolean isToday) {
+        requireNonNull(appointmentList);
+
+        return appointmentBook.findAvailableTimeSlots(appointmentList, isToday);
+    }
+
+    @Override
     public ReadOnlyAppointmentBook getAppointmentBook() {
         return appointmentBook;
     }

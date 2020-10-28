@@ -1,6 +1,7 @@
 package seedu.address.model;
 
 import java.nio.file.Path;
+import java.util.List;
 import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
@@ -144,7 +145,14 @@ public interface Model {
     void setAppointment(Appointment target, Appointment editedAppointment);
 
     /**
-     * Returns an unmodifiable view of the filtered patient list
+     * Finds available time slots from the {@code appointmentList}.
+     * Appointments in {@code appointmentList} must take place on the same date.
+     * Returns the available time slots in string format.
+     */
+    String findAvailableTimeSlots(List<Appointment> appointmentList, boolean isToday);
+
+    /**
+     * Returns an unmodifiable view of the filtered patient list.
      */
     ObservableList<Patient> getFilteredPatientList();
 
@@ -168,12 +176,12 @@ public interface Model {
     void setAppointmentBook(ReadOnlyAppointmentBook appointmentBook);
 
     /**
-     * Returns the AppointmentBook
+     * Returns the AppointmentBook.
      */
     ReadOnlyAppointmentBook getAppointmentBook();
 
     /**
-     * Returns an unmodifiable view of the filtered appointment list
+     * Returns an unmodifiable view of the filtered appointment list.
      */
     ObservableList<Appointment> getFilteredAppointmentList();
 }
