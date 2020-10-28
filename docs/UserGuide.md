@@ -321,6 +321,11 @@ Patients and appointments data are saved in the hard disk automatically after an
 
 Past appointments are automatically archived and neatly organised in an archive folder for future reference. This is done automatically everytime you start up the Nuudle app. The appointments are organised by their appointment months and are saved in Comma-Separated Values (CSV) format. CSV files can be opened and viewed as a typical Excel file.
 
+### Backing up files
+
+The core data files of the previous session are automatically saved in a folder called `backup`. The backup data will be updated everytime you start up the Nuudle app.  
+This backup files allow you to completely revert your data to the version in the previous session. This is especially useful if your data was unintentionally corrupted and you need to manually update the data.
+
 --------------------------------------------------------------------------------------------------------------------
 
 ## FAQ
