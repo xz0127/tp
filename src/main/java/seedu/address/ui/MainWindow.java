@@ -156,7 +156,7 @@ public class MainWindow extends UiPart<Stage> {
         StatusBarFooter appointmentStatusBarFooter = new StatusBarFooter(logic.getAppointmentBookFilePath());
         appointmentStatusbarPlaceholder.getChildren().add(appointmentStatusBarFooter.getRoot());
 
-        CommandBox commandBox = new CommandBox(this::executeCommand);
+        CommandBox commandBox = new CommandBox(logic.getCommandHistory(), this::executeCommand);
         commandBoxPlaceholder.getChildren().add(commandBox.getRoot());
 
         initClock();
