@@ -18,8 +18,9 @@ public class HelpWindow extends UiPart<Stage> {
     public static final String USERGUIDE_URL = "https://ay2021s1-cs2103t-t12-4.github.io/tp/UserGuide.html";
 
     public static final String COMMON_COMMANDS = "Add a patient ---"
-            + "add n/NAME i/NRIC p/PHONE_NUMBER a/ADDRESS [t/TAG]…\n"
-            + "Edit a patient --- edit INDEX [n/NAME] [i/NRIC] [p/PHONE_NUMBER] [a/ADDRESS] [t/TAG]…\n"
+            + "add n/NAME i/NRIC p/PHONE_NUMBER a/ADDRESS [r/REMARK] [t/TAG]…\n"
+            + "Edit a patient --- edit INDEX [n/NAME] [i/NRIC] [p/PHONE_NUMBER] [a/ADDRESS] [r/REMARK] [t/TAG]…\n"
+            + "Add/Edit a remark --- remark INDEX [r/REMARK]\n"
             + "Delete a patient --- delete INDEX\n"
             + "List all patients --- list\n\n"
             + "Assign a patient to an appointment --- assign INDEX d/DATE t/TIME [dur/DURATION]\n"
