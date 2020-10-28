@@ -50,8 +50,4 @@ public interface AppointmentArchive {
     void saveAppointments(List<CsvAdaptedAppointment> appointments, Path directoryPath)
             throws IOException;
 
-    /**
-     * Gets archive statistics message.
-     */
-    String getArchiveStatistics();
 }

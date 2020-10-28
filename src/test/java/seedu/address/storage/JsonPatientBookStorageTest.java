@@ -64,7 +64,8 @@ public class JsonPatientBookStorageTest {
     public void readAndSavePatientBook_allInOrder_success() throws Exception {
         Path filePath = testFolder.resolve("TempPatientBook.json");
         PatientBook original = getTypicalPatientBook();
-        JsonPatientBookStorage jsonPatientBookStorage = new JsonPatientBookStorage(filePath);
+        StorageStatsManager statsManager = new StorageStatsManager();
+        JsonPatientBookStorage jsonPatientBookStorage = new JsonPatientBookStorage(filePath, statsManager);
 
         // Save in new file and read back
         jsonPatientBookStorage.savePatientBook(original, filePath);
@@ -103,7 +104,8 @@ public class JsonPatientBookStorageTest {
     }
 
     private java.util.Optional<ReadOnlyPatientBook> readPatientBook(String filePath) throws Exception {
-        return new JsonPatientBookStorage(Paths.get(filePath)).readPatientBook(addToTestDataPathIfNotNull(filePath));
+        return new JsonPatientBookStorage(Paths.get(filePath), new StorageStatsManager())
+                .readPatientBook(addToTestDataPathIfNotNull(filePath));
     }
 
     /**
@@ -111,7 +113,7 @@ public class JsonPatientBookStorageTest {
      */
     private void savePatientBook(ReadOnlyPatientBook patientBook, String filePath) {
         try {
-            new JsonPatientBookStorage(Paths.get(filePath))
+            new JsonPatientBookStorage(Paths.get(filePath), new StorageStatsManager())
                     .savePatientBook(patientBook, addToTestDataPathIfNotNull(filePath));
         } catch (IOException ioe) {
             throw new AssertionError("There should not be an error writing to the file.", ioe);

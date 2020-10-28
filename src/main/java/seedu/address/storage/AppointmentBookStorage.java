@@ -45,8 +45,12 @@ public interface AppointmentBookStorage {
      */
     void saveAppointmentBook(ReadOnlyAppointmentBook appointmentBook, Path filePath) throws IOException;
 
-    String getArchiveStatus();
-
+    /**
+     * Archives pasts appointment and returns the appointment book containing only upcoming appointments.
+     *
+     * @param appointmentBook the appointment book to check and archive.
+     * @return the updated appointment book.
+     */
     ReadOnlyAppointmentBook archivePastAppointments(ReadOnlyAppointmentBook appointmentBook);
 
     /**
@@ -57,4 +61,5 @@ public interface AppointmentBookStorage {
      */
     void backupData(String folderName) throws IOException;
 
+    StorageStatsManager getStatsManager();
 }

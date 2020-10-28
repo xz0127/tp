@@ -73,7 +73,7 @@ public class CsvAppointmentArchiveTest {
 
     @Test
     public void archiveThenReadAppointments_allInOrder_success() throws Exception {
-        CsvAppointmentArchive archive = new CsvAppointmentArchive(testFolder);
+        CsvAppointmentArchive archive = new CsvAppointmentArchive(testFolder, new StorageStatsManager());
         String fileName = "test.csv";
         List<CsvAdaptedAppointment> originalData = getSampleCsvData();
 
@@ -87,7 +87,7 @@ public class CsvAppointmentArchiveTest {
 
     @Test
     public void archiveAppointmentBook_validAppointmentBook_archiveSuccess() throws Exception {
-        CsvAppointmentArchive archive = new CsvAppointmentArchive(testFolder);
+        CsvAppointmentArchive archive = new CsvAppointmentArchive(testFolder, new StorageStatsManager());
 
         AppointmentBook appointmentBook = new AppointmentBook();
         appointmentBook.setAppointments(List.of(expiredAppointment, BENSON_APPOINTMENT));
@@ -114,17 +114,18 @@ public class CsvAppointmentArchiveTest {
     }
 
     private ReadOnlyAppointmentBook archiveAppointmentBook(ReadOnlyAppointmentBook appointmentBook) {
-        return new CsvAppointmentArchive(TEST_DATA_FOLDER).archivePastAppointments(appointmentBook);
+        return new CsvAppointmentArchive(TEST_DATA_FOLDER, new StorageStatsManager())
+                .archivePastAppointments(appointmentBook);
     }
 
     private List<CsvAdaptedAppointment> readArchive(String fileName) throws Exception {
-        return new CsvAppointmentArchive(TEST_DATA_FOLDER)
+        return new CsvAppointmentArchive(TEST_DATA_FOLDER, new StorageStatsManager())
                 .readAppointments(addToTestDataPathIfNotNull(fileName));
     }
 
     private void archiveAppointments(List<CsvAdaptedAppointment> appointments, String fileName) {
         try {
-            new CsvAppointmentArchive(TEST_DATA_FOLDER)
+            new CsvAppointmentArchive(TEST_DATA_FOLDER, new StorageStatsManager())
                     .saveAppointments(appointments, addToTestDataPathIfNotNull(fileName));
         } catch (IOException ioe) {
             throw new AssertionError("There should not be an error writing to the file.", ioe);

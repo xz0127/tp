@@ -22,17 +22,24 @@ public class StorageManager implements Storage {
     private final PatientBookStorage patientBookStorage;
     private final AppointmentBookStorage appointmentBookStorage;
     private final UserPrefsStorage userPrefsStorage;
+    private final StorageStatsManager statsManager;
 
     /**
      * Creates a {@code StorageManager} with the given {@code DataStorage} and {@code UserPrefStorage}.
      */
     public StorageManager(PatientBookStorage patientBookStorage,
                           AppointmentBookStorage appointmentBookStorage,
-                          UserPrefsStorage userPrefsStorage) {
+                          UserPrefsStorage userPrefsStorage,
+                          StorageStatsManager statsManager) {
         super();
+
+        assert patientBookStorage.getStatsManager() == statsManager;
+        assert appointmentBookStorage.getStatsManager() == statsManager;
+
         this.patientBookStorage = patientBookStorage;
         this.appointmentBookStorage = appointmentBookStorage;
         this.userPrefsStorage = userPrefsStorage;
+        this.statsManager = statsManager;
     }
 
     // ================ UserPrefs methods ==============================
@@ -123,11 +130,6 @@ public class StorageManager implements Storage {
         return appointmentBookStorage.archivePastAppointments(appointmentBook);
     }
 
-    @Override
-    public String getArchiveStatus() {
-        return appointmentBookStorage.getArchiveStatus();
-    }
-
     // ===================== Util methods ====================================
 
     @Override
@@ -140,5 +142,15 @@ public class StorageManager implements Storage {
         logger.fine("Attempting to make backup files: " + folderName);
         patientBookStorage.backupData(folderName);
         appointmentBookStorage.backupData(folderName);
+    }
+
+    @Override
+    public StorageStatsManager getStatsManager() {
+        return statsManager;
+    }
+
+    @Override
+    public String getStatusMessage() {
+        return statsManager.getMessage();
     }
 }

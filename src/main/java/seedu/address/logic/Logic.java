@@ -74,7 +74,7 @@ public interface Logic {
     void setGuiSettings(GuiSettings guiSettings);
 
     /**
-     * Gets the archive status message.
+     * Gets the storage load status message.
      */
-    String getArchiveStatus();
+    String getStorageStatus();
 }

@@ -31,6 +31,7 @@ import seedu.address.storage.JsonUserPrefsStorage;
 import seedu.address.storage.PatientBookStorage;
 import seedu.address.storage.Storage;
 import seedu.address.storage.StorageManager;
+import seedu.address.storage.StorageStatsManager;
 import seedu.address.storage.UserPrefsStorage;
 import seedu.address.ui.Ui;
 import seedu.address.ui.UiManager;
@@ -61,10 +62,14 @@ public class MainApp extends Application {
         UserPrefsStorage userPrefsStorage = new JsonUserPrefsStorage(config.getUserPrefsFilePath());
         UserPrefs userPrefs = initPrefs(userPrefsStorage);
 
-        PatientBookStorage patientBookStorage = new JsonPatientBookStorage(userPrefs.getPatientBookFilePath());
+        StorageStatsManager storageStatsManager = new StorageStatsManager();
+        PatientBookStorage patientBookStorage = new JsonPatientBookStorage(
+                userPrefs.getPatientBookFilePath(), storageStatsManager);
         AppointmentBookStorage appointmentBookStorage = new JsonAppointmentBookStorage(
-                userPrefs.getAppointmentBookFilePath(), userPrefs.getArchiveDirectoryPath());
-        storage = new StorageManager(patientBookStorage, appointmentBookStorage, userPrefsStorage);
+                userPrefs.getAppointmentBookFilePath(), userPrefs.getArchiveDirectoryPath(),
+                storageStatsManager);
+        storage = new StorageManager(patientBookStorage, appointmentBookStorage,
+                userPrefsStorage, storageStatsManager);
 
         initLogging(config);
 

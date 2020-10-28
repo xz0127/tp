@@ -109,7 +109,7 @@ public class LogicManager implements Logic {
     }
 
     @Override
-    public String getArchiveStatus() {
-        return storage.getArchiveStatus();
+    public String getStorageStatus() {
+        return storage.getStatusMessage();
     }
 }

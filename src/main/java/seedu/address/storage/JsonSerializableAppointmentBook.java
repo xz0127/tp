@@ -51,7 +51,7 @@ class JsonSerializableAppointmentBook {
     /**
      * Converts this appointment book into the model's {@code AppointmentBook} object.
      */
-    public AppointmentBook toModelType() {
+    public AppointmentBook toModelType(StorageStatsManager statsManager) {
         AppointmentBook appointmentBook = new AppointmentBook();
         int nDataViolations = 0;
 
@@ -76,6 +76,7 @@ class JsonSerializableAppointmentBook {
         }
         if (nDataViolations > 0) {
             logger.warning("Failed to read " + nDataViolations + " appointment data!");
+            statsManager.setRemovedAppointmentCount(nDataViolations);
         }
         return appointmentBook;
     }

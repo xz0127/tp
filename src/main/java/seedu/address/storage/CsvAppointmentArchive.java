@@ -27,14 +27,16 @@ public class CsvAppointmentArchive implements AppointmentArchive {
 
     private static final Logger logger = LogsCenter.getLogger(CsvAppointmentArchive.class);
 
-    // Statistics
-    private int numberOfArchivedAppointments = 0;
-    private int numberOfExpiredAppointments = 0;
-
     private final Path directoryPath;
+    private final StorageStatsManager statsManager;
 
-    public CsvAppointmentArchive(Path directoryPath) {
+    /**
+     * @param directoryPath the path to the archive directory.
+     * @param statsManager the statistics handler for storage.
+     */
+    public CsvAppointmentArchive(Path directoryPath, StorageStatsManager statsManager) {
         this.directoryPath = directoryPath;
+        this.statsManager = statsManager;
     }
 
     public Path getArchiveDirectoryPath() {
@@ -49,6 +51,10 @@ public class CsvAppointmentArchive implements AppointmentArchive {
         LocalDate date = null;
         List<CsvAdaptedAppointment> pastAppointments = new ArrayList<>();
         List<Appointment> upcomingAppointments = new ArrayList<>();
+
+        // Statistics
+        int numberOfArchivedAppointments = 0;
+        int numberOfExpiredAppointments = 0;
 
         for (int i = 0; i < appointments.size(); i++) {
             Appointment appointment = appointments.get(i);
@@ -82,6 +88,7 @@ public class CsvAppointmentArchive implements AppointmentArchive {
         }
 
         saveAppointments(pastAppointments, getFileName(date));
+        statsManager.setArchiveStats(numberOfArchivedAppointments, numberOfExpiredAppointments);
 
         AppointmentBook book = new AppointmentBook();
         book.setAppointments(upcomingAppointments);
@@ -102,7 +109,7 @@ public class CsvAppointmentArchive implements AppointmentArchive {
      * Similar to {@link #saveAppointments(List, String)}.
      *
      * @param appointments the appointments to archive.
-     * @param filePath location of the data. Cannot be null.
+     * @param filePath     location of the data. Cannot be null.
      * @throws IOException if there is an error writing to file.
      */
     public void saveAppointments(List<CsvAdaptedAppointment> appointments, Path filePath)
@@ -149,18 +156,6 @@ public class CsvAppointmentArchive implements AppointmentArchive {
         return date.getYear() + "_"
                 + date.getMonth().getDisplayName(TextStyle.SHORT, Locale.ENGLISH).toUpperCase()
                 + ".csv";
-    }
-
-    public String getArchiveStatistics() {
-        String output = String.format("%d %s archived", numberOfArchivedAppointments,
-                numberOfArchivedAppointments > 1 ? "appointments" : "appointment");
-
-        if (numberOfExpiredAppointments > 0) {
-            output += String.format(", of which %d %s not done", numberOfExpiredAppointments,
-                    numberOfExpiredAppointments > 1 ? "are" : "is");
-        }
-
-        return output;
     }
 
 }

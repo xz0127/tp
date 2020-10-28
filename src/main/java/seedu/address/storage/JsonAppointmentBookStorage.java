@@ -23,14 +23,17 @@ public class JsonAppointmentBookStorage implements AppointmentBookStorage {
     private AppointmentArchive csvArchive;
 
     private Path filePath;
+    private StorageStatsManager statsManager;
 
     /**
      * @param filePath the filePath for the appointment storage.
      * @param archivePath the directory path for the appointment archives.
+     * @param statsManager the statistics handler for storage.
      */
-    public JsonAppointmentBookStorage(Path filePath, Path archivePath) {
+    public JsonAppointmentBookStorage(Path filePath, Path archivePath, StorageStatsManager statsManager) {
         this.filePath = filePath;
-        this.csvArchive = new CsvAppointmentArchive(archivePath);
+        this.csvArchive = new CsvAppointmentArchive(archivePath, statsManager);
+        this.statsManager = statsManager;
     }
 
     public Path getAppointmentBookFilePath() {
@@ -64,12 +67,7 @@ public class JsonAppointmentBookStorage implements AppointmentBookStorage {
             return Optional.empty();
         }
 
-        // try {
-        return jsonAppointmentBook.map(JsonSerializableAppointmentBook::toModelType);
-        // } catch (IllegalValueException ive) {
-        //     logger.info("Illegal values found in " + filePath + ": " + ive.getMessage());
-        //     throw new DataConversionException(ive);
-        // }
+        return jsonAppointmentBook.map((book) -> book.toModelType(statsManager));
     }
 
     @Override
@@ -96,17 +94,17 @@ public class JsonAppointmentBookStorage implements AppointmentBookStorage {
     }
 
     @Override
-    public String getArchiveStatus() {
-        return csvArchive.getArchiveStatistics();
-    }
-
-    @Override
     public void backupData(String folderName) throws IOException {
         requireNonNull(folderName);
 
         if (FileUtil.isFileExists(filePath)) {
             FileUtil.backupFileToFolder(filePath, folderName);
         }
+    }
+
+    @Override
+    public StorageStatsManager getStatsManager() {
+        return statsManager;
     }
 
 }

@@ -49,13 +49,15 @@ public class JsonAppointmentBookStorageTest {
 
     @Test
     public void readAppointmentBook_allInvalidAppointmentBook_returnEmptyBook() throws Exception {
-        ReadOnlyAppointmentBook bookFromFile = readAppointmentBook("invalidAppointmentBook.json", "archives").get();
+        ReadOnlyAppointmentBook bookFromFile =
+                readAppointmentBook("invalidAppointmentBook.json", "archives").get();
         assertEquals(bookFromFile, new AppointmentBook());
     }
 
     @Test
     public void readAppointmentBook_invalidAndValidAppointmentBook_returnUncorruptedValidBook() throws Exception {
-        ReadOnlyAppointmentBook bookFromFile = readAppointmentBook("invalidAndValidAppointmentBook.json", "archives").get();
+        ReadOnlyAppointmentBook bookFromFile =
+                readAppointmentBook("invalidAndValidAppointmentBook.json", "archives").get();
 
         AppointmentBook expectedBook = new AppointmentBook();
         expectedBook.addAppointment(CARL_APPOINTMENT_2);
@@ -65,7 +67,8 @@ public class JsonAppointmentBookStorageTest {
 
     @Test
     public void readAppointmentBook_overlappingAppointmentBook_returnBookWithFirstOverlapped() throws Exception {
-        ReadOnlyAppointmentBook bookFromFile = readAppointmentBook("overlappingAppointmentBook.json", "archives").get();
+        ReadOnlyAppointmentBook bookFromFile =
+                readAppointmentBook("overlappingAppointmentBook.json", "archives").get();
 
         AppointmentBook expectedBook = new AppointmentBook();
         Appointment firstAppointment = new AppointmentBuilder(ALICE_APPOINTMENT)
@@ -80,7 +83,8 @@ public class JsonAppointmentBookStorageTest {
         Path filePath = testFolder.resolve("TempAppointmentBook.json");
         Path archivePath = testFolder.resolve("archive");
         AppointmentBook original = getTypicalAppointmentBook();
-        JsonAppointmentBookStorage jsonAppointmentBookStorage = new JsonAppointmentBookStorage(filePath, archivePath);
+        JsonAppointmentBookStorage jsonAppointmentBookStorage =
+                new JsonAppointmentBookStorage(filePath, archivePath, new StorageStatsManager());
 
         // Save in new file and read back
         jsonAppointmentBookStorage.saveAppointmentBook(original, filePath);
@@ -120,7 +124,7 @@ public class JsonAppointmentBookStorageTest {
 
     private java.util.Optional<ReadOnlyAppointmentBook> readAppointmentBook(String filePath, String archivePath)
             throws Exception {
-        return new JsonAppointmentBookStorage(Paths.get(filePath), Paths.get(archivePath))
+        return new JsonAppointmentBookStorage(Paths.get(filePath), Paths.get(archivePath), new StorageStatsManager())
                 .readAppointmentBook(addToTestDataPathIfNotNull(filePath));
     }
 
@@ -129,7 +133,7 @@ public class JsonAppointmentBookStorageTest {
      */
     private void saveAppointmentBook(ReadOnlyAppointmentBook appointmentBook, String filePath) {
         try {
-            new JsonAppointmentBookStorage(Paths.get(filePath), TEST_DATA_FOLDER.resolve("archive"))
+            new JsonAppointmentBookStorage(Paths.get(filePath), Paths.get(filePath), new StorageStatsManager())
                     .saveAppointmentBook(appointmentBook, addToTestDataPathIfNotNull(filePath));
         } catch (IOException ioe) {
             throw new AssertionError("There should not be an error writing to the file.", ioe);
@@ -152,7 +156,9 @@ public class JsonAppointmentBookStorageTest {
         original.addAppointment(expiredAppointment);
         original.addAppointment(pastAppointment);
 
-        JsonAppointmentBookStorage jsonAppointmentBookStorage = new JsonAppointmentBookStorage(filePath, archivePath);
+        StorageStatsManager statsManager = new StorageStatsManager();
+        JsonAppointmentBookStorage jsonAppointmentBookStorage =
+                new JsonAppointmentBookStorage(filePath, archivePath, statsManager);
 
         // Archive appointments
         ReadOnlyAppointmentBook filteredBook = jsonAppointmentBookStorage.archivePastAppointments(original);
@@ -161,7 +167,6 @@ public class JsonAppointmentBookStorageTest {
 
         // Check archive status message
         String expectedMessage = "2 appointments archived, of which 1 is not done";
-        assertEquals(expectedMessage, jsonAppointmentBookStorage.getArchiveStatus());
-
+        assertEquals(expectedMessage, statsManager.getArchiveStatusMessage());
     }
 }
