@@ -42,12 +42,15 @@ public class CommandBox extends UiPart<Region> {
         this.historyPointer = commandHistory.size();
     }
 
+    /**
+     * Checks if a previous command input exists.
+     */
     private boolean hasPreviousHistory() {
         return historyPointer > 0;
     }
 
     /**
-     * Get previous command input.
+     * Gets previous command input.
      */
     private void getPreviousHistory() {
         if (hasPreviousHistory()) {
@@ -56,12 +59,15 @@ public class CommandBox extends UiPart<Region> {
         }
     }
 
+    /**
+     * Checks if the next command input exists.
+     */
     private boolean hasNextHistory() {
         return historyPointer < commandHistory.size() - 1;
     }
 
     /**
-     * Get next command input.
+     * Gets next command input.
      */
     private void getNextHistory() {
         if (hasNextHistory()) {
