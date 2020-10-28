@@ -19,28 +19,28 @@
     "nric" : "S1234567P",
     "phone" : "95352563",
     "address" : "wall street",
-    "remark" : "This is a test remark :)",
+    "remark" : "",
     "tagged" : [ ]
   }, {
     "name" : "Daniel Meier",
     "nric" : "S1234567L",
     "phone" : "87652533",
     "address" : "10th street",
-    "remark" : "This is a test remark :)",
+    "remark" : "",
     "tagged" : [ "friends" ]
   }, {
     "name" : "Elle Meyer",
     "nric" : "T1234567P",
     "phone" : "9482224",
     "address" : "michegan ave",
-    "remark" : "This is a test remark :)",
+    "remark" : "",
     "tagged" : [ ]
   }, {
     "name" : "Fiona Kunz",
     "nric" : "T0234567P",
     "phone" : "9482427",
     "address" : "little tokyo",
-    "remark" : "This is a test remark :)",
+    "remark" : "",
     "tagged" : [ ]
   }, {
     "name" : "George Best",
