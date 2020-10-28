@@ -15,8 +15,10 @@ import java.util.function.Predicate;
 import org.junit.jupiter.api.Test;
 
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.AppointmentBook;
 import seedu.address.model.Model;
 import seedu.address.model.PatientBook;
 import seedu.address.model.ReadOnlyAppointmentBook;
@@ -78,7 +80,8 @@ public class AddCommandTest {
     }
 
     /**
-     * A default model stub that have all of the methods failing.
+     * A default model stub that have all of the methods failing other than
+     * {@code updateFilteredAppointmentList}.
      */
     private class ModelStub implements Model {
         @Override
@@ -202,7 +205,11 @@ public class AddCommandTest {
 
         @Override
         public void updateFilteredAppointmentList(Predicate<Appointment> predicate) {
-            throw new AssertionError("This method should not be called.");
+            requireNonNull(predicate);
+            FilteredList<Appointment> filteredAppointments =
+                    new FilteredList<>(new AppointmentBook().getAppointmentList());
+
+            filteredAppointments.setPredicate(predicate);
         }
 
         @Override

@@ -80,14 +80,21 @@ public class MainApp extends Application {
      * {@code storage}'s appointment book and {@code userPrefs}.
      */
     private Model initModelManager(Storage storage, ReadOnlyUserPrefs userPrefs) {
+        // backup storage data in case of unintended overwriting of data.
+        try {
+            storage.backupData();
+        } catch (IOException ioe) {
+            logger.warning("Failed to backup data : " + StringUtil.getDetails(ioe));
+        }
+
         ReadOnlyPatientBook initialPatientData = initPatientBookModel(storage);
         ReadOnlyAppointmentBook initialAppointmentData = initAppointmentBookModel(storage);
 
         // Check if model is in sync
         if (!ModelManager.isValidModel(initialPatientData, initialAppointmentData)) {
-            logger.warning("Appointment data not in sync with Patients' data. "
-                    + "Will be starting with an empty AppointmentBook");
-            initialAppointmentData = new AppointmentBook();
+            logger.warning("Appointment data not in sync with patients' data. "
+                    + "Will be starting with a minimal uncorrupted version.");
+            initialAppointmentData = ModelManager.getSyncedAppointmentBook(initialPatientData, initialAppointmentData);
         }
 
         return new ModelManager(initialPatientData, initialAppointmentData, userPrefs);
@@ -109,9 +116,6 @@ public class MainApp extends Application {
             }
             initialPatientData = patientBookOptional.orElseGet(SampleDataUtil::getSamplePatientBook);
         } catch (DataConversionException e) {
-            logger.warning("Data file not in the correct format. Will be starting with an empty PatientBook");
-            initialPatientData = new PatientBook();
-        } catch (IOException e) {
             logger.warning("Problem while reading from the file. Will be starting with an empty PatientBook");
             initialPatientData = new PatientBook();
         }
@@ -137,9 +141,6 @@ public class MainApp extends Application {
 
             initialAppointmentData = appointmentBookOptional.orElseGet(SampleDataUtil::getSampleAppointmentBook);
         } catch (DataConversionException e) {
-            logger.warning("Data file not in the correct format. Will be starting with an empty AppointmentBook");
-            initialAppointmentData = new AppointmentBook();
-        } catch (IOException e) {
             logger.warning("Problem while reading from the file. Will be starting with an empty AppointmentBook");
             initialAppointmentData = new AppointmentBook();
         }
@@ -203,9 +204,6 @@ public class MainApp extends Application {
         } catch (DataConversionException e) {
             logger.warning("UserPrefs file at " + prefsFilePath + " is not in the correct format. "
                     + "Using default user prefs");
-            initializedPrefs = new UserPrefs();
-        } catch (IOException e) {
-            logger.warning("Problem while reading from the file. Will be starting with an empty PatientBook");
             initializedPrefs = new UserPrefs();
         }
 

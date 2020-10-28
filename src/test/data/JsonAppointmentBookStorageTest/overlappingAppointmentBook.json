@@ -9,7 +9,7 @@
       "address" : "123, Jurong West Ave 6, #08-111",
       "tagged" : [ "friends" ],
       "nric" : "S1234567I",
-      "remark" : ""
+      "remark" : "This is a test remark :)"
     },
     "isDone" : false
   }, {

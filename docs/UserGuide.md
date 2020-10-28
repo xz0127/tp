@@ -39,7 +39,7 @@ We hope that this document will help you in your journey in exploring the wonder
 
    * **`delete`**`d/tomorrow t/12.30pm` : Deletes the previously created appointment occurring at 12.30pm tomorrow.
 
-   * **`clear`** : Deletes all appointments.
+   * **`clear`** : Deletes all appointments and patients data.
 
    * **`exit`** : Exits the app.
 
@@ -162,12 +162,13 @@ Examples:
 ### Adding a remark for a patient : `remark`
 
 Adds a remark to an existing patient in the patient book for nurses to store additional data unique to the patient.
+<br>Each remark has a limit of **200 words**.
 
 Format: `remark INDEX [r/REMARK]`
 
 <div markdown="span" class="alert alert-primary">:bulb: **Tip:**
 We implemented our Remarks feature with the hopes of empowering you with the ability to add extra information to a patient's bio data! 
-So don't be shy and feel free to add anything under the sun that you feel apt for the patient. :smile:
+So don't be shy and feel free to add anything under the sun that you feel apt for the patient.
 </div>
 
 * Creates and **adds a remark** for the patient at the specified `INDEX`. The index here refers to the index number shown on the left side of the displayed patient list. 
@@ -303,7 +304,7 @@ Example:
 
 ### Clearing all appointment entries : `clear`
 
-Clears all appointment entries from the appointment book.
+Clears all appointment and patients entries.
 
 Format: `clear`
 

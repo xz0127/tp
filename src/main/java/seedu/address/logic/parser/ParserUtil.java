@@ -26,8 +26,10 @@ import seedu.address.model.tag.Tag;
  * Contains utility methods used for parsing strings in the various *Parser classes.
  */
 public class ParserUtil {
-    public static final String MESSAGE_INVALID_INDEX = "Index is not a non-zero unsigned integer.";
-    public static final String MESSAGE_INVALID_DURATION = "Duration is not a non-zero unsigned integer.";
+    public static final String MESSAGE_INVALID_INDEX = "Index must be a positive integer that is more than 0.";
+    public static final String MESSAGE_INVALID_DURATION = "Duration must be a positive integer that is more than 10 "
+            + "mins.";
+
 
     /**
      * Parses {@code oneBasedIndex} into an {@code Index} and returns it. Leading and trailing whitespaces will be
@@ -181,21 +183,25 @@ public class ParserUtil {
     }
 
     /**
-     * Parses a {@code String duration} into a {@code Duration}
-     *
+     * Parses a {@code String duration} into a {@code Duration}.
      * @throws ParseException ParseException if the given {@code Duration} is not a positive integer string.
      */
     public static Duration parseDuration(String durationString) throws ParseException {
         // null duration will use the default one hour duration.
         String trimmedDuration = durationString.trim();
         Duration duration;
+        Duration minDuration = Duration.of(10, MINUTES);
         try {
             duration = Duration.of(Integer.parseInt(trimmedDuration), MINUTES);
         } catch (NumberFormatException e) {
             throw new ParseException(MESSAGE_INVALID_DURATION);
         }
 
-        if (duration.isNegative()) {
+        if (duration.isNegative() || duration.isZero()) {
+            throw new ParseException(MESSAGE_INVALID_DURATION);
+        }
+
+        if (duration.compareTo(minDuration) < 0) {
             throw new ParseException(MESSAGE_INVALID_DURATION);
         }
 

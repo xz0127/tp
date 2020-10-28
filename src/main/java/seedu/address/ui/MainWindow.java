@@ -156,7 +156,7 @@ public class MainWindow extends UiPart<Stage> {
         StatusBarFooter appointmentStatusBarFooter = new StatusBarFooter(logic.getAppointmentBookFilePath());
         appointmentStatusbarPlaceholder.getChildren().add(appointmentStatusBarFooter.getRoot());
 
-        CommandBox commandBox = new CommandBox(this::executeCommand);
+        CommandBox commandBox = new CommandBox(logic.getCommandHistory(), this::executeCommand);
         commandBoxPlaceholder.getChildren().add(commandBox.getRoot());
 
         initClock();
@@ -164,6 +164,8 @@ public class MainWindow extends UiPart<Stage> {
         setSplitViewPosition(logic.getGuiSettings());
     }
 
+    // @@author JinHao-L-reused
+    // Inspired by CS2103T-T12-1
     // Reused from https://stackoverflow.com/q/42383857 with minor modifications.
     private void initClock() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("EEE, dd MMM uuuu h:mm a");
@@ -173,6 +175,7 @@ public class MainWindow extends UiPart<Stage> {
         clock.setCycleCount(Animation.INDEFINITE);
         clock.play();
     }
+    // @@author
 
     private void setSplitViewPosition(GuiSettings guiSettings) {
         splitView.setDividerPosition(0, guiSettings.getSplitViewRatio());
