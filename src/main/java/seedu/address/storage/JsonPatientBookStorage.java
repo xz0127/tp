@@ -21,9 +21,15 @@ public class JsonPatientBookStorage implements PatientBookStorage {
     private static final Logger logger = LogsCenter.getLogger(JsonPatientBookStorage.class);
 
     private Path filePath;
+    private StorageStatsManager statsManager;
 
-    public JsonPatientBookStorage(Path filePath) {
+    /**
+     * @param filePath the filePath for the patient storage.
+     * @param statsManager the statistics handler for storage.
+     */
+    public JsonPatientBookStorage(Path filePath, StorageStatsManager statsManager) {
         this.filePath = filePath;
+        this.statsManager = statsManager;
     }
 
     public Path getPatientBookFilePath() {
@@ -50,13 +56,7 @@ public class JsonPatientBookStorage implements PatientBookStorage {
             return Optional.empty();
         }
 
-        // todo:
-        // try {
-        return jsonPatientBook.map(JsonSerializablePatientBook::toModelType);
-        // } catch (IllegalValueException ive) {
-        //     logger.info("Illegal values found in " + filePath + ": " + ive.getMessage());
-        //     throw new DataConversionException(ive);
-        // }
+        return jsonPatientBook.map(book -> book.toModelType(statsManager));
     }
 
     @Override
@@ -84,6 +84,11 @@ public class JsonPatientBookStorage implements PatientBookStorage {
         if (FileUtil.isFileExists(filePath)) {
             FileUtil.backupFileToFolder(filePath, folderName);
         }
+    }
+
+    @Override
+    public StorageStatsManager getStatsManager() {
+        return statsManager;
     }
 
 }
