@@ -169,7 +169,7 @@ public class ModelManager implements Model {
     public String findAvailableTimeSlots(List<Appointment> appointmentList, boolean isToday) {
         requireNonNull(appointmentList);
 
-        return appointmentBook.findAvailableTimeSlots(appointmentList, isToday);
+        return versionedAppointmentBook.findAvailableTimeSlots(appointmentList, isToday);
     }
 
     @Override
