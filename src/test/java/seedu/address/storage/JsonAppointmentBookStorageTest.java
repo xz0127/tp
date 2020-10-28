@@ -166,7 +166,7 @@ public class JsonAppointmentBookStorageTest {
         assertEquals(expected, new AppointmentBook(filteredBook));
 
         // Check archive status message
-        String expectedMessage = "2 appointments archived, of which 1 is not done";
+        String expectedMessage = "2 appointments archived, of which 1 is not done.";
         assertEquals(expectedMessage, statsManager.getArchiveStatusMessage());
     }
 }
