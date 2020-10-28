@@ -23,15 +23,14 @@ public interface AppointmentBookStorage {
      * Returns AppointmentBook data as a {@link ReadOnlyAppointmentBook}.
      * Returns {@code Optional.empty()} if storage file is not found.
      *
-     * @throws DataConversionException if the data in storage is not in the expected format.
-     * @throws IOException             if there was any problem when reading from the storage.
+     * @throws DataConversionException if there was any problem when reading from the storage.
      */
-    Optional<ReadOnlyAppointmentBook> readAppointmentBook() throws DataConversionException, IOException;
+    Optional<ReadOnlyAppointmentBook> readAppointmentBook() throws DataConversionException;
 
     /**
      * @see #getAppointmentBookFilePath()
      */
-    Optional<ReadOnlyAppointmentBook> readAppointmentBook(Path filePath) throws DataConversionException, IOException;
+    Optional<ReadOnlyAppointmentBook> readAppointmentBook(Path filePath) throws DataConversionException;
 
     /**
      * Saves the given {@link ReadOnlyAppointmentBook} to the storage.
@@ -49,4 +48,13 @@ public interface AppointmentBookStorage {
     String getArchiveStatus();
 
     ReadOnlyAppointmentBook archivePastAppointments(ReadOnlyAppointmentBook appointmentBook);
+
+    /**
+     * Makes a backup of the appointment storage file.
+     *
+     * @param folderName the name of the backup folder.
+     * @throws IOException if there was any problem writing to the backup file.
+     */
+    void backupData(String folderName) throws IOException;
+
 }

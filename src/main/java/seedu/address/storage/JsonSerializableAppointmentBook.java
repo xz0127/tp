@@ -2,12 +2,14 @@ package seedu.address.storage;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonRootName;
 
+import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.AppointmentBook;
 import seedu.address.model.ReadOnlyAppointmentBook;
@@ -21,6 +23,8 @@ class JsonSerializableAppointmentBook {
 
     public static final String MESSAGE_OVERLAPPING_APPOINTMENT =
             "Appointment list contains overlapping appointment(s).";
+
+    private static final Logger logger = LogsCenter.getLogger(JsonSerializableAppointmentBook.class);
 
     private final List<JsonAdaptedAppointment> appointments = new ArrayList<>();
 
@@ -46,21 +50,32 @@ class JsonSerializableAppointmentBook {
 
     /**
      * Converts this appointment book into the model's {@code AppointmentBook} object.
-     *
-     * @throws IllegalValueException if there were any data constraints violated.
      */
-    public AppointmentBook toModelType() throws IllegalValueException {
+    public AppointmentBook toModelType() {
         AppointmentBook appointmentBook = new AppointmentBook();
-        AppointmentBook pastAppointmentBook = new AppointmentBook();
+        int nDataViolations = 0;
 
         for (JsonAdaptedAppointment jsonAdaptedAppointment : appointments) {
-            Appointment appointment = jsonAdaptedAppointment.toModelType();
+            Appointment appointment;
+            try {
+                appointment = jsonAdaptedAppointment.toModelType();
+            } catch (IllegalValueException ive) {
+                logger.info("Data constraints violated: " + ive.getMessage());
+                nDataViolations++;
+                continue;
+            }
+
             if (appointmentBook.hasOverlapsWith(appointment)) {
-                throw new IllegalValueException(MESSAGE_OVERLAPPING_APPOINTMENT);
+                logger.info(MESSAGE_OVERLAPPING_APPOINTMENT);
+                nDataViolations++;
+                continue;
             }
 
             // add to appointment book
             appointmentBook.addAppointment(appointment);
+        }
+        if (nDataViolations > 0) {
+            logger.warning("Failed to read " + nDataViolations + " appointment data!");
         }
         return appointmentBook;
     }

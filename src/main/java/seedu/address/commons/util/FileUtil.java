@@ -6,6 +6,7 @@ import java.nio.file.InvalidPathException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
+import java.nio.file.StandardCopyOption;
 
 /**
  * Writes and reads files
@@ -21,6 +22,7 @@ public class FileUtil {
     /**
      * Returns true if {@code path} can be converted into a {@code Path} via {@link Paths#get(String, String...)},
      * otherwise returns false.
+     *
      * @param path A string representing the file path. Cannot be null.
      */
     public static boolean isValidPath(String path) {
@@ -34,6 +36,7 @@ public class FileUtil {
 
     /**
      * Creates a file if it does not exist along with its missing parent directories.
+     *
      * @throws IOException if the file or directory cannot be created.
      */
     public static void createIfMissing(Path file) throws IOException {
@@ -91,6 +94,33 @@ public class FileUtil {
                 : StandardOpenOption.CREATE;
 
         Files.write(file, content.getBytes(CHARSET), openOption);
+    }
+
+    /**
+     * Copies data from {@code FilePath from} to {@code FilePath to}.
+     * Will create the file if it does not exist yet.
+     */
+    public static void copyFile(Path from, Path to) throws IOException {
+        Files.copy(from, to, StandardCopyOption.REPLACE_EXISTING, StandardCopyOption.COPY_ATTRIBUTES);
+    }
+
+    /**
+     * Creates a backup of the indicated file in a nested folder of the same directory.
+     * The created backup file will have the same name as the original file.
+     *
+     * @param folderName the name of the backup folder.
+     * @param filePath   the file to create a backup of.
+     */
+    public static void backupFileToFolder(Path filePath, String folderName) throws IOException {
+        Path backupFilePath;
+        if (filePath.getNameCount() == 1) {
+            backupFilePath = Path.of(folderName).resolve(filePath);
+        } else {
+            backupFilePath = filePath.getParent().resolve(folderName).resolve(filePath.getFileName());
+        }
+
+        createIfMissing(backupFilePath);
+        copyFile(filePath, backupFilePath);
     }
 
 }
