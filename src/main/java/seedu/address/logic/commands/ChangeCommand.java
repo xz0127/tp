@@ -22,6 +22,7 @@ import seedu.address.model.Model;
 import seedu.address.model.appointment.Appointment;
 import seedu.address.model.appointment.Date;
 import seedu.address.model.appointment.Time;
+import seedu.address.model.appointment.exceptions.OverlappingAppointmentException;
 import seedu.address.model.patient.Patient;
 
 /**
@@ -45,10 +46,13 @@ public class ChangeCommand extends Command {
             + PREFIX_DURATION + "30";
 
     public static final String MESSAGE_EDIT_APPOINTMENT_SUCCESS = "Edited Appointment: %1$s";
+    public static final String MESSAGE_SAME_APPOINTMENT = "Hmm, it appears there is no change to the details of your "
+            + "original appointment with this input.";
     public static final String MESSAGE_DUPLICATE_APPOINTMENT = "This appointment already exists in the appointment "
-            + "book.";
+            + "book for this patient with the same time-slot.";
 
-    public static final String ASSIGNMENT_OVERLAP = "This time slot is occupied";
+    public static final String APPOINTMENT_OVERLAP = "Hmm it seems this time slot is occupied. Please choose another "
+            + "time-slot to schedule your appointment :)";
 
     private final Index index;
     private final EditAppointmentDescriptor editAppointmentDescriptor;
@@ -78,17 +82,20 @@ public class ChangeCommand extends Command {
         Appointment appointmentToEdit = lastShownList.get(index.getZeroBased());
         Appointment editedAppointment = createEditedAppointment(appointmentToEdit, editAppointmentDescriptor);
 
+        if (appointmentToEdit.equals(editedAppointment)) {
+            throw new CommandException(MESSAGE_SAME_APPOINTMENT);
+        }
+
         if (!appointmentToEdit.startAtSameTime(editedAppointment.getDate(), editedAppointment.getStartTime())
                 && model.hasAppointment(editedAppointment)) {
             throw new CommandException(MESSAGE_DUPLICATE_APPOINTMENT);
         }
-        model.deleteAppointment(appointmentToEdit);
-        if (model.hasOverlappingAppointment(editedAppointment)) {
-            model.addAppointment(appointmentToEdit);
-            throw new CommandException(ASSIGNMENT_OVERLAP);
+
+        try {
+            model.setAppointment(appointmentToEdit, editedAppointment);
+        } catch (OverlappingAppointmentException e) {
+            throw new CommandException(APPOINTMENT_OVERLAP);
         }
-        model.addAppointment(appointmentToEdit);
-        model.setAppointment(appointmentToEdit, editedAppointment);
         model.updateFilteredAppointmentList(PREDICATE_SHOW_ALL_APPOINTMENTS);
         return new CommandResult(String.format(MESSAGE_EDIT_APPOINTMENT_SUCCESS, editedAppointment));
     }

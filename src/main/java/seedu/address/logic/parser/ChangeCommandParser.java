@@ -16,6 +16,13 @@ import seedu.address.logic.parser.exceptions.ParseException;
  */
 public class ChangeCommandParser implements Parser<ChangeCommand> {
 
+    public static final String MULTIPLE_DATES_DETECTED = "Please provide only 1 date input when rescheduling your "
+            + "appointment.";
+    public static final String MULTIPLE_TIME_DETECTED = "Please provide only 1 time input when rescheduling your "
+            + "appointment.";
+    public static final String MULTIPLE_DURATIONS_DETECTED = "Please provide only 1 duration input when rescheduling "
+            + "your appointment.";
+
     /**
      * Parses the given {@code String} of arguments in the context of the ChangeCommand
      * and returns an ChangeCommand object for execution.
@@ -38,12 +45,21 @@ public class ChangeCommandParser implements Parser<ChangeCommand> {
         EditAppointmentDescriptor editAppointmentDescriptor = new EditAppointmentDescriptor();
 
         if (argMultimap.getValue(PREFIX_DATE).isPresent()) {
+            if (!argMultimap.isSingleValue(PREFIX_DATE)) {
+                throw new ParseException(MULTIPLE_DATES_DETECTED);
+            }
             editAppointmentDescriptor.setDate(ParserUtil.parseDate(argMultimap.getValue(PREFIX_DATE).get()));
         }
         if (argMultimap.getValue(PREFIX_TIME).isPresent()) {
+            if (!argMultimap.isSingleValue(PREFIX_TIME)) {
+                throw new ParseException(MULTIPLE_TIME_DETECTED);
+            }
             editAppointmentDescriptor.setStartTime(ParserUtil.parseTime(argMultimap.getValue(PREFIX_TIME).get()));
         }
         if (argMultimap.getValue(PREFIX_DURATION).isPresent()) {
+            if (!argMultimap.isSingleValue(PREFIX_DURATION)) {
+                throw new ParseException(MULTIPLE_DURATIONS_DETECTED);
+            }
             editAppointmentDescriptor.setDuration(ParserUtil.parseDuration(argMultimap.getValue(PREFIX_DURATION).get()));
         }
 

@@ -40,12 +40,16 @@ public class UniqueAppointmentList implements Iterable<Appointment> {
     }
 
     /**
-     * Returns true if the list contains an appointment that completely overlaps with toCheck appointment.
+     * Returns true if the list contains an appointment that completely overlaps with the appointment toCheck and
+     * shares the same patient.
      */
     public boolean hasCompleteOverlaps(Appointment toCheck) {
         requireNonNull(toCheck);
-        return internalList.stream().anyMatch(appointment -> appointment.startAtSameTime(toCheck.getDate(),
-                toCheck.getStartTime()));
+        return internalList.stream().anyMatch(appointment ->
+                appointment.startAtSameTime(toCheck.getDate(), toCheck.getStartTime())
+                && appointment.getEndTime().equals(toCheck.getEndTime())
+                && appointment.getPatient().equals(toCheck.getPatient())
+        );
     }
 
     /**
@@ -73,8 +77,10 @@ public class UniqueAppointmentList implements Iterable<Appointment> {
             throw new AppointmentNotFoundException();
         }
         try {
-            internalList.remove(target);
-            internalList.add(index, editedAppointment);
+//            internalList.remove(target);
+//            internalList.add(index, editedAppointment);
+            this.remove(target);
+            this.add(editedAppointment);
         } catch (OverlappingAppointmentException ex) {
             internalList.add(index, target);
             throw new OverlappingAppointmentException();
