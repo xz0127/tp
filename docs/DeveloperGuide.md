@@ -199,7 +199,7 @@ The appointment data will be archived according to their months and saved as a c
 
 The data stored on the archive will be minimal and only contains the following columns: `date`, `startTime`, `endTime`, `isDone`, `name`, `phone`, `address` and `remark`.
 
-#### Implementation
+#### 2.1 Implementation
 
 The archive mechanism is facilitated by `CsvAppointmentArchive` which implements the `AppointmentArchive` interface.
 It is stored internally within the `JsonAppointmentBookStorage` which in turn implements the `AppointmentBookStorage` interface.
@@ -241,7 +241,7 @@ The following sequence diagram shows how the archive status message is obtained 
 
 ![ArchiveStatusDiagram](images/ArchiveStatusDiagram.png)
 
-#### Design consideration:
+#### 2.2 Design consideration:
 
 ##### Aspect: Type of data to save as csv format
 
@@ -262,7 +262,7 @@ As the data is to be saved in a csv format, the data attributes of the Java Obje
 
 The assign feature will allow the user to create a new appointment that is attached to a patient.
 
-#### Implementation
+#### 3.1 Implementation
 
 The `assign` feature is implemented to allow users to assign a specified patient into a specified appointment date and time. To avoid cyclic dependency, only an `Appointment` has an attribute of `Patient` object instead of `Appointment` object and `Patient` object refer to each other.<br><br>
 This feature creates a new Appointment instance, which is stored in an instance of `UniqueAppointmentList`, which in turn is stored in the `AppointmentBook`. These classes are part of the `model` component.<br><br>
@@ -300,7 +300,7 @@ Here below is an example usage scenario and how the `assign` feature works at ea
 
 ![AssignSequenceDiagram](images/AssignSequenceDiagram.png)
 
-#### Design Considerations
+#### 3.2 Design Considerations
 
 ##### Aspect: How the `assign` command executes
 
@@ -389,7 +389,7 @@ This feature creates a `Remark` instance which is stored internally in Nuudle as
 which is in turn stored in the `PatientBook`. These classes are a part of the `Model` component and are illustrated
 in the class diagram below. 
 
-![RemarkLogicClassDiagram](images/RemarkLogicClassDiagram.png)
+![RemarkLogicClassDiagram](images/RemarkLogicClassDiagram2.png)
 <br>**Diagram 5.1.1: Class diagram for classes involved in the remark feature of the Model component**
  
 Additionally, to facilitate greater convenience for our users, we have implemented our remark feature to support the following pathways:
