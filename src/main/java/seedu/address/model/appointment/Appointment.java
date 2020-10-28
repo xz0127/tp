@@ -26,8 +26,6 @@ public class Appointment {
     private final Time startTime;
     private final Time endTime;
     private final boolean isDone;
-    // todo: add more support for appointmentId
-    private final AppointmentId appointmentId;
 
     // Data field
     private final Patient patient;
@@ -60,7 +58,6 @@ public class Appointment {
         this.startTime = startTime;
         this.endTime = endTime;
 
-        this.appointmentId = new AppointmentId(date, startTime);
         this.patient = patient;
         this.isDone = isDone;
     }
@@ -79,10 +76,6 @@ public class Appointment {
 
     public Duration getDuration() {
         return Duration.between(startTime.getTime(), endTime.getTime());
-    }
-
-    public AppointmentId getAppointmentId() {
-        return appointmentId;
     }
 
     public Patient getPatient() {
@@ -204,14 +197,13 @@ public class Appointment {
         return otherAppointment.getStartTime().equals(getStartTime())
                 && otherAppointment.getEndTime().equals(getEndTime())
                 && otherAppointment.getDate().equals(getDate())
-                && otherAppointment.getAppointmentId().equals(getAppointmentId())
                 && otherAppointment.getPatient().equals(getPatient())
                 && otherAppointment.getIsDoneStatus() == this.getIsDoneStatus();
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(startTime, endTime, date, appointmentId, patient);
+        return Objects.hash(startTime, endTime, date, patient);
     }
 
     @Override

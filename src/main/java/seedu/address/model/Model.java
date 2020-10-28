@@ -1,6 +1,7 @@
 package seedu.address.model;
 
 import java.nio.file.Path;
+import java.util.List;
 import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
@@ -77,7 +78,8 @@ public interface Model {
     boolean hasOverlappingAppointment(Appointment appointment);
 
     /**
-     * Returns true if the time slot of an appointment is same {@code appointment} in the appointment book.
+     * Returns true if the time slot of an appointment is the same as another {@code appointment} in the appointment
+     * book.
      */
     boolean hasAppointment(Appointment appointment);
 
@@ -130,6 +132,13 @@ public interface Model {
      * in the appointment book.
      */
     void setAppointment(Appointment target, Appointment editedAppointment);
+
+    /**
+     * Finds available time slots from the {@code appointmentList}.
+     * Appointments in {@code appointmentList} must take place on the same date.
+     * Returns the available time slots in string format.
+     */
+    String findAvailableTimeSlots(List<Appointment> appointmentList, boolean isToday);
 
     /** Returns an unmodifiable view of the filtered patient list */
     ObservableList<Patient> getFilteredPatientList();

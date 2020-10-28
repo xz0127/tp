@@ -9,6 +9,7 @@ import java.util.List;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import seedu.address.model.ScheduleManager;
 import seedu.address.model.appointment.exceptions.AppointmentNotFoundException;
 import seedu.address.model.appointment.exceptions.OverlappingAppointmentException;
 import seedu.address.model.patient.Patient;
@@ -40,12 +41,16 @@ public class UniqueAppointmentList implements Iterable<Appointment> {
     }
 
     /**
-     * Returns true if the list contains an appointment that completely overlaps with toCheck appointment.
+     * Returns true if the list contains an appointment that completely overlaps with the appointment toCheck and
+     * shares the same patient.
      */
     public boolean hasCompleteOverlaps(Appointment toCheck) {
         requireNonNull(toCheck);
-        return internalList.stream().anyMatch(appointment -> appointment.startAtSameTime(toCheck.getDate(),
-                toCheck.getStartTime()));
+        return internalList.stream().anyMatch(appointment ->
+                appointment.startAtSameTime(toCheck.getDate(), toCheck.getStartTime())
+                && appointment.getEndTime().equals(toCheck.getEndTime())
+                && appointment.getPatient().equals(toCheck.getPatient())
+        );
     }
 
     /**
@@ -73,16 +78,12 @@ public class UniqueAppointmentList implements Iterable<Appointment> {
             throw new AppointmentNotFoundException();
         }
         try {
-            internalList.remove(target);
-            internalList.add(index, editedAppointment);
+            this.remove(target);
+            this.add(editedAppointment);
         } catch (OverlappingAppointmentException ex) {
             internalList.add(index, target);
             throw new OverlappingAppointmentException();
         }
-        // if (!target.isOverlapping(editedAppointment) && hasOverlaps(editedAppointment)) {
-        //     throw new OverlappingAppointmentException();
-        // }
-        // internalList.set(index, editedAppointment);
     }
 
     /**
@@ -150,6 +151,16 @@ public class UniqueAppointmentList implements Iterable<Appointment> {
             }
         }
         internalList.setAll(newAppointmentList);
+    }
+
+    /**
+     * Finds the available time slots based on the {@code appointmentList} on a specified date
+     * and output as a string message.
+     */
+    public String findAvailableTimeSlots(List<Appointment> appointmentList, boolean isToday) {
+        ScheduleManager scheduleManager = new ScheduleManager(appointmentList, isToday);
+        // ArrayList<TimeInterval> availableTimeIntervals = scheduleManager.findFreeSlots();
+        return scheduleManager.findFreeSlots();
     }
 
     @Override

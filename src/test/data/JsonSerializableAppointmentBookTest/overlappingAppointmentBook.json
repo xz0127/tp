@@ -22,7 +22,7 @@
       "address" : "wall street",
       "tagged" : [ ],
       "nric" : "S1234567P",
-      "remark" : "This is a test remark :)"
+      "remark" : ""
     },
     "isDone" : false
   } ]

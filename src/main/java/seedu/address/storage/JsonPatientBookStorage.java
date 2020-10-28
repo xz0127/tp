@@ -9,7 +9,6 @@ import java.util.logging.Logger;
 
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.exceptions.DataConversionException;
-import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.FileUtil;
 import seedu.address.commons.util.JsonUtil;
 import seedu.address.model.ReadOnlyPatientBook;
@@ -47,16 +46,17 @@ public class JsonPatientBookStorage implements PatientBookStorage {
 
         Optional<JsonSerializablePatientBook> jsonPatientBook = JsonUtil.readJsonFile(
                 filePath, JsonSerializablePatientBook.class);
-        if (!jsonPatientBook.isPresent()) {
+        if (jsonPatientBook.isEmpty()) {
             return Optional.empty();
         }
 
-        try {
-            return Optional.of(jsonPatientBook.get().toModelType());
-        } catch (IllegalValueException ive) {
-            logger.info("Illegal values found in " + filePath + ": " + ive.getMessage());
-            throw new DataConversionException(ive);
-        }
+        // todo:
+        // try {
+        return jsonPatientBook.map(JsonSerializablePatientBook::toModelType);
+        // } catch (IllegalValueException ive) {
+        //     logger.info("Illegal values found in " + filePath + ": " + ive.getMessage());
+        //     throw new DataConversionException(ive);
+        // }
     }
 
     @Override
@@ -75,6 +75,15 @@ public class JsonPatientBookStorage implements PatientBookStorage {
 
         FileUtil.createIfMissing(filePath);
         JsonUtil.saveJsonFile(new JsonSerializablePatientBook(patientBook), filePath);
+    }
+
+    @Override
+    public void backupData(String folderName) throws IOException {
+        requireNonNull(folderName);
+
+        if (FileUtil.isFileExists(filePath)) {
+            FileUtil.backupFileToFolder(filePath, folderName);
+        }
     }
 
 }
