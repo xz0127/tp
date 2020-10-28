@@ -28,7 +28,7 @@ public class FindCommand extends Command {
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds all patients whose names contain any of "
             + "the specified keywords (case-insensitive),"
-            + "or whose phone number or nric matches and displays them as a list with index numbers.\n"
+            + "or whose phone number or nric matches.\n"
             + "Parameters: [" + PREFIX_NAME + "NAME [MORE_NAMES]] "
             + "[" + PREFIX_NRIC + "NRIC [MORE_NRICS]] "
             + "[" + PREFIX_PHONE + "PHONE_NUMBER [MORE_PHONE_NUMBERS]]\n"
@@ -44,9 +44,6 @@ public class FindCommand extends Command {
     @Override
     public CommandResult execute(Model model) {
         requireNonNull(model);
-        assert descriptor.getNamePredicate().isPresent();
-        assert descriptor.getNricPredicate().isPresent();
-        assert descriptor.getPhonePredicate().isPresent();
 
         Predicate<Patient> allPredicates = descriptor.getOrPredicate();
         model.updateFilteredPatientList(allPredicates);
@@ -152,7 +149,17 @@ public class FindCommand extends Command {
          * Returns the or statements of all predicates.
          */
         public Predicate<Patient> getOrPredicate() {
-            return namePredicate.or(phonePredicate).or(nricPredicate);
+            Predicate<Patient> result = unused -> false;
+            if (getNamePredicate().isPresent()) {
+                result = result.or(getNamePredicate().get());
+            }
+            if (getNricPredicate().isPresent()) {
+                result = result.or(getNricPredicate().get());
+            }
+            if (getPhonePredicate().isPresent()) {
+                result = result.or(getPhonePredicate().get());
+            }
+            return result;
         }
     }
 }

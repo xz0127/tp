@@ -48,4 +48,31 @@ public class FindPatientDescriptorTest {
                 new FindPatientDescriptorBuilder(FIND_DESC_AMY).withNric(new String[]{VALID_NRIC_BOB}).build();
         assertFalse(FIND_DESC_AMY.equals(editedAmy));
     }
+
+    // todo: complete the test case
+    //    @Test
+    //    public void execute_getOrPredicate() {
+    //        Predicate<Patient> empty = unused -> false;
+    //        FindPatientDescriptorBuilder descriptorBuilder = new FindPatientDescriptorBuilder();
+    //
+    //        // empty descriptor
+    //        FindPatientDescriptor emptyDescriptor = descriptorBuilder.build();
+    //        assertEquals(empty, emptyDescriptor.getOrPredicate());
+    //
+    //        // only NamePredicate in the descriptor is present
+    //        FindPatientDescriptor descriptorWithName = descriptorBuilder.withName(new String[]{"asd"}).build();
+    //        Predicate<Patient> predWithName = descriptorWithName.getNamePredicate().get();
+    //        assertEquals(descriptorWithName.getOrPredicate(), predWithName);
+    //
+    //        // both NamePredicate and NricPredicate in the descriptor are present
+    //        FindPatientDescriptor descriptorWithNameNric =
+    //        descriptorBuilder.withNric(new String[]{"S1234567I"}).build();
+    //        Predicate<Patient> predWithNameNric = predWithName.or(descriptorWithNameNric.getNricPredicate().get());
+    //        assertEquals(descriptorWithNameNric.getOrPredicate(), predWithNameNric);
+    //
+    //        // all predicates in the descriptor are present
+    //        FindPatientDescriptor descriptorWithAll = descriptorBuilder.withPhone(new String[]{"12345678"}).build();
+    //        Predicate<Patient> predWithAll = predWithNameNric.or(descriptorWithAll.getPhonePredicate().get());
+    //        assertEquals(descriptorWithAll.getOrPredicate(), predWithAll);
+    //    }
 }

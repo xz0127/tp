@@ -33,7 +33,7 @@ We hope that this document will help you in your journey in exploring the wonder
 
    * **`edit`**`1 n/Betsy Crower p/91234567 a/College Avenue 8` : Edits the name, phone number, and address of the 1st patient in the list to be `Betsy`, `91234567`, and `College Avenue 8` respectively.
 
-   * **`find`**`n/alex p/99998888 i/S1234567I` returns patients whose name contains `Alex`, or whose phone number is `99998888`, or whose nric number is `S1234567I`.
+   * **`find`**`n/alex p/99998888 i/S1234567I` returns patients whose name contains `Alex`, or whose phone number is `99998888`, or whose NRIC number is `S1234567I`.
 
    * **`assign`**`1 d/tomorrow t/12.30pm dur/30` : Creates an appointment for the 1st patient in the list from 12.30pm to 1pm, tomorrow, if there are no other appointments in that time period.
 
@@ -124,22 +124,22 @@ Examples:
 
 ### Locating patients by name : `find`
 
-Finds patients whose names contain any of the given keywords.
+Finds patients by name, NRIC or phone numbers.
 
 Format: `find [n/NAME [MORE_NAMES]] [i/NRIC [MORE_NRICS]] [p/PHONE_NUMBER [MORE_PHONE_NUMBERS]] `
 
 * The search is case-insensitive. e.g `hans` will match `Hans`
 * The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
-* Only the name, nric, and phone number are searched.
+* Only the name, NRIC, and phone number are searched.
 * Only full words will be matched e.g. `Han` will not match `Hans`
 * Patients matching at least one keyword will be returned (i.e. `OR` search).
   e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
 * The respective appointments of patients matching at least one keyword will also be returned. 
-* The command cannot be empty, i.e. `find`. At least one among searching by name, nric, or phone number needs to be given.
+* The search requirements cannot be left empty, at least one search requirement (by name, NRIC, or phone number) has to be provided
 
 Examples:
 * `find n/John` returns patients whose name contains `john`.
-* `find n/alex p/99998888 i/S1234567I` returns patients whose name contains `Alex`, or whose phone number is `99998888`, or whose nric number is `S1234567I`.<br>
+* `find n/alex p/99998888 i/S1234567I` returns patients whose name contains `Alex`, or whose phone number is `99998888`, or whose NRIC number is `S1234567I`.<br>
 
 ![FindCommand](images/FindCommand.png)
 
