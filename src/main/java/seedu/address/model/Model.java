@@ -78,7 +78,8 @@ public interface Model {
     boolean hasOverlappingAppointment(Appointment appointment);
 
     /**
-     * Returns true if the time slot of an appointment is same {@code appointment} in the appointment book.
+     * Returns true if the time slot of an appointment is the same as another {@code appointment} in the appointment
+     * book.
      */
     boolean hasAppointment(Appointment appointment);
 

@@ -6,6 +6,7 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_ADDRESS_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_NRIC_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_REMARK_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
 import static seedu.address.testutil.Assert.assertThrows;
 import static seedu.address.testutil.TypicalPatients.ALICE;
@@ -31,16 +32,16 @@ public class PatientTest {
         // null -> returns false
         assertFalse(ALICE.isSamePatient(null));
 
-        // different phone -> returns false
+        // different phone -> returns true
         Patient editedAlice = new PatientBuilder(ALICE).withPhone(VALID_PHONE_BOB).build();
-        assertFalse(ALICE.isSamePatient(editedAlice));
+        assertTrue(ALICE.isSamePatient(editedAlice));
 
-        // different name -> returns false
+        // different name -> returns true
         editedAlice = new PatientBuilder(ALICE).withName(VALID_NAME_BOB).build();
-        assertFalse(ALICE.isSamePatient(editedAlice));
+        assertTrue(ALICE.isSamePatient(editedAlice));
 
         // different nric -> returns false
-        editedAlice = new PatientBuilder(ALICE).withName(VALID_NRIC_BOB).build();
+        editedAlice = new PatientBuilder(ALICE).withNric(VALID_NRIC_BOB).build();
         assertFalse(ALICE.isSamePatient(editedAlice));
 
         // same name, same phone, same nric, different attributes -> returns true
@@ -81,6 +82,10 @@ public class PatientTest {
 
         // different nric -> returns false
         editedAlice = new PatientBuilder(ALICE).withNric(VALID_NRIC_BOB).build();
+        assertFalse(ALICE.equals(editedAlice));
+
+        // different remark -> returns false
+        editedAlice = new PatientBuilder(ALICE).withRemark(VALID_REMARK_BOB).build();
         assertFalse(ALICE.equals(editedAlice));
 
         // different tags -> returns false
