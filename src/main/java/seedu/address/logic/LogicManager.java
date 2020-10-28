@@ -115,6 +115,7 @@ public class LogicManager implements Logic {
     @Override
     public String getStorageStatus() {
         return storage.getStatusMessage();
+    }
 
     @Override
     public ObservableList<String> getCommandHistory() {
