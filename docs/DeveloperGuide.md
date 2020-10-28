@@ -5,6 +5,12 @@ title: Developer Guide
 * Table of Contents
 {:toc}
 
+## **Introduction**
+
+This document is the developer guide for Nuudle, an appointment scheduling app for nurses.
+
+This developer guide serves to provide developers with an understanding on how Nuudle is designed.
+
 --------------------------------------------------------------------------------------------------------------------
 
 ## **Setting up, getting started**
@@ -14,6 +20,8 @@ Refer to the guide [_Setting up and getting started_](SettingUp.md).
 --------------------------------------------------------------------------------------------------------------------
 
 ## **Design**
+
+This section describes the design & implementation of Nuudle using a top-down design.
 
 ### Architecture
 
@@ -131,6 +139,7 @@ The `Storage` component,
 * can save the patient book data in json format and read it back.
 * can save the appointment data in json format and read it back.
 * can save the appointment data in csv format for archiving.
+* can handle files with invalid data by removing only corrupted/invalid data.
 
 ### Common classes
 
@@ -734,7 +743,6 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 ### Glossary
 
 * **Mainstream OS**: Windows, Linux, Unix, OS-X
-* **Patient records**: The past records of the patient's visit to the clinic. May contain doctor's diagnosis (if any).
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -753,16 +761,14 @@ testers are expected to do more *exploratory* testing.
 
    1. Download the jar file and copy into an empty folder
 
-   1. Double-click the jar file Expected: Shows the GUI with a set of sample contacts. The window size may not be optimum.
+   1. Double-click the jar file Expected: Shows the GUI with a set of sample patients and appointments. The window size may not be optimum.
 
 1. Saving window preferences
 
-   1. Resize the window to an optimum size. Move the window to a different location. Close the window.
+   1. Resize the window to an optimum size. Adjust the main split window to preferred position. Move the window to a different location. Close the window.
 
    1. Re-launch the app by double-clicking the jar file.<br>
-       Expected: The most recent window size and location is retained.
-
-1. _{ more test cases …​ }_
+       Expected: The most recent window size, split window position and location is retained.
 
 ### Deleting a patient
 
@@ -771,20 +777,40 @@ testers are expected to do more *exploratory* testing.
    1. Prerequisites: List all patients using the `list` command. Multiple patients in the list.
 
    1. Test case: `delete 1`<br>
-      Expected: First contact is deleted from the list. Details of the deleted contact shown in the status message. Timestamp in the status bar is updated.
+      Expected: First patient is deleted from the list. Details of the deleted patient shown in the status message.
 
    1. Test case: `delete 0`<br>
-      Expected: No patient is deleted. Error details shown in the status message. Status bar remains the same.
+      Expected: No patient is deleted. Error details shown in the status message.
 
    1. Other incorrect delete commands to try: `delete`, `delete x`, `...` (where x is larger than the list size)<br>
       Expected: Similar to previous.
-
-1. _{ more test cases …​ }_
 
 ### Saving data
 
 1. Dealing with missing/corrupted data files
 
-   1. _{explain how to simulate a missing/corrupted file, and the expected behavior}_
+   1. Prerequisites: Data save location not modified. The `preference.json` file is not edited. Multiple patients in the list.
+   
+   1. Look for the patient Json file at the default location: `.\data\patientbook.json`
+   
+   1. Remove the `Nric` field of the first patient in the file. Note the patient name.
+   
+   1. Launch the app by double-clicking the jar file.<br> 
+      The app safely launches with multiple patients. The patient with missing Nric field is not in the list.
 
-1. _{ more test cases …​ }_
+### Archiving data
+
+1. Archiving past appointments 
+
+   1. Prerequisites: Have at least one upcoming appointments and no expired appointments.
+   
+   1. Locate the appointment Json file at the default location: `.\data\appointmentbook.json`
+   
+   1. Change the `Date` field of an appointment to a past date, with month `may` and year `2019` Note the details of the appointment.
+   
+   1. Launch the app by double-clicking the jar file.<br> 
+      The app safely launches. The previously edited appointment is not in the appointment list.
+      The Command Result display indicates that 1 appointment is archived.
+      
+   1. Locate the appointment csv archive file at `.\data\archives\2019_May.csv`. 
+      The previously edited appointment should be reflected as an archived appointment.

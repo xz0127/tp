@@ -1,14 +1,13 @@
 package seedu.address.storage;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static seedu.address.testutil.Assert.assertThrows;
+import static seedu.address.testutil.TypicalPatients.ALICE;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
 import org.junit.jupiter.api.Test;
 
-import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.JsonUtil;
 import seedu.address.model.PatientBook;
 import seedu.address.testutil.TypicalPatients;
@@ -30,18 +29,22 @@ public class JsonSerializablePatientBookTest {
     }
 
     @Test
-    public void toModelType_invalidPatientFile_throwsIllegalValueException() throws Exception {
+    public void toModelType_invalidPatientFile_returnsEmptyPatientBook() throws Exception {
         JsonSerializablePatientBook dataFromFile = JsonUtil.readJsonFile(INVALID_PATIENT_FILE,
                 JsonSerializablePatientBook.class).get();
-        assertThrows(IllegalValueException.class, dataFromFile::toModelType);
+        PatientBook patientBookFromFile = dataFromFile.toModelType();
+        PatientBook expectedPatientBook = new PatientBook();
+        assertEquals(patientBookFromFile, expectedPatientBook);
     }
 
     @Test
-    public void toModelType_duplicatePatients_throwsIllegalValueException() throws Exception {
+    public void toModelType_duplicatePatients_returnsOnePatientInBook() throws Exception {
         JsonSerializablePatientBook dataFromFile = JsonUtil.readJsonFile(DUPLICATE_PATIENT_FILE,
                 JsonSerializablePatientBook.class).get();
-        assertThrows(IllegalValueException.class, JsonSerializablePatientBook.MESSAGE_DUPLICATE_PATIENT,
-                dataFromFile::toModelType);
+        PatientBook patientBookFromFile = dataFromFile.toModelType();
+        PatientBook expectedPatientBook = new PatientBook();
+        expectedPatientBook.addPatient(ALICE);
+        assertEquals(patientBookFromFile, expectedPatientBook);
     }
 
 }

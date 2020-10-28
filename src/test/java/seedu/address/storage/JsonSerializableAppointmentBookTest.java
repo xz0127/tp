@@ -1,16 +1,18 @@
 package seedu.address.storage;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static seedu.address.testutil.Assert.assertThrows;
+import static seedu.address.testutil.TypicalAppointments.ALICE_APPOINTMENT;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.time.LocalTime;
 
 import org.junit.jupiter.api.Test;
 
-import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.JsonUtil;
 import seedu.address.model.AppointmentBook;
+import seedu.address.model.appointment.Appointment;
+import seedu.address.testutil.AppointmentBuilder;
 import seedu.address.testutil.TypicalAppointments;
 
 public class JsonSerializableAppointmentBookTest {
@@ -19,7 +21,7 @@ public class JsonSerializableAppointmentBookTest {
             "test", "data", "JsonSerializableAppointmentBookTest");
     private static final Path TYPICAL_APPOINTMENT_FILE = TEST_DATA_FOLDER.resolve("typicalAppointmentBook.json");
     private static final Path INVALID_APPOINTMENT_FILE = TEST_DATA_FOLDER.resolve("invalidAppointmentBook.json");
-    private static final Path DUPLICATE_APPOINTMENT_FILE = TEST_DATA_FOLDER.resolve("overlappingAppointmentBook.json");
+    private static final Path OVERLAP_APPOINTMENT_FILE = TEST_DATA_FOLDER.resolve("overlappingAppointmentBook.json");
 
     @Test
     public void toModelType_typicalAppointmentFile_success() throws Exception {
@@ -31,18 +33,26 @@ public class JsonSerializableAppointmentBookTest {
     }
 
     @Test
-    public void toModelType_invalidAppointmentFile_throwsIllegalValueException() throws Exception {
+    public void toModelType_invalidAppointmentFile_returnEmptyBook() throws Exception {
         JsonSerializableAppointmentBook dataFromFile = JsonUtil.readJsonFile(INVALID_APPOINTMENT_FILE,
                 JsonSerializableAppointmentBook.class).get();
-        assertThrows(IllegalValueException.class, dataFromFile::toModelType);
+        AppointmentBook appointmentBookFromFile = dataFromFile.toModelType();
+        AppointmentBook expectedAppointmentBook = new AppointmentBook();
+        assertEquals(expectedAppointmentBook, appointmentBookFromFile);
     }
 
     @Test
-    public void toModelType_duplicatePatients_throwsIllegalValueException() throws Exception {
-        JsonSerializableAppointmentBook dataFromFile = JsonUtil.readJsonFile(DUPLICATE_APPOINTMENT_FILE,
+    public void toModelType_duplicateAppointments_returnsFirstUniqueAppointment() throws Exception {
+        JsonSerializableAppointmentBook dataFromFile = JsonUtil.readJsonFile(OVERLAP_APPOINTMENT_FILE,
                 JsonSerializableAppointmentBook.class).get();
-        assertThrows(IllegalValueException.class, JsonSerializableAppointmentBook.MESSAGE_OVERLAPPING_APPOINTMENT,
-                dataFromFile::toModelType);
+        AppointmentBook appointmentBookFromFile = dataFromFile.toModelType();
+
+        AppointmentBook expectedAppointmentBook = new AppointmentBook();
+        Appointment firstAppointment = new AppointmentBuilder(ALICE_APPOINTMENT)
+                .withTime(LocalTime.of(10, 0)).build();
+        expectedAppointmentBook.addAppointment(firstAppointment);
+
+        assertEquals(expectedAppointmentBook, appointmentBookFromFile);
     }
 
 }

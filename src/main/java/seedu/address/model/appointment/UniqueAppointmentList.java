@@ -9,6 +9,7 @@ import java.util.List;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import seedu.address.model.ScheduleManager;
 import seedu.address.model.appointment.exceptions.AppointmentNotFoundException;
 import seedu.address.model.appointment.exceptions.OverlappingAppointmentException;
 import seedu.address.model.patient.Patient;
@@ -150,6 +151,16 @@ public class UniqueAppointmentList implements Iterable<Appointment> {
             }
         }
         internalList.setAll(newAppointmentList);
+    }
+
+    /**
+     * Finds the available time slots based on the {@code appointmentList} on a specified date
+     * and output as a string message.
+     */
+    public String findAvailableTimeSlots(List<Appointment> appointmentList, boolean isToday) {
+        ScheduleManager scheduleManager = new ScheduleManager(appointmentList, isToday);
+        // ArrayList<TimeInterval> availableTimeIntervals = scheduleManager.findFreeSlots();
+        return scheduleManager.findFreeSlots();
     }
 
     @Override

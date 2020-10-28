@@ -24,7 +24,7 @@ public class Time {
     public static final String MESSAGE_CONSTRAINTS = "The appointment time period should fall within "
             + "the opening hours: from " + OPENING_TIME.format(TIME_FORMAT)
             + " to " + CLOSING_TIME.format(TIME_FORMAT)
-            + "\nThe appointment duration of " + DEFAULT_DURATION.toHours() + "hour should also be considered.";
+            + "\nThe appointment duration should also be considered.";
 
     private final LocalTime value;
 
