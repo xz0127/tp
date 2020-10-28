@@ -1,0 +1,18 @@
+@startuml
+start
+:User executes command;
+:Check input;
+if() then ([user input is valid])
+    :Create remark command;
+    :Find the patient to edit
+     in the patient book;
+    :Duplicate the patient to edit with
+     the new remark input;
+    :Replace it with the
+    edited patient in the model;
+    :Show success message to user;
+else([user input is invalid])
+    :Show error message to user;
+endif
+stop
+@enduml

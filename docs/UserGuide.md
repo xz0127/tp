@@ -80,7 +80,7 @@ Format: `help`
 
 Adds a patient to the patient book.
 
-Format: `add n/NAME i/NRIC p/PHONE_NUMBER a/ADDRESS [t/TAG]…​`
+Format: `add n/NAME i/NRIC p/PHONE_NUMBER a/ADDRESS [r/REMARK] [t/TAG]…​`
 
 <div markdown="span" class="alert alert-primary">:bulb: **Tip:**
 Tags are used to indicate a patient's underlying medical conditions. A patient can have any number of tags (including 0).
@@ -107,7 +107,7 @@ Format: `list`
 
 Edits an existing patient in the patient book. Existing appointments which include the edited patient will be updated accordingly.
 
-Format: `edit INDEX [n/NAME] [i/NRIC] [p/PHONE_NUMBER] [a/ADDRESS] [t/TAG]…​`
+Format: `edit INDEX [n/NAME] [i/NRIC] [p/PHONE_NUMBER] [a/ADDRESS] [r/REMARK] [t/TAG]…​`
 
 * Edits the patient at the specified `INDEX`. The index refers to the index number shown in the displayed patient list. The index **must be a positive integer** 1, 2, 3, …​
 * At least one of the optional fields must be provided.

@@ -1,0 +1,43 @@
+@startuml
+!include style.puml
+
+box Logic LOGIC_COLOR_T1
+participant "<<class>>\n :ParserUtil" as ParserUtil LOGIC_COLOR
+participant "<<class>>\n :Index" as IndexClass LOGIC_COLOR
+participant ":Index" as Index LOGIC_COLOR
+participant ":Remark" as Remark LOGIC_COLOR
+end box
+
+[-> ParserUtil : parseIndex(index)
+activate ParserUtil
+
+ParserUtil -> IndexClass : fromOneBased(index)
+activate IndexClass
+
+create Index
+IndexClass -> Index : new
+activate Index
+
+Index --> IndexClass : index
+deactivate Index
+
+IndexClass --> ParserUtil : index
+deactivate IndexClass
+
+[<-- ParserUtil : index
+deactivate ParserUtil
+
+[-> ParserUtil : parseRemark(remark)
+activate ParserUtil
+
+create Remark
+ParserUtil -> Remark : new
+activate Remark
+
+Remark --> ParserUtil : remark
+deactivate Remark
+
+[<-- ParserUtil : remark
+deactivate ParserUtil
+
+@enduml
