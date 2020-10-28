@@ -29,6 +29,8 @@ public class CancelCommandTest {
         ModelManager expectedModel = new ModelManager(model.getPatientBook(),
                 model.getAppointmentBook(), new UserPrefs());
         expectedModel.deleteAppointment(appointmentToCancel);
+        expectedModel.commitPatientBook();
+        expectedModel.commitAppointmentBook();
 
         assertCommandSuccess(cancelCommand, model, expectedMessage, expectedModel);
     }

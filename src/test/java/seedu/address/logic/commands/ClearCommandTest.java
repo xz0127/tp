@@ -18,14 +18,20 @@ public class ClearCommandTest {
     public void execute_emptyBooks_success() {
         Model model = new ModelManager();
         Model expectedModel = new ModelManager();
-
+        expectedModel.commitPatientBook();
+        expectedModel.commitAppointmentBook();
         assertCommandSuccess(new ClearCommand(), model, ClearCommand.MESSAGE_SUCCESS, expectedModel);
     }
 
     @Test
     public void execute_nonEmptyBooks_success() {
         Model model = new ModelManager(getTypicalPatientBook(), getTypicalAppointmentBook(), new UserPrefs());
-        Model expectedModel = new ModelManager(new PatientBook(), new AppointmentBook(), new UserPrefs());
+
+        Model expectedModel = new ModelManager(getTypicalPatientBook(), getTypicalAppointmentBook(), new UserPrefs());
+        expectedModel.setAppointmentBook(new AppointmentBook());
+        expectedModel.setPatientBook(new PatientBook());
+        expectedModel.commitPatientBook();
+        expectedModel.commitAppointmentBook();
 
         assertCommandSuccess(new ClearCommand(), model, ClearCommand.MESSAGE_SUCCESS, expectedModel);
     }

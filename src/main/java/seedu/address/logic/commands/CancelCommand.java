@@ -49,6 +49,8 @@ public class CancelCommand extends Command {
 
         model.deleteAppointment(toCancel);
         model.updateFilteredAppointmentList(PREDICATE_SHOW_ALL_APPOINTMENTS);
+        model.commitPatientBook();
+        model.commitAppointmentBook();
         return new CommandResult(String.format(MESSAGE_MARK_CANCEL_SUCCESS, toCancel));
     }
 
