@@ -1,9 +1,15 @@
 package seedu.address.ui;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.logging.Logger;
 
+import javafx.animation.Animation;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.SplitPane;
 import javafx.scene.control.TextInputControl;
@@ -11,6 +17,7 @@ import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.logic.Logic;
@@ -45,6 +52,9 @@ public class MainWindow extends UiPart<Stage> {
 
     @FXML
     private MenuItem helpMenuItem;
+
+    @FXML
+    private Label dateTime;
 
     @FXML
     private SplitPane splitView;
@@ -149,7 +159,19 @@ public class MainWindow extends UiPart<Stage> {
         CommandBox commandBox = new CommandBox(this::executeCommand);
         commandBoxPlaceholder.getChildren().add(commandBox.getRoot());
 
+        initClock();
+
         setSplitViewPosition(logic.getGuiSettings());
+    }
+
+    // Reused from https://stackoverflow.com/q/42383857 with minor modifications.
+    private void initClock() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("EEE, dd MMM uuuu h:mm a");
+        Timeline clock = new Timeline(new KeyFrame(Duration.ZERO, event -> {
+            dateTime.setText(LocalDateTime.now().format(formatter));
+        }), new KeyFrame(Duration.seconds(15)));
+        clock.setCycleCount(Animation.INDEFINITE);
+        clock.play();
     }
 
     private void setSplitViewPosition(GuiSettings guiSettings) {

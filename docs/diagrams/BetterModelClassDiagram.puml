@@ -18,4 +18,12 @@ Person *--> Name
 Person *--> Phone
 Person *--> Email
 Person *--> Address
+
+AppointmentBook *-right-> "1" UniqueAppointmentList
+
+UniqueAppointmentList o-right-> Appointment
+
+Appointment *--> Date
+Appointment *--> Time
+Appointment *--> AppointmentId
 @enduml

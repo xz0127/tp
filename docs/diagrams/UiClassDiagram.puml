@@ -51,6 +51,7 @@ StatisticsDisplay --|> UiPart
 AppointmentListPanel --|> UiPart
 AppointmentCard --|> UiPart
 CommandBox --|> UiPart
+
 PatientListPanel --|> UiPart
 PatientCard --|> UiPart
 StatusBarFooter --|> UiPart
@@ -62,6 +63,7 @@ UiManager -right-> Logic
 MainWindow -left-> Logic
 
 PatientListPanel -[hidden]left- HelpWindow
+
 HelpWindow -[hidden]left- CommandBox
 CommandBox -[hidden]left- StatisticsDisplay
 StatisticsDisplay -[hidden]left- ResultDisplay

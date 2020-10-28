@@ -18,6 +18,8 @@ import org.junit.jupiter.api.io.TempDir;
 import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.model.PatientBook;
 import seedu.address.model.ReadOnlyPatientBook;
+import seedu.address.model.patient.Patient;
+import seedu.address.testutil.PatientBuilder;
 
 public class JsonPatientBookStorageTest {
     private static final Path TEST_DATA_FOLDER = Paths.get("src", "test", "data", "JsonPatientBookStorageTest");
@@ -41,13 +43,21 @@ public class JsonPatientBookStorageTest {
     }
 
     @Test
-    public void readPatientBook_invalidPatientBook_throwDataConversionException() {
-        assertThrows(DataConversionException.class, () -> readPatientBook("invalidPatientBook.json"));
+    public void readPatientBook_allInvalidPatientBook_returnEmptyBook() throws Exception {
+        ReadOnlyPatientBook bookFromFile = readPatientBook("invalidPatientBook.json").get();
+        assertEquals(bookFromFile, new PatientBook());
     }
 
     @Test
-    public void readPatientBook_invalidAndValidPatientBook_throwDataConversionException() {
-        assertThrows(DataConversionException.class, () -> readPatientBook("invalidAndValidPatientBook.json"));
+    public void readPatientBook_invalidAndValidPatientBook_returnUncorruptedValidBook() throws Exception {
+        ReadOnlyPatientBook bookFromFile = readPatientBook("invalidAndValidPatientBook.json").get();
+
+        PatientBook expectedBook = new PatientBook();
+        Patient validPatient = new PatientBuilder().withName("Valid Patient")
+                .withPhone("9482424").withAddress("4th street").withNric("S1234567I").build();
+        expectedBook.addPatient(validPatient);
+
+        assertEquals(bookFromFile, expectedBook);
     }
 
     @Test
