@@ -322,14 +322,14 @@ Here below is an example usage scenario and how the `assign` feature works at ea
     * Pros: Separating list is no longer needed and the usage of `UniquePatientList` would be enlarged. This might be better for hardware memory performance.
     * Cons: It hardens the issue of maintaining `Appointment` instances since the logic is that a `Patient` could have multiple `Appointment` but not the other way. As such, it would be harder for `Patient` related commands (`find`) to find the `Patient` and all his `Appointment` at once.
 
-### 5. Edit Patient Feature
+### 4. Edit Patient Feature
 
 `[written by: Xin Zhe]`
 
 The Edit Patient Feature allows the nurse to edit an existing `Patient` in the patient book.
 `Appointment` which involves the patient will be updated accordingly.
 
-#### 5.1 Implementation
+#### 4.1 Implementation
 
 The Edit Patient Feature is facilitated by the `EditCommand`, which extends the abstract class `Command`,
 and the `EditCommandParser`, which implements the `Parser` interface. All of these classes are part of the `Logic` component.
@@ -376,7 +376,7 @@ Step 14: Lastly, `EditCommand` creates a `CommandResult` with `SuccessMessage` a
 
 _{more aspects and alternatives to be added}_
 
-### 6. Remark feature
+### 5. Remark feature
 
 `[written by: Low Ming Lim]`
 
@@ -384,13 +384,13 @@ The remark feature allows users to add a custom note to a new or existing patien
 This provides our users with the flexibility and freedom to store extra notes or bio data for a patient apart from the compulsory 
 fields such as name, phone number, etc.
 
-#### 6.1 Implementation
+#### 5.1 Implementation
 This feature creates a `Remark` instance which is stored internally in Nuudle as a variable of a `Patient` object
 which is in turn stored in the `PatientBook`. These classes are a part of the `Model` component and are illustrated
 in the class diagram below. 
 
 ![RemarkLogicClassDiagram](images/RemarkLogicClassDiagram.png)
-<br>**Diagram 6.1.1: Class diagram for classes involved in the remark feature of the Model component**
+<br>**Diagram 5.1.1: Class diagram for classes involved in the remark feature of the Model component**
  
 Additionally, to facilitate greater convenience for our users, we have implemented our remark feature to support the following pathways:
 
@@ -420,7 +420,7 @@ Additionally, to facilitate greater convenience for our users, we have implement
 
 Refer to the following activity diagram for a summary of the above pathways.
 ![RemarkPathwaysActivityDiagram](images/RemarkPathwaysActivityDiagram.png)
-<br>**Diagram 6.1.2: Architecture diagram showcasing available pathways to create a remark**
+<br>**Diagram 5.1.2: Activity diagram showcasing available pathways to create a remark**
 
 This segment will focus on the implementation details for the `RemarkCommand` pathway. The implementation for the 
 alternative `AddCommand` and `EditCommand` pathways can be found in another segment of our Developer's Guide.
@@ -431,9 +431,9 @@ extends the abstract class `Command`. A `RemarkCommandParser` which implements t
 to instantiate a `RemarkCommand` from the user input. The classes mentioned above in this paragraph resides in our 
 `logic` component.
 
-#### 6.2 Implementation Illustration
+#### 5.2 Implementation Illustration
 <br>![RemarkSequenceDiagram](images/RemarkSequenceDiagram.png)
-<br>**Diagram 6.2.1: Remark Command sequence diagram**
+<br>**Diagram 5.2.1: Sequence diagram for the Remark Command**
 
 The following is a step by step illustration of how the remark command mechanism works for an example scenario based on the sequence diagram above:
 
@@ -450,7 +450,7 @@ in the input string and creates a new `RemarkCommandParser`.
 `ParserUtil#parseIndex` and `ParserUtil#parseRemark` methods respectively. <br>
 <br>The process described in step 4 is shown in the following sequence diagram:
 ![RemarkParserRefSequenceDiagram](images/RemarkParserRefSequenceDiagram.png)
-<br>**Diagram 6.2.2: RemarkParserRef sequence diagram**
+<br>**Diagram 5.2.2: Sequence diagram for the Remark-ParserUtil interactions**
 
 5. The `RemarkCommandParser` then instantiates a new `RemarkCommand` with the appropriate `Index` and `Remark` object.
 This new `RemarkCommand` is then returned to `NuudleParser` and subsequently `LogicManager` at the end of the `NuudleParser#parseCommand(String)` execution.
@@ -468,7 +468,7 @@ This new `RemarkCommand` is then returned to `NuudleParser` and subsequently `Lo
 11. `Model#updateFilteredPatientList` is then called to update the `FilteredPatientList` displayed by the UI.
 <br><br>The above process is shown in the following sequence diagram:
 <br>![RemarkModelSequenceDiagram](images/RemarkModelSequenceDiagram.png)
-<br>**Diagram 6.2.3: RemarkModel sequence diagram**
+<br>**Diagram 5.2.3: Sequence diagram for the Remark-Model interactions**
 
 12. Lastly, the `RemarkCommand` creates a `CommandResult` with a `SuccessMessage` and returns it to `LogicManager`.
 
@@ -477,9 +477,9 @@ This new `RemarkCommand` is then returned to `NuudleParser` and subsequently `Lo
 The following activity diagram summarizes the above steps when a user uses the remark command pathway:
 
 ![RemarkCommandActivityDiagram](images/RemarkCommandActivityDiagram.png)
-<br>**Diagram 6.2.4: Architecture diagram showcasing the Remark Command execution flow**
+<br>**Diagram 5.2.4: Activity diagram showcasing the Remark Command execution flow**
 
-#### 6.3 Design Considerations
+#### 5.3 Design Considerations
 
 ##### Aspect: How the `remark` command executes
 

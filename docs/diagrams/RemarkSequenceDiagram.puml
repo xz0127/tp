@@ -30,7 +30,7 @@ deactivate RemarkCommandParser
 NuudleParser -> RemarkCommandParser : parse("INDEX r/...")
 activate RemarkCommandParser
 
-ref over RemarkCommandParser, ParserUtil : Please refer to the RemarkParserRef Sequence Diagram below.
+ref over RemarkCommandParser, ParserUtil : Please refer to Figure 5.2.2 for Remark-ParserUtil interactions.
 
 create RemarkCommand
 RemarkCommandParser -> RemarkCommand : new
@@ -50,7 +50,7 @@ destroy RemarkCommandParser
 LogicManager -> RemarkCommand : execute()
 activate RemarkCommand
 
-ref over RemarkCommand, Patient, Model : Please refer to the RemarkModel sequence diagram below.
+ref over RemarkCommand, Patient, Model : Please refer to Figure 5.2.3 for Remark-Model interactions.
 
 RemarkCommand --> LogicManager : Command
 deactivate RemarkCommand
