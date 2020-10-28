@@ -40,6 +40,16 @@ public class ArgumentMultimap {
     }
 
     /**
+     * Checks if only 1 value is stored for the input {@code Prefix} in the {@code ArgumentMultimap}.
+     * @param prefix
+     * @return
+     */
+    public boolean isSingleValue(Prefix prefix) {
+        List<String> values = getAllValues(prefix);
+        return values.size() == 1;
+    }
+
+    /**
      * Returns all values of {@code prefix}.
      * If the prefix does not exist or has no values, this will return an empty list.
      * Modifying the returned list will not affect the underlying data structure of the ArgumentMultimap.
