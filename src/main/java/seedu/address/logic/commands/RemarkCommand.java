@@ -24,7 +24,7 @@ public class RemarkCommand extends Command {
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Edits the remark of the patient identified "
             + "by the index number used in the last patient listing. "
             + "Existing remark will be overwritten by the input.\n"
-            + "Parameters: INDEX (must be a positive integer) "
+            + "Parameters: PATIENT_INDEX (must be a positive integer) "
             + "r/[REMARK]\n"
             + "Example: " + COMMAND_WORD + " 1 "
             + "r/Has been visiting Dr John.";

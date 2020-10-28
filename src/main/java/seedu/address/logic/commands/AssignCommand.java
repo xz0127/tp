@@ -29,7 +29,7 @@ public class AssignCommand extends Command {
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Assigns an appointment to an existing patient.\n"
             + "Parameters: "
-            + "PATIENT INDEX (must be a positive integer) "
+            + "PATIENT_INDEX (must be a positive integer) "
             + PREFIX_DATE + "DATE "
             + PREFIX_TIME + "TIME "
             + "[" + PREFIX_DURATION + "DURATION] (minute in unit) \n"
