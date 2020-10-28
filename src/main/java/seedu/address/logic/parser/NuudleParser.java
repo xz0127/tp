@@ -8,6 +8,7 @@ import java.util.regex.Pattern;
 
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.AssignCommand;
+import seedu.address.logic.commands.AvailableCommand;
 import seedu.address.logic.commands.CancelCommand;
 import seedu.address.logic.commands.ChangeCommand;
 import seedu.address.logic.commands.ClearCommand;
@@ -91,6 +92,10 @@ public class NuudleParser {
 
         case ChangeCommand.COMMAND_WORD:
             return new ChangeCommandParser().parse(arguments);
+
+        case AvailableCommand.COMMAND_WORD:
+            return new AvailableCommandParser().parse(arguments);
+
 
         default:
             throw new ParseException(MESSAGE_UNKNOWN_COMMAND);
