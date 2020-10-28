@@ -39,7 +39,7 @@ We hope that this document will help you in your journey in exploring the wonder
 
    * **`delete`**`d/tomorrow t/12.30pm` : Deletes the previously created appointment occurring at 12.30pm tomorrow.
 
-   * **`clear`** : Deletes all appointments.
+   * **`clear`** : Deletes all appointments and patients data.
 
    * **`exit`** : Exits the app.
 
@@ -303,7 +303,7 @@ Example:
 
 ### Clearing all appointment entries : `clear`
 
-Clears all appointment entries from the appointment book.
+Clears all appointment and patients entries.
 
 Format: `clear`
 
