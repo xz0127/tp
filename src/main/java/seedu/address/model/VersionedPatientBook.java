@@ -14,7 +14,7 @@ public class VersionedPatientBook extends PatientBook {
     private int currentStatePointer;
 
     /**
-     * Initialize a versioned patient book with the given initial state.
+     * Initializes a versioned patient book with the given initial state.
      */
     public VersionedPatientBook(ReadOnlyPatientBook initialState) {
         super(initialState);

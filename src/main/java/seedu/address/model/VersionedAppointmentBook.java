@@ -14,7 +14,7 @@ public class VersionedAppointmentBook extends AppointmentBook {
     private int currentStatePointer;
 
     /**
-     * Initialize a versioned appointment book with the given initial state.
+     * Initializes a versioned appointment book with the given initial state.
      */
     public VersionedAppointmentBook(ReadOnlyAppointmentBook initialState) {
         super(initialState);

@@ -20,11 +20,11 @@ import seedu.address.testutil.AppointmentBookBuilder;
 
 public class VersionedAppointmentBookTest {
 
-    private final ReadOnlyAppointmentBook appointmentBookWithAmy = new AppointmentBookBuilder()
+    private final ReadOnlyAppointmentBook appointmentBookWithAliceAppointment = new AppointmentBookBuilder()
             .withAppointment(ALICE_APPOINTMENT).build();
-    private final ReadOnlyAppointmentBook appointmentBookWithBob = new AppointmentBookBuilder()
+    private final ReadOnlyAppointmentBook appointmentBookWithBensonAppointment = new AppointmentBookBuilder()
             .withAppointment(BENSON_APPOINTMENT).build();
-    private final ReadOnlyAppointmentBook appointmentBookWithCarl = new AppointmentBookBuilder()
+    private final ReadOnlyAppointmentBook appointmentBookWithHoonAppointment = new AppointmentBookBuilder()
             .withAppointment(HOON_APPOINTMENT).build();
     private final ReadOnlyAppointmentBook emptyAppointmentBook = new AppointmentBookBuilder().build();
 
@@ -45,20 +45,23 @@ public class VersionedAppointmentBookTest {
     public void commit_multipleAppointmentBookPointerAtEndOfStateList_noStatesRemovedCurrentStateSaved() {
         VersionedAppointmentBook versionedAppointmentBook =
                 prepareAppointmentBookList(
-                        emptyAppointmentBook, appointmentBookWithAmy, appointmentBookWithBob);
+                        emptyAppointmentBook, appointmentBookWithAliceAppointment,
+                        appointmentBookWithBensonAppointment);
 
         versionedAppointmentBook
                 .commit();
         assertAppointmentBookListStatus(versionedAppointmentBook,
-                Arrays.asList(emptyAppointmentBook, appointmentBookWithAmy, appointmentBookWithBob),
-                appointmentBookWithBob,
+                Arrays.asList(emptyAppointmentBook, appointmentBookWithAliceAppointment,
+                        appointmentBookWithBensonAppointment),
+                appointmentBookWithBensonAppointment,
                 Collections.emptyList());
     }
 
     @Test
     public void commit_multipleAppointmentBookPointerNotAtEndOfStateList_statesAfterPointerRemovedCurrentStateSaved() {
         VersionedAppointmentBook versionedAppointmentBook =
-                prepareAppointmentBookList(emptyAppointmentBook, appointmentBookWithAmy, appointmentBookWithBob);
+                prepareAppointmentBookList(emptyAppointmentBook, appointmentBookWithAliceAppointment,
+                        appointmentBookWithBensonAppointment);
         shiftCurrentStatePointerLeftwards(versionedAppointmentBook, 2);
 
         versionedAppointmentBook
@@ -72,7 +75,8 @@ public class VersionedAppointmentBookTest {
     @Test
     public void canUndo_multipleAppointmentBookPointerAtEndOfStateList_returnsTrue() {
         VersionedAppointmentBook versionedAppointmentBook =
-                prepareAppointmentBookList(emptyAppointmentBook, appointmentBookWithAmy, appointmentBookWithBob);
+                prepareAppointmentBookList(emptyAppointmentBook, appointmentBookWithAliceAppointment,
+                        appointmentBookWithBensonAppointment);
 
         assertTrue(versionedAppointmentBook.canUndo());
     }
@@ -80,7 +84,8 @@ public class VersionedAppointmentBookTest {
     @Test
     public void canUndo_multipleAppointmentBookPointerAtStartOfStateList_returnsTrue() {
         VersionedAppointmentBook versionedAppointmentBook =
-                prepareAppointmentBookList(emptyAppointmentBook, appointmentBookWithAmy, appointmentBookWithBob);
+                prepareAppointmentBookList(emptyAppointmentBook, appointmentBookWithAliceAppointment,
+                        appointmentBookWithBensonAppointment);
         shiftCurrentStatePointerLeftwards(versionedAppointmentBook, 1);
 
         assertTrue(versionedAppointmentBook.canUndo());
@@ -96,7 +101,7 @@ public class VersionedAppointmentBookTest {
     @Test
     public void canUndo_multipleAppointmentBookPointerAtStartOfStateList_returnsFalse() {
         VersionedAppointmentBook versionedAppointmentBook = prepareAppointmentBookList(emptyAppointmentBook,
-                appointmentBookWithAmy, appointmentBookWithBob);
+                appointmentBookWithAliceAppointment, appointmentBookWithBensonAppointment);
         shiftCurrentStatePointerLeftwards(versionedAppointmentBook, 2);
 
         assertFalse(versionedAppointmentBook.canUndo());
@@ -105,7 +110,7 @@ public class VersionedAppointmentBookTest {
     @Test
     public void canRedo_multipleAppointmentBookPointerNotAtEndOfStateList_returnsTrue() {
         VersionedAppointmentBook versionedAppointmentBook = prepareAppointmentBookList(emptyAppointmentBook,
-                appointmentBookWithAmy, appointmentBookWithBob);
+                appointmentBookWithAliceAppointment, appointmentBookWithBensonAppointment);
         shiftCurrentStatePointerLeftwards(versionedAppointmentBook, 1);
 
         assertTrue(versionedAppointmentBook.canRedo());
@@ -114,7 +119,7 @@ public class VersionedAppointmentBookTest {
     @Test
     public void canRedo_multipleAppointmentBookPointerAtStartOfStateList_returnsTrue() {
         VersionedAppointmentBook versionedAppointmentBook = prepareAppointmentBookList(emptyAppointmentBook,
-                appointmentBookWithAmy, appointmentBookWithBob);
+                appointmentBookWithAliceAppointment, appointmentBookWithBensonAppointment);
         shiftCurrentStatePointerLeftwards(versionedAppointmentBook, 2);
 
         assertTrue(versionedAppointmentBook.canRedo());
@@ -130,7 +135,7 @@ public class VersionedAppointmentBookTest {
     @Test
     public void canRedo_multipleAppointmentBookPointerAtEndOfStateList_returnsFalse() {
         VersionedAppointmentBook versionedAppointmentBook = prepareAppointmentBookList(
-                emptyAppointmentBook, appointmentBookWithAmy, appointmentBookWithBob);
+                emptyAppointmentBook, appointmentBookWithAliceAppointment, appointmentBookWithBensonAppointment);
 
         assertFalse(versionedAppointmentBook.canRedo());
     }
@@ -138,26 +143,26 @@ public class VersionedAppointmentBookTest {
     @Test
     public void undo_multipleAppointmentBookPointerAtEndOfStateList_success() {
         VersionedAppointmentBook versionedAppointmentBook = prepareAppointmentBookList(
-                emptyAppointmentBook, appointmentBookWithAmy, appointmentBookWithBob);
+                emptyAppointmentBook, appointmentBookWithAliceAppointment, appointmentBookWithBensonAppointment);
 
         versionedAppointmentBook.undo();
         assertAppointmentBookListStatus(versionedAppointmentBook,
                 Collections.singletonList(emptyAppointmentBook),
-                appointmentBookWithAmy,
-                Collections.singletonList(appointmentBookWithBob));
+                appointmentBookWithAliceAppointment,
+                Collections.singletonList(appointmentBookWithBensonAppointment));
     }
 
     @Test
     public void undo_multipleAppointmentBookPointerNotAtStartOfStateList_success() {
         VersionedAppointmentBook versionedAppointmentBook = prepareAppointmentBookList(
-                emptyAppointmentBook, appointmentBookWithAmy, appointmentBookWithBob);
+                emptyAppointmentBook, appointmentBookWithAliceAppointment, appointmentBookWithBensonAppointment);
         shiftCurrentStatePointerLeftwards(versionedAppointmentBook, 1);
 
         versionedAppointmentBook.undo();
         assertAppointmentBookListStatus(versionedAppointmentBook,
                 Collections.emptyList(),
                 emptyAppointmentBook,
-                Arrays.asList(appointmentBookWithAmy, appointmentBookWithBob));
+                Arrays.asList(appointmentBookWithAliceAppointment, appointmentBookWithBensonAppointment));
     }
 
     @Test
@@ -170,7 +175,7 @@ public class VersionedAppointmentBookTest {
     @Test
     public void undo_multipleAppointmentBookPointerAtStartOfStateList_throwsNoUndoableStateException() {
         VersionedAppointmentBook versionedAppointmentBook = prepareAppointmentBookList(
-                emptyAppointmentBook, appointmentBookWithAmy, appointmentBookWithBob);
+                emptyAppointmentBook, appointmentBookWithAliceAppointment, appointmentBookWithBensonAppointment);
         shiftCurrentStatePointerLeftwards(versionedAppointmentBook, 2);
 
         assertThrows(NoUndoableStateException.class, versionedAppointmentBook::undo);
@@ -179,27 +184,27 @@ public class VersionedAppointmentBookTest {
     @Test
     public void redo_multipleAppointmentBookPointerNotAtEndOfStateList_success() {
         VersionedAppointmentBook versionedAppointmentBook = prepareAppointmentBookList(
-                emptyAppointmentBook, appointmentBookWithAmy, appointmentBookWithBob);
+                emptyAppointmentBook, appointmentBookWithAliceAppointment, appointmentBookWithBensonAppointment);
         shiftCurrentStatePointerLeftwards(versionedAppointmentBook, 1);
 
         versionedAppointmentBook.redo();
         assertAppointmentBookListStatus(versionedAppointmentBook,
-                Arrays.asList(emptyAppointmentBook, appointmentBookWithAmy),
-                appointmentBookWithBob,
+                Arrays.asList(emptyAppointmentBook, appointmentBookWithAliceAppointment),
+                appointmentBookWithBensonAppointment,
                 Collections.emptyList());
     }
 
     @Test
     public void redo_multipleAppointmentBookPointerAtStartOfStateList_success() {
         VersionedAppointmentBook versionedAppointmentBook = prepareAppointmentBookList(
-                emptyAppointmentBook, appointmentBookWithAmy, appointmentBookWithBob);
+                emptyAppointmentBook, appointmentBookWithAliceAppointment, appointmentBookWithBensonAppointment);
         shiftCurrentStatePointerLeftwards(versionedAppointmentBook, 2);
 
         versionedAppointmentBook.redo();
         assertAppointmentBookListStatus(versionedAppointmentBook,
                 Collections.singletonList(emptyAppointmentBook),
-                appointmentBookWithAmy,
-                Collections.singletonList(appointmentBookWithBob));
+                appointmentBookWithAliceAppointment,
+                Collections.singletonList(appointmentBookWithBensonAppointment));
     }
 
     @Test
@@ -212,7 +217,7 @@ public class VersionedAppointmentBookTest {
     @Test
     public void redo_multipleAppointmentBookPointerAtEndOfStateList_throwsNoRedoableStateException() {
         VersionedAppointmentBook versionedAppointmentBook = prepareAppointmentBookList(
-                emptyAppointmentBook, appointmentBookWithAmy, appointmentBookWithBob);
+                emptyAppointmentBook, appointmentBookWithAliceAppointment, appointmentBookWithBensonAppointment);
 
         assertThrows(NoRedoableStateException.class, versionedAppointmentBook::redo);
     }
@@ -220,10 +225,11 @@ public class VersionedAppointmentBookTest {
     @Test
     public void equals() {
         VersionedAppointmentBook versionedAppointmentBook =
-                prepareAppointmentBookList(appointmentBookWithAmy, appointmentBookWithBob);
+                prepareAppointmentBookList(appointmentBookWithAliceAppointment, appointmentBookWithBensonAppointment);
 
         // same values -> returns true
-        VersionedAppointmentBook copy = prepareAppointmentBookList(appointmentBookWithAmy, appointmentBookWithBob);
+        VersionedAppointmentBook copy = prepareAppointmentBookList(appointmentBookWithAliceAppointment,
+                appointmentBookWithBensonAppointment);
         assertTrue(versionedAppointmentBook.equals(copy));
 
         // same object -> returns true
@@ -236,13 +242,13 @@ public class VersionedAppointmentBookTest {
         assertFalse(versionedAppointmentBook.equals(1));
 
         // different state list -> returns false
-        VersionedAppointmentBook differentAppointmentBookList = prepareAppointmentBookList(appointmentBookWithBob,
-                appointmentBookWithCarl);
+        VersionedAppointmentBook differentAppointmentBookList = prepareAppointmentBookList(
+                appointmentBookWithBensonAppointment, appointmentBookWithHoonAppointment);
         assertFalse(versionedAppointmentBook.equals(differentAppointmentBookList));
 
         // different current pointer index -> returns false
         VersionedAppointmentBook differentCurrentStatePointer = prepareAppointmentBookList(
-                appointmentBookWithAmy, appointmentBookWithBob);
+                appointmentBookWithAliceAppointment, appointmentBookWithBensonAppointment);
         shiftCurrentStatePointerLeftwards(versionedAppointmentBook, 1);
         assertFalse(versionedAppointmentBook.equals(differentCurrentStatePointer));
     }
