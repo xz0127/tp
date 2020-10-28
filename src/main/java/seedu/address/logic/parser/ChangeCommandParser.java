@@ -60,7 +60,8 @@ public class ChangeCommandParser implements Parser<ChangeCommand> {
             if (!argMultimap.isSingleValue(PREFIX_DURATION)) {
                 throw new ParseException(MULTIPLE_DURATIONS_DETECTED);
             }
-            editAppointmentDescriptor.setDuration(ParserUtil.parseDuration(argMultimap.getValue(PREFIX_DURATION).get()));
+            editAppointmentDescriptor.setDuration(ParserUtil.parseDuration(argMultimap
+                                                                            .getValue(PREFIX_DURATION).get()));
         }
 
         return new ChangeCommand(index, editAppointmentDescriptor);

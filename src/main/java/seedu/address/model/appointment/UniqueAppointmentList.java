@@ -78,18 +78,12 @@ public class UniqueAppointmentList implements Iterable<Appointment> {
             throw new AppointmentNotFoundException();
         }
         try {
-//            internalList.remove(target);
-//            internalList.add(index, editedAppointment);
             this.remove(target);
             this.add(editedAppointment);
         } catch (OverlappingAppointmentException ex) {
             internalList.add(index, target);
             throw new OverlappingAppointmentException();
         }
-        // if (!target.isOverlapping(editedAppointment) && hasOverlaps(editedAppointment)) {
-        //     throw new OverlappingAppointmentException();
-        // }
-        // internalList.set(index, editedAppointment);
     }
 
     /**

@@ -39,6 +39,11 @@ public class ArgumentMultimap {
         return values.isEmpty() ? Optional.empty() : Optional.of(values.get(values.size() - 1));
     }
 
+    /**
+     * Checks if only 1 value is stored for the input {@code Prefix} in the {@code ArgumentMultimap}.
+     * @param prefix
+     * @return
+     */
     public boolean isSingleValue(Prefix prefix) {
         List<String> values = getAllValues(prefix);
         return values.size() == 1;

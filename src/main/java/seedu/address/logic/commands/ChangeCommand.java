@@ -105,7 +105,8 @@ public class ChangeCommand extends Command {
      * edited with {@code editAppointmentDescriptor}.
      */
     private static Appointment createEditedAppointment(Appointment appointmentToEdit,
-                                                       EditAppointmentDescriptor editAppointmentDescriptor) throws CommandException {
+                                                       EditAppointmentDescriptor editAppointmentDescriptor)
+                                                       throws CommandException {
         assert appointmentToEdit != null;
         assert editAppointmentDescriptor != null;
 
@@ -174,6 +175,9 @@ public class ChangeCommand extends Command {
         private Time startTime;
         private Duration duration;
 
+        /**
+         * Creates an EditAppointmentDescriptor with all variables initialised to null.
+         */
         public EditAppointmentDescriptor() {
             this.startTime = null;
             this.date = null;
