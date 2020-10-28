@@ -18,7 +18,6 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.CollectionUtil;
 import seedu.address.commons.util.DateTimeUtil;
 import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.Model;
 import seedu.address.model.appointment.Appointment;
 import seedu.address.model.appointment.Date;
@@ -50,9 +49,6 @@ public class ChangeCommand extends Command {
             + "book.";
 
     public static final String ASSIGNMENT_OVERLAP = "This time slot is occupied";
-    public static final String DATE_MISSING = "The date of appointment is missing";
-    public static final String TIME_MISSING = "The time of appointment is missing";
-    public static final String DURATION_MISSING = "The duration of appointment is missing";
 
     private final Index index;
     private final EditAppointmentDescriptor editAppointmentDescriptor;
@@ -104,9 +100,6 @@ public class ChangeCommand extends Command {
                                                        EditAppointmentDescriptor editAppointmentDescriptor) throws CommandException {
         assert appointmentToEdit != null;
         assert editAppointmentDescriptor != null;
-//        assert editAppointmentDescriptor.duration != null;
-//        assert editAppointmentDescriptor.date != null;
-//        assert editAppointmentDescriptor.startTime != null;
 
         Date date;
         Time startTime;
