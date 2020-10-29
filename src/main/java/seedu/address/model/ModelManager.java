@@ -95,6 +95,16 @@ public class ModelManager implements Model {
         userPrefs.setAppointmentBookFilePath(appointmentBookFilePath);
     }
 
+    @Override
+    public Path getArchiveDirPath() {
+        return userPrefs.getArchiveDirectoryPath();
+    }
+
+    @Override
+    public void setArchiveDirPath(Path archiveDirPath) {
+        requireNonNull(archiveDirPath);
+        userPrefs.setArchiveDirectoryPath(archiveDirPath);
+    }
     //=========== PatientBook ================================================================================
 
     @Override

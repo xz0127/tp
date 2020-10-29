@@ -2,9 +2,7 @@ package seedu.address.logic.commands;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_DATE;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_REMARK_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_TIME;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.logic.commands.CommandTestUtil.showPatientAtIndex;
@@ -27,7 +25,6 @@ import seedu.address.model.PatientBook;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.patient.Patient;
 import seedu.address.model.patient.Remark;
-import seedu.address.testutil.DateTimeLoaderBuilder;
 import seedu.address.testutil.PatientBuilder;
 
 class RemarkCommandTest {
@@ -165,9 +162,7 @@ class RemarkCommandTest {
 
     @Test
     public void equals_differentType_fail() {
-        DateTimeLoader loader = new DateTimeLoaderBuilder()
-                .withDate(VALID_DATE).withTime(VALID_TIME).build();
-        final DoneCommand standardCommand = new DoneCommand(loader);
+        final DoneCommand standardCommand = new DoneCommand(INDEX_FIRST_PATIENT);
 
         Patient samplePatient = model.getFilteredPatientList()
                 .get(INDEX_SECOND_PATIENT.getZeroBased());

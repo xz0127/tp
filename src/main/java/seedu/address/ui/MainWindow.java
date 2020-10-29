@@ -149,6 +149,7 @@ public class MainWindow extends UiPart<Stage> {
 
         resultDisplay = new ResultDisplay();
         resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());
+        resultDisplay.setFeedbackToUser(logic.getStorageStatus());
 
         StatusBarFooter patientStatusBarFooter = new StatusBarFooter(logic.getPatientBookFilePath());
         patientStatusbarPlaceholder.getChildren().add(patientStatusBarFooter.getRoot());

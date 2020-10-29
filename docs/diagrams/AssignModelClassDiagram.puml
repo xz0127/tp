@@ -1,35 +1,28 @@
 @startuml
-package Model {
+!include style.puml
+skinparam arrowThickness 1.1
+skinparam arrowColor MODEL_COLOR
+skinparam classBackgroundColor MODEL_COLOR
 
-class Appointment {
-- date : Date[1]
-- time : Time[1]
-- appointmentId : AppointmentId[1]
-- patient : Patient[1]
-...
---
-+ Appointment(data: Date, startTime: Time, patient: Patient)
-...
-}
+package Model <<Rectangle>>{
+interface Iterable <<Interface>>
+interface ReadOnlyAppointmentBook <<Interface>>
+class AppointmentBook
+class UniqueAppointmentList
+class Appointment
+class Date
+class Time
+class AppointmentId
+class Patient
 
-class UniqueAppointmentList {
-- internalList : ObservableList<Appointment>
-- internalUnmodifiableList : ObservableList<Appointment>
---
-+ add(toAdd: Appointment)
-+ hasOverlaps(toCheck: Appointment) : boolean
-...
-}
+AppointmentBook .up.|> ReadOnlyAppointmentBook
+AppointmentBook *-right-* "1" UniqueAppointmentList
+UniqueAppointmentList .up.|> Iterable
+UniqueAppointmentList o--> "*" Appointment
+Appointment *--> Date
+Appointment *--> Time
+Appointment *--> AppointmentId
+Appointment *--> Patient
 
-class AppointmentBook {
-- appointments : UniqueAppointmentList
---
-+ AppointmentBook(toBeCopied: ReadOnlyAppointmentBook)
-+ addAppointment(a: Appointment)
-...
-}
-
-Appointment -- UniqueAppointmentList: contains <
-UniqueAppointmentList -- AppointmentBook : contains <
 }
 @enduml

@@ -44,4 +44,8 @@ public interface Storage extends PatientBookStorage, AppointmentBookStorage, Use
     @Override
     void backupData(String folderName) throws IOException;
 
+    @Override
+    StorageStatsManager getStatsManager();
+
+    String getStatusMessage();
 }

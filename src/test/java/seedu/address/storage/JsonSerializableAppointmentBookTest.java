@@ -27,7 +27,7 @@ public class JsonSerializableAppointmentBookTest {
     public void toModelType_typicalAppointmentFile_success() throws Exception {
         JsonSerializableAppointmentBook dataFromFile = JsonUtil.readJsonFile(TYPICAL_APPOINTMENT_FILE,
                 JsonSerializableAppointmentBook.class).get();
-        AppointmentBook appointmentBookFromFile = dataFromFile.toModelType();
+        AppointmentBook appointmentBookFromFile = dataFromFile.toModelType(new StorageStatsManager());
         AppointmentBook typicalAppointmentBook = TypicalAppointments.getTypicalAppointmentBook();
         assertEquals(appointmentBookFromFile, typicalAppointmentBook);
     }
@@ -36,7 +36,7 @@ public class JsonSerializableAppointmentBookTest {
     public void toModelType_invalidAppointmentFile_returnEmptyBook() throws Exception {
         JsonSerializableAppointmentBook dataFromFile = JsonUtil.readJsonFile(INVALID_APPOINTMENT_FILE,
                 JsonSerializableAppointmentBook.class).get();
-        AppointmentBook appointmentBookFromFile = dataFromFile.toModelType();
+        AppointmentBook appointmentBookFromFile = dataFromFile.toModelType(new StorageStatsManager());
         AppointmentBook expectedAppointmentBook = new AppointmentBook();
         assertEquals(expectedAppointmentBook, appointmentBookFromFile);
     }
@@ -45,7 +45,7 @@ public class JsonSerializableAppointmentBookTest {
     public void toModelType_duplicateAppointments_returnsFirstUniqueAppointment() throws Exception {
         JsonSerializableAppointmentBook dataFromFile = JsonUtil.readJsonFile(OVERLAP_APPOINTMENT_FILE,
                 JsonSerializableAppointmentBook.class).get();
-        AppointmentBook appointmentBookFromFile = dataFromFile.toModelType();
+        AppointmentBook appointmentBookFromFile = dataFromFile.toModelType(new StorageStatsManager());
 
         AppointmentBook expectedAppointmentBook = new AppointmentBook();
         Appointment firstAppointment = new AppointmentBuilder(ALICE_APPOINTMENT)

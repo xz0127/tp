@@ -20,14 +20,31 @@ public class JsonAppointmentBookStorage implements AppointmentBookStorage {
 
     private static final Logger logger = LogsCenter.getLogger(JsonAppointmentBookStorage.class);
 
-    private Path filePath;
+    private AppointmentArchive csvArchive;
 
-    public JsonAppointmentBookStorage(Path filePath) {
+    private Path filePath;
+    private StorageStatsManager statsManager;
+
+    /**
+     * @param filePath the filePath for the appointment storage.
+     * @param archivePath the directory path for the appointment archives.
+     * @param statsManager the statistics handler for storage.
+     */
+    public JsonAppointmentBookStorage(Path filePath, Path archivePath, StorageStatsManager statsManager) {
         this.filePath = filePath;
+        this.csvArchive = new CsvAppointmentArchive(archivePath, statsManager);
+        this.statsManager = statsManager;
     }
 
     public Path getAppointmentBookFilePath() {
         return filePath;
+    }
+
+    /**
+     * Returns the {@code Path} to the archive directory.
+     */
+    public Path getAppointmentArchiveDirPath() {
+        return csvArchive.getArchiveDirectoryPath();
     }
 
     @Override
@@ -50,12 +67,12 @@ public class JsonAppointmentBookStorage implements AppointmentBookStorage {
             return Optional.empty();
         }
 
-        // try {
-        return jsonAppointmentBook.map(JsonSerializableAppointmentBook::toModelType);
-        // } catch (IllegalValueException ive) {
-        //     logger.info("Illegal values found in " + filePath + ": " + ive.getMessage());
-        //     throw new DataConversionException(ive);
-        // }
+        return jsonAppointmentBook.map((book) -> book.toModelType(statsManager));
+    }
+
+    @Override
+    public ReadOnlyAppointmentBook archivePastAppointments(ReadOnlyAppointmentBook appointmentBook) {
+        return csvArchive.archivePastAppointments(appointmentBook);
     }
 
     @Override
@@ -83,6 +100,11 @@ public class JsonAppointmentBookStorage implements AppointmentBookStorage {
         if (FileUtil.isFileExists(filePath)) {
             FileUtil.backupFileToFolder(filePath, folderName);
         }
+    }
+
+    @Override
+    public StorageStatsManager getStatsManager() {
+        return statsManager;
     }
 
 }

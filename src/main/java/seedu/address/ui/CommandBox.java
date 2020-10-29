@@ -74,6 +74,7 @@ public class CommandBox extends UiPart<Region> {
             historyPointer++;
             setInput(commandHistory.get(historyPointer));
         } else {
+            historyPointer = commandHistory.size();
             setInput("");
         }
     }
