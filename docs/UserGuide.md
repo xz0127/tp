@@ -188,16 +188,18 @@ Adds a remark to an existing patient in the patient book for nurses to store add
 Format: `remark PATIENT_INDEX [r/REMARK]`
 
 <div markdown="span" class="alert alert-primary">:bulb: **Tip:**
-We implemented our Remarks feature with the hopes of empowering you with the ability to add extra information to a patient's bio data! 
-So don't be shy and feel free to add anything under the sun that you feel apt for the patient.
+We implemented our remarks feature to empower you with the ability to add extra information to a patient's bio data! 
+So don't be shy and feel free to add anything under the sun that is applicable for the patient.
 </div>
 
-* Creates and **adds a remark** for the patient at the specified `PATIENT_INDEX`. The index here refers to the index number shown on the left side of the displayed patient list. 
+* **Adds a remark** for the patient at the specified `PATIENT_INDEX`. 
+* `PATIENT_INDEX` here refers to the number shown on the left side of the displayed patient book. 
 * Please note that the index used **must be a positive integer** 1, 2, 3, …​
-* A remark serves as an **optional field** for adding extra info to a patient's bio data and can be left blank if it is not applicable.
+* A remark is an **optional field** and can be left blank if it is not applicable.
 * A patient will have `NIL` displayed as his/her remark status if it was left empty.
-* To **override** a remark, simply use the remark/edit command as you would when creating the remark for the patient for the first time with the new remark content.
-* If you wish to **delete** the remark for a patient at a specific `PATIENT_INDEX`, simply enter either of the following commands:
+* To **override** a remark, simply use the remark command as described above.
+ Alternatively, you can also use the edit command as you would for an existing patient with the new remark content if you wish to change multiple fields (eg. Phone number) at the same time.
+* If you wish to **delete** a patient's remark, simply use either of the following commands:
     * `remark PATIENT_INDEX`
     * `remark PATIENT_INDEX r/`
     
@@ -253,29 +255,35 @@ Example:
 
 ### Reschedules an appointment for a patient : `change`
 
-Reschedules or modifies an existing appointment with a new date, time and duration.
+Reschedules or modifies an existing appointment with a new date, time or duration.
 
-Format: `change APPT_INDEX d/DATE t/TIME dur/DURATION`
+Do note that the duration used here is **measured in minutes**!
+
+Format: `change APPT_INDEX [d/DATE] [t/TIME] [dur/DURATION]`
 
 <div markdown="span" class="alert alert-primary">:bulb: **Tip:**
-Do note that the duration used here is measured in minutes!
+If you would only like to change the duration of an appointment while keeping it's original date and time, simply 
+enter the new `DURATION` with it's corresponding `APPT_INDEX`! There is no need to retype it's date and time. The same 
+applies for the other fields.
 </div>
 
-* Reschedules an appointment at the specified `APPT_INDEX` for the patient it is tagged to. 
-The index here refers to the index number shown on the left side of the displayed appointment list on the right side of the UI. 
+* **Reschedules an appointment** at the specified `APPT_INDEX` for the patient it is tagged to. 
+* The `APPT_INDEX` here refers to the number shown on the left side of the displayed appointment book located on the right side of the UI. 
 * Please note that the index used **must be a positive integer** 1, 2, 3, …
-* Please note that the `DATE` and `TIME` used for rescheduling must take place in the future.
+* Please note that the `DATE` and `TIME` used for rescheduling must be set in the future.
+* **At least one** of the optional fields must be present for a successful execution of the change command.
 
 * If you wish to **modify** the duration of an existing appointment, simply call the command in the following format:
-    * `change 1 d/ORIGINAL_DATE t/ORIGINAL_TIME dur/NEW_DURATION` Extends the duration of the appointment at `INDEX` 1 to the new `DURATION` with the same date and start time.
+    * `change 1 dur/NEW_DURATION`: <br>Extends the duration of the original appointment at `APPT_INDEX` 1 to the `NEW_DURATION` with the same date and start time.
 
-* If you wish to **reschedule** the appointment with new `DATE`/`TIME`:
-    * `change 1 d/NEW_DATE t/ORIGINAL_TIME dur/NEW_DURATION`
-    * `change 1 d/ORIGINAL_DATE t/NEW_TIME dur/NEW_DURATION`
-    * `change 1 d/NEW_DATE t/NEW_TIME dur/NEW_DURATION`
+* Some examples of **rescheduling** an appointment with a new `DATE`,`TIME` or `DURATION`:
+    * `change 1 d/NEW_DATE dur/NEW_DURATION`: <br>Reschedules an appointment to the `NEW_DATE` with the `NEW_DURATION` at it's original `TIME`.
+    * `change 1 t/NEW_TIME dur/NEW_DURATION`: <br>Reschedules an appointment to the `NEW_TIME` with the `NEW_DURATION` at it's original `DATE`.
+    * `change 1 d/NEW_DATE t/NEW_TIME dur/NEW_DURATION`: <br>Reschedules an appointment to the `NEW_DATE` and `NEW_TIME` with the `NEW_DURATION`.
+* Any other combinations of the optional fields are supported as well.
 
 Examples to reschedule appointments:
-*  `change 3 d/02-03-2021 t/1130 dur/30` <br> Reschedules the 3rd appointment in the appointment list to 2nd March 2021, 11:30AM with a duration of 30 minutes with it's original patient.
+*  `change 3 d/02-03-2021` <br> Reschedules the 3rd appointment in the appointment book to 2nd March 2021 with it's time, duration and patient.
 *  `change 2 d/12-05-2021 t/1530 dur/60` <br> Reschedules the 2nd appointment in the appointment list to 12th May 2021, 3:30PM with a duration of 1 hour with it's original patient.
 
 ![ChangeCommand](images/ChangeCommand.png)
