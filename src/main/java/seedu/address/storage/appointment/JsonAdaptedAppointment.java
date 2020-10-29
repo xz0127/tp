@@ -1,4 +1,4 @@
-package seedu.address.storage;
+package seedu.address.storage.appointment;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -11,6 +11,7 @@ import seedu.address.model.appointment.Appointment;
 import seedu.address.model.appointment.Date;
 import seedu.address.model.appointment.Time;
 import seedu.address.model.patient.Patient;
+import seedu.address.storage.patient.JsonAdaptedPatient;
 
 /**
  * Jackson-friendly version of {@link Appointment}.

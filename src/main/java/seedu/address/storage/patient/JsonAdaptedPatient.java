@@ -1,4 +1,4 @@
-package seedu.address.storage;
+package seedu.address.storage.patient;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -21,7 +21,7 @@ import seedu.address.model.tag.Tag;
 /**
  * Jackson-friendly version of {@link Patient}.
  */
-class JsonAdaptedPatient {
+public class JsonAdaptedPatient {
 
     public static final String MISSING_FIELD_MESSAGE_FORMAT = "Patient's %s field is missing!";
 

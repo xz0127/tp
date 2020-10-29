@@ -11,21 +11,27 @@ Class StorageManager
 Interface UserPrefsStorage <<Interface>>
 Class JsonUserPrefsStorage
 
+Package Patient {
 Interface PatientBookStorage <<Interface>>
 Class JsonPatientBookStorage
 Class JsonSerializablePatientBook
 Class JsonAdaptedPatient
 Class JsonAdaptedTag
+}
 
+Package Appointment {
 Interface AppointmentBookStorage <<Interface>>
 Class JsonAppointmentBookStorage
 Class JsonSerializableAppointmentBook
 Class JsonAdaptedAppointment
+}
 
+Package Archive {
 Interface AppointmentArchive <<Interface>>
 Class CsvAppointmentArchive
 Class CsvAdaptedAppointment
 Class CsvAdaptedPatient
+}
 
 Class StorageStatsManager
 }

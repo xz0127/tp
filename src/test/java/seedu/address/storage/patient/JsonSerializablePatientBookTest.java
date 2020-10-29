@@ -1,4 +1,4 @@
-package seedu.address.storage;
+package seedu.address.storage.patient;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static seedu.address.testutil.TypicalPatients.ALICE;
@@ -10,6 +10,7 @@ import org.junit.jupiter.api.Test;
 
 import seedu.address.commons.util.JsonUtil;
 import seedu.address.model.PatientBook;
+import seedu.address.storage.StorageStatsManager;
 import seedu.address.testutil.TypicalPatients;
 
 public class JsonSerializablePatientBookTest {
