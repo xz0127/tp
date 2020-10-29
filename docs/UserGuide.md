@@ -336,6 +336,17 @@ Examples:
   `clear`
   `undo` (reverses the `clear` command)
   `undo` (reverses the `cancel 1` command)
+  
+Step by step illustration:
+1. Initial state:
+![UndoCommandInitialState](images/UndoRedoInitialState_UG.png)
+2. Input `delete 1`:
+![UndoCommandStep2](images/UndoStep2_UG.png)
+The first patient `Alex Yeoh` is deleted.
+3. Input `Undo`:
+![UndoCommandStep3](images/UndoStep3_UG.png)
+The `undo` command cancels the last undoable command `delete 1`, so that 
+the patient `Alex Yeoh` comes back to the list again.
 
 ### Redoing the previously undone command : `redo`
 
@@ -363,6 +374,18 @@ Examples:
   `undo` (reverses the `cancel 1` command)
   `redo` (reapplies the `cancel 1` command)
   `undo` (reapplies the `clear` command)
+
+Step by step illustration:
+1. Initial state:
+![RedoCommandInitialState](images/UndoRedoInitialState_UG.png)
+2. Input `clear`:
+![RedoCommandStep2](images/RedoStep2_UG.png)
+3. Input `Undo`:
+![RedoCommandStep3](images/RedoStep3_UG.png)
+All the data comes back.
+4. Input `Redo`:
+![RedoCommandStep4](images/RedoStep4_UG.png)
+Redo the `clear` command, which removes all the data again.
 
 ### Searching through entered commands
 
