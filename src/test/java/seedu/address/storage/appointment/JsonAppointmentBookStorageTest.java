@@ -1,4 +1,4 @@
-package seedu.address.storage;
+package seedu.address.storage.appointment;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -22,6 +22,7 @@ import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.model.AppointmentBook;
 import seedu.address.model.ReadOnlyAppointmentBook;
 import seedu.address.model.appointment.Appointment;
+import seedu.address.storage.StorageStatsManager;
 import seedu.address.testutil.AppointmentBuilder;
 
 public class JsonAppointmentBookStorageTest {

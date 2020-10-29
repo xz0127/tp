@@ -1,8 +1,8 @@
-package seedu.address.storage;
+package seedu.address.storage.appointment;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static seedu.address.storage.JsonAdaptedAppointment.MISSING_FIELD_MESSAGE_FORMAT;
-import static seedu.address.storage.JsonAdaptedAppointment.TIME_IN_WRONG_ORDER;
+import static seedu.address.storage.appointment.JsonAdaptedAppointment.MISSING_FIELD_MESSAGE_FORMAT;
+import static seedu.address.storage.appointment.JsonAdaptedAppointment.TIME_IN_WRONG_ORDER;
 import static seedu.address.testutil.Assert.assertThrows;
 import static seedu.address.testutil.TypicalAppointments.BENSON_APPOINTMENT;
 import static seedu.address.testutil.TypicalPatients.BENSON;
@@ -16,6 +16,7 @@ import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.appointment.Date;
 import seedu.address.model.appointment.Time;
 import seedu.address.model.patient.Patient;
+import seedu.address.storage.patient.JsonAdaptedPatient;
 
 
 public class JsonAdaptedAppointmentTest {

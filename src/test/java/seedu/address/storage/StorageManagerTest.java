@@ -17,6 +17,8 @@ import seedu.address.model.PatientBook;
 import seedu.address.model.ReadOnlyAppointmentBook;
 import seedu.address.model.ReadOnlyPatientBook;
 import seedu.address.model.UserPrefs;
+import seedu.address.storage.appointment.JsonAppointmentBookStorage;
+import seedu.address.storage.patient.JsonPatientBookStorage;
 
 public class StorageManagerTest {
 
