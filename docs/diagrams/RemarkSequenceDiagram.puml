@@ -1,0 +1,60 @@
+@startuml
+!include style.puml
+
+box Logic LOGIC_COLOR_T1
+participant ":LogicManager" as LogicManager LOGIC_COLOR
+participant ":NuudleParser" as NuudleParser LOGIC_COLOR
+participant ":RemarkCommandParser" as RemarkCommandParser LOGIC_COLOR
+participant "<<class>>\n :ParserUtil" as ParserUtil LOGIC_COLOR
+participant "d:RemarkCommand" as RemarkCommand LOGIC_COLOR
+end box
+
+box Model MODEL_COLOR_T1
+participant ":Patient" as Patient MODEL_COLOR
+participant ":Model" as Model MODEL_COLOR
+end box
+
+[-> LogicManager : execute("remark INDEX r/...")
+activate LogicManager
+
+LogicManager -> NuudleParser : parse("remark INDEX r/...")
+activate NuudleParser
+
+create RemarkCommandParser
+NuudleParser -> RemarkCommandParser : new
+activate RemarkCommandParser
+
+RemarkCommandParser --> NuudleParser
+deactivate RemarkCommandParser
+
+NuudleParser -> RemarkCommandParser : parse("INDEX r/...")
+activate RemarkCommandParser
+
+ref over RemarkCommandParser, ParserUtil : Please refer to Figure 5.2.2 for Remark-ParserUtil interactions.
+
+create RemarkCommand
+RemarkCommandParser -> RemarkCommand : new
+activate RemarkCommand
+
+RemarkCommand --> RemarkCommandParser
+deactivate RemarkCommand
+
+RemarkCommandParser --> NuudleParser : remarkCommand
+deactivate RemarkCommandParser
+
+NuudleParser --> LogicManager : remarkCommand
+deactivate NuudleParser
+
+destroy RemarkCommandParser
+
+LogicManager -> RemarkCommand : execute()
+activate RemarkCommand
+
+ref over RemarkCommand, Patient, Model : Please refer to Figure 5.2.3 for Remark-Model interactions.
+
+RemarkCommand --> LogicManager : Command
+deactivate RemarkCommand
+
+[<--LogicManager
+deactivate LogicManager
+@enduml

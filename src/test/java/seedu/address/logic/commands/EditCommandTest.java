@@ -2,8 +2,8 @@ package seedu.address.logic.commands;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static seedu.address.logic.commands.CommandTestUtil.DESC_AMY;
-import static seedu.address.logic.commands.CommandTestUtil.DESC_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.EDIT_DESC_AMY;
+import static seedu.address.logic.commands.CommandTestUtil.EDIT_DESC_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
@@ -40,7 +40,7 @@ public class EditCommandTest {
 
     @Test
     public void execute_allFieldsSpecifiedUnfilteredList_success() {
-        Patient editedPatient = new PatientBuilder().build();
+        Patient editedPatient = new PatientBuilder().withRemark("This is a test remark :)").build();
         EditPatientDescriptor descriptor = new EditPatientDescriptorBuilder(editedPatient).build();
         EditCommand editCommand = new EditCommand(INDEX_FIRST_PATIENT, descriptor);
 
@@ -60,6 +60,8 @@ public class EditCommandTest {
             .get(INDEX_FIRST_APPOINTMENT.getZeroBased()), firstEditedAppointment);
         expectedModel.setAppointment(model.getFilteredAppointmentList()
             .get(INDEX_SIXTH_APPOINTMENT.getZeroBased()), secondEditedAppointment);
+        expectedModel.commitPatientBook();
+        expectedModel.commitAppointmentBook();
         assertCommandSuccess(editCommand, model, expectedMessage, expectedModel);
     }
 
@@ -81,7 +83,8 @@ public class EditCommandTest {
         Model expectedModel = new ModelManager(new PatientBook(model.getPatientBook()),
                 new AppointmentBook(model.getAppointmentBook()), new UserPrefs());
         expectedModel.setPatient(lastPatient, editedPatient);
-
+        expectedModel.commitPatientBook();
+        expectedModel.commitAppointmentBook();
         assertCommandSuccess(editCommand, model, expectedMessage, expectedModel);
     }
 
@@ -103,7 +106,8 @@ public class EditCommandTest {
         Model expectedModel = new ModelManager(new PatientBook(model.getPatientBook()),
             new AppointmentBook(model.getAppointmentBook()), new UserPrefs());
         expectedModel.setPatient(lastPatient, editedPatient);
-
+        expectedModel.commitPatientBook();
+        expectedModel.commitAppointmentBook();
         assertCommandSuccess(editCommand, model, expectedMessage, expectedModel);
     }
 
@@ -116,7 +120,8 @@ public class EditCommandTest {
 
         Model expectedModel = new ModelManager(new PatientBook(model.getPatientBook()),
                 new AppointmentBook(model.getAppointmentBook()), new UserPrefs());
-
+        expectedModel.commitPatientBook();
+        expectedModel.commitAppointmentBook();
         assertCommandSuccess(editCommand, model, expectedMessage, expectedModel);
     }
 
@@ -144,7 +149,8 @@ public class EditCommandTest {
             .get(INDEX_FIRST_APPOINTMENT.getZeroBased()), firstEditedAppointment);
         expectedModel.setAppointment(model.getFilteredAppointmentList()
             .get(INDEX_SIXTH_APPOINTMENT.getZeroBased()), secondEditedAppointment);
-
+        expectedModel.commitPatientBook();
+        expectedModel.commitAppointmentBook();
         assertCommandSuccess(editCommand, model, expectedMessage, expectedModel);
     }
 
@@ -197,10 +203,10 @@ public class EditCommandTest {
 
     @Test
     public void equals() {
-        final EditCommand standardCommand = new EditCommand(INDEX_FIRST_PATIENT, DESC_AMY);
+        final EditCommand standardCommand = new EditCommand(INDEX_FIRST_PATIENT, EDIT_DESC_AMY);
 
         // same values -> returns true
-        EditPatientDescriptor copyDescriptor = new EditPatientDescriptor(DESC_AMY);
+        EditPatientDescriptor copyDescriptor = new EditPatientDescriptor(EDIT_DESC_AMY);
         EditCommand commandWithSameValues = new EditCommand(INDEX_FIRST_PATIENT, copyDescriptor);
         assertTrue(standardCommand.equals(commandWithSameValues));
 
@@ -214,10 +220,10 @@ public class EditCommandTest {
         assertFalse(standardCommand.equals(new ClearCommand()));
 
         // different index -> returns false
-        assertFalse(standardCommand.equals(new EditCommand(INDEX_SECOND_PATIENT, DESC_AMY)));
+        assertFalse(standardCommand.equals(new EditCommand(INDEX_SECOND_PATIENT, EDIT_DESC_AMY)));
 
         // different descriptor -> returns false
-        assertFalse(standardCommand.equals(new EditCommand(INDEX_FIRST_PATIENT, DESC_BOB)));
+        assertFalse(standardCommand.equals(new EditCommand(INDEX_FIRST_PATIENT, EDIT_DESC_BOB)));
     }
 
 }

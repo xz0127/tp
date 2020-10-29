@@ -12,6 +12,8 @@ Class NuudleParser
 Class XYZCommandParser
 Class CliSyntax
 Class ParserUtil
+Class DateParserUtil
+Class TimeParserUtil
 Class ArgumentMultimap
 Class ArgumentTokenizer
 Class Prefix
@@ -25,6 +27,7 @@ Class "{abstract}\nCommand" as Command
 
 Interface Logic <<Interface>>
 Class LogicManager
+Class CommandHistory
 }
 
 package Model{
@@ -35,6 +38,7 @@ Class HiddenOutside #FFFFFF
 HiddenOutside ..> Logic
 
 LogicManager .up.|> Logic
+LogicManager -left->"1" CommandHistory
 LogicManager -->"1" NuudleParser
 NuudleParser .left.> XYZCommandParser: creates >
 
@@ -42,11 +46,15 @@ XYZCommandParser ..> XYZCommand : creates >
 XYZCommandParser ..|> Parser
 XYZCommandParser ..> ArgumentMultimap
 XYZCommandParser ..> ArgumentTokenizer
-ArgumentTokenizer .left.> ArgumentMultimap
+ArgumentTokenizer .right.> ArgumentMultimap
 XYZCommandParser ..> CliSyntax
 CliSyntax ..> Prefix
 XYZCommandParser ..> ParserUtil
 ParserUtil .down.> Prefix
+ParserUtil .down.> DateParserUtil
+ParserUtil .down.> TimeParserUtil
+ArgumentMultimap .left[hidden].> CliSyntax
+ParserUtil .right[hidden].> ArgumentTokenizer
 ArgumentTokenizer .down.> Prefix
 XYZCommand -up-|> Command
 LogicManager .left.> Command : executes >
