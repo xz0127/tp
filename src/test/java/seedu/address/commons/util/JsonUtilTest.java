@@ -7,7 +7,7 @@ import java.nio.file.Path;
 
 import org.junit.jupiter.api.Test;
 
-import seedu.address.testutil.SerializableTestClass;
+import seedu.address.testutil.SerializableJsonTestClass;
 import seedu.address.testutil.TestUtil;
 
 /**
@@ -15,28 +15,28 @@ import seedu.address.testutil.TestUtil;
  */
 public class JsonUtilTest {
 
-    private static final Path SERIALIZATION_FILE = TestUtil.getFilePathInSandboxFolder("serialize.json");
+    private static final Path SERIALIZATION_FILE = TestUtil.getFilePathInSandboxFolder("json_serialize.json");
 
     @Test
     public void serializeObjectToJsonFile_noExceptionThrown() throws IOException {
-        SerializableTestClass serializableTestClass = new SerializableTestClass();
+        SerializableJsonTestClass serializableTestClass = new SerializableJsonTestClass();
         serializableTestClass.setTestValues();
 
         JsonUtil.serializeObjectToJsonFile(SERIALIZATION_FILE, serializableTestClass);
 
-        assertEquals(FileUtil.readFromFile(SERIALIZATION_FILE), SerializableTestClass.JSON_STRING_REPRESENTATION);
+        assertEquals(FileUtil.readFromFile(SERIALIZATION_FILE), SerializableJsonTestClass.JSON_STRING_REPRESENTATION);
     }
 
     @Test
     public void deserializeObjectFromJsonFile_noExceptionThrown() throws IOException {
-        FileUtil.writeToFile(SERIALIZATION_FILE, SerializableTestClass.JSON_STRING_REPRESENTATION);
+        FileUtil.writeToFile(SERIALIZATION_FILE, SerializableJsonTestClass.JSON_STRING_REPRESENTATION);
 
-        SerializableTestClass serializableTestClass = JsonUtil
-                .deserializeObjectFromJsonFile(SERIALIZATION_FILE, SerializableTestClass.class);
+        SerializableJsonTestClass serializableTestClass = JsonUtil
+                .deserializeObjectFromJsonFile(SERIALIZATION_FILE, SerializableJsonTestClass.class);
 
-        assertEquals(serializableTestClass.getName(), SerializableTestClass.getNameTestValue());
-        assertEquals(serializableTestClass.getListOfLocalDateTimes(), SerializableTestClass.getListTestValues());
-        assertEquals(serializableTestClass.getMapOfIntegerToString(), SerializableTestClass.getHashMapTestValues());
+        assertEquals(serializableTestClass.getName(), SerializableJsonTestClass.getNameTestValue());
+        assertEquals(serializableTestClass.getListOfLocalDateTimes(), SerializableJsonTestClass.getListTestValues());
+        assertEquals(serializableTestClass.getMapOfIntegerToString(), SerializableJsonTestClass.getHashMapTestValues());
     }
 
     //TODO: @Test jsonUtil_readJsonStringToObjectInstance_correctObject()

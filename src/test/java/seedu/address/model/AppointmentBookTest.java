@@ -141,7 +141,7 @@ public class AppointmentBookTest {
     @Test
     public void getAppointmentBookStatistics_patientInAppointmentBook_returnsFalse() {
         Appointment editedAppointmentOne = new AppointmentBuilder(ALICE_APPOINTMENT)
-                .withDate(LocalDate.now().plusDays(4)).build();
+                .withDate(LocalDate.now()).build();
         appointmentBook.addAppointment(editedAppointmentOne);
         List<Appointment> newAppointments = Arrays.asList(ALICE_APPOINTMENT, editedAppointmentOne);
         AppointmentBookStub newData = new AppointmentBookStub(newAppointments);

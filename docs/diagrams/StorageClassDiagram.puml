@@ -11,21 +11,29 @@ Class StorageManager
 Interface UserPrefsStorage <<Interface>>
 Class JsonUserPrefsStorage
 
+Package Patient {
 Interface PatientBookStorage <<Interface>>
 Class JsonPatientBookStorage
 Class JsonSerializablePatientBook
 Class JsonAdaptedPatient
 Class JsonAdaptedTag
+}
 
+Package Appointment {
 Interface AppointmentBookStorage <<Interface>>
 Class JsonAppointmentBookStorage
 Class JsonSerializableAppointmentBook
 Class JsonAdaptedAppointment
+}
 
+Package Archive {
 Interface AppointmentArchive <<Interface>>
 Class CsvAppointmentArchive
 Class CsvAdaptedAppointment
 Class CsvAdaptedPatient
+}
+
+Class StorageStatsManager
 }
 
 Class HiddenOutside #FFFFFF
@@ -48,9 +56,14 @@ JsonAppointmentBookStorage .down.> JsonSerializableAppointmentBook
 JsonSerializableAppointmentBook ..> JsonAdaptedAppointment
 JsonAdaptedAppointment .right.> JsonAdaptedPatient
 
-JsonAppointmentBookStorage o-up-> AppointmentArchive
+JsonAppointmentBookStorage o-right-> AppointmentArchive
 CsvAppointmentArchive .up.|> AppointmentArchive
 CsvAppointmentArchive .down.> CsvAdaptedAppointment
 CsvAdaptedAppointment ..> CsvAdaptedPatient
+
+StorageManager --> StorageStatsManager
+JsonAppointmentBookStorage -up-> StorageStatsManager
+JsonPatientBookStorage -up-> StorageStatsManager
+CsvAppointmentArchive -up-> StorageStatsManager
 @enduml
 

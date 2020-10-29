@@ -24,14 +24,15 @@ import seedu.address.model.ReadOnlyPatientBook;
 import seedu.address.model.ReadOnlyUserPrefs;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.util.SampleDataUtil;
-import seedu.address.storage.AppointmentBookStorage;
-import seedu.address.storage.JsonAppointmentBookStorage;
-import seedu.address.storage.JsonPatientBookStorage;
 import seedu.address.storage.JsonUserPrefsStorage;
-import seedu.address.storage.PatientBookStorage;
 import seedu.address.storage.Storage;
 import seedu.address.storage.StorageManager;
+import seedu.address.storage.StorageStatsManager;
 import seedu.address.storage.UserPrefsStorage;
+import seedu.address.storage.appointment.AppointmentBookStorage;
+import seedu.address.storage.appointment.JsonAppointmentBookStorage;
+import seedu.address.storage.patient.JsonPatientBookStorage;
+import seedu.address.storage.patient.PatientBookStorage;
 import seedu.address.ui.Ui;
 import seedu.address.ui.UiManager;
 
@@ -40,7 +41,7 @@ import seedu.address.ui.UiManager;
  */
 public class MainApp extends Application {
 
-    public static final Version VERSION = new Version(1, 2, 1, true);
+    public static final Version VERSION = new Version(1, 3, 1, false);
 
     private static final Logger logger = LogsCenter.getLogger(MainApp.class);
 
@@ -61,18 +62,36 @@ public class MainApp extends Application {
         UserPrefsStorage userPrefsStorage = new JsonUserPrefsStorage(config.getUserPrefsFilePath());
         UserPrefs userPrefs = initPrefs(userPrefsStorage);
 
-        PatientBookStorage patientBookStorage = new JsonPatientBookStorage(userPrefs.getPatientBookFilePath());
-        AppointmentBookStorage appointmentBookStorage =
-                new JsonAppointmentBookStorage(userPrefs.getAppointmentBookFilePath());
-        storage = new StorageManager(patientBookStorage, appointmentBookStorage, userPrefsStorage);
+        StorageStatsManager storageStatsManager = new StorageStatsManager();
+        PatientBookStorage patientBookStorage = new JsonPatientBookStorage(
+                userPrefs.getPatientBookFilePath(), storageStatsManager);
+        AppointmentBookStorage appointmentBookStorage = new JsonAppointmentBookStorage(
+                userPrefs.getAppointmentBookFilePath(), userPrefs.getArchiveDirectoryPath(),
+                storageStatsManager);
+        storage = new StorageManager(patientBookStorage, appointmentBookStorage,
+                userPrefsStorage, storageStatsManager);
 
         initLogging(config);
 
         model = initModelManager(storage, userPrefs);
 
-        logic = new LogicManager(model, storage);
-
+        logic = initLogicManager(model, storage);
         ui = new UiManager(logic);
+    }
+
+    /**
+     * Returns a {@code ModelManager} with the data from {@code storage}'s patient book,
+     * {@code storage}'s appointment book and {@code userPrefs}.
+     */
+    private Logic initLogicManager(Model model, Storage storage) {
+        Logic logic = new LogicManager(model, storage);
+
+        try {
+            logic.saveData();
+        } catch (IOException ioe) {
+            logger.warning("Problem while saving to files");
+        }
+        return logic;
     }
 
     /**
@@ -135,11 +154,15 @@ public class MainApp extends Application {
 
         try {
             appointmentBookOptional = storage.readAppointmentBook();
+
             if (appointmentBookOptional.isEmpty()) {
                 logger.info("Data file not found. Will be starting with a sample AppointmentBook");
+                initialAppointmentData = SampleDataUtil.getSampleAppointmentBook();
+            } else {
+                initialAppointmentData = appointmentBookOptional.map(storage::archivePastAppointments)
+                        .orElseGet(AppointmentBook::new);
             }
 
-            initialAppointmentData = appointmentBookOptional.orElseGet(SampleDataUtil::getSampleAppointmentBook);
         } catch (DataConversionException e) {
             logger.warning("Problem while reading from the file. Will be starting with an empty AppointmentBook");
             initialAppointmentData = new AppointmentBook();

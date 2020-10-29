@@ -44,7 +44,7 @@ Class HiddenOutside #FFFFFF
 HiddenOutside .down.> Model
 
 PatientBook .left.|> ReadOnlyPatientBook
-AppointmentBook .left.|> ReadOnlyAppointmentBook
+AppointmentBook .right.|> ReadOnlyAppointmentBook
 
 ModelManager .right.|> Model
 Model .right.> ObservableList
@@ -67,7 +67,7 @@ UniqueAppointmentList o--> "*" Appointment
 UniqueAppointmentList -[hidden]down-> Appointment
 Appointment *--> Date
 Appointment *--> "2" Time
-Appointment --> Patient
+Appointment *--> Patient
 
 Name -[hidden]right-> Phone
 Phone -[hidden]right-> Address

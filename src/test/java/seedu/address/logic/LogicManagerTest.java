@@ -28,10 +28,11 @@ import seedu.address.model.ModelManager;
 import seedu.address.model.ReadOnlyPatientBook;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.patient.Patient;
-import seedu.address.storage.JsonAppointmentBookStorage;
-import seedu.address.storage.JsonPatientBookStorage;
 import seedu.address.storage.JsonUserPrefsStorage;
 import seedu.address.storage.StorageManager;
+import seedu.address.storage.StorageStatsManager;
+import seedu.address.storage.appointment.JsonAppointmentBookStorage;
+import seedu.address.storage.patient.JsonPatientBookStorage;
 import seedu.address.testutil.PatientBuilder;
 
 public class LogicManagerTest {
@@ -45,12 +46,15 @@ public class LogicManagerTest {
 
     @BeforeEach
     public void setUp() {
+        StorageStatsManager statsManager = new StorageStatsManager();
         JsonPatientBookStorage patientBookStorage =
-                new JsonPatientBookStorage(temporaryFolder.resolve("patientBook.json"));
+                new JsonPatientBookStorage(temporaryFolder.resolve("patientBook.json"), statsManager);
         JsonAppointmentBookStorage appointmentBookStorage =
-                new JsonAppointmentBookStorage(temporaryFolder.resolve("appointmentBook.json"));
+                new JsonAppointmentBookStorage(temporaryFolder.resolve("appointmentBook.json"),
+                        temporaryFolder.resolve("archive"), statsManager);
         JsonUserPrefsStorage userPrefsStorage = new JsonUserPrefsStorage(temporaryFolder.resolve("userPrefs.json"));
-        StorageManager storage = new StorageManager(patientBookStorage, appointmentBookStorage, userPrefsStorage);
+        StorageManager storage =
+                new StorageManager(patientBookStorage, appointmentBookStorage, userPrefsStorage, statsManager);
         logic = new LogicManager(model, storage);
     }
 
@@ -75,13 +79,19 @@ public class LogicManagerTest {
     @Test
     public void execute_storageThrowsIoException_throwsCommandException() {
         // Setup LogicManager with JsonPatientBookIoExceptionThrowingStub
+        StorageStatsManager statsManager = new StorageStatsManager();
         JsonPatientBookStorage patientBookStorage =
-                new JsonPatientBookIoExceptionThrowingStub(temporaryFolder.resolve("ioExceptionPatientBook.json"));
+                new JsonPatientBookIoExceptionThrowingStub(temporaryFolder.resolve("ioExceptionPatientBook.json"),
+                        statsManager);
         JsonAppointmentBookStorage appointmentBookStorage =
-                new JsonAppointmentBookStorage(temporaryFolder.resolve("ioExceptionAppointmentBook.json"));
+                new JsonAppointmentBookStorage(
+                        temporaryFolder.resolve("ioExceptionAppointmentBook.json"),
+                        temporaryFolder.resolve("ioExceptionArchives"),
+                        statsManager);
         JsonUserPrefsStorage userPrefsStorage =
                 new JsonUserPrefsStorage(temporaryFolder.resolve("ioExceptionUserPrefs.json"));
-        StorageManager storage = new StorageManager(patientBookStorage, appointmentBookStorage, userPrefsStorage);
+        StorageManager storage = new StorageManager(patientBookStorage, appointmentBookStorage,
+                userPrefsStorage, statsManager);
         logic = new LogicManager(model, storage);
 
         // Execute add command
@@ -90,6 +100,8 @@ public class LogicManagerTest {
         Patient expectedPatient = new PatientBuilder(AMY).withRemark("").withTags().build();
         ModelManager expectedModel = new ModelManager();
         expectedModel.addPatient(expectedPatient);
+        expectedModel.commitAppointmentBook();
+        expectedModel.commitPatientBook();
         String expectedMessage = LogicManager.FILE_OPS_ERROR_MESSAGE + DUMMY_IO_EXCEPTION;
         assertCommandFailure(addCommand, CommandException.class, expectedMessage, expectedModel);
     }
@@ -178,8 +190,8 @@ public class LogicManagerTest {
      * A stub class to throw an {@code IOException} when the save method is called.
      */
     private static class JsonPatientBookIoExceptionThrowingStub extends JsonPatientBookStorage {
-        private JsonPatientBookIoExceptionThrowingStub(Path filePath) {
-            super(filePath);
+        private JsonPatientBookIoExceptionThrowingStub(Path filePath, StorageStatsManager statsManager) {
+            super(filePath, statsManager);
         }
 
         @Override

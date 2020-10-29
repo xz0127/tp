@@ -208,21 +208,23 @@ The appointment data will be archived according to their months and saved as a c
 
 The data stored on the archive will be minimal and only contains the following columns: `date`, `startTime`, `endTime`, `isDone`, `name`, `phone`, `address` and `remark`.
 
-#### Implementation
+#### 2.1 Implementation
 
 The archive mechanism is facilitated by `CsvAppointmentArchive` which implements the `AppointmentArchive` interface.
 It is stored internally within the `JsonAppointmentBookStorage` which in turn implements the `AppointmentBookStorage` interface.
-
+<br>
 `CsvAppointmentArchive` implements the following operations:
 
-* `AppointmentArchive#archivePastAppointments(ReadOnlyAppointmentBook)` — Removes all past appointments from the `ReadOnlyAppointmentBook` and archive them as a csv file.
-* `AppointmentArchive#saveAppointments(List<CsvAdaptedAppointment>, String)` — Saves the list of `CsvAdaptedAppointment` as a csv file in the archive directory with the given filename.
-* `AppointmentArchive#readAppointments(String)` — Reads the csv file with the given filename and returns the data as a `List<CsvAdaptedAppointment>`
-* `AppointmentArchive#getArchiveStatistics()` — Gets the status message of the archive mechanism.
+* `archivePastAppointments(ReadOnlyAppointmentBook)` — Removes all past appointments from the `ReadOnlyAppointmentBook` and archive them as a csv file.
+* `saveAppointments(List<CsvAdaptedAppointment>, String)` — Saves the list of `CsvAdaptedAppointment` as a csv file in the archive directory with the given filename.
+* `readAppointments(String)` — Reads the csv file with the given filename and returns the data as a `List<CsvAdaptedAppointment>`
+* `getArchiveStatistics()` — Gets the status message of the archive mechanism.
 
 Of these three, only the `archivePastAppointments(ReadOnlyAppointmenBook)` and `getArchiveStatistics()` are exposed in the `AppointmentBookStorage` and `Storage` interfaces as methods with the same signature.
 
+<br>
 `CsvAdaptedAppointment` and `CsvAdaptedPatient` are used to represent the csv-adapted `Appointment` and `Patient` respectively.
+<br>
 
 Given below is an example archive run scenario and how the archive mechanism behaves at each step.
 
@@ -250,7 +252,7 @@ The following sequence diagram shows how the archive status message is obtained 
 
 ![ArchiveStatusDiagram](images/ArchiveStatusDiagram.png)
 
-#### Design consideration:
+#### 2.2 Design consideration:
 
 ##### Aspect: Type of data to save as csv format
 
@@ -271,7 +273,7 @@ As the data is to be saved in a csv format, the data attributes of the Java Obje
 
 The assign feature will allow the user to create a new appointment that is attached to a patient.
 
-#### Implementation
+#### 3.1 Implementation
 
 The `assign` feature is implemented to allow users to assign a specified patient into a specified appointment date and time. To avoid cyclic dependency, only an `Appointment` has an attribute of `Patient` object instead of `Appointment` object and `Patient` object refer to each other.<br><br>
 This feature creates a new Appointment instance, which is stored in an instance of `UniqueAppointmentList`, which in turn is stored in the `AppointmentBook`. These classes are part of the `model` component.<br><br>
@@ -309,7 +311,7 @@ Here below is an example usage scenario and how the `assign` feature works at ea
 
 ![AssignSequenceDiagram](images/AssignSequenceDiagram.png)
 
-#### Design Considerations
+#### 3.2 Design Considerations
 
 ##### Aspect: How the `assign` command executes
 
@@ -331,14 +333,14 @@ Here below is an example usage scenario and how the `assign` feature works at ea
     * Pros: Separating list is no longer needed and the usage of `UniquePatientList` would be enlarged. This might be better for hardware memory performance.
     * Cons: It hardens the issue of maintaining `Appointment` instances since the logic is that a `Patient` could have multiple `Appointment` but not the other way. As such, it would be harder for `Patient` related commands (`find`) to find the `Patient` and all his `Appointment` at once.
 
-### 5. Edit Patient Feature
+### 4. Edit Patient Feature
 
 `[written by: Xin Zhe]`
 
 The Edit Patient Feature allows the nurse to edit an existing `Patient` in the patient book.
 `Appointment` which involves the patient will be updated accordingly.
 
-#### 5.1 Implementation
+#### 4.1 Implementation
 
 The Edit Patient Feature is facilitated by the `EditCommand`, which extends the abstract class `Command`,
 and the `EditCommandParser`, which implements the `Parser` interface. All of these classes are part of the `Logic` component.
@@ -354,36 +356,190 @@ Creates a `patient` with the details of `patientToEdit` edited with `editPatient
 
 Given below is an example usage scenario and how the edit mechanism behaves at each step.
 
-Step 1: The user types `edit INDEX [n/NAME] [p/PHONE] [i/NRIC] [a/ADDRESS] [t/TAG]…` into Nuudle.
+1: The user types `edit INDEX [n/NAME] [p/PHONE] [i/NRIC] [a/ADDRESS] [r/REMARK] [t/TAG]…` into Nuudle.
 
-Step 2: The request is handled by `LogicManager#execute(String)`, which then calls and passes the input to the `NuudleParser#parseCommand(String)` method.
+2: The request is handled by `LogicManager#execute(String)`, which then calls and passes the input to the `NuudleParser#parseCommand(String)` method.
 
-Step 3: `NuudleParser` detects the command word `edit` in the input string and creates a new `EditCommandParser` to parse inputs according to the format specified for `EditCommand`.
+3: `NuudleParser` detects the command word `edit` in the input string and creates a new `EditCommandParser` to parse inputs according to the format specified for `EditCommand`.
 
-Step 4: Input is parsed using the EditCommandParser#parse(String) method, which also performs input validation. The method creates a `EditPatientDescriptor` using the parsed inputs by calling the static constructor inside `EditCommand`.
+4: Input is parsed using the ·EditCommandParser#parse(String)· method, which also performs input validation. The method creates a `EditPatientDescriptor` using the parsed inputs by calling the static constructor inside `EditCommand`.
 
-Step 5: The `EditCommandParser` creates a new `EditCommand` instance with the given index and newly created `EditPatientDescriptor` object and returns it to `NuudleParser`, which in turn returns it to `LogicManager`.
+5: The `EditCommandParser` creates a new `EditCommand` instance with the given index and newly created `EditPatientDescriptor` object and returns it to `NuudleParser`, which in turn returns it to `LogicManager`.
 
-Step 6: `LogicManager` calls the `EditCommand#execute(Model)` method.
+6: `LogicManager` calls the `EditCommand#execute(Model)` method.
 
-Step 7: `EditCommand` obtains a copy of the `FilteredPatientList` by calling the `Model#getFilteredPatientList()` method. This is used to check if the `patient` index supplied by the user exists in Nuudle.
+7: `EditCommand` obtains a copy of the `FilteredPatientList` by calling the `Model#getFilteredPatientList()` method. This is used to check if the `patient` index supplied by the user exists in Nuudle.
 
-Step 8: `EditCommand` creates a new `patient` specified by the `EditPatientDescriptor` by calling its own private static method `EditCommand#createEditedPatient(Patient patientToEdit, EditPatientDescriptor editPatientDescriptor)`.
+8: `EditCommand` creates a new `patient` specified by the `EditPatientDescriptor` by calling its own private static method `EditCommand#createEditedPatient(Patient, EditPatientDescriptor)`.
 
-Step 9: `EditCommand` checks whether there are duplicate patients in the patient book by calling `Model#hasPatient(Patient)` method.
+9: `EditCommand` checks whether there are duplicate patients in the patient book by calling `Model#hasPatient(Patient)` method.
 
-Step 10: `EditCommand` edits the `patient` at a given index by calling `Model#setPatient(Patient, Patient)`;
+10: `EditCommand` edits the `patient` at a given index by calling `Model#setPatient(Patient, Patient)`;
 
-Step 11: `EditCommand` edits the `appointment` in the `UniqueAppointmentList` which contains the edited patient by calling `Model#updateAppointmentsWithPatient(Patient, Patient)` method.
+11: `EditCommand` edits the `appointment` in the `UniqueAppointmentList` which contains the edited patient by calling `Model#updateAppointmentsWithPatient(Patient, Patient)` method.
 
-Step 12: `EditCommand` updates the filtered list by calling `Model#updateFilteredPatientList(Predicate)` method.
+12: `EditCommand` updates the filtered list by calling `Model#updateFilteredPatientList(Predicate)` method.
 
-Step 13: `EditCommand` updates the filtered list by calling `Model#updateFilteredAppointmentList(Predicate)` method.
+13: `EditCommand` updates the filtered list by calling `Model#updateFilteredAppointmentList(Predicate)` method.
 
-Step 14: Lastly, `EditCommand` creates a `CommandResult` with `SuccessMessage` and `Patient` and returns it to `LogicManager`.
+14: Lastly, `EditCommand` creates a `CommandResult` with `SuccessMessage` and `Patient` and returns it to `LogicManager`.
+
+The above process is shown in the following sequence diagram:
+
+![EditSequenceDiagram](images/EditSequenceDiagram.png)
+<br>**Diagram 5.2.1: Sequence diagram showcasing the Edit Command process**
+
+The following activity diagram summarises the general workflow for the Edit Command:
+
+![EditCommandActivityDiagram](images/EditCommandActivityDiagram.png)
+<br>**Diagram 5.2.2: Activity diagram showcasing the Edit Command execution flow**
+
+#### 5.3 Design Considerations
+
+##### Aspect: How the `edit` command executes
+
+* **Alternative 1 (current choice):** Separate parsing from code execution
+    * Pros: Separate the responsibilities clearly between classes and adhere to the Single Responsibility Principle.
+    * Cons: Increases numbers of lines of code and may increase coupling as objects are passed around between the classes.
+
+* **Alternative 2:** Parse and Execute in the same class
+    * Pros: Fewer lines of code, less fields/objects are passed between classes which reduces the coupling.
+    * Cons: No separation between classes violates the Single Responsibility Principle. Compromises the readability of the code and 
+    increases the difficulty of debugging and maintaining the code base. 
+    
+##### Aspect: How to update corresponding `appointment` instance
+
+* **Alternative 1 (current choice):** Separate updating `appointment` from editing `patient`
+    * Pros: Draws clear distinction between the responsibilities of `appointmentBook` and `patientBook`. Reduces the coupling.
+    * Cons: Increases numbers of lines of code and increases the cost of testing since more tests have to be carried out.
+
+* **Alternative 2:** Update `appointment` together with `edit` patient in one function
+    * Pros: Fewer lines of code. Lower cost of testing.
+    * Cons: No separation between classes violates the Single Responsibility Principle. Compromises the readability of the code and 
+    increases the difficulty of debugging and maintaining the code base. Increases the coupling.
 
 
-_{more aspects and alternatives to be added}_
+### 5. Remark feature
+
+`[written by: Low Ming Lim]`
+
+The remark feature allows users to add a custom note to a new or existing patient using the `r/` tag in multiple commands.
+This provides our users with the flexibility and freedom to store extra notes or bio data for a patient apart from the compulsory 
+fields such as name, phone number, etc.
+
+#### 5.1 Implementation
+This feature creates a `Remark` instance which is stored internally in Nuudle as a variable of a `Patient` object
+which is in turn stored in the `PatientBook`. These classes are a part of the `Model` component and are illustrated
+in the class diagram below. 
+
+![RemarkLogicClassDiagram](images/RemarkLogicClassDiagram.png)
+<br>**Diagram 5.1.1: Class diagram for classes involved in the remark feature of the Model component**
+ 
+Additionally, to facilitate greater convenience for our users, we have implemented our remark feature to support the following pathways:
+
+1. Adding a remark via the `AddCommand` for a new `Patient`: 
+    
+    Command syntax: `add n/NAME i/NRIC p/PHONE_NUMBER a/ADDRESS [r/REMARK] [t/TAG]…​`
+    
+    Example Usage:
+    * `add n/Betsy i/S9123456G t/friend a/NUS Utown p/1234567 r/Prefers Dr John`
+    * `add n/John Doe i/S9730284G p/98765432 a/John street, block 123, #01-01 r/Regular customer`
+
+1. Adding a remark via the `RemarkCommand` for an existing `Patient`:
+    
+    Command syntax: `remark INDEX [r/REMARK]`
+    
+    Example Usage:
+    * `remark 2 r/Has been visiting Dr John`
+    * `remark 1 r/Can only converse in mandarin`
+
+1.  Or via the `EditCommand`:
+ 
+    Command syntax: `edit INDEX [n/NAME] [i/NRIC] [p/PHONE_NUMBER] [a/ADDRESS] [r/REMARK] [t/TAG]…`
+    
+    Example Usage:
+    * `edit 1 r/Can only converse in mandarin`
+    * `edit 2 n/Betsy r/Has been visiting Dr John`
+
+Refer to the following activity diagram for a summary of the above pathways.
+![RemarkPathwaysActivityDiagram](images/RemarkPathwaysActivityDiagram.png)
+<br>**Diagram 5.1.2: Activity diagram showcasing available pathways to create a remark**
+
+This segment will focus on the implementation details for the `RemarkCommand` pathway. The implementation for the 
+alternative `EditCommand` pathway can be found in another segment of our Developer's Guide while the implementation
+ for the `AddCommand` pathway is inherited from the original AB3-Addressbook.
+
+ 
+The addition of a remark via the remark command pathway is mainly facilitated by the `RemarkCommand` class which
+extends the abstract class `Command`. A `RemarkCommandParser` which implements the `Parser` interface is required 
+to instantiate a `RemarkCommand` from the user input. The classes mentioned above in this paragraph resides in our 
+`logic` component.
+
+#### 5.2 Implementation Illustration
+<br>![RemarkSequenceDiagram](images/RemarkSequenceDiagram.png)
+<br>**Diagram 5.2.1: Sequence diagram for the Remark Command**
+
+The following is a step by step illustration of how the remark command mechanism works for an example scenario based on the sequence diagram above:
+
+1. The user executes the `remark 1 r/Can only converse in chinese` command to add the remark `Can only ...` to the first patient
+in the patient list currently displayed to the user.
+
+2. This request is handled by `LogicManager#execute(String)`, which then calls and passes the input over to the `NuudleParser#parseCommand(String)` method.
+
+3. During the execution of the `NuudleParser#parseCommand(String)` method, `NuudleParser` detects the command word `remark` 
+in the input string and creates a new `RemarkCommandParser`.
+
+4. The `RemarkCommandParser#parse(String)` method is then subsequently called to parse the rest of the input string according to the format specified for 
+`RemarkCommand`. Input validation for the appropriate `Index` and `Remark` format is performed here by calling the 
+`ParserUtil#parseIndex` and `ParserUtil#parseRemark` methods respectively. <br>
+<br>The process described in step 4 is shown in the following sequence diagram:
+![RemarkParserRefSequenceDiagram](images/RemarkParserRefSequenceDiagram.png)
+<br>**Diagram 5.2.2: Sequence diagram for the Remark-ParserUtil interactions**
+
+5. The `RemarkCommandParser` then instantiates a new `RemarkCommand` with the appropriate `Index` and `Remark` object.
+This new `RemarkCommand` is then returned to `NuudleParser` and subsequently `LogicManager` at the end of the `NuudleParser#parseCommand(String)` execution.
+
+6. `LogicManager` proceeds to call the `RemarkCommand#execute(Model)` method.
+
+7. `RemarkCommand` obtains a copy of the `FilteredPatientList` by calling the `Model#getFilteredPatientList()` method.
+
+8. The `patientToEdit` is then identified from the `FilteredPatientList` based on the `Index` provided. 
+
+9. A new `editedPatient` is then created with the input `Remark` while the rest of its particulars are duplicated from the `patientToEdit`.
+
+10. After all is done, the `editedPatient` is set to replace the `patientToEdit` in the `Model` via the `Model#setPatient(Patient, Patient)` method.
+
+11. `Model#updateFilteredPatientList` is then called to update the `FilteredPatientList` displayed by the UI.
+<br><br>The above process is shown in the following sequence diagram:
+<br>![RemarkModelSequenceDiagram](images/RemarkModelSequenceDiagram.png)
+<br>**Diagram 5.2.3: Sequence diagram for the Remark-Model interactions**
+
+12. Lastly, the `RemarkCommand` creates a `CommandResult` with a `SuccessMessage` and returns it to `LogicManager`.
+
+13. The `SuccessMessage` is then displayed to the user via the GUI.
+
+The following activity diagram summarizes the above steps when a user uses the remark command pathway:
+
+![RemarkCommandActivityDiagram](images/RemarkCommandActivityDiagram.png)
+<br>**Diagram 5.2.4: Activity diagram showcasing the Remark Command execution flow**
+
+#### 5.3 Design Considerations
+
+##### Aspect: How the `remark` command executes
+
+* **Alternative 1 (current choice):** Separate parsing from code execution
+    * Pros: Responsibilities of classes are clearly distinguished. Adherence to the Single Responsibility Principle 
+    helps improve code cohesion. Changes to either the parser or execution will no longer affect each other.
+        
+    * Cons: Increases the code base, may increase coupling as objects are passed around between the classes. 
+    More tests have to be written for the respective classes, thus increasing the cost of testing.
+
+* **Alternative 2:** Parse and Execute in the same class
+    * Pros: Size of code base is reduced. Fewer objects are passed between classes thereby reducing coupling.
+    
+    * Cons: Violates the Single Responsibility Principle and reduces code readability. 
+    Harder for team members to maintain the code base. Increases code cohesion. 
+    Code design will also differ from other commands such as `Add` and `Edit` which are adapted from AddressBookLevel3.
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -812,5 +968,5 @@ testers are expected to do more *exploratory* testing.
       The app safely launches. The previously edited appointment is not in the appointment list.
       The Command Result display indicates that 1 appointment is archived.
       
-   1. Locate the appointment csv archive file at `.\data\archives\2019_May.csv`. 
+   1. Locate the appointment csv archive file at `.\data\archives\2019_MAY.csv`. 
       The previously edited appointment should be reflected as an archived appointment.

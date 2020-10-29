@@ -16,6 +16,7 @@ public class DateMatchesPredicate implements Predicate<Appointment> {
     public Date getDate() {
         return this.date;
     }
+
     @Override
     public boolean test(Appointment appointment) {
         return Stream.of(date).anyMatch(date -> date.equals(appointment.getDate()));

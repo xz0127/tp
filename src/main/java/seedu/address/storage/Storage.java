@@ -9,6 +9,8 @@ import seedu.address.model.ReadOnlyAppointmentBook;
 import seedu.address.model.ReadOnlyPatientBook;
 import seedu.address.model.ReadOnlyUserPrefs;
 import seedu.address.model.UserPrefs;
+import seedu.address.storage.appointment.AppointmentBookStorage;
+import seedu.address.storage.patient.PatientBookStorage;
 
 /**
  * API of the Storage component
@@ -44,4 +46,8 @@ public interface Storage extends PatientBookStorage, AppointmentBookStorage, Use
     @Override
     void backupData(String folderName) throws IOException;
 
+    @Override
+    StorageStatsManager getStatsManager();
+
+    String getStatusMessage();
 }

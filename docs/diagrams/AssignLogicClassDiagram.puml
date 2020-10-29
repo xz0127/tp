@@ -1,23 +1,24 @@
 @startuml
+!include style.puml
+skinparam arrowThickness 1.1
+skinparam arrowColor LOGIC_COLOR
+skinparam classBackgroundColor LOGIC_COLOR
 
-package Logic {
-class AssignCommand {
-+ {static} COMMAND_WORD : String
-- targetIndex : Index
-- durationSupporter : DurationSupporter
-...
---
-+ AssignCommand(targetIndex: Index, durationSupporter: DurationSupporter)
-+ CommandResult execute(model: Model)
-...
+package Logic <<Rectangle>>{
+interface Command <<Interface>>
+interface Parser <<Interface>>
+
+class AssignCommand
+class AssignCommandParser
+class Index
+class DurationSupporter
+class Duration
+
+AssignCommand .up.|> Command
+AssignCommandParser .up.|> Parser
+AssignCommandParser -right- AssignCommand
+AssignCommand -right-> "1" Index: contains >
+AssignCommand -down-> "1" DurationSupporter: contains >
+DurationSupporter -left-> "1" Duration: contains >
 }
-
-class AssignCommandParser {
-+ parse(args: String) : AssignCommand
-}
-}
-
-
-
-AssignCommand -- AssignCommandParser
 @enduml

@@ -17,6 +17,8 @@ import seedu.address.model.PatientBook;
 import seedu.address.model.ReadOnlyAppointmentBook;
 import seedu.address.model.ReadOnlyPatientBook;
 import seedu.address.model.UserPrefs;
+import seedu.address.storage.appointment.JsonAppointmentBookStorage;
+import seedu.address.storage.patient.JsonPatientBookStorage;
 
 public class StorageManagerTest {
 
@@ -27,11 +29,14 @@ public class StorageManagerTest {
 
     @BeforeEach
     public void setUp() {
-        JsonPatientBookStorage patientBookStorage = new JsonPatientBookStorage(getTempFilePath("pb"));
+        StorageStatsManager statsManager = new StorageStatsManager();
+        JsonPatientBookStorage patientBookStorage =
+                new JsonPatientBookStorage(getTempFilePath("pb"), statsManager);
         JsonAppointmentBookStorage appointmentBookStorage =
-                new JsonAppointmentBookStorage(getTempFilePath("appt"));
+                new JsonAppointmentBookStorage(getTempFilePath("appt"), getTempFilePath("archive"),
+                        statsManager);
         JsonUserPrefsStorage userPrefsStorage = new JsonUserPrefsStorage(getTempFilePath("prefs"));
-        storageManager = new StorageManager(patientBookStorage, appointmentBookStorage, userPrefsStorage);
+        storageManager = new StorageManager(patientBookStorage, appointmentBookStorage, userPrefsStorage, statsManager);
     }
 
     private Path getTempFilePath(String fileName) {
