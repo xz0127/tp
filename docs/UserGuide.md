@@ -2,14 +2,28 @@
 layout: page
 title: User Guide
 ---
-Welcome to Nuudle’s User Guide! :smiley: :ramen:
-
-Nuudle is a **desktop app that helps nurses manage patient records and schedule appointments** in an accurate and efficient manner.
-
-We hope that this document will help you in your journey in exploring the wonders of Nuudle app and redefine the way you schedule appointments for your patients. :smirk: To begin your journey, head down to our [quick start](#quick-start) or explore the various [features](#features) that we offer. The document will provide you with all the necessary information you need to start your journey.
 
 * Table of Contents
 {:toc}
+
+--------------------------------------------------------------------------------------------------------------------
+
+## Introduction
+
+Welcome to Nuudle’s User Guide! :smiley:
+
+Nuudle is a **desktop app that helps nurses manage patient records and schedule appointments** in an accurate and efficient manner.
+
+This app uses a command line interface. This means that you can use the app by typing commands into a Command Box.
+
+Let us introduce to you the our Nuudle app:
+![UiMarkup](images/UiMarkup.png)
+
+--------------------------------------------------------------------------------------------------------------------
+
+## About this document
+
+We hope that this document will help you in your journey in exploring the wonders of Nuudle app and redefine the way you schedule appointments for your patients. To begin your journey, head down to our [Quick Start](#quick-start) or explore the various [Features](#features) that we offer. The document will provide you with all the necessary information you need to start your journey.
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -27,23 +41,27 @@ We hope that this document will help you in your journey in exploring the wonder
 1. Type the command in the command box and press Enter to execute it. e.g. typing **`help`** and pressing Enter will open the help window.<br>
    Some example commands you can try :
 
-   * **`list`** : Lists all patients.
+   1. **`list`** : Lists all patients.
 
-   * **`add`**` n/John Doe i/S9730284G p/98765432 a/John street, block 123, #01-01` : Adds a patient named `John Doe` to the Patient Book.
+   1. **`add`**` n/John Doe i/S9730284G p/98765432 a/John street, block 123, #01-01` : Adds a patient named `John Doe` to the Patient Book.
 
-   * **`edit`**`1 n/Betsy Crower p/91234567 a/College Avenue 8` : Edits the name, phone number, and address of the 1st patient in the list to be `Betsy`, `91234567`, and `College Avenue 8` respectively.
+   1. **`edit`**` 1 n/Betsy Crower p/91234567 a/College Avenue 8` : Edits the name, phone number, and address of the 1st patient in the list to be `Betsy`, `91234567`, and `College Avenue 8` respectively.
 
-   * **`find`**`n/alex p/99998888 i/S1234567I` returns patients whose name contains `Alex`, or whose phone number is `99998888`, or whose NRIC number is `S1234567I`.
+   1. **`find`**` n/John p/91238765 i/S9234567Q` : Finds the patients whose name contains `John`, or whose phone number is `912348765`, or whose NRIC number is `S9234567Q`.
 
-   * **`assign`**`1 d/tomorrow t/12.30pm dur/30` : Creates an appointment for the 1st patient in the list from 12.30pm to 1pm, tomorrow, if there are no other appointments in that time period.
+   1. **`avail`**` d/Tomorrow` : Gets all available time slots for tomorrow.
 
-   * **`delete`**`d/tomorrow t/12.30pm` : Deletes the previously created appointment occurring at 12.30pm tomorrow.
+   1. **`assign`**` 1 d/Tomorrow t/8.30am dur/30` : Creates an appointment for the 1st patient in the list from 8.30am to 9am, tomorrow, if there are no other appointments in that time period.
 
-   * **`clear`** : Deletes all appointments and patients data.
+   1. **`view`**` d/Tomorrow` : Displays all appointment happening tomorrow.
 
-   * **`exit`** : Exits the app.
+   1. **`cancel`**` 1` : Cancels the first appointment in the displayed appointment list. (Should be the previously added appointment occurring at 12.30pm tomorrow)
 
-1. Refer to the [features](#features) below for details of each command.
+   1. **`clear`** : Deletes all patients patient and appointments.
+
+   1. **`exit`** : Exits the app.
+
+1. Refer to the [Features](#features) below for details of each command.
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -325,16 +343,16 @@ Undoable commands refers to commands that modifies the patient or appointment li
 * Multiple calls to `redo` will reverse multiple undoable command execution, starting from the most recent command.
 
 Examples:
-* `delete 1` 
-  `list`
+* `delete 1`<br> 
+  `list`<br>
   `undo` (reverses the `delete 1` command)
-* `view d/today`
-  `list`
-  `undo`
+* `view d/today`<br>
+  `list`<br>
+  `undo`<br>
    The `undo` command fails as there is no previous undoable command to reverse.
-* `cancel 1`
-  `clear`
-  `undo` (reverses the `clear` command)
+* `cancel 1`<br>
+  `clear`<br>
+  `undo` (reverses the `clear` command)<br>
   `undo` (reverses the `cancel 1` command)
 
 ### Redoing the previously undone command : `redo`
@@ -348,21 +366,21 @@ Format: `redo`
 * Multiple call to `redo` will reverse multiple `undo` command, starting from the most recent `undo` command. 
 
 Examples:
-* `cancel 1` 
-  `undo` (reverses the `cancel 1` command)
-  `list`
+* `cancel 1` <br>
+  `undo` (reverses the `cancel 1` command)<br>
+  `list`<br>
   `redo` (reapplies the `cancel 1` command)
-* `cancel 1`
-  `undo` (reverses the `cancel 1` command)
-  `cancel 2`
-  `redo`
+* `cancel 1`<br>
+  `undo` (reverses the `cancel 1` command)<br>
+  `cancel 2`<br>
+  `redo`<br>
    The `redo` command fails as there are no `undo` commands executed previously.
-* `cancel 1`
-  `clear`
-  `undo` (reverses the `clear` command)
-  `undo` (reverses the `cancel 1` command)
-  `redo` (reapplies the `cancel 1` command)
-  `undo` (reapplies the `clear` command)
+* `cancel 1`<br>
+  `clear`<br>
+  `undo` (reverses the `clear` command)<br>
+  `undo` (reverses the `cancel 1` command)<br>
+  `redo` (reapplies the `cancel 1` command)<br>
+  `undo` (reapplies the `clear` command)<br>
 
 ### Searching through entered commands
 
@@ -384,7 +402,7 @@ Past appointments are automatically archived and neatly organised in an archive 
 
 ### Backing up files
 
-The core data files of the previous session are automatically saved in a folder called `backup`. The backup data will be updated everytime you start up the Nuudle app.  
+The data files of your previous Nuudle session are automatically saved in a folder called `backup`. The backup data will be updated everytime you start up the Nuudle app.  
 This backup files allow you to completely revert your data to the version in the previous session. This is especially useful if your data was unintentionally corrupted and you need to manually update the data.
 
 --------------------------------------------------------------------------------------------------------------------

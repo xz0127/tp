@@ -40,13 +40,13 @@ create DoneCommand
 DoneCommandParser -> DoneCommand : new
 activate DoneCommand
 
-DoneCommand --> DoneCommandParser
+DoneCommand --> DoneCommandParser : cmd
 deactivate DoneCommand
 
-DoneCommandParser --> NuudleParser : d
+DoneCommandParser --> NuudleParser : cmd
 deactivate DoneCommandParser
 
-NuudleParser --> LogicManager : d
+NuudleParser --> LogicManager : cmd
 deactivate NuudleParser
 
 LogicManager -> DoneCommand : execute()
@@ -63,7 +63,7 @@ activate ToMarkAppointment
 
 
 
-ToMarkAppointment --> DoneCommand : doneAppointment
+ToMarkAppointment --> DoneCommand : doneAppt
 deactivate ToMarkAppointment
 
 DoneCommand -> Model : setAppointment(toMark, doneAppt)

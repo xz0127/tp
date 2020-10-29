@@ -20,7 +20,7 @@ LogicManager -> NuudleParser : parseCommand("delete 1")
 activate NuudleParser
 
 create DeleteCommandParser
-NuudleParser -> DeleteCommandParser
+NuudleParser -> DeleteCommandParser : new
 activate DeleteCommandParser
 
 DeleteCommandParser --> NuudleParser
@@ -30,25 +30,25 @@ NuudleParser -> DeleteCommandParser : parse("1")
 activate DeleteCommandParser
 
 create DeleteCommand
-DeleteCommandParser -> DeleteCommand
+DeleteCommandParser -> DeleteCommand : new
 activate DeleteCommand
 
-DeleteCommand --> DeleteCommandParser : d
+DeleteCommand --> DeleteCommandParser : cmd
 deactivate DeleteCommand
 
-DeleteCommandParser --> NuudleParser : d
+DeleteCommandParser --> NuudleParser : cmd
 deactivate DeleteCommandParser
 'Hidden arrow to position the destroy marker below the end of the activation bar.
 DeleteCommandParser -[hidden]-> NuudleParser
 destroy DeleteCommandParser
 
-NuudleParser --> LogicManager : d
+NuudleParser --> LogicManager : cmd
 deactivate NuudleParser
 
 LogicManager -> DeleteCommand : execute()
 activate DeleteCommand
 
- -> Model : getFilteredPatientList()
+DeleteCommand -> Model : getFilteredPatientList()
 activate Model
 
 Model --> DeleteCommand : lastShownList
@@ -67,7 +67,7 @@ Model --> DeleteCommand
 deactivate Model
 
 create CommandResult
-DeleteCommand -> CommandResult
+DeleteCommand -> CommandResult: new
 activate CommandResult
 
 CommandResult --> DeleteCommand

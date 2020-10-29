@@ -43,8 +43,8 @@ Class Tag
 Class HiddenOutside #FFFFFF
 HiddenOutside .down.> Model
 
-PatientBook .up.|> ReadOnlyPatientBook
-AppointmentBook .up.|> ReadOnlyAppointmentBook
+PatientBook .left.|> ReadOnlyPatientBook
+AppointmentBook .right.|> ReadOnlyAppointmentBook
 
 ModelManager .right.|> Model
 Model .right.> ObservableList
@@ -66,9 +66,8 @@ AppointmentBook *--> "1" UniqueAppointmentList
 UniqueAppointmentList o--> "*" Appointment
 UniqueAppointmentList -[hidden]down-> Appointment
 Appointment *--> Date
-Appointment *--> Time
-Appointment *--> AppointmentId
-Appointment *-left-> Patient
+Appointment *--> "2" Time
+Appointment *--> Patient
 
 Name -[hidden]right-> Phone
 Phone -[hidden]right-> Address
