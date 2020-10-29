@@ -39,7 +39,8 @@ public class ChangeCommandParser implements Parser<ChangeCommand> {
         try {
             index = ParserUtil.parseIndex(argMultimap.getPreamble());
         } catch (ParseException pe) {
-            throw new ParseException(String.format(MESSAGE_INVALID_APPOINTMENT_DISPLAYED_INDEX, ChangeCommand.MESSAGE_USAGE), pe);
+            throw new ParseException(String.format(MESSAGE_INVALID_APPOINTMENT_DISPLAYED_INDEX,
+                    ChangeCommand.MESSAGE_USAGE), pe);
         }
 
         EditAppointmentDescriptor editAppointmentDescriptor = new EditAppointmentDescriptor();
