@@ -16,14 +16,16 @@ Nuudle is a **desktop app that helps nurses manage patient records and schedule 
 
 This app uses a command line interface. This means that you can use the app by typing commands into a Command Box.
 
-Let us introduce to you the our Nuudle app:
+Let us introduce to you our Nuudle app:
 ![UiMarkup](images/UiMarkup.png)
 
 --------------------------------------------------------------------------------------------------------------------
 
 ## About this document
 
-We hope that this document will help you in your journey in exploring the wonders of Nuudle app and redefine the way you schedule appointments for your patients. To begin your journey, head down to our [Quick Start](#quick-start) or explore the various [Features](#features) that we offer. The document will provide you with all the necessary information you need to start your journey.
+We hope that this document will help you in your journey in exploring the wonders of Nuudle app and redefine the way you schedule appointments for your patients.
+
+To begin your journey, head down to our [Quick Start](#quick-start) or explore the various [Features](#features) that we offer. The document will provide you with all the necessary information you need to start your journey.
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -51,13 +53,13 @@ We hope that this document will help you in your journey in exploring the wonder
 
    1. **`avail`**` d/Tomorrow` : Gets all available time slots for tomorrow.
 
-   1. **`assign`**` 1 d/Tomorrow t/8.30am dur/30` : Creates an appointment for the 1st patient in the list from 8.30am to 9am, tomorrow, if there are no other appointments in that time period.
+   1. **`assign`**` 1 d/Tomorrow t/8.30am dur/30` : Creates an appointment for the 1st patient in the patient list for tomorrow 8.30am to 9am, assuming that the time slot is free.
 
    1. **`view`**` d/Tomorrow` : Displays all appointment happening tomorrow.
 
-   1. **`cancel`**` 1` : Cancels the first appointment in the displayed appointment list. (Should be the previously added appointment occurring at 12.30pm tomorrow)
+   1. **`cancel`**` 1` : Cancels the first appointment in the displayed appointment list, which is also the first appointment happening tomorrow.
 
-   1. **`clear`** : Deletes all patients patient and appointments.
+   1. **`clear`** : Deletes all patients and appointments.
 
    1. **`exit`** : Exits the app.
 
@@ -87,7 +89,7 @@ We hope that this document will help you in your journey in exploring the wonder
 
 ### Viewing help : `help`
 
-Shows a message explaining how to access the help page of Nuudle.
+Shows a message with the commonly used commands, and the link to access the help page.
 
 ![help message](images/helpMessage.png)
 
@@ -346,10 +348,12 @@ Examples:
 * `delete 1`<br> 
   `list`<br>
   `undo` (reverses the `delete 1` command)
+  
 * `view d/today`<br>
   `list`<br>
   `undo`<br>
    The `undo` command fails as there is no previous undoable command to reverse.
+   
 * `cancel 1`<br>
   `clear`<br>
   `undo` (reverses the `clear` command)<br>
@@ -370,11 +374,13 @@ Examples:
   `undo` (reverses the `cancel 1` command)<br>
   `list`<br>
   `redo` (reapplies the `cancel 1` command)
+  
 * `cancel 1`<br>
   `undo` (reverses the `cancel 1` command)<br>
   `cancel 2`<br>
   `redo`<br>
    The `redo` command fails as there are no `undo` commands executed previously.
+   
 * `cancel 1`<br>
   `clear`<br>
   `undo` (reverses the `clear` command)<br>
@@ -382,15 +388,15 @@ Examples:
   `redo` (reapplies the `cancel 1` command)<br>
   `undo` (reapplies the `clear` command)<br>
 
-### Searching through entered commands
-
-Pressing the :arrow_up: and :arrow_down: arrows in the command box will display the previous and next input respectively.
-
 ### Exiting the program : `exit`
 
 Exits Nuudle.
 
 Format: `exit`
+
+### Searching through entered commands
+
+Pressing the :arrow_up: and :arrow_down: arrows in the command box will display the previous and next input respectively.
 
 ### Saving the data
 
@@ -398,12 +404,15 @@ Patients and appointments data are saved in the hard disk automatically after an
 
 ### Archiving past appointments
 
-Past appointments are automatically archived and neatly organised in an archive folder for future reference. This is done automatically everytime you start up the Nuudle app. The appointments are organised by their appointment months and are saved in Comma-Separated Values (CSV) format. CSV files can be opened and viewed as a typical Excel file.
+Past appointments are automatically archived and neatly organised into an archive folder for future reference. This is done automatically everytime you start up the Nuudle app.
+
+The appointments are organised by their appointment months and are saved in Comma-Separated Values (CSV) format. CSV files can be opened and viewed as a typical Excel file.
 
 ### Backing up files
 
-The data files of your previous Nuudle session are automatically saved in a folder called `backup`. The backup data will be updated everytime you start up the Nuudle app.  
-This backup files allow you to completely revert your data to the version in the previous session. This is especially useful if your data was unintentionally corrupted and you need to manually update the data.
+The data files of your previous Nuudle session are automatically saved in a folder called `backup`. The backup data will be updated everytime you start up the Nuudle app.
+
+This backup files allow you to completely revert your data to the previous session's data. This is especially useful if your data was unintentionally corrupted and you need to manually restore the data.
 
 --------------------------------------------------------------------------------------------------------------------
 
