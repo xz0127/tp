@@ -36,7 +36,7 @@ public class ChangeCommand extends Command {
             + "by the index number used in the displayed appointment list. "
             + "A new appointment will be created with the input values.\n"
             + "The old appointment at the input index will be deleted from the appointment book.\n"
-            + "Parameters: INDEX (must be a positive integer) "
+            + "Parameters: APPT_INDEX (must be a positive integer) "
             + "[" + PREFIX_DATE + "DATE] "
             + "[" + PREFIX_TIME + "TIME] "
             + "[" + PREFIX_DURATION + "DURATION] \n"

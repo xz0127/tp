@@ -2,34 +2,30 @@ package seedu.address.logic.commands;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static seedu.address.logic.commands.CommandTestUtil.DIFF_DATE;
-import static seedu.address.logic.commands.CommandTestUtil.SAME_TIME;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_DATE;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_TIME;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.testutil.TypicalAppointments.ALICE_APPOINTMENT;
 import static seedu.address.testutil.TypicalAppointments.getTypicalAppointmentBook;
+import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_APPOINTMENT;
+import static seedu.address.testutil.TypicalIndexes.INDEX_FOURTH_APPOINTMENT;
 import static seedu.address.testutil.TypicalPatients.getTypicalPatientBook;
 
 import org.junit.jupiter.api.Test;
 
+import seedu.address.commons.core.Messages;
+import seedu.address.commons.core.index.Index;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.appointment.Appointment;
-import seedu.address.testutil.DateTimeLoaderBuilder;
-
 
 public class CancelCommandTest {
     private Model model = new ModelManager(getTypicalPatientBook(), getTypicalAppointmentBook(), new UserPrefs());
 
     @Test
-    public void execute_validDateTimeInput_success() {
-        DateTimeLoader loader = new DateTimeLoaderBuilder()
-                .withDate("1 Jan 2050").withTime("9am").build();
+    public void execute_validIndex_success() {
         Appointment appointmentToCancel = ALICE_APPOINTMENT;
-        CancelCommand cancelCommand = new CancelCommand(loader);
+        CancelCommand cancelCommand = new CancelCommand(INDEX_FIRST_APPOINTMENT);
 
         String expectedMessage = String.format(CancelCommand.MESSAGE_MARK_CANCEL_SUCCESS, appointmentToCancel);
 
@@ -43,22 +39,19 @@ public class CancelCommandTest {
     }
 
     @Test
-    public void execute_appointmentWithDateTimeAbsent_fail() {
-        DateTimeLoader loader = new DateTimeLoaderBuilder()
-                .withDate(VALID_DATE).withTime(VALID_TIME).build();
-        CancelCommand cancelCommand = new CancelCommand(loader);
+    public void execute_invalidIndex_throwsCommandException() {
+        Index outOfBoundIndex = Index.fromOneBased(model.getFilteredPatientList().size() + 1);
+        CancelCommand cancelCommand = new CancelCommand(outOfBoundIndex);
 
-        assertCommandFailure(cancelCommand, model, CancelCommand.APPOINTMENT_DOES_NOT_EXISTS);
+        assertCommandFailure(cancelCommand, model, Messages.MESSAGE_INVALID_APPOINTMENT_DISPLAYED_INDEX);
     }
 
     @Test
     public void equals() {
-        DateTimeLoader loader = new DateTimeLoaderBuilder()
-                .withDate(VALID_DATE).withTime(VALID_TIME).build();
-        final CancelCommand standardCommand = new CancelCommand(loader);
+        final CancelCommand standardCommand = new CancelCommand(INDEX_FIRST_APPOINTMENT);
 
         // same values -> returns true
-        CancelCommand commandWithSameValues = new CancelCommand(loader);
+        CancelCommand commandWithSameValues = new CancelCommand(INDEX_FIRST_APPOINTMENT);
         assertTrue(standardCommand.equals(commandWithSameValues));
 
         // same object -> returns true
@@ -71,8 +64,6 @@ public class CancelCommandTest {
         assertFalse(standardCommand.equals(new ClearCommand()));
 
         // different DateTimeLoader -> returns false
-        DateTimeLoader difLoader = new DateTimeLoaderBuilder()
-                .withDate(DIFF_DATE).withTime(SAME_TIME).build();
-        assertFalse(standardCommand.equals(new CancelCommand(difLoader)));
+        assertFalse(standardCommand.equals(new CancelCommand(INDEX_FOURTH_APPOINTMENT)));
     }
 }
