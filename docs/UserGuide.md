@@ -198,7 +198,7 @@ So don't be shy and feel free to add anything under the sun that is applicable f
 * A remark is an **optional field** and can be left blank if it is not applicable.
 * A patient will have `NIL` displayed as his/her remark status if it was left empty.
 * To **override** a remark, simply use the remark command as described above.
- Alternatively, you can also use the edit command as you would for an existing patient with the new remark content if you wish to change multiple fields (eg. Phone number) at the same time.
+ Alternatively, you can also use the edit command to add or edit remarks if you wish to change multiple fields (eg. Phone number) at the same time.
 * If you wish to **delete** a patient's remark, simply use either of the following commands:
     * `remark PATIENT_INDEX`
     * `remark PATIENT_INDEX r/`
@@ -274,7 +274,7 @@ applies for the other fields.
 * **At least one** of the optional fields must be present for a successful execution of the change command.
 
 * If you wish to **modify** the duration of an existing appointment, simply call the command in the following format:
-    * `change 1 dur/NEW_DURATION`: <br>Extends the duration of the original appointment at `APPT_INDEX` 1 to the `NEW_DURATION` with the same date and start time.
+    * `change 1 dur/NEW_DURATION`: <br>Extends the duration of the first appointment at `APPT_INDEX` 1 to the `NEW_DURATION` with the same date and start time.
 
 * Some examples of **rescheduling** an appointment with a new `DATE`,`TIME` or `DURATION`:
     * `change 1 d/NEW_DATE dur/NEW_DURATION`: <br>Reschedules an appointment to the `NEW_DATE` with the `NEW_DURATION` at it's original `TIME`.
