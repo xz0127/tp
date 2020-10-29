@@ -61,13 +61,22 @@ public class ScheduleManager {
     }
 
     /**
+     * Checks whether the current time is within operation hours.
+     * @return true if current time is within operation hours, false otherwise.
+     */
+    public boolean isWithinOperationHour() {
+        LocalTime currentTime = LocalTime.now();
+        return (currentTime.getHour() >= 8 && currentTime.getHour() < 22);
+    }
+
+    /**
      * Constructs the operation time interval based on the operation time of the clinic.
      *
      * @return a TimeIntervalList containing the operation time intervals of the clinic.
      */
     public TimeIntervalList constructOperationTimeIntervals() {
         ArrayList<TimeInterval> operationTimeIntervals = new ArrayList<>();
-        if (isToday) {
+        if (isToday && isWithinOperationHour()) {
             LocalTime currentTime = LocalTime.now();
             Time current = new Time(currentTime.getHour(), currentTime.getMinute());
             TimeInterval todayInterval = new TimeInterval(current, CLOSE_TIME);
