@@ -1,4 +1,4 @@
-package seedu.address.storage;
+package seedu.address.storage.appointment;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static seedu.address.testutil.TypicalAppointments.ALICE_APPOINTMENT;
@@ -12,6 +12,7 @@ import org.junit.jupiter.api.Test;
 import seedu.address.commons.util.JsonUtil;
 import seedu.address.model.AppointmentBook;
 import seedu.address.model.appointment.Appointment;
+import seedu.address.storage.StorageStatsManager;
 import seedu.address.testutil.AppointmentBuilder;
 import seedu.address.testutil.TypicalAppointments;
 

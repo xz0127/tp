@@ -13,6 +13,7 @@ end box
 
 box Storage STORAGE_COLOR_T1
 participant ":StorageManager" as StorageManager STORAGE_COLOR_T3
+participant ":StorageStatsManager" as StorageStatsManager STORAGE_COLOR_T3
 end box
 
 [-> UiManager : start()
@@ -28,11 +29,23 @@ deactivate MainWindow
 UiManager -> MainWindow : fillInnerParts()
 activate MainWindow
 
-MainWindow -> LogicManager : getArchiveStatus()
+MainWindow -> LogicManager : getStorageStatus()
 activate LogicManager
 
-LogicManager -> StorageManager : getArchiveStatus()
+LogicManager -> StorageManager : getStorageStatus()
 activate StorageManager
+
+StorageManager -> StorageStatsManager : getStorageStatus()
+activate StorageStatsManager
+
+StorageStatsManager -> StorageStatsManager : getArchiveStatusMessage()
+activate StorageStatsManager
+
+StorageStatsManager --> StorageStatsManager : message
+deactivate StorageStatsManager
+
+StorageStatsManager --> StorageManager : message
+deactivate StorageStatsManager
 
 StorageManager --> LogicManager : message
 deactivate StorageManager

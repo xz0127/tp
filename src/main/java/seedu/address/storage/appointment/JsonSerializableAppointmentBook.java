@@ -1,4 +1,4 @@
-package seedu.address.storage;
+package seedu.address.storage.appointment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,6 +14,7 @@ import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.AppointmentBook;
 import seedu.address.model.ReadOnlyAppointmentBook;
 import seedu.address.model.appointment.Appointment;
+import seedu.address.storage.StorageStatsManager;
 
 /**
  * An Immutable AppointmentBook that is serializable to JSON format.

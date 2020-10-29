@@ -11,6 +11,8 @@ import seedu.address.model.ReadOnlyAppointmentBook;
 import seedu.address.model.ReadOnlyPatientBook;
 import seedu.address.model.ReadOnlyUserPrefs;
 import seedu.address.model.UserPrefs;
+import seedu.address.storage.appointment.AppointmentBookStorage;
+import seedu.address.storage.patient.PatientBookStorage;
 
 /**
  * Manages storage of PatientBook and AppointmentBook data in local storage.

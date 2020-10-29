@@ -1,4 +1,4 @@
-package seedu.address.storage;
+package seedu.address.storage.archive;
 
 import java.time.LocalDate;
 import java.time.LocalTime;

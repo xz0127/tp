@@ -1,4 +1,4 @@
-package seedu.address.storage;
+package seedu.address.storage.archive;
 
 import static java.util.Objects.requireNonNull;
 
@@ -19,6 +19,7 @@ import seedu.address.commons.util.FileUtil;
 import seedu.address.model.AppointmentBook;
 import seedu.address.model.ReadOnlyAppointmentBook;
 import seedu.address.model.appointment.Appointment;
+import seedu.address.storage.StorageStatsManager;
 
 /**
  * A class to access archived appointment data stored as a csv file on the hard disk.

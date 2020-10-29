@@ -1,4 +1,4 @@
-package seedu.address.storage;
+package seedu.address.storage.patient;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -19,6 +19,7 @@ import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.model.PatientBook;
 import seedu.address.model.ReadOnlyPatientBook;
 import seedu.address.model.patient.Patient;
+import seedu.address.storage.StorageStatsManager;
 import seedu.address.testutil.PatientBuilder;
 
 public class JsonPatientBookStorageTest {
