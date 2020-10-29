@@ -268,7 +268,7 @@ applies for the other fields.
 </div>
 
 * **Reschedules an appointment** at the specified `APPT_INDEX` for the patient it is tagged to. 
-* The `APPT_INDEX` here refers to the number shown on the left side of the displayed appointment book located on the right side of the UI. 
+* The `APPT_INDEX` refers to the number shown in the displayed appointment book located on the right side of the UI. 
 * Please note that the index used **must be a positive integer** 1, 2, 3, …
 * Please note that the `DATE` and `TIME` used for rescheduling must be set in the future.
 * **At least one** of the optional fields must be present for a successful execution of the change command.
