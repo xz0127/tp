@@ -74,7 +74,7 @@ public class EditPatientDescriptorBuilder {
     }
 
     /**
-     * Sets the {@code Nric} of the {@code Nric} that we are building.
+     * Sets the {@code Nric} of the {@code EditPatientDescriptor} that we are building.
      */
     public EditPatientDescriptorBuilder withNric(String nric) {
         descriptor.setNric(new Nric(nric));

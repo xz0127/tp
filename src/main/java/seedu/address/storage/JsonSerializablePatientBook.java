@@ -47,7 +47,7 @@ class JsonSerializablePatientBook {
     /**
      * Converts this patient book into the model's {@code PatientBook} object.
      */
-    public PatientBook toModelType() {
+    public PatientBook toModelType(StorageStatsManager statsManager) {
         PatientBook patientBook = new PatientBook();
         int nDataViolations = 0;
 
@@ -71,6 +71,7 @@ class JsonSerializablePatientBook {
         }
         if (nDataViolations > 0) {
             logger.warning("Failed to read " + nDataViolations + " patient data!");
+            statsManager.setRemovedPatientCount(nDataViolations);
         }
         return patientBook;
     }

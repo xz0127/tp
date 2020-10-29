@@ -11,7 +11,6 @@ import com.fasterxml.jackson.annotation.JsonRootName;
 
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.exceptions.IllegalValueException;
-import seedu.address.commons.util.DateTimeUtil;
 import seedu.address.model.AppointmentBook;
 import seedu.address.model.ReadOnlyAppointmentBook;
 import seedu.address.model.appointment.Appointment;
@@ -52,7 +51,7 @@ class JsonSerializableAppointmentBook {
     /**
      * Converts this appointment book into the model's {@code AppointmentBook} object.
      */
-    public AppointmentBook toModelType() {
+    public AppointmentBook toModelType(StorageStatsManager statsManager) {
         AppointmentBook appointmentBook = new AppointmentBook();
         int nDataViolations = 0;
 
@@ -72,16 +71,12 @@ class JsonSerializableAppointmentBook {
                 continue;
             }
 
-            if (DateTimeUtil.isExpiredByDay(appointment.getDate().getDate())) {
-                // send to archive
-                continue;
-            }
-
             // add to appointment book
             appointmentBook.addAppointment(appointment);
         }
         if (nDataViolations > 0) {
             logger.warning("Failed to read " + nDataViolations + " appointment data!");
+            statsManager.setRemovedAppointmentCount(nDataViolations);
         }
         return appointmentBook;
     }

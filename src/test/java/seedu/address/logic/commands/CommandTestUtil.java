@@ -219,4 +219,13 @@ public class CommandTestUtil {
         assertEquals(1, model.getFilteredAppointmentList().size());
     }
 
+    /**
+     * Deletes the first appointment in {@code model}'s filtered list from {@code model}'s appointment book.
+     */
+    public static void deleteFirstAppointment(Model model) {
+        Appointment firstAppointment = model.getFilteredAppointmentList().get(0);
+        model.deleteAppointment(firstAppointment);
+        model.commitAppointmentBook();
+        model.commitPatientBook();
+    }
 }

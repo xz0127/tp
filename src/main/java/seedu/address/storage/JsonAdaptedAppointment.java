@@ -33,7 +33,7 @@ class JsonAdaptedAppointment {
     public JsonAdaptedAppointment(@JsonProperty("date") LocalDate date,
                                   @JsonProperty("startTime") LocalTime startTime,
                                   @JsonProperty("endTime") LocalTime endTime,
-                                  @JsonProperty("doneStatus") Boolean isDone,
+                                  @JsonProperty("isDone") Boolean isDone,
                                   @JsonProperty("patient") JsonAdaptedPatient patient) {
         this.date = date;
         this.startTime = startTime;

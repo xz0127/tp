@@ -150,7 +150,7 @@ public class Appointment {
 
         return getDate().isBefore(otherAppointment.getDate())
                 || (getDate().equals(otherAppointment.getDate())
-                    && !(getEndTime().isAfter(otherAppointment.getStartTime()))); // End1 <= Start2
+                && !(getEndTime().isAfter(otherAppointment.getStartTime()))); // End1 <= Start2
     }
 
     /**
@@ -164,7 +164,7 @@ public class Appointment {
 
         return getDate().isAfter(otherAppointment.getDate())
                 || (getDate().equals(otherAppointment.getDate())
-                    && !(otherAppointment.getEndTime().isAfter(getStartTime()))); // End2 <= Start1
+                && !(otherAppointment.getEndTime().isAfter(getStartTime()))); // End2 <= Start1
     }
 
     /**

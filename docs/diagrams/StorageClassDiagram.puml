@@ -26,6 +26,8 @@ Interface AppointmentArchive <<Interface>>
 Class CsvAppointmentArchive
 Class CsvAdaptedAppointment
 Class CsvAdaptedPatient
+
+Class StorageStatsManager
 }
 
 Class HiddenOutside #FFFFFF
@@ -48,9 +50,14 @@ JsonAppointmentBookStorage .down.> JsonSerializableAppointmentBook
 JsonSerializableAppointmentBook ..> JsonAdaptedAppointment
 JsonAdaptedAppointment .right.> JsonAdaptedPatient
 
-JsonAppointmentBookStorage o-up-> AppointmentArchive
+JsonAppointmentBookStorage o-right-> AppointmentArchive
 CsvAppointmentArchive .up.|> AppointmentArchive
 CsvAppointmentArchive .down.> CsvAdaptedAppointment
 CsvAdaptedAppointment ..> CsvAdaptedPatient
+
+StorageManager --> StorageStatsManager
+JsonAppointmentBookStorage -up-> StorageStatsManager
+JsonPatientBookStorage -up-> StorageStatsManager
+CsvAppointmentArchive -up-> StorageStatsManager
 @enduml
 

@@ -17,6 +17,8 @@ public interface AppointmentBookStorage {
      */
     Path getAppointmentBookFilePath();
 
+    Path getAppointmentArchiveDirPath();
+
     /**
      * Returns AppointmentBook data as a {@link ReadOnlyAppointmentBook}.
      * Returns {@code Optional.empty()} if storage file is not found.
@@ -44,6 +46,14 @@ public interface AppointmentBookStorage {
     void saveAppointmentBook(ReadOnlyAppointmentBook appointmentBook, Path filePath) throws IOException;
 
     /**
+     * Archives pasts appointment and returns the appointment book containing only upcoming appointments.
+     *
+     * @param appointmentBook the appointment book to check and archive.
+     * @return the updated appointment book.
+     */
+    ReadOnlyAppointmentBook archivePastAppointments(ReadOnlyAppointmentBook appointmentBook);
+
+    /**
      * Makes a backup of the appointment storage file.
      *
      * @param folderName the name of the backup folder.
@@ -51,4 +61,5 @@ public interface AppointmentBookStorage {
      */
     void backupData(String folderName) throws IOException;
 
+    StorageStatsManager getStatsManager();
 }
