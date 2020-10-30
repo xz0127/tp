@@ -4,26 +4,27 @@ skinparam arrowThickness 1.1
 skinparam arrowColor MODEL_COLOR
 skinparam classBackgroundColor MODEL_COLOR
 
-PatientBook *-right-> "1" UniquePersonList
-PatientBook *-right-> "1" UniqueTagList
-UniqueTagList -[hidden]down- UniquePersonList
-UniqueTagList -[hidden]down- UniquePersonList
+PatientBook *--> "1" UniquePatientList
+PatientBook *--> "1" UniqueTagList
 
-UniqueTagList *-right-> "*" Tag
-UniquePersonList o-right-> Person
+UniqueTagList -[hidden]right- UniquePatientList
 
-Person -up-> "*" Tag
+UniqueTagList *--> "*" Tag
+UniquePatientList o--> Patient
 
-Person *--> Name
-Person *--> Phone
-Person *--> Email
-Person *--> Address
+Patient -up-> "*" Tag
 
-AppointmentBook *-right-> "1" UniqueAppointmentList
+Patient *--> Name
+Patient *--> Phone
+Patient *--> Nric
+Patient *--> Address
+Patient *--> Remark
 
-UniqueAppointmentList o-right-> Appointment
+AppointmentBook *--> "1" UniqueAppointmentList
+
+UniqueAppointmentList o--> Appointment
 
 Appointment *--> Date
-Appointment *--> Time
-Appointment *--> AppointmentId
+Appointment *--> "2" Time
+Appointment --> Patient
 @enduml

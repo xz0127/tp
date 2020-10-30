@@ -11,7 +11,7 @@ end box
 [-> Storage : readAppointmentBook()
 activate Storage
 
-Storage -> AppointmentBookStorage : readAppointmentBook(filePath)
+Storage -> AppointmentBookStorage : readAppointmentBook(..)
 activate AppointmentBookStorage
 
 AppointmentBookStorage --> Storage
@@ -40,13 +40,13 @@ loop for all Appointments in ab
     end
 
     opt different appointment month
-        AppointmentArchive -> AppointmentArchive : saveAppointments()
+        AppointmentArchive -> AppointmentArchive : saveAppointments(..)
         activate AppointmentArchive
         deactivate AppointmentArchive
     end
 end
 
-AppointmentArchive -> AppointmentArchive : saveAppointments()
+AppointmentArchive -> AppointmentArchive : saveAppointments(..)
 activate AppointmentArchive
 deactivate AppointmentArchive
 

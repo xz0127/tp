@@ -74,16 +74,16 @@ public class AppointmentTest {
         // null -> returns false
         assertFalse(ALICE_APPOINTMENT.hasPatient(null));
 
-        // different phone -> returns false
+        // different phone -> returns true
         Patient editedAlice = new PatientBuilder(ALICE).withPhone(VALID_PHONE_BOB).build();
-        assertFalse(ALICE_APPOINTMENT.hasPatient(editedAlice));
+        assertTrue(ALICE_APPOINTMENT.hasPatient(editedAlice));
 
-        // different name -> returns false
+        // different name -> returns true
         editedAlice = new PatientBuilder(ALICE).withName(VALID_NAME_BOB).build();
-        assertFalse(ALICE.isSamePatient(editedAlice));
+        assertTrue(ALICE.isSamePatient(editedAlice));
 
         // different nric -> returns false
-        editedAlice = new PatientBuilder(ALICE).withName(VALID_NRIC_BOB).build();
+        editedAlice = new PatientBuilder(ALICE).withNric(VALID_NRIC_BOB).build();
         assertFalse(ALICE.isSamePatient(editedAlice));
     }
 

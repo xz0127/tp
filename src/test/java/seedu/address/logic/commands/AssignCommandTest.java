@@ -24,12 +24,10 @@ import seedu.address.logic.commands.AssignCommand.DurationSupporter;
 import seedu.address.model.AppointmentBook;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
-import seedu.address.model.PatientBook;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.appointment.Appointment;
 import seedu.address.model.appointment.Date;
 import seedu.address.model.appointment.Time;
-import seedu.address.testutil.AppointmentBookBuilder;
 import seedu.address.testutil.DurationSupporterBuilder;
 
 
@@ -65,11 +63,12 @@ public class AssignCommandTest {
         Appointment appointment = new Appointment(date, start, end, ALICE);
 
         String expectedMessage = String.format(AssignCommand.MESSAGE_SUCCESS, appointment);
-        AppointmentBook expectedAppointmentBook = new AppointmentBookBuilder().withAppointment(appointment).build();
 
-        Model expectedModel = new ModelManager(new PatientBook(model.getPatientBook()),
-                expectedAppointmentBook, new UserPrefs());
-
+        Model expectedModel = new ModelManager(model.getPatientBook(),
+                model.getAppointmentBook(), new UserPrefs());
+        expectedModel.addAppointment(appointment);
+        expectedModel.commitPatientBook();
+        expectedModel.commitAppointmentBook();
         assertCommandSuccess(assignCommand, model, expectedMessage, expectedModel);
     }
 
@@ -84,11 +83,12 @@ public class AssignCommandTest {
         Appointment appointment = new Appointment(date, start, end, ALICE);
 
         String expectedMessage = String.format(AssignCommand.MESSAGE_SUCCESS, appointment);
-        AppointmentBook expectedAppointmentBook = new AppointmentBookBuilder().withAppointment(appointment).build();
 
-        Model expectedModel = new ModelManager(new PatientBook(model.getPatientBook()),
-                expectedAppointmentBook, new UserPrefs());
-
+        Model expectedModel = new ModelManager(model.getPatientBook(),
+                model.getAppointmentBook(), new UserPrefs());
+        expectedModel.addAppointment(appointment);
+        expectedModel.commitPatientBook();
+        expectedModel.commitAppointmentBook();
         assertCommandSuccess(assignCommand, model, expectedMessage, expectedModel);
     }
 

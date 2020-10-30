@@ -9,6 +9,8 @@ import seedu.address.model.ReadOnlyAppointmentBook;
 import seedu.address.model.ReadOnlyPatientBook;
 import seedu.address.model.ReadOnlyUserPrefs;
 import seedu.address.model.UserPrefs;
+import seedu.address.storage.appointment.AppointmentBookStorage;
+import seedu.address.storage.patient.PatientBookStorage;
 
 /**
  * API of the Storage component
@@ -16,7 +18,7 @@ import seedu.address.model.UserPrefs;
 public interface Storage extends PatientBookStorage, AppointmentBookStorage, UserPrefsStorage {
 
     @Override
-    Optional<UserPrefs> readUserPrefs() throws DataConversionException, IOException;
+    Optional<UserPrefs> readUserPrefs() throws DataConversionException;
 
     @Override
     void saveUserPrefs(ReadOnlyUserPrefs userPrefs) throws IOException;
@@ -25,7 +27,7 @@ public interface Storage extends PatientBookStorage, AppointmentBookStorage, Use
     Path getPatientBookFilePath();
 
     @Override
-    Optional<ReadOnlyPatientBook> readPatientBook() throws DataConversionException, IOException;
+    Optional<ReadOnlyPatientBook> readPatientBook() throws DataConversionException;
 
     @Override
     void savePatientBook(ReadOnlyPatientBook patientBook) throws IOException;
@@ -34,9 +36,18 @@ public interface Storage extends PatientBookStorage, AppointmentBookStorage, Use
     Path getAppointmentBookFilePath();
 
     @Override
-    Optional<ReadOnlyAppointmentBook> readAppointmentBook() throws DataConversionException, IOException;
+    Optional<ReadOnlyAppointmentBook> readAppointmentBook() throws DataConversionException;
 
     @Override
     void saveAppointmentBook(ReadOnlyAppointmentBook appointmentBook) throws IOException;
 
+    void backupData() throws IOException;
+
+    @Override
+    void backupData(String folderName) throws IOException;
+
+    @Override
+    StorageStatsManager getStatsManager();
+
+    String getStatusMessage();
 }

@@ -1,0 +1,46 @@
+@startuml
+!include style.puml
+
+box Logic LOGIC_COLOR_T1
+participant "d:RemarkCommand" as RemarkCommand LOGIC_COLOR
+end box
+
+box Model MODEL_COLOR_T1
+participant ":Patient" as Patient MODEL_COLOR
+participant ":Model" as Model MODEL_COLOR
+end box
+
+[-> RemarkCommand : execute()
+activate RemarkCommand
+
+RemarkCommand -> Model : getFilteredPatientList()
+activate Model
+
+Model --> RemarkCommand : lastShownList
+deactivate Model
+
+create Patient
+RemarkCommand -> Patient : new
+activate Patient
+
+Patient --> RemarkCommand : editedPatient
+deactivate Patient
+
+RemarkCommand -> Model : setPatient(Patient, Patient)
+activate Model
+
+Model --> RemarkCommand
+deactivate Model
+
+RemarkCommand -> Model : updateFilteredPatientList()
+activate Model
+
+Model --> RemarkCommand
+deactivate Model
+
+[<-- RemarkCommand : result
+deactivate RemarkCommand
+
+destroy RemarkCommand
+
+@enduml

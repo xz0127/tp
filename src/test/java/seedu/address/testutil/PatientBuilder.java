@@ -21,7 +21,7 @@ public class PatientBuilder {
     public static final String DEFAULT_PHONE = "85355255";
     public static final String DEFAULT_ADDRESS = "123, Jurong West Ave 6, #08-111";
     public static final String DEFAULT_NRIC = "S1234567U";
-    public static final String DEFAULT_REMARK = "This is a test remark :)";
+    public static final String DEFAULT_REMARK = "";
 
     private Name name;
     private Phone phone;

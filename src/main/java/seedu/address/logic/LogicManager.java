@@ -29,6 +29,7 @@ public class LogicManager implements Logic {
     private final Model model;
     private final Storage storage;
     private final NuudleParser nuudleParser;
+    private final CommandHistory commandHistory;
 
     /**
      * Constructs a {@code LogicManager} with the given {@code Model} and {@code Storage}.
@@ -37,6 +38,7 @@ public class LogicManager implements Logic {
         this.model = model;
         this.storage = storage;
         nuudleParser = new NuudleParser();
+        commandHistory = new CommandHistory();
     }
 
     @Override
@@ -44,6 +46,8 @@ public class LogicManager implements Logic {
 
         //Logging, safe to ignore
         logger.info("----------------[USER COMMAND][" + commandText + "]");
+
+        commandHistory.add(commandText);
 
         CommandResult commandResult;
         //Parse user input from String to a Command
@@ -54,13 +58,18 @@ public class LogicManager implements Logic {
         try {
             // We can deduce that the previous line of code modifies model in some way
             // since it's being stored here.
-            storage.savePatientBook(model.getPatientBook());
-            storage.saveAppointmentBook(model.getAppointmentBook());
+            saveData();
         } catch (IOException ioe) {
             throw new CommandException(FILE_OPS_ERROR_MESSAGE + ioe, ioe);
         }
 
         return commandResult;
+    }
+
+    @Override
+    public void saveData() throws IOException {
+        storage.savePatientBook(model.getPatientBook());
+        storage.saveAppointmentBook(model.getAppointmentBook());
     }
 
     @Override
@@ -101,5 +110,15 @@ public class LogicManager implements Logic {
     @Override
     public void setGuiSettings(GuiSettings guiSettings) {
         model.setGuiSettings(guiSettings);
+    }
+
+    @Override
+    public String getStorageStatus() {
+        return storage.getStatusMessage();
+    }
+
+    @Override
+    public ObservableList<String> getCommandHistory() {
+        return commandHistory.asUnmodifiableObservableList();
     }
 }

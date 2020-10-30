@@ -21,8 +21,8 @@ import seedu.address.model.patient.Patient;
 public class ModelManager implements Model {
     private static final Logger logger = LogsCenter.getLogger(ModelManager.class);
 
-    private final PatientBook patientBook;
-    private final AppointmentBook appointmentBook;
+    private final VersionedPatientBook versionedPatientBook;
+    private final VersionedAppointmentBook versionedAppointmentBook;
     private final UserPrefs userPrefs;
     private final FilteredList<Patient> filteredPatients;
     private final FilteredList<Appointment> filteredAppointments;
@@ -38,11 +38,11 @@ public class ModelManager implements Model {
         logger.fine("Initializing with patient book: " + patientBook + " and appointment book" + appointmentBook
                 + " and user prefs " + userPrefs);
 
-        this.patientBook = new PatientBook(patientBook);
-        this.appointmentBook = new AppointmentBook(appointmentBook);
+        this.versionedPatientBook = new VersionedPatientBook(patientBook);
+        this.versionedAppointmentBook = new VersionedAppointmentBook(appointmentBook);
         this.userPrefs = new UserPrefs(userPrefs);
-        filteredPatients = new FilteredList<>(this.patientBook.getPatientList());
-        filteredAppointments = new FilteredList<>(this.appointmentBook.getAppointmentList());
+        filteredPatients = new FilteredList<>(this.versionedPatientBook.getPatientList());
+        filteredAppointments = new FilteredList<>(this.versionedAppointmentBook.getAppointmentList());
     }
 
     public ModelManager() {
@@ -95,32 +95,42 @@ public class ModelManager implements Model {
         userPrefs.setAppointmentBookFilePath(appointmentBookFilePath);
     }
 
+    @Override
+    public Path getArchiveDirPath() {
+        return userPrefs.getArchiveDirectoryPath();
+    }
+
+    @Override
+    public void setArchiveDirPath(Path archiveDirPath) {
+        requireNonNull(archiveDirPath);
+        userPrefs.setArchiveDirectoryPath(archiveDirPath);
+    }
     //=========== PatientBook ================================================================================
 
     @Override
     public void setPatientBook(ReadOnlyPatientBook patientBook) {
-        this.patientBook.resetData(patientBook);
+        this.versionedPatientBook.resetData(patientBook);
     }
 
     @Override
     public ReadOnlyPatientBook getPatientBook() {
-        return patientBook;
+        return versionedPatientBook;
     }
 
     @Override
     public boolean hasPatient(Patient patient) {
         requireNonNull(patient);
-        return patientBook.hasPatient(patient);
+        return versionedPatientBook.hasPatient(patient);
     }
 
     @Override
     public void deletePatient(Patient target) {
-        patientBook.removePatient(target);
+        versionedPatientBook.removePatient(target);
     }
 
     @Override
     public void addPatient(Patient patient) {
-        patientBook.addPatient(patient);
+        versionedPatientBook.addPatient(patient);
         updateFilteredPatientList(PREDICATE_SHOW_ALL_PATIENTS);
     }
 
@@ -128,46 +138,53 @@ public class ModelManager implements Model {
     public void setPatient(Patient target, Patient editedPatient) {
         requireAllNonNull(target, editedPatient);
 
-        patientBook.setPatient(target, editedPatient);
+        versionedPatientBook.setPatient(target, editedPatient);
     }
 
     //=========== AppointmentBook ================================================================================
     @Override
     public boolean hasOverlappingAppointment(Appointment appointment) {
-        return appointmentBook.hasOverlapsWith(appointment);
+        return versionedAppointmentBook.hasOverlapsWith(appointment);
     }
 
     @Override
     public boolean hasAppointment(Appointment appointment) {
-        return appointmentBook.hasAppointment(appointment);
+        return versionedAppointmentBook.hasAppointment(appointment);
     }
 
     @Override
     public void addAppointment(Appointment appointment) {
-        appointmentBook.addAppointment(appointment);
+        versionedAppointmentBook.addAppointment(appointment);
         updateFilteredAppointmentList(PREDICATE_SHOW_ALL_APPOINTMENTS);
     }
 
     @Override
     public void deleteAppointment(Appointment target) {
-        appointmentBook.removeAppointment(target);
+        versionedAppointmentBook.removeAppointment(target);
     }
 
     @Override
     public void setAppointmentBook(ReadOnlyAppointmentBook appointmentBook) {
-        this.appointmentBook.resetData(appointmentBook);
+        this.versionedAppointmentBook.resetData(appointmentBook);
     }
 
     @Override
     public void setAppointment(Appointment target, Appointment editedAppointment) {
         requireAllNonNull(target, editedAppointment);
 
-        appointmentBook.setAppointment(target, editedAppointment);
+        versionedAppointmentBook.setAppointment(target, editedAppointment);
+    }
+
+    @Override
+    public String findAvailableTimeSlots(List<Appointment> appointmentList, boolean isToday) {
+        requireNonNull(appointmentList);
+
+        return versionedAppointmentBook.findAvailableTimeSlots(appointmentList, isToday);
     }
 
     @Override
     public ReadOnlyAppointmentBook getAppointmentBook() {
-        return appointmentBook;
+        return versionedAppointmentBook;
     }
 
     //=========== Patient-related Appointment Operations =============================================================
@@ -175,15 +192,16 @@ public class ModelManager implements Model {
     public void updateAppointmentsWithPatient(Patient target, Patient editedPatient) {
         requireNonNull(editedPatient);
 
-        appointmentBook.updateAppointmentsWithPatients(target, editedPatient);
+        versionedAppointmentBook.updateAppointmentsWithPatients(target, editedPatient);
     }
 
     @Override
     public void deleteAppointmentsWithPatient(Patient target) {
-        appointmentBook.deleteAppointmentsWithPatients(target);
+        versionedAppointmentBook.deleteAppointmentsWithPatients(target);
     }
 
     //=========== Filtered Appointment List Accessors =================================================================
+
     /**
      * Returns an unmodifiable view of the list of {@code Appointment} backed by the internal list of
      * {@code versionedAppointmentBook}
@@ -216,6 +234,58 @@ public class ModelManager implements Model {
         filteredPatients.setPredicate(predicate);
     }
 
+    //=========== Undo/Redo =================================================================================
+
+    @Override
+    public boolean canUndoAppointmentBook() {
+        return versionedAppointmentBook.canUndo();
+    }
+
+    @Override
+    public boolean canUndoPatientBook() {
+        return versionedPatientBook.canUndo();
+    }
+
+    @Override
+    public boolean canRedoAppointmentBook() {
+        return versionedAppointmentBook.canRedo();
+    }
+
+    @Override
+    public boolean canRedoPatientBook() {
+        return versionedPatientBook.canRedo();
+    }
+
+    @Override
+    public void undoAppointmentBook() {
+        versionedAppointmentBook.undo();
+    }
+
+    @Override
+    public void undoPatientBook() {
+        versionedPatientBook.undo();
+    }
+
+    @Override
+    public void redoAppointmentBook() {
+        versionedAppointmentBook.redo();
+    }
+
+    @Override
+    public void redoPatientBook() {
+        versionedPatientBook.redo();
+    }
+
+    @Override
+    public void commitAppointmentBook() {
+        versionedAppointmentBook.commit();
+    }
+
+    @Override
+    public void commitPatientBook() {
+        versionedPatientBook.commit();
+    }
+
     @Override
     public boolean equals(Object obj) {
         // short circuit if same object
@@ -230,8 +300,8 @@ public class ModelManager implements Model {
 
         // state check
         ModelManager other = (ModelManager) obj;
-        return patientBook.equals(other.patientBook)
-                && appointmentBook.equals(other.appointmentBook)
+        return versionedPatientBook.equals(other.versionedPatientBook)
+                && versionedAppointmentBook.equals(other.versionedAppointmentBook)
                 && userPrefs.equals(other.userPrefs)
                 && filteredPatients.equals(other.filteredPatients)
                 && filteredAppointments.equals(other.filteredAppointments);
@@ -240,15 +310,17 @@ public class ModelManager implements Model {
     //=========== Model Validation =============================================================
 
     /**
-     * Checks if the {@code readOnlyPatientBook} is consistent with the {@code appointmentBook} data.
+     * Checks if the {@code readOnlyPatientBook} is consistent with the {@code readOnlyAppointmentBook} data.
      *
-     * @param readOnlyPatientBook the patients data
-     * @param appointmentBook the appointments data
-     * @return true if the two books are valid, false otherwise
+     * @param readOnlyPatientBook     the patients data.
+     * @param readOnlyAppointmentBook the appointments data.
+     * @return true if the two books are valid, false otherwise.
      */
     public static boolean isValidModel(ReadOnlyPatientBook readOnlyPatientBook,
-                                       ReadOnlyAppointmentBook appointmentBook) {
-        List<Appointment> appointmentList = appointmentBook.getAppointmentList();
+                                       ReadOnlyAppointmentBook readOnlyAppointmentBook) {
+        requireAllNonNull(readOnlyPatientBook, readOnlyAppointmentBook);
+
+        List<Appointment> appointmentList = readOnlyAppointmentBook.getAppointmentList();
         PatientBook patientBook = new PatientBook(readOnlyPatientBook);
 
         for (Appointment appointment : appointmentList) {
@@ -257,5 +329,30 @@ public class ModelManager implements Model {
             }
         }
         return true;
+    }
+
+    /**
+     * Makes an appointment book that only consists of appointment data that is consistent
+     * with {@code readOnlyPatientBook}.
+     *
+     * @param readOnlyPatientBook     the patients data.
+     * @param readOnlyAppointmentBook the appointments data.
+     * @return the Appointment Book that consists of the appointments that are consistent with the Patient Book.
+     */
+    public static ReadOnlyAppointmentBook getSyncedAppointmentBook(ReadOnlyPatientBook readOnlyPatientBook,
+                                                   ReadOnlyAppointmentBook readOnlyAppointmentBook) {
+        requireAllNonNull(readOnlyPatientBook, readOnlyAppointmentBook);
+        assert !isValidModel(readOnlyPatientBook, readOnlyAppointmentBook);
+
+        List<Appointment> appointmentList = readOnlyAppointmentBook.getAppointmentList();
+        AppointmentBook appointmentBook = new AppointmentBook();
+        PatientBook patientBook = new PatientBook(readOnlyPatientBook);
+
+        for (Appointment appointment : appointmentList) {
+            if (patientBook.hasPatient(appointment.getPatient())) {
+                appointmentBook.addAppointment(appointment);
+            }
+        }
+        return appointmentBook;
     }
 }

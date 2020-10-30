@@ -46,6 +46,8 @@ public class DeleteCommandTest {
         expectedModel.deletePatient(patientToDelete);
         expectedModel.deleteAppointment(firstAppointmentToDelete);
         expectedModel.deleteAppointment(secondAppointmentToDelete);
+        expectedModel.commitPatientBook();
+        expectedModel.commitAppointmentBook();
         assertCommandSuccess(deleteCommand, model, expectedMessage, expectedModel);
     }
 
@@ -75,7 +77,8 @@ public class DeleteCommandTest {
         expectedModel.deleteAppointment(firstAppointmentToDelete);
         expectedModel.deleteAppointment(secondAppointmentToDelete);
         showNoPatient(expectedModel);
-
+        expectedModel.commitPatientBook();
+        expectedModel.commitAppointmentBook();
         assertCommandSuccess(deleteCommand, model, expectedMessage, expectedModel);
     }
 
@@ -90,7 +93,8 @@ public class DeleteCommandTest {
 
         Model expectedModel = new ModelManager(model.getPatientBook(), model.getAppointmentBook(), new UserPrefs());
         expectedModel.deletePatient(patientToDelete);
-
+        expectedModel.commitPatientBook();
+        expectedModel.commitAppointmentBook();
         assertCommandSuccess(deleteCommand, model, expectedMessage, expectedModel);
     }
 

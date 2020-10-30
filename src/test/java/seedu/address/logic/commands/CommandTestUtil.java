@@ -32,6 +32,7 @@ import seedu.address.model.patient.Patient;
 import seedu.address.testutil.DateTimeLoaderBuilder;
 import seedu.address.testutil.DurationSupporterBuilder;
 import seedu.address.testutil.EditPatientDescriptorBuilder;
+import seedu.address.testutil.FindPatientDescriptorBuilder;
 
 /**
  * Contains helper methods for testing commands.
@@ -94,8 +95,10 @@ public class CommandTestUtil {
     public static final String PREAMBLE_WHITESPACE = "\t  \r  \n";
     public static final String PREAMBLE_NON_EMPTY = "NonEmptyPreamble";
 
-    public static final EditCommand.EditPatientDescriptor DESC_AMY;
-    public static final EditCommand.EditPatientDescriptor DESC_BOB;
+    public static final EditCommand.EditPatientDescriptor EDIT_DESC_AMY;
+    public static final EditCommand.EditPatientDescriptor EDIT_DESC_BOB;
+    public static final FindCommand.FindPatientDescriptor FIND_DESC_AMY;
+    public static final FindCommand.FindPatientDescriptor FIND_DESC_BOB;
     public static final DateTimeLoader LOADER;
     public static final DateTimeLoader LOADER_DIFF_TIME;
     public static final DateTimeLoader LOADER_DIFF_DATE;
@@ -105,12 +108,19 @@ public class CommandTestUtil {
     public static final AssignCommand.DurationSupporter SUPPORTER_DIFF_DURATION;
 
     static {
-        DESC_AMY = new EditPatientDescriptorBuilder().withName(VALID_NAME_AMY)
+        EDIT_DESC_AMY = new EditPatientDescriptorBuilder().withName(VALID_NAME_AMY)
                 .withPhone(VALID_PHONE_AMY).withAddress(VALID_ADDRESS_AMY)
                 .withTags(VALID_TAG_FRIEND).withNric(VALID_NRIC_AMY).build();
-        DESC_BOB = new EditPatientDescriptorBuilder().withName(VALID_NAME_BOB)
+        EDIT_DESC_BOB = new EditPatientDescriptorBuilder().withName(VALID_NAME_BOB)
                 .withPhone(VALID_PHONE_BOB).withAddress(VALID_ADDRESS_BOB)
                 .withTags(VALID_TAG_HUSBAND, VALID_TAG_FRIEND).withNric(VALID_NRIC_BOB).build();
+    }
+
+    static {
+        FIND_DESC_AMY = new FindPatientDescriptorBuilder().withName(new String[]{VALID_NAME_AMY})
+                .withPhone(new String[]{VALID_PHONE_AMY}).withNric(new String[]{VALID_NRIC_AMY}).build();
+        FIND_DESC_BOB = new FindPatientDescriptorBuilder().withName(new String[]{VALID_NAME_BOB})
+                .withPhone(new String[]{VALID_PHONE_BOB}).withNric(new String[]{VALID_NRIC_BOB}).build();
     }
 
     static {
@@ -209,4 +219,13 @@ public class CommandTestUtil {
         assertEquals(1, model.getFilteredAppointmentList().size());
     }
 
+    /**
+     * Deletes the first appointment in {@code model}'s filtered list from {@code model}'s appointment book.
+     */
+    public static void deleteFirstAppointment(Model model) {
+        Appointment firstAppointment = model.getFilteredAppointmentList().get(0);
+        model.deleteAppointment(firstAppointment);
+        model.commitAppointmentBook();
+        model.commitPatientBook();
+    }
 }
