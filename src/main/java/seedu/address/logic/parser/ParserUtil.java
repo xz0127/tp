@@ -27,8 +27,8 @@ import seedu.address.model.tag.Tag;
  */
 public class ParserUtil {
     public static final String MESSAGE_INVALID_INDEX = "Index must be a positive integer that is more than 0.";
-    public static final String MESSAGE_INVALID_DURATION = "Duration must be a positive integer that is more than 10 "
-            + "mins.";
+    public static final String MESSAGE_INVALID_DURATION = "Duration must be a positive integer that is more than or "
+            + "equals to 10 mins.";
 
 
     /**
