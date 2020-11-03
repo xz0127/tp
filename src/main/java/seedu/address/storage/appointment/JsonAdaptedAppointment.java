@@ -18,7 +18,7 @@ import seedu.address.storage.patient.JsonAdaptedPatient;
  */
 class JsonAdaptedAppointment {
 
-    public static final String MISSING_FIELD_MESSAGE_FORMAT = "Appointment's %s field is missing!";
+    public static final String MISSING_FIELD_MESSAGE_FORMAT = "Appointment's %s field is missing or corrupted!";
     public static final String TIME_IN_WRONG_ORDER = "Appointment start time is not before end time!";
 
     private final LocalDate date;
