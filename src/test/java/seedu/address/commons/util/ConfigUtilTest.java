@@ -40,10 +40,27 @@ public class ConfigUtilTest {
 
     @Test
     public void read_fileInOrder_successfullyRead() throws DataConversionException {
-
         Config expected = getTypicalConfig();
 
         Config actual = read("TypicalConfig.json").get();
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    public void read_nullPathUsed_partialDefaultValuesUsed() throws DataConversionException {
+        Config expected = getTypicalConfig();
+        expected.setUserPrefsFilePath(new Config().getUserPrefsFilePath());
+
+        Config actual = read("NullPathConfig.json").get();
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    public void read_nullLogLevelUsed_partialDefaultValuesUsed() throws DataConversionException {
+        Config expected = getTypicalConfig();
+        expected.setLogLevel(new Config().getLogLevel());
+
+        Config actual = read("NullLogLevelConfig.json").get();
         assertEquals(expected, actual);
     }
 
@@ -64,7 +81,7 @@ public class ConfigUtilTest {
     private Config getTypicalConfig() {
         Config config = new Config();
         config.setLogLevel(Level.INFO);
-        config.setUserPrefsFilePath(Paths.get("preferences.json"));
+        config.setUserPrefsFilePath(Paths.get("myPreferences.json"));
         return config;
     }
 

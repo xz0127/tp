@@ -63,6 +63,34 @@ public class JsonUserPrefsStorageTest {
     }
 
     @Test
+    public void readUserPrefs_nullPatientBookPath_partialDefaultValuesUsed() throws DataConversionException {
+        UserPrefs actual = readUserPrefs("NullPatientBookPath.json").get();
+
+        UserPrefs expected = getTypicalUserPrefs();
+        expected.setPatientBookFilePath(new UserPrefs().getPatientBookFilePath());
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    public void readUserPrefs_nullAppointmentBookPath_partialDefaultValuesUsed() throws DataConversionException {
+        UserPrefs actual = readUserPrefs("NullAppointmentBookPath.json").get();
+
+        UserPrefs expected = getTypicalUserPrefs();
+        expected.setAppointmentBookFilePath(new UserPrefs().getAppointmentBookFilePath());
+        assertEquals(expected, actual);
+
+    }
+
+    @Test
+    public void readUserPrefs_nullArchiveDirectoryPath_partialDefaultValuesUsed() throws DataConversionException {
+        UserPrefs actual = readUserPrefs("NullArchiveDirectoryPath.json").get();
+
+        UserPrefs expected = getTypicalUserPrefs();
+        expected.setArchiveDirectoryPath(new UserPrefs().getArchiveDirectoryPath());
+        assertEquals(expected, actual);
+    }
+
+    @Test
     public void readUserPrefs_extraValuesInFile_extraValuesIgnored() throws DataConversionException {
         UserPrefs expected = getTypicalUserPrefs();
         UserPrefs actual = readUserPrefs("ExtraValuesUserPref.json").get();
@@ -75,6 +103,7 @@ public class JsonUserPrefsStorageTest {
         userPrefs.setGuiSettings(new GuiSettings(1000, 500, 300, 100, 0.3));
         userPrefs.setPatientBookFilePath(Paths.get("patientbook.json"));
         userPrefs.setAppointmentBookFilePath(Paths.get("appointmentbook.json"));
+        userPrefs.setArchiveDirectoryPath(Paths.get("archives"));
         return userPrefs;
     }
 

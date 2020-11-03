@@ -6,6 +6,9 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Objects;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import seedu.address.commons.core.GuiSettings;
 
 /**
@@ -22,6 +25,32 @@ public class UserPrefs implements ReadOnlyUserPrefs {
      * Creates a {@code UserPrefs} with default values.
      */
     public UserPrefs() {}
+
+    /**
+     * Creates a {@code UserPrefs} with specified values.
+     * For any null input value, the default values will be used instead.
+     */
+    @JsonCreator
+    public UserPrefs(@JsonProperty("guiSettings") GuiSettings guiSettings,
+                     @JsonProperty("patientBookFilePath") Path patientBookFilePath,
+                     @JsonProperty("appointmentBookFilePath") Path appointmentBookFilePath,
+                     @JsonProperty("archiveDirectoryPath") Path archiveDirectoryPath) {
+        if (guiSettings != null) {
+            this.guiSettings = guiSettings;
+        }
+
+        if (patientBookFilePath != null) {
+            this.patientBookFilePath = patientBookFilePath;
+        }
+
+        if (appointmentBookFilePath != null) {
+            this.appointmentBookFilePath = appointmentBookFilePath;
+        }
+
+        if (archiveDirectoryPath != null) {
+            this.archiveDirectoryPath = archiveDirectoryPath;
+        }
+    }
 
     /**
      * Creates a {@code UserPrefs} with the prefs in {@code userPrefs}.
@@ -99,19 +128,23 @@ public class UserPrefs implements ReadOnlyUserPrefs {
         UserPrefs o = (UserPrefs) other;
 
         return guiSettings.equals(o.guiSettings)
-                && patientBookFilePath.equals(o.patientBookFilePath);
+                && patientBookFilePath.equals(o.patientBookFilePath)
+                && appointmentBookFilePath.equals(o.appointmentBookFilePath)
+                && archiveDirectoryPath.equals(o.archiveDirectoryPath);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(guiSettings, patientBookFilePath);
+        return Objects.hash(guiSettings, patientBookFilePath, appointmentBookFilePath, archiveDirectoryPath);
     }
 
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("Gui Settings : " + guiSettings);
-        sb.append("\nLocal data file location : " + patientBookFilePath);
+        sb.append("\nLocal Patient data file location : " + patientBookFilePath);
+        sb.append("\nLocal Appointment data file location : " + appointmentBookFilePath);
+        sb.append("\nLocal Archive data file location : " + archiveDirectoryPath);
         return sb.toString();
     }
 
