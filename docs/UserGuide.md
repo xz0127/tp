@@ -334,7 +334,8 @@ Format: `clear`
 ### Undoing previous command : `undo`
 
 Restores the patient and appointment book to the state before the previous *undoable* command was executed.
-
+`undo` command will not work if you restart Nuudle.
+ 
 Format: `undo`
 
 <div markdown="span" class="alert alert-primary">:information_source: **Tip:**
@@ -372,7 +373,7 @@ the patient `Alex Yeoh` comes back to the list again.
 
 ### Redoing the previously undone command : `redo`
 
-Reverses the most recent `undo` command.
+Reverses the most recent `undo` command. `redo` command will not work if you restart Nuudle.
 
 Format: `redo`
 
@@ -397,7 +398,7 @@ Examples:
   `undo` (reverses the `clear` command)<br>
   `undo` (reverses the `cancel 1` command)<br>
   `redo` (reapplies the `cancel 1` command)<br>
-  `undo` (reapplies the `clear` command)
+  `redo` (reapplies the `clear` command)
 
 Step by step illustration:
 1. Initial state:
