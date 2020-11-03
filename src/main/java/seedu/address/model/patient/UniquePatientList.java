@@ -26,8 +26,7 @@ public class UniquePatientList implements Iterable<Patient> {
 
     private final ObservableList<Patient> internalList = FXCollections.observableArrayList();
     private final ObservableList<Patient> internalUnmodifiableList =
-        FXCollections.unmodifiableObservableList(internalList);
-
+        FXCollections.unmodifiableObservableList(internalList.sorted());
     /**
      * Returns true if the list contains an equivalent patient as the given argument.
      */
