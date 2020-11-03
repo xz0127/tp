@@ -1,4 +1,4 @@
-package seedu.address.storage;
+package seedu.address.storage.patient;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,6 +14,7 @@ import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.PatientBook;
 import seedu.address.model.ReadOnlyPatientBook;
 import seedu.address.model.patient.Patient;
+import seedu.address.storage.StorageStatsManager;
 
 /**
  * An Immutable PatientBook that is serializable to JSON format.

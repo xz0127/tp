@@ -22,7 +22,7 @@ LogicManager -> NuudleParser : parseCommand(String)
 activate NuudleParser
 
 create EditCommandParser
-NuudleParser -> EditCommandParser: EditCommandParser()
+NuudleParser -> EditCommandParser: new
 activate EditCommandParser
 
 EditCommandParser --> NuudleParser
@@ -32,7 +32,7 @@ NuudleParser -> EditCommandParser : parse(String)
 activate EditCommandParser
 
 create EditCommand
-EditCommandParser -> EditCommand: EditCommand(Index, EditPatientDescriptor)
+EditCommandParser -> EditCommand: new
 note left: Input Validation \n \n EditCommand() needs Index and \n EditPatientDescriptor objects
 activate EditCommand
 
@@ -63,7 +63,7 @@ EditCommand -> EditCommand
 activate EditCommand
 
 create Patient
-EditCommand -> Patient: createEditedPatient(Patient, EditPatientDescriptor)
+EditCommand -> Patient: new Edited Patient
 activate Patient
 
 Patient --> EditCommand
@@ -74,6 +74,9 @@ deactivate EditCommand
 
 EditCommand -> Model : hasPatient(Patient)
 activate Model
+
+Model --> EditCommand
+deactivate Model
 
 note left: hasPatient(Patient) checks whether \n the edited patient is same as the patient before editing.
 
@@ -102,7 +105,7 @@ Model --> EditCommand
 deactivate Model
 
 create CommandResult
-EditCommand -> CommandResult: CommandResult(String)
+EditCommand -> CommandResult : new
 activate CommandResult
 
 CommandResult --> EditCommand

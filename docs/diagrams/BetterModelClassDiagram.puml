@@ -6,6 +6,7 @@ skinparam classBackgroundColor MODEL_COLOR
 
 PatientBook *--> "1" UniquePatientList
 PatientBook *--> "1" UniqueTagList
+
 UniqueTagList -[hidden]right- UniquePatientList
 
 UniqueTagList *--> "*" Tag

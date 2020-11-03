@@ -2,14 +2,30 @@
 layout: page
 title: User Guide
 ---
-Welcome to Nuudle’s User Guide! :smiley: :ramen:
-
-Nuudle is a **desktop app that helps nurses manage patient records and schedule appointments** in an accurate and efficient manner.
-
-We hope that this document will help you in your journey in exploring the wonders of Nuudle app and redefine the way you schedule appointments for your patients. :smirk: To begin your journey, head down to our [quick start](#quick-start) or explore the various [features](#features) that we offer. The document will provide you with all the necessary information you need to start your journey.
 
 * Table of Contents
 {:toc}
+
+--------------------------------------------------------------------------------------------------------------------
+
+## Introduction
+
+Welcome to Nuudle’s User Guide! :smiley:
+
+Nuudle is a **desktop app that helps nurses manage patient records and schedule appointments** in an accurate and efficient manner.
+
+This app uses a command line interface. This means that you can use the app by typing commands into a Command Box.
+
+Let us introduce to you our Nuudle app:
+![UiMarkup](images/UiMarkup.png)
+
+--------------------------------------------------------------------------------------------------------------------
+
+## About this document
+
+We hope that this document will help you in your journey in exploring the wonders of Nuudle app and redefine the way you schedule appointments for your patients.
+
+To begin your journey, head down to our [Quick Start](#quick-start) or explore the various [Features](#features) that we offer. The document will provide you with all the necessary information you need to start your journey.
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -27,23 +43,27 @@ We hope that this document will help you in your journey in exploring the wonder
 1. Type the command in the command box and press Enter to execute it. e.g. typing **`help`** and pressing Enter will open the help window.<br>
    Some example commands you can try :
 
-   * **`list`** : Lists all patients.
+   1. **`list`** : Lists all patients.
 
-   * **`add`**` n/John Doe i/S9730284G p/98765432 a/John street, block 123, #01-01` : Adds a patient named `John Doe` to the Patient Book.
+   1. **`add`**` n/John Doe i/S9730284G p/98765432 a/John street, block 123, #01-01` : Adds a patient named `John Doe` to the Patient Book.
 
-   * **`edit`**`1 n/Betsy Crower p/91234567 a/College Avenue 8` : Edits the name, phone number, and address of the 1st patient in the list to be `Betsy`, `91234567`, and `College Avenue 8` respectively.
+   1. **`edit`**` 1 n/Betsy Crower p/91234567 a/College Avenue 8` : Edits the name, phone number, and address of the 1st patient in the list to be `Betsy`, `91234567`, and `College Avenue 8` respectively.
 
-   * **`find`**`n/alex p/99998888 i/S1234567I` returns patients whose name contains `Alex`, or whose phone number is `99998888`, or whose NRIC number is `S1234567I`.
+   1. **`find`**` n/John p/91238765 i/S9234567Q` : Finds the patients whose name contains `John`, or whose phone number is `912348765`, or whose NRIC number is `S9234567Q`.
 
-   * **`assign`**`1 d/tomorrow t/12.30pm dur/30` : Creates an appointment for the 1st patient in the list from 12.30pm to 1pm, tomorrow, if there are no other appointments in that time period.
+   1. **`avail`**` d/Tomorrow` : Gets all available time slots for tomorrow.
 
-   * **`delete`**`d/tomorrow t/12.30pm` : Deletes the previously created appointment occurring at 12.30pm tomorrow.
+   1. **`assign`**` 1 d/Tomorrow t/8.30am dur/30` : Creates an appointment for the 1st patient in the patient list for tomorrow 8.30am to 9am, assuming that the time slot is free.
 
-   * **`clear`** : Deletes all appointments and patients data.
+   1. **`view`**` d/Tomorrow` : Displays all appointment happening tomorrow.
 
-   * **`exit`** : Exits the app.
+   1. **`cancel`**` 1` : Cancels the first appointment in the displayed appointment list, which is also the first appointment happening tomorrow.
 
-1. Refer to the [features](#features) below for details of each command.
+   1. **`clear`** : Deletes all patients and appointments.
+
+   1. **`exit`** : Exits the app.
+
+1. Refer to the [Features](#features) below for details of each command.
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -69,7 +89,7 @@ We hope that this document will help you in your journey in exploring the wonder
 
 ### Viewing help : `help`
 
-Shows a message explaining how to access the help page of Nuudle.
+Shows a message with the commonly used commands, and the link to access the help page.
 
 ![help message](images/helpMessage.png)
 
@@ -168,16 +188,18 @@ Adds a remark to an existing patient in the patient book for nurses to store add
 Format: `remark PATIENT_INDEX [r/REMARK]`
 
 <div markdown="span" class="alert alert-primary">:bulb: **Tip:**
-We implemented our Remarks feature with the hopes of empowering you with the ability to add extra information to a patient's bio data! 
-So don't be shy and feel free to add anything under the sun that you feel apt for the patient.
+We implemented our remarks feature to empower you with the ability to add extra information to a patient's bio data! 
+So don't be shy and feel free to add anything under the sun that is applicable for the patient.
 </div>
 
-* Creates and **adds a remark** for the patient at the specified `PATIENT_INDEX`. The index here refers to the index number shown on the left side of the displayed patient list. 
+* **Adds a remark** for the patient at the specified `PATIENT_INDEX`. 
+* `PATIENT_INDEX` here refers to the number shown on the left side of the displayed patient book. 
 * Please note that the index used **must be a positive integer** 1, 2, 3, …​
-* A remark serves as an **optional field** for adding extra info to a patient's bio data and can be left blank if it is not applicable.
+* A remark is an **optional field** and can be left blank if it is not applicable.
 * A patient will have `NIL` displayed as his/her remark status if it was left empty.
-* To **override** a remark, simply use the remark/edit command as you would when creating the remark for the patient for the first time with the new remark content.
-* If you wish to **delete** the remark for a patient at a specific `PATIENT_INDEX`, simply enter either of the following commands:
+* To **override** a remark, simply use the remark command as described above.
+ Alternatively, you can also use the edit command to add or edit remarks if you wish to change multiple fields (eg. Phone number) at the same time.
+* If you wish to **delete** a patient's remark, simply use either of the following commands:
     * `remark PATIENT_INDEX`
     * `remark PATIENT_INDEX r/`
     
@@ -233,29 +255,35 @@ Example:
 
 ### Reschedules an appointment for a patient : `change`
 
-Reschedules or modifies an existing appointment with a new date, time and duration.
+Reschedules or modifies an existing appointment with a new date, time or duration.
 
-Format: `change APPT_INDEX d/DATE t/TIME dur/DURATION`
+Do note that the duration used here is **measured in minutes**!
+
+Format: `change APPT_INDEX [d/DATE] [t/TIME] [dur/DURATION]`
 
 <div markdown="span" class="alert alert-primary">:bulb: **Tip:**
-Do note that the duration used here is measured in minutes!
+If you would only like to change the duration of an appointment while keeping it's original date and time, simply 
+enter the new `DURATION` with it's corresponding `APPT_INDEX`! There is no need to retype it's date and time. The same 
+applies for the other fields.
 </div>
 
-* Reschedules an appointment at the specified `APPT_INDEX` for the patient it is tagged to. 
-The index here refers to the index number shown on the left side of the displayed appointment list on the right side of the UI. 
+* **Reschedules an appointment** at the specified `APPT_INDEX` for the patient it is tagged to. 
+* The `APPT_INDEX` refers to the number shown in the displayed appointment book located on the right side of the UI. 
 * Please note that the index used **must be a positive integer** 1, 2, 3, …
-* Please note that the `DATE` and `TIME` used for rescheduling must take place in the future.
+* Please note that the `DATE` and `TIME` used for rescheduling must be set in the future.
+* **At least one** of the optional fields must be present for a successful execution of the change command.
 
 * If you wish to **modify** the duration of an existing appointment, simply call the command in the following format:
-    * `change 1 d/ORIGINAL_DATE t/ORIGINAL_TIME dur/NEW_DURATION` Extends the duration of the appointment at `INDEX` 1 to the new `DURATION` with the same date and start time.
+    * `change 1 dur/NEW_DURATION`: <br>Extends the duration of the first appointment at `APPT_INDEX` 1 to the `NEW_DURATION` with the same date and start time.
 
-* If you wish to **reschedule** the appointment with new `DATE`/`TIME`:
-    * `change 1 d/NEW_DATE t/ORIGINAL_TIME dur/NEW_DURATION`
-    * `change 1 d/ORIGINAL_DATE t/NEW_TIME dur/NEW_DURATION`
-    * `change 1 d/NEW_DATE t/NEW_TIME dur/NEW_DURATION`
+* Some examples of **rescheduling** an appointment with a new `DATE`,`TIME` or `DURATION`:
+    * `change 1 d/NEW_DATE dur/NEW_DURATION`: <br>Reschedules an appointment to the `NEW_DATE` with the `NEW_DURATION` at it's original `TIME`.
+    * `change 1 t/NEW_TIME dur/NEW_DURATION`: <br>Reschedules an appointment to the `NEW_TIME` with the `NEW_DURATION` at it's original `DATE`.
+    * `change 1 d/NEW_DATE t/NEW_TIME dur/NEW_DURATION`: <br>Reschedules an appointment to the `NEW_DATE` and `NEW_TIME` with the `NEW_DURATION`.
+* Any other combinations of the optional fields are supported as well.
 
 Examples to reschedule appointments:
-*  `change 3 d/02-03-2021 t/1130 dur/30` <br> Reschedules the 3rd appointment in the appointment list to 2nd March 2021, 11:30AM with a duration of 30 minutes with it's original patient.
+*  `change 3 d/02-03-2021` <br> Reschedules the 3rd appointment in the appointment book to 2nd March 2021 with it's time, duration and patient.
 *  `change 2 d/12-05-2021 t/1530 dur/60` <br> Reschedules the 2nd appointment in the appointment list to 12th May 2021, 3:30PM with a duration of 1 hour with it's original patient.
 
 ![ChangeCommand](images/ChangeCommand.png)
@@ -325,16 +353,18 @@ Undoable commands refers to commands that modifies the patient or appointment li
 * Multiple calls to `redo` will reverse multiple undoable command execution, starting from the most recent command.
 
 Examples:
-* `delete 1` 
-  `list`
+* `delete 1`<br> 
+  `list`<br>
   `undo` (reverses the `delete 1` command)
-* `view d/today`
-  `list`
-  `undo`
+  
+* `view d/today`<br>
+  `list`<br>
+  `undo`<br>
    The `undo` command fails as there is no previous undoable command to reverse.
-* `cancel 1`
-  `clear`
-  `undo` (reverses the `clear` command)
+   
+* `cancel 1`<br>
+  `clear`<br>
+  `undo` (reverses the `clear` command)<br>
   `undo` (reverses the `cancel 1` command)
 
 ### Redoing the previously undone command : `redo`
@@ -348,25 +378,23 @@ Format: `redo`
 * Multiple call to `redo` will reverse multiple `undo` command, starting from the most recent `undo` command. 
 
 Examples:
-* `cancel 1` 
-  `undo` (reverses the `cancel 1` command)
-  `list`
+* `cancel 1` <br>
+  `undo` (reverses the `cancel 1` command)<br>
+  `list`<br>
   `redo` (reapplies the `cancel 1` command)
-* `cancel 1`
-  `undo` (reverses the `cancel 1` command)
-  `cancel 2`
-  `redo`
+  
+* `cancel 1`<br>
+  `undo` (reverses the `cancel 1` command)<br>
+  `cancel 2`<br>
+  `redo`<br>
    The `redo` command fails as there are no `undo` commands executed previously.
-* `cancel 1`
-  `clear`
-  `undo` (reverses the `clear` command)
-  `undo` (reverses the `cancel 1` command)
-  `redo` (reapplies the `cancel 1` command)
-  `undo` (reapplies the `clear` command)
-
-### Searching through entered commands
-
-Pressing the :arrow_up: and :arrow_down: arrows in the command box will display the previous and next input respectively.
+   
+* `cancel 1`<br>
+  `clear`<br>
+  `undo` (reverses the `clear` command)<br>
+  `undo` (reverses the `cancel 1` command)<br>
+  `redo` (reapplies the `cancel 1` command)<br>
+  `undo` (reapplies the `clear` command)<br>
 
 ### Exiting the program : `exit`
 
@@ -374,18 +402,25 @@ Exits Nuudle.
 
 Format: `exit`
 
+### Searching through entered commands
+
+Pressing the :arrow_up: and :arrow_down: arrows in the command box will display the previous and next input respectively.
+
 ### Saving the data
 
 Patients and appointments data are saved in the hard disk automatically after any command that changes the data. There is no need to save manually.
 
 ### Archiving past appointments
 
-Past appointments are automatically archived and neatly organised in an archive folder for future reference. This is done automatically everytime you start up the Nuudle app. The appointments are organised by their appointment months and are saved in Comma-Separated Values (CSV) format. CSV files can be opened and viewed as a typical Excel file.
+Past appointments are automatically archived and neatly organised into an archive folder for future reference. This is done automatically everytime you start up the Nuudle app.
+
+The appointments are organised by their appointment months and are saved in Comma-Separated Values (CSV) format. CSV files can be opened and viewed as a typical Excel file.
 
 ### Backing up files
 
-The core data files of the previous session are automatically saved in a folder called `backup`. The backup data will be updated everytime you start up the Nuudle app.  
-This backup files allow you to completely revert your data to the version in the previous session. This is especially useful if your data was unintentionally corrupted and you need to manually update the data.
+The data files of your previous Nuudle session are automatically saved in a folder called `backup`. The backup data will be updated everytime you start up the Nuudle app.
+
+This backup files allow you to completely revert your data to the previous session's data. This is especially useful if your data was unintentionally corrupted and you need to manually restore the data.
 
 --------------------------------------------------------------------------------------------------------------------
 

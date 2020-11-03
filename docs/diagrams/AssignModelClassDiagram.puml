@@ -16,7 +16,7 @@ class AppointmentId
 class Patient
 
 AppointmentBook .up.|> ReadOnlyAppointmentBook
-AppointmentBook *-right-* "1" UniqueAppointmentList
+AppointmentBook *-right-> "1" UniqueAppointmentList
 UniqueAppointmentList .up.|> Iterable
 UniqueAppointmentList o--> "*" Appointment
 Appointment *--> Date

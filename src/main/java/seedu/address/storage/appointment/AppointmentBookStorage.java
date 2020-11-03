@@ -1,4 +1,4 @@
-package seedu.address.storage;
+package seedu.address.storage.appointment;
 
 import java.io.IOException;
 import java.nio.file.Path;
@@ -6,6 +6,7 @@ import java.util.Optional;
 
 import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.model.ReadOnlyAppointmentBook;
+import seedu.address.storage.StorageStatsManager;
 
 /**
  * Represents a storage for {@link seedu.address.model.AppointmentBook}.

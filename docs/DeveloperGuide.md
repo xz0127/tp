@@ -432,7 +432,7 @@ This feature creates a `Remark` instance which is stored internally in Nuudle as
 which is in turn stored in the `PatientBook`. These classes are a part of the `Model` component and are illustrated
 in the class diagram below. 
 
-![RemarkLogicClassDiagram](images/RemarkLogicClassDiagram2.png)
+![RemarkLogicClassDiagram](images/RemarkLogicClassDiagram.png)
 <br>**Diagram 5.1.1: Class diagram for classes involved in the remark feature of the Model component**
  
 Additionally, to facilitate greater convenience for our users, we have implemented our remark feature to support the following pathways:
