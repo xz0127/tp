@@ -28,6 +28,10 @@ public class DateParserUtilTest {
         assertThrows(NullPointerException.class, () -> DateParserUtil.parse(null));
         assertThrows(NullPointerException.class, () -> DateParserUtil.parse(null, currDate));
 
+        // empty date
+        assertThrows(ParseException.class, () -> DateParserUtil.parse(""));
+        assertThrows(ParseException.class, () -> DateParserUtil.parse("    "));
+
         // formatted date
         assertEquals(LocalDate.of(currYear, 8, 12), DateParserUtil.parse("12/08", currDate));
 

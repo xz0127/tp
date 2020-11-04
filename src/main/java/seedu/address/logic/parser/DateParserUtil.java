@@ -29,6 +29,8 @@ public class DateParserUtil {
             + "Please visit our user guide"
             + " for more date/time variants."
             + "\nType help in the input box for the link!";
+    public static final String MESSAGE_EMPTY_DATE = "The Date input should not be empty.\n"
+            + "See the date input format on our User Guide";
 
     /**
      * List of known date formats that parser accepts.
@@ -82,6 +84,10 @@ public class DateParserUtil {
      */
     static LocalDate parse(String dateString, LocalDate currDate) throws ParseException {
         requireAllNonNull(dateString, currDate);
+
+        if (dateString.trim().equals("")) {
+            throw new ParseException(MESSAGE_EMPTY_DATE);
+        }
 
         LocalDate formattedDate = parseByDateFormat(dateString);
         if (formattedDate != null) {
