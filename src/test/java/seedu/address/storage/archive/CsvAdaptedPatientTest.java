@@ -1,5 +1,6 @@
 package seedu.address.storage.archive;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_ADDRESS_BOB;
@@ -15,6 +16,16 @@ import seedu.address.model.patient.Patient;
 import seedu.address.testutil.PatientBuilder;
 
 public class CsvAdaptedPatientTest {
+
+    @Test
+    public void constructor() {
+        CsvAdaptedPatient patient = new CsvAdaptedPatient(ALICE);
+        CsvAdaptedPatient constructedPatient = new CsvAdaptedPatient(ALICE.getName().fullName, ALICE.getPhone().value,
+                ALICE.getAddress().value, ALICE.getRemark().value);
+
+        assertEquals(patient, constructedPatient);
+    }
+
     @Test
     public void equals() {
         // same values -> returns true

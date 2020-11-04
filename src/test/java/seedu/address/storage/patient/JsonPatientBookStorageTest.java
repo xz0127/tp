@@ -89,6 +89,32 @@ public class JsonPatientBookStorageTest {
     }
 
     @Test
+    public void saveBackupAndReadPatientBook_allInOrder_success() throws Exception {
+        String jsonFileName = "TempPatientBook.json";
+        String backupFolderName = "backup";
+
+        Path filePath = testFolder.resolve(jsonFileName);
+        PatientBook original = getTypicalPatientBook();
+        JsonPatientBookStorage jsonPatientBookStorage =
+                new JsonPatientBookStorage(filePath, new StorageStatsManager());
+
+        Path backupFilePath = testFolder.resolve(backupFolderName + "/" + jsonFileName);
+        // save and backup file and read back backup file
+        jsonPatientBookStorage.savePatientBook(original, filePath);
+        jsonPatientBookStorage.backupData(backupFolderName);
+        ReadOnlyPatientBook readBack = jsonPatientBookStorage.readPatientBook(backupFilePath).get();
+        assertEquals(original, new PatientBook(readBack));
+
+        // Modify data, save, backup file, and read back backup file
+        original.addPatient(HOON);
+        original.removePatient(ALICE);
+        jsonPatientBookStorage.savePatientBook(original, filePath);
+        jsonPatientBookStorage.backupData(backupFolderName);
+        readBack = jsonPatientBookStorage.readPatientBook(backupFilePath).get();
+        assertEquals(original, new PatientBook(readBack));
+    }
+
+    @Test
     public void savePatientBook_nullPatientBook_throwsNullPointerException() {
         assertThrows(NullPointerException.class, () -> savePatientBook(null, "SomeFile.json"));
     }
@@ -96,6 +122,12 @@ public class JsonPatientBookStorageTest {
     @Test
     public void savePatientBook_nullFilePath_throwsNullPointerException() {
         assertThrows(NullPointerException.class, () -> savePatientBook(new PatientBook(), null));
+    }
+
+    @Test
+    public void backupPatientBook_nullFileName_throwsNullPointerException() {
+        assertThrows(NullPointerException.class, ()
+            -> new JsonPatientBookStorage(TEST_DATA_FOLDER, new StorageStatsManager()).backupData(null));
     }
 
     private Path addToTestDataPathIfNotNull(String prefsFileInTestDataFolder) {
