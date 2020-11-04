@@ -30,7 +30,7 @@ public class DateParserUtil {
             + " for more date/time variants."
             + "\nType help in the input box for the link!";
     public static final String MESSAGE_EMPTY_DATE = "The Date input should not be empty.\n"
-            + "You can try entering time with the format such as:\n"
+            + "You can try entering a date with the format such as:\n"
             + "01 Jan 2000\n"
             + "See more date format on our User Guide.";
 
