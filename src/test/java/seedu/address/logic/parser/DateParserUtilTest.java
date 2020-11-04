@@ -11,8 +11,6 @@ import org.junit.jupiter.api.Test;
 
 import seedu.address.logic.parser.exceptions.ParseException;
 
-
-
 public class DateParserUtilTest {
     private final int currYear = LocalDate.now().getYear();
     // Default/now --> Monday
