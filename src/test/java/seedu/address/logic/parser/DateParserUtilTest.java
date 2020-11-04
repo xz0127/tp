@@ -1,15 +1,14 @@
 package seedu.address.logic.parser;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
-import static seedu.address.testutil.Assert.assertThrows;
+import org.junit.jupiter.api.Test;
+import seedu.address.logic.parser.exceptions.ParseException;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 
-import org.junit.jupiter.api.Test;
-
-import seedu.address.logic.parser.exceptions.ParseException;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static seedu.address.testutil.Assert.assertThrows;
 
 public class DateParserUtilTest {
     private final int currYear = LocalDate.now().getYear();
@@ -18,7 +17,7 @@ public class DateParserUtilTest {
 
     @Test
     void parse_invalidDateString_throwsParseException() {
-        assertThrows(ParseException.class, DateParserUtil.MESSAGE_CONSTRAINTS, ()
+        assertThrows(ParseException.class, DateParserUtil.MESSAGE_EMPTY_DATE, ()
             -> DateParserUtil.parse(""));
     }
 
@@ -27,10 +26,6 @@ public class DateParserUtilTest {
         // null date
         assertThrows(NullPointerException.class, () -> DateParserUtil.parse(null));
         assertThrows(NullPointerException.class, () -> DateParserUtil.parse(null, currDate));
-
-        // empty date
-        assertThrows(ParseException.class, () -> DateParserUtil.parse(""));
-        assertThrows(ParseException.class, () -> DateParserUtil.parse("    "));
 
         // formatted date
         assertEquals(LocalDate.of(currYear, 8, 12), DateParserUtil.parse("12/08", currDate));
