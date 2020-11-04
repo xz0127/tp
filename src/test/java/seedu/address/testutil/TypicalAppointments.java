@@ -9,11 +9,11 @@ import static seedu.address.testutil.TypicalPatients.IDA;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import seedu.address.model.AppointmentBook;
 import seedu.address.model.appointment.Appointment;
-import seedu.address.model.appointment.AppointmentComparator;
 
 /**
  * A utility class containing a list of {@code Appointment} objects to be used in tests.
@@ -94,7 +94,7 @@ public class TypicalAppointments {
                 ALICE_APPOINTMENT, BENSON_APPOINTMENT, CARL_APPOINTMENT,
                 CARL_APPOINTMENT_2, ALICE_APPOINTMENT_2, BENSON_APPOINTMENT_2
         );
-        appointmentList.sort(new AppointmentComparator());
+        Collections.sort(appointmentList);
         return appointmentList;
     }
 
@@ -102,7 +102,7 @@ public class TypicalAppointments {
         List<Appointment> appointmentList = Arrays.asList(
             ALICE_APPOINTMENT, CARL_APPOINTMENT
         );
-        appointmentList.sort(new AppointmentComparator());
+        Collections.sort(appointmentList);
         return appointmentList;
     }
 
@@ -110,7 +110,7 @@ public class TypicalAppointments {
         List<Appointment> appointmentList = Arrays.asList(
             ALICE_APPOINTMENT_2, CARL_APPOINTMENT_2
         );
-        appointmentList.sort(new AppointmentComparator());
+        Collections.sort(appointmentList);
         return appointmentList;
     }
 }

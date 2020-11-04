@@ -13,7 +13,7 @@ import seedu.address.model.patient.Patient;
  * Represents an Appointment in the appointment book.
  * Guarantees: details are present and not null, field values are validated, immutable.
  */
-public class Appointment {
+public class Appointment implements Comparable<Appointment> {
     // Duration of an appointment in hours
     public static final Duration DEFAULT_DURATION = Duration.ofHours(1);
     // Creation offset in minutes. Used to allow creation of "last-minute" appointments.
@@ -220,5 +220,21 @@ public class Appointment {
                 .append(getPatient().getPhone());
 
         return builder.toString();
+    }
+
+    @Override
+    public int compareTo(Appointment other) {
+        requireAllNonNull(other);
+
+        if (isBefore(other)) {
+            return -1;
+        }
+
+        if (isAfter((other))) {
+            return 1;
+        }
+
+        assert isOverlapping(other);
+        return 0;
     }
 }

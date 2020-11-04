@@ -1,5 +1,6 @@
 package seedu.address.model.patient;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_ADDRESS_BOB;
@@ -10,6 +11,7 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_REMARK_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
 import static seedu.address.testutil.Assert.assertThrows;
 import static seedu.address.testutil.TypicalPatients.ALICE;
+import static seedu.address.testutil.TypicalPatients.BENSON;
 import static seedu.address.testutil.TypicalPatients.BOB;
 
 import org.junit.jupiter.api.Test;
@@ -91,5 +93,20 @@ public class PatientTest {
         // different tags -> returns false
         editedAlice = new PatientBuilder(ALICE).withTags(VALID_TAG_HUSBAND).build();
         assertFalse(ALICE.equals(editedAlice));
+    }
+
+    @Test
+    void compareTo() {
+        // negative: -1
+        assertTrue(ALICE.compareTo(BENSON) < 0);
+        assertTrue(BENSON.compareTo(BOB) < 0);
+
+        // 0
+        assertEquals(ALICE.compareTo(ALICE), 0);
+        assertEquals(BENSON.compareTo(BENSON), 0);
+
+        // positive: 1
+        assertTrue(BENSON.compareTo(ALICE) > 0);
+        assertTrue(BOB.compareTo(BENSON) > 0);
     }
 }
