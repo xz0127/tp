@@ -29,7 +29,8 @@ public class ParserUtil {
     public static final String MESSAGE_INVALID_INDEX = "Index must be a positive integer that is more than 0.";
     public static final String MESSAGE_INVALID_DURATION = "Duration must be a positive integer that is more than or "
             + "equals to 10 mins.";
-
+    public static final String MESSAGE_EMPTY_DURATION = "Duration must not be empty if you have put the prefix";
+    public static final String MESSAGE_MAX_DURATION = "The max duration in minute cannot exceed 1440 (24 hours).";
 
     /**
      * Parses {@code oneBasedIndex} into an {@code Index} and returns it. Leading and trailing whitespaces will be
@@ -191,6 +192,11 @@ public class ParserUtil {
         String trimmedDuration = durationString.trim();
         Duration duration;
         Duration minDuration = Duration.of(10, MINUTES);
+        Duration maxDuration = Duration.of(1440, MINUTES);
+
+        if (trimmedDuration.equals("")) {
+            throw new ParseException(MESSAGE_EMPTY_DURATION);
+        }
         try {
             duration = Duration.of(Integer.parseInt(trimmedDuration), MINUTES);
         } catch (NumberFormatException e) {
@@ -199,6 +205,10 @@ public class ParserUtil {
 
         if (duration.isNegative() || duration.isZero()) {
             throw new ParseException(MESSAGE_INVALID_DURATION);
+        }
+
+        if (duration.compareTo(maxDuration) > 0) {
+            throw new ParseException(MESSAGE_MAX_DURATION);
         }
 
         if (duration.compareTo(minDuration) < 0) {
