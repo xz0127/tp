@@ -28,7 +28,7 @@ public class TimeParserUtil {
             + "\nType help in the input box for the link!";
 
     public static final String MESSAGE_EMPTY_TIME = "The Time input should not be empty.\n"
-            + "You can try entering time with the format such as:\n"
+            + "You can try entering a time with the format such as:\n"
             + "1300\n"
             + "See more time format on our User Guide";
 
