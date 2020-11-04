@@ -26,7 +26,11 @@ public class TimeParserUtil {
             + "Please visit our user guide"
             + " for more date/time variants."
             + "\nType help in the input box for the link!";
-    public static final String MESSAGE_EMPTY_TIME = "The Time input should not be empty.";
+
+    public static final String MESSAGE_EMPTY_TIME = "The Time input should not be empty.\n"
+            + "You can try entering time with the format such as:\n"
+            + "1300\n"
+            + "See more time format on our User Guide";
 
     /**
      * List of known time formats that parser accepts.
