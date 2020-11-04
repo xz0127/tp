@@ -62,11 +62,29 @@ public class ScheduleManager {
 
     /**
      * Checks whether the current time is within operation hours.
+     *
      * @return true if current time is within operation hours, false otherwise.
      */
-    public boolean isWithinOperationHour() {
-        LocalTime currentTime = LocalTime.now();
-        return (currentTime.getHour() >= 8 && currentTime.getHour() < 22);
+    public boolean isWithinOperationHour(LocalTime time) {
+        return !isBeforeOperationHour(time) && !isAfterOperationHour(time);
+    }
+
+    /**
+     * Checks whether {@code time} is before opening hour.
+     *
+     * @return true is {@code time} is before opening hour, false otherwise.
+     */
+    public boolean isBeforeOperationHour(LocalTime time) {
+        return time.isBefore(OPEN_TIME.getTime());
+    }
+
+    /**
+     * Checks whether {@code time} is after closing hour.
+     *
+     * @return true is {@code time} is after closing hour, false otherwise.
+     */
+    public boolean isAfterOperationHour(LocalTime time) {
+        return time.isAfter(CLOSE_TIME.getTime());
     }
 
     /**
@@ -76,12 +94,12 @@ public class ScheduleManager {
      */
     public TimeIntervalList constructOperationTimeIntervals() {
         ArrayList<TimeInterval> operationTimeIntervals = new ArrayList<>();
-        if (isToday && isWithinOperationHour()) {
-            LocalTime currentTime = LocalTime.now();
-            Time current = new Time(currentTime.getHour(), currentTime.getMinute());
-            TimeInterval todayInterval = new TimeInterval(current, CLOSE_TIME);
+        LocalTime currentTime = LocalTime.now();
+        Time currTime = new Time(currentTime);
+        if (isToday && isWithinOperationHour(currentTime)) {
+            TimeInterval todayInterval = new TimeInterval(currTime, CLOSE_TIME);
             operationTimeIntervals.add(todayInterval);
-        } else {
+        } else if (!(isToday && isAfterOperationHour(currentTime))) {
             operationTimeIntervals.add(OPERATION_TIME);
         }
         return new TimeIntervalList(operationTimeIntervals);
