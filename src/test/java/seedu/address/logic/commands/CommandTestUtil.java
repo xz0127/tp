@@ -91,7 +91,8 @@ public class CommandTestUtil {
     public static final String INVALID_REMARK_INDEX = " 0 " + PREFIX_REMARK + WORDS_ONE_NINETY_NINE;
     public static final String INVALID_DURATION_NEGATIVE_DESC = " " + PREFIX_DURATION + "-40";
     public static final String INVALID_DURATION_NON_INTEGER_DESC = " " + PREFIX_DURATION + "CS";
-    public static final String INVALID_DURATION_EXCEED_DESC = " " + PREFIX_DURATION + "1800";
+    public static final String INVALID_DURATION_EXCEED_CLOSING_TIME_DESC = " " + PREFIX_DURATION + "720";
+    public static final String INVALID_DURATION_EXCEED_MAX_DESC = " " + PREFIX_DURATION + "1800";
     public static final String INVALID_DURATION_EMPTY_DESC = " " + PREFIX_DURATION + "";
     public static final String INVALID_DURATION_WHITESPACE_DESC = " " + PREFIX_DURATION + "       ";
 

@@ -35,6 +35,8 @@ public class ParserUtilTest {
     private static final String INVALID_TIME_FORMAT = "2359am";
     private static final String INVALID_DURATION_EMPTY = "";
     private static final String INVALID_DURATION_WHITESPACE = "    ";
+    private static final String INVALID_DURATION_TOO_SHORT = "1";
+    private static final String INVALID_DURATION_EXCESS_MAX_DURATION = "1770";
 
     private static final String VALID_NAME = "Rachel Walker";
     private static final String VALID_PHONE = "123456";
@@ -47,7 +49,6 @@ public class ParserUtilTest {
 
     // given the start time is more than 30 minutes before the CLOSING_TIME.
     private static final String VALID_DURATION = "30";
-    private static final String DURATION_TOO_SHORT = "1";
 
     private static final String WHITESPACE = " \t\r\n";
 
@@ -194,6 +195,16 @@ public class ParserUtilTest {
     @Test
     public void parseDuration_whitespace_throwsParseException() {
         assertThrows(ParseException.class, () -> ParserUtil.parseDuration(INVALID_DURATION_WHITESPACE));
+    }
+
+    @Test
+    public void parseDuration_tooShort_throwsParseException() {
+        assertThrows(ParseException.class, () -> ParserUtil.parseDuration(INVALID_DURATION_TOO_SHORT));
+    }
+
+    @Test
+    public void parseDuration_excessMaxDuration_throwsParseException() {
+        assertThrows(ParseException.class, () -> ParserUtil.parseDuration(INVALID_DURATION_EXCESS_MAX_DURATION));
     }
 
     @Test
