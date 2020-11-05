@@ -201,48 +201,44 @@ The following activity diagram summarizes what happens when a user executes a ne
 
 ### 2. Data archiving
 
-`[written by: Jin Hao]`
+`[written by: Lim Jin Hao]`
 
 The data archiving feature will archive all past appointments into an archive directory on starting the app.
 The appointment data will be archived according to their months and saved as a csv file.
 
-The data stored on the archive will be minimal and only contains the following columns: `date`, `startTime`, `endTime`, `isDone`, `name`, `phone`, `address` and `remark`.
+The data archived will be minimal and only contains the following columns: `date`, `startTime`, `endTime`, `isDone`, `name`, `phone`, `address` and `remark`.
 
 #### 2.1 Implementation
 
 The archive mechanism is facilitated by `CsvAppointmentArchive` which implements the `AppointmentArchive` interface.
 It is stored internally within the `JsonAppointmentBookStorage` which in turn implements the `AppointmentBookStorage` interface.
 <br>
-`CsvAppointmentArchive` implements the following operations:
+[`CsvAppointmentArchive`](https://github.com/AY2021S1-CS2103T-T12-4/tp/blob/master/src/main/java/seedu/address/storage/archive/CsvAppointmentArchive.java) implements the following operations:
 
-* `archivePastAppointments(ReadOnlyAppointmentBook)` — Removes all past appointments from the `ReadOnlyAppointmentBook` and archive them as a csv file.
-* `saveAppointments(List<CsvAdaptedAppointment>, String)` — Saves the list of `CsvAdaptedAppointment` as a csv file in the archive directory with the given filename.
-* `readAppointments(String)` — Reads the csv file with the given filename and returns the data as a `List<CsvAdaptedAppointment>`
-* `getArchiveStatistics()` — Gets the status message of the archive mechanism.
+* `archivePastAppointments(..)` — Removes all past appointments from the `ReadOnlyAppointmentBook` and archive them as a csv file.
+* `saveAppointments(..)` — Saves the list of `CsvAdaptedAppointment` as a csv file in the archive directory with the given filename.
+* `readAppointments(..)` — Reads the csv file with the given filename and returns the data as a `List<CsvAdaptedAppointment>`
 
-Of these three, only the `archivePastAppointments(ReadOnlyAppointmenBook)` and `getArchiveStatistics()` are exposed in the `AppointmentBookStorage` and `Storage` interfaces as methods with the same signature.
-
-<br>
 `CsvAdaptedAppointment` and `CsvAdaptedPatient` are used to represent the csv-adapted `Appointment` and `Patient` respectively.
 <br>
 
 Given below is an example archive run scenario and how the archive mechanism behaves at each step.
 
-1. The user launches the application with some existing appointment data (not launching for the first time).
+1. The user launches the application with some existing appointment data.
 
-1. The `MainApp` calls the `Storage#readAppointmentBook()` method to get the `Optional<ReadOnlyAppointmentBook>` which may contains the book of existing appointment data.
+1. The `MainApp` calls the `Storage#readAppointmentBook()` method to get the `ReadOnlyAppointmentBook` with the existing appointment data.
 
-1. The original `ReadOnlyAppointmentBook` is then passed to the `AppointmentArchive` through the `Storage` and `AppointmentBookStorage` by calling their respective `archivePastAppointments(ReadOnlyAppointmentBook)` methods.
+1. The `ReadOnlyAppointmentBook` is then passed to the `AppointmentArchive` through the `Storage` and `AppointmentBookStorage` by calling their respective `archivePastAppointments(..)` methods.
 
-1. `AppointmentArchive#archivePastAppointments(ReadOnlyAppointmentBook)` then iterates through the `ReadOnlyAppointmentBook` and separates it into a `List<Appointment>`, which contains only the upcoming appointments, and `List<CsvAdaptedAppointment>`, which contains the appointments to be archived.
+1. `AppointmentArchive#archivePastAppointments(..)` then iterates through the `ReadOnlyAppointmentBook` and separates it into a `List<Appointment>`, which contains only the upcoming appointments, and a `List<CsvAdaptedAppointment>`, which contains the past appointments to be archived.
 
-1. For each `CsvAdaptedAppointment` in the same group (same month), the `AppointmentArchive` calls the `AppointmentArchive#saveAppointments(List<CsvAdaptedAppointment>, String)` method to save the appointment list.
+1. For each `CsvAdaptedAppointment` in the same group (same month), the `AppointmentArchive` calls the `AppointmentArchive#saveAppointments(..)` method to save the appointment list.
 
-1. `AppointmentArchive#saveAppointments()` then calls the `CsvUtil::serializeObjectToCsvFile()` method to save and archive the past appointments.
+1. `AppointmentArchive#saveAppointments(..)` then calls the `CsvUtil::serializeObjectToCsvFile(..)` method to save and archive the past appointments.
 
 1. The `List<Appointment>` containing only the upcoming appointments will then be returned to the user as a `ReadOnlyAppointmentBook`.
 
-1. The `Ui` component will then call the `Logic#getArchiveStatus()` component on initialisation to get the archive status message from the `StorageManager`.
+1. The `Ui` component will then call the `Logic#getStorageStatus()` component on initialisation to get the archive status message from the `StorageManager`.
 
 The above process is shown in the following sequence diagram:
 
@@ -947,7 +943,7 @@ testers are expected to do more *exploratory* testing.
 
    1. Prerequisites: Data save location not modified. The `preference.json` file is not edited. Multiple patients in the list.
 
-   1. Look for the patient Json file at the default location: `.\data\patientbook.json`
+   1. Look for the patient json file at the default location: `.\data\patientbook.json`
 
    1. Remove the `Nric` field of the first patient in the file. Note the patient name.
 
@@ -960,7 +956,7 @@ testers are expected to do more *exploratory* testing.
 
    1. Prerequisites: Have at least one upcoming appointments and no expired appointments.
 
-   1. Locate the appointment Json file at the default location: `.\data\appointmentbook.json`
+   1. Locate the appointment json file at the default location: `.\data\appointmentbook.json`
 
    1. Change the `Date` field of an appointment to a past date, with month `may` and year `2019` Note the details of the appointment.
 
