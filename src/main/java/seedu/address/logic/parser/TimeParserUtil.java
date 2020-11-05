@@ -70,7 +70,7 @@ public class TimeParserUtil {
     public static LocalTime parse(String timeString) throws ParseException {
         requireNonNull(timeString);
 
-        if (timeString.trim().equals("")) {
+        if (timeString.isBlank()) {
             throw new ParseException(MESSAGE_EMPTY_TIME);
         }
 
