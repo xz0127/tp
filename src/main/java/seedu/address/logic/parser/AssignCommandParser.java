@@ -72,8 +72,8 @@ public class AssignCommandParser implements Parser<AssignCommand> {
         }
 
         // check if the duration exceeds the CLOSING_TIME
-        Duration maxDuration = Duration.between(time.getTime(), CLOSING_TIME);
-        if (duration.compareTo(maxDuration) > 0) {
+        Duration usableDuration = Duration.between(time.getTime(), CLOSING_TIME);
+        if (duration.compareTo(usableDuration) > 0) {
             throw new ParseException(Time.MESSAGE_CONSTRAINTS);
         }
 

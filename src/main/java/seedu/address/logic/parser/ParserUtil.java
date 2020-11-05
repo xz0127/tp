@@ -2,6 +2,8 @@ package seedu.address.logic.parser;
 
 import static java.time.temporal.ChronoUnit.MINUTES;
 import static java.util.Objects.requireNonNull;
+import static seedu.address.model.appointment.Time.CLOSING_TIME;
+import static seedu.address.model.appointment.Time.OPENING_TIME;
 
 import java.time.Duration;
 import java.time.LocalDate;
@@ -30,6 +32,8 @@ public class ParserUtil {
     public static final String MESSAGE_INVALID_DURATION = "Duration must be a positive integer that is more than or "
             + "equals to 10 mins.";
     public static final String MESSAGE_EMPTY_DURATION = "Duration must not be empty if you have entered the prefix";
+    public static final String MESSAGE_MAX_DURATION = "Duration must be smaller than the number of minutes\n"
+            + "in the working hours for one day";
 
     /**
      * Parses {@code oneBasedIndex} into an {@code Index} and returns it. Leading and trailing whitespaces will be
@@ -191,6 +195,7 @@ public class ParserUtil {
         String trimmedDuration = durationString.trim();
         Duration duration;
         Duration minDuration = Duration.of(10, MINUTES);
+        Duration maxDuration = Duration.between(OPENING_TIME, CLOSING_TIME);
 
         if (trimmedDuration.isEmpty()) {
             throw new ParseException(MESSAGE_EMPTY_DURATION);
@@ -209,6 +214,9 @@ public class ParserUtil {
             throw new ParseException(MESSAGE_INVALID_DURATION);
         }
 
+        if (duration.compareTo(maxDuration) > 0) {
+            throw new ParseException(MESSAGE_MAX_DURATION);
+        }
         return duration;
     }
 }
