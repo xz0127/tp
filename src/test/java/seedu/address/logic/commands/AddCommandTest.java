@@ -210,7 +210,11 @@ public class AddCommandTest {
 
         @Override
         public void updateFilteredPatientList(Predicate<Patient> predicate) {
-            throw new AssertionError("This method should not be called.");
+            requireNonNull(predicate);
+            FilteredList<Patient> filteredPatients =
+                    new FilteredList<>(new PatientBook().getPatientList());
+
+            filteredPatients.setPredicate(predicate);
         }
 
         @Override
