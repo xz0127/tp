@@ -155,14 +155,14 @@ This section describes some noteworthy details on how certain features are imple
 
 `[written by: Yang Yue]`
 
-The mark done feature allows users to mark a specific appointment in the address book as done using `d/` tag and `t/` tag to specify the appointment at a certain time slot.
+The mark done feature allows users to mark a specific appointment in the address book as done using `APPT_INDEX` to specify the appointment in the list of appointments.
 
 #### 1.1 Implementation
-Command: `done d/DATE t/TIME`
+Command: `done APPT_INDEX`
 
 Example Usage:
-* `done d/Monday t/9am`
-* `done d/12-12-2020 t/12pm`
+* `done 1`
+* `done 4`
 
 The mark appointments as Done feature is facilitated by the `DoneCommand`, which extends the abstract class `Command`, and
 the `DoneCommandParser`, which implements the `Parser` interface. Both of these classes are part of the `Logic` component.
@@ -176,15 +176,15 @@ The following is an example usage scenario on how the mark as done mechanism wor
 
 3. `NuudleParser` detects the command word `done` in the input string and creates a new `DoneCommandParser` to parse inputs according to the format specified for `DoneCommand`.
 
-4. Input is parsed using the `DoneCommandParser#parse(String)` method, which also performs input validation. The method creates a `DateTimeLoader` using the parsed inputs by calling the constructor of the class `DateTimeLoader`.
+4. Input is parsed using the `DoneCommandParser#parse(String)` method, which also performs input validation. 
 
-5. The `DoneCommandParser` creates a new `DoneCommand` instance with the newly created `DateTimeLoader` object and returns it to `NuudleParser`, which in turn returns it to `LogicManager`.
+5. The `DoneCommandParser` creates a new `DoneCommand` instance with the given index and returns it to `NuudleParser`, which in turn returns it to `LogicManager`.
 
 6. `LogicManager` calls the `DoneCommand#execute(Model)` method.
 
 7. `DoneCommand` obtains a copy of the `FilteredAppointmentList` by calling the `Model#getFilteredAppointmentList()` method.
 
-8. `DoneCommand` returns the appointment `toMark` in the `FilteredAppointmentList`, if there is an appointment in the list starts at the same time with the date and time indicated in the `DateTimeLoader`; Otherwise, throw an
+8. `DoneCommand` returns the appointment `toMark` in the `FilteredAppointmentList`, if an appointment can be found by the given index. Otherwise, throw an
 `APPOINTMENT_DOES_NOT_EXISTS` exception.
 
 9. `DoneCommand` creates another instance of this appointment `doneAppointment` which has a `done` status.
@@ -198,6 +198,19 @@ The above process is shown in the following sequence diagram:
 
 The following activity diagram summarizes what happens when a user executes a new command:
 ![DoneCommandActivityDiagram](images/DoneCommandActivityDiagram.png)
+
+#### 1.2 Design consideration
+
+##### Aspect: Input format
+
+* **Alternative 1 (current choice):** Use `APPT_INDEX` to indicate the appointment to mark.
+  * Pros: Easy to type. In this case, a user does not have to type in a long string to indicate the date and time. Easy to implement. We can find an appointment easily using the `APPT_INDEX`. Otherwise, we need to create a `DateTimeLoader` to locate the appointment in the appointment list.
+  * Cons: The input does not show the date and time, so users have to scroll down the list to check whether the index points to the right appointment.
+
+* **Alternative 2:** Use `d/DATE t/TIME` as input 
+  * Pros: Without checking the list, users can tell whether the input is the right appointment they want to mark.
+  * Cons: It takes more time to type `d/DATE t/TIME` comparing to a single number `INDEX` in alternative 1.
+
 
 ### 2. Data archiving
 
