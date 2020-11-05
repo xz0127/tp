@@ -192,7 +192,7 @@ public class ParserUtil {
         Duration duration;
         Duration minDuration = Duration.of(10, MINUTES);
 
-        if (trimmedDuration.equals("")) {
+        if (trimmedDuration.isEmpty()) {
             throw new ParseException(MESSAGE_EMPTY_DURATION);
         }
         try {
