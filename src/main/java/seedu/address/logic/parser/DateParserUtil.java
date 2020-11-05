@@ -88,7 +88,7 @@ public class DateParserUtil {
     static LocalDate parse(String dateString, LocalDate currDate) throws ParseException {
         requireAllNonNull(dateString, currDate);
 
-        if (dateString.trim().equals("")) {
+        if (dateString.isBlank()) {
             throw new ParseException(MESSAGE_EMPTY_DATE);
         }
 
