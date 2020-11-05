@@ -35,7 +35,7 @@ The ***Architecture Diagram*** given above explains the high-level design of the
 
 </div>
 
-**`Main`** has two classes called [`Main`](https://github.com/AY2021S1-CS2103T-T12-4/tp/blob/master/src/main/java/seedu/address/Main.java) 
+**`Main`** has two classes called [`Main`](https://github.com/AY2021S1-CS2103T-T12-4/tp/blob/master/src/main/java/seedu/address/Main.java)
 and [`MainApp`](https://github.com/AY2021S1-CS2103T-T12-4/tp/blob/master/src/main/java/seedu/address/MainApp.java). It is responsible for,
 
 * At app launch: Initializes the components in the correct sequence, and connects them up with each other.
@@ -404,9 +404,9 @@ The following activity diagram summarises the general workflow for the Edit Comm
 
 * **Alternative 2:** Parse and Execute in the same class
     * Pros: Fewer lines of code, less fields/objects are passed between classes which reduces the coupling.
-    * Cons: No separation between classes violates the Single Responsibility Principle. Compromises the readability of the code and 
-    increases the difficulty of debugging and maintaining the code base. 
-    
+    * Cons: No separation between classes violates the Single Responsibility Principle. Compromises the readability of the code and
+    increases the difficulty of debugging and maintaining the code base.
+
 ##### Aspect: How to update corresponding `appointment` instance
 
 * **Alternative 1 (current choice):** Separate updating `appointment` from editing `patient`
@@ -415,7 +415,7 @@ The following activity diagram summarises the general workflow for the Edit Comm
 
 * **Alternative 2:** Update `appointment` together with `edit` patient in one function
     * Pros: Fewer lines of code. Lower cost of testing.
-    * Cons: No separation between classes violates the Single Responsibility Principle. Compromises the readability of the code and 
+    * Cons: No separation between classes violates the Single Responsibility Principle. Compromises the readability of the code and
     increases the difficulty of debugging and maintaining the code base. Increases the coupling.
 
 
@@ -424,39 +424,39 @@ The following activity diagram summarises the general workflow for the Edit Comm
 `[written by: Low Ming Lim]`
 
 The remark feature allows users to add a custom note to a new or existing patient using the `r/` tag in multiple commands.
-This provides our users with the flexibility and freedom to store extra notes or bio data for a patient apart from the compulsory 
+This provides our users with the flexibility and freedom to store extra notes or bio data for a patient apart from the compulsory
 fields such as name, phone number, etc.
 
 #### 5.1 Implementation
 This feature creates a `Remark` instance which is stored internally in Nuudle as a variable of a `Patient` object
 which is in turn stored in the `PatientBook`. These classes are a part of the `Model` component and are illustrated
-in the class diagram below. 
+in the class diagram below.
 
 ![RemarkLogicClassDiagram](images/RemarkLogicClassDiagram.png)
 <br>**Diagram 5.1.1: Class diagram for classes involved in the remark feature of the Model component**
- 
+
 Additionally, to facilitate greater convenience for our users, we have implemented our remark feature to support the following pathways:
 
-1. Adding a remark via the `AddCommand` for a new `Patient`: 
-    
+1. Adding a remark via the `AddCommand` for a new `Patient`:
+
     Command syntax: `add n/NAME i/NRIC p/PHONE_NUMBER a/ADDRESS [r/REMARK] [t/TAG]…​`
-    
+
     Example Usage:
     * `add n/Betsy i/S9123456G t/friend a/NUS Utown p/1234567 r/Prefers Dr John`
     * `add n/John Doe i/S9730284G p/98765432 a/John street, block 123, #01-01 r/Regular customer`
 
 1. Adding a remark via the `RemarkCommand` for an existing `Patient`:
-    
+
     Command syntax: `remark INDEX [r/REMARK]`
-    
+
     Example Usage:
     * `remark 2 r/Has been visiting Dr John`
     * `remark 1 r/Can only converse in mandarin`
 
 1.  Or via the `EditCommand`:
- 
+
     Command syntax: `edit INDEX [n/NAME] [i/NRIC] [p/PHONE_NUMBER] [a/ADDRESS] [r/REMARK] [t/TAG]…`
-    
+
     Example Usage:
     * `edit 1 r/Can only converse in mandarin`
     * `edit 2 n/Betsy r/Has been visiting Dr John`
@@ -465,14 +465,14 @@ Refer to the following activity diagram for a summary of the above pathways.
 ![RemarkPathwaysActivityDiagram](images/RemarkPathwaysActivityDiagram.png)
 <br>**Diagram 5.1.2: Activity diagram showcasing available pathways to create a remark**
 
-This segment will focus on the implementation details for the `RemarkCommand` pathway. The implementation for the 
+This segment will focus on the implementation details for the `RemarkCommand` pathway. The implementation for the
 alternative `EditCommand` pathway can be found in another segment of our Developer's Guide while the implementation
  for the `AddCommand` pathway is inherited from the original AB3-Addressbook.
 
- 
+
 The addition of a remark via the remark command pathway is mainly facilitated by the `RemarkCommand` class which
-extends the abstract class `Command`. A `RemarkCommandParser` which implements the `Parser` interface is required 
-to instantiate a `RemarkCommand` from the user input. The classes mentioned above in this paragraph resides in our 
+extends the abstract class `Command`. A `RemarkCommandParser` which implements the `Parser` interface is required
+to instantiate a `RemarkCommand` from the user input. The classes mentioned above in this paragraph resides in our
 `logic` component.
 
 #### 5.2 Implementation Illustration
@@ -486,11 +486,11 @@ in the patient list currently displayed to the user.
 
 2. This request is handled by `LogicManager#execute(String)`, which then calls and passes the input over to the `NuudleParser#parseCommand(String)` method.
 
-3. During the execution of the `NuudleParser#parseCommand(String)` method, `NuudleParser` detects the command word `remark` 
+3. During the execution of the `NuudleParser#parseCommand(String)` method, `NuudleParser` detects the command word `remark`
 in the input string and creates a new `RemarkCommandParser`.
 
-4. The `RemarkCommandParser#parse(String)` method is then subsequently called to parse the rest of the input string according to the format specified for 
-`RemarkCommand`. Input validation for the appropriate `Index` and `Remark` format is performed here by calling the 
+4. The `RemarkCommandParser#parse(String)` method is then subsequently called to parse the rest of the input string according to the format specified for
+`RemarkCommand`. Input validation for the appropriate `Index` and `Remark` format is performed here by calling the
 `ParserUtil#parseIndex` and `ParserUtil#parseRemark` methods respectively. <br>
 <br>The process described in step 4 is shown in the following sequence diagram:
 ![RemarkParserRefSequenceDiagram](images/RemarkParserRefSequenceDiagram.png)
@@ -503,7 +503,7 @@ This new `RemarkCommand` is then returned to `NuudleParser` and subsequently `Lo
 
 7. `RemarkCommand` obtains a copy of the `FilteredPatientList` by calling the `Model#getFilteredPatientList()` method.
 
-8. The `patientToEdit` is then identified from the `FilteredPatientList` based on the `Index` provided. 
+8. The `patientToEdit` is then identified from the `FilteredPatientList` based on the `Index` provided.
 
 9. A new `editedPatient` is then created with the input `Remark` while the rest of its particulars are duplicated from the `patientToEdit`.
 
@@ -528,17 +528,17 @@ The following activity diagram summarizes the above steps when a user uses the r
 ##### Aspect: How the `remark` command executes
 
 * **Alternative 1 (current choice):** Separate parsing from code execution
-    * Pros: Responsibilities of classes are clearly distinguished. Adherence to the Single Responsibility Principle 
+    * Pros: Responsibilities of classes are clearly distinguished. Adherence to the Single Responsibility Principle
     helps improve code cohesion. Changes to either the parser or execution will no longer affect each other.
-        
-    * Cons: Increases the code base, may increase coupling as objects are passed around between the classes. 
+
+    * Cons: Increases the code base, may increase coupling as objects are passed around between the classes.
     More tests have to be written for the respective classes, thus increasing the cost of testing.
 
 * **Alternative 2:** Parse and Execute in the same class
     * Pros: Size of code base is reduced. Fewer objects are passed between classes thereby reducing coupling.
-    
-    * Cons: Violates the Single Responsibility Principle and reduces code readability. 
-    Harder for team members to maintain the code base. Increases code cohesion. 
+
+    * Cons: Violates the Single Responsibility Principle and reduces code readability.
+    Harder for team members to maintain the code base. Increases code cohesion.
     Code design will also differ from other commands such as `Add` and `Edit` which are adapted from AddressBookLevel3.
 
 --------------------------------------------------------------------------------------------------------------------
@@ -946,27 +946,27 @@ testers are expected to do more *exploratory* testing.
 1. Dealing with missing/corrupted data files
 
    1. Prerequisites: Data save location not modified. The `preference.json` file is not edited. Multiple patients in the list.
-   
+
    1. Look for the patient Json file at the default location: `.\data\patientbook.json`
-   
+
    1. Remove the `Nric` field of the first patient in the file. Note the patient name.
-   
-   1. Launch the app by double-clicking the jar file.<br> 
+
+   1. Launch the app by double-clicking the jar file.<br>
       The app safely launches with multiple patients. The patient with missing Nric field is not in the list.
 
 ### Archiving data
 
-1. Archiving past appointments 
+1. Archiving past appointments
 
    1. Prerequisites: Have at least one upcoming appointments and no expired appointments.
-   
+
    1. Locate the appointment Json file at the default location: `.\data\appointmentbook.json`
-   
+
    1. Change the `Date` field of an appointment to a past date, with month `may` and year `2019` Note the details of the appointment.
-   
-   1. Launch the app by double-clicking the jar file.<br> 
+
+   1. Launch the app by double-clicking the jar file.<br>
       The app safely launches. The previously edited appointment is not in the appointment list.
       The Command Result display indicates that 1 appointment is archived.
-      
-   1. Locate the appointment csv archive file at `.\data\archives\2019_MAY.csv`. 
+
+   1. Locate the appointment csv archive file at `.\data\archives\2019_MAY.csv`.
       The previously edited appointment should be reflected as an archived appointment.
