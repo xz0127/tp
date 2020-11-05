@@ -895,6 +895,8 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 ### Glossary
 
 * **Mainstream OS**: Windows, Linux, Unix, OS-X
+* **csv file**: A [Comma-Separated Values](https://en.wikipedia.org/wiki/Comma-separated_values) file that uses a comma to separate values. It can be opened using Microsoft Excel.
+* **json file**: A file that stores object data in [JavaScript object notation](https://www.json.org/json-en.html)) format
 
 --------------------------------------------------------------------------------------------------------------------
 

@@ -30,7 +30,7 @@ Given below are my contributions to the project.
   * Improved the way the app loads corrupted data from the storage. ([\#123](https://github.com/AY2021S1-CS2103T-T12-4/tp/pull/123))
     * **What it does**: Loads all uncorrupted data from the JSON file and displays a status message if there are any corrupted appointment or patient data.
     * **Justification**: Previously, if any data is corrupted in the JSON file, the whole JSON file will be invalidated, and the app starts up with an empty appointment/patient book. This is not appropriate as it removes all user's data without warning even when some of the data are not corrupted.
-    * Highlights: This enhancement requires detection of corrupted data by checking for missing fields, invalid data type in fields (such as unsupported date, time) and unexpected data value (such as null paths).
+    * **Highlights**: This enhancement requires detection of corrupted data by checking for missing fields, invalid data type in fields (such as unsupported date, time) and unexpected data value (such as null paths).
   * Added commonly-used commands in help box (can be accessed through `help` command). ([\#131](https://github.com/AY2021S1-CS2103T-T12-4/tp/pull/131))
   * Wrote relevant tests for the new implementation and enhancements to existing features.
 
