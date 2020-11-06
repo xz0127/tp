@@ -214,6 +214,7 @@ The archive mechanism is facilitated by `CsvAppointmentArchive` which implements
 It is stored internally within the `JsonAppointmentBookStorage` which in turn implements the `AppointmentBookStorage` interface.
 
 [`CsvAppointmentArchive`](https://github.com/AY2021S1-CS2103T-T12-4/tp/blob/master/src/main/java/seedu/address/storage/archive/CsvAppointmentArchive.java) implements the following operations:
+
 * `archivePastAppointments(..)` — Removes all past appointments from the `ReadOnlyAppointmentBook` and archive them as a CSV file.
 * `saveAppointments(..)` — Saves the list of `CsvAdaptedAppointment` as a CSV file in the archive directory with the given filename.
 * `readAppointments(..)` — Reads the CSV file with the given filename and returns the data as a `List<CsvAdaptedAppointment>`
@@ -225,27 +226,36 @@ Given below is an example archive run scenario and how the archive mechanism beh
 
 1. The user launches the application with some existing appointment data.
 
-1. The `MainApp` calls the `Storage#readAppointmentBook()` method to get the `ReadOnlyAppointmentBook` with the existing appointment data.
+2. The `MainApp` calls the `Storage#readAppointmentBook()` method to get the `ReadOnlyAppointmentBook` with the existing appointment data.
 
-1. The `ReadOnlyAppointmentBook` is then passed to the `AppointmentArchive` through the `Storage` and `AppointmentBookStorage` by calling their respective `archivePastAppointments(..)` methods.
+3. The `ReadOnlyAppointmentBook` is then passed to the `AppointmentArchive` through the `Storage` and `AppointmentBookStorage` by calling their respective `archivePastAppointments(..)` methods.
 
-1. `AppointmentArchive#archivePastAppointments(..)` then iterates through the `ReadOnlyAppointmentBook` and separates it into a `List<Appointment>`, which contains only the upcoming appointments, and a `List<CsvAdaptedAppointment>`, which contains the past appointments to be archived.
+4. `AppointmentArchive#archivePastAppointments(..)` then iterates through the `ReadOnlyAppointmentBook` and separates it into a `List<Appointment>`, which contains only the upcoming appointments, and a `List<CsvAdaptedAppointment>`, which contains the past appointments to be archived.
 
-1. For each `CsvAdaptedAppointment` in the same group (same month), the `AppointmentArchive` calls the `AppointmentArchive#saveAppointments(..)` method to save the appointment list.
+5. For each `CsvAdaptedAppointment` in the same group (same month), the `AppointmentArchive` calls the `AppointmentArchive#saveAppointments(..)` method to save the appointment list.
 
-1. `AppointmentArchive#saveAppointments(..)` then calls the `CsvUtil::serializeObjectToCsvFile(..)` method to save and archive the past appointments.
+6. `AppointmentArchive#saveAppointments(..)` then calls the `CsvUtil::serializeObjectToCsvFile(..)` method to save and archive the past appointments.
 
-1. The `List<Appointment>` containing only the upcoming appointments will then be returned to the user as a `ReadOnlyAppointmentBook`.
+7. The `List<Appointment>` containing only the upcoming appointments will then be returned to the user as a `ReadOnlyAppointmentBook`, to be used as the starting appointment book data.
 
-1. The `Ui` component will then call the `Logic#getStorageStatus()` component on initialisation to get the archive status message from the `StorageManager`.
-
-The above process is shown in the following sequence diagram:
+The following sequence diagram summarises the above archiving process:
 
 ![ArchiveSequenceDiagram](images/ArchiveSequenceDiagram.png)
+<br>**diagram 2.1.1: Sequence diagram showcasing the Data Archiving process**
 
-The following sequence diagram shows how the archive status message is obtained and shown to the user:
+8. The `Ui` component will then call the `Logic#getStorageStatus()` component to get the archive status message from the `StorageManager`.
 
-![ArchiveStatusDiagram](images/ArchiveStatusDiagram.png)
+The retrieval of the status message is shown in the following sequence diagram:
+
+![ArchiveStatusSequenceDiagram](images/ArchiveStatusDiagram.png)
+<br>**diagram 2.1.2: Sequence diagram showcasing the Archive message retrieval process**
+
+9. The archive status message is then displayed to the user via the GUI.
+
+The following activity diagram summarises how the System sieve and archive past appointments:
+
+![ArchiveActivityDiagram](images/ArchiveActivityDiagram.png)
+<br>**Diagram 2.1.3: Activity diagram showcasing the Data Archiving execution flow**
 
 #### 2.2 Design consideration:
 
@@ -382,14 +392,14 @@ Given below is an example usage scenario and how the edit mechanism behaves at e
 The above process is shown in the following sequence diagram:
 
 ![EditSequenceDiagram](images/EditSequenceDiagram.png)
-<br>**Diagram 5.2.1: Sequence diagram showcasing the Edit Command process**
+<br>**Diagram 4.1.1: Sequence diagram showcasing the Edit Command process**
 
 The following activity diagram summarises the general workflow for the Edit Command:
 
 ![EditCommandActivityDiagram](images/EditCommandActivityDiagram.png)
-<br>**Diagram 5.2.2: Activity diagram showcasing the Edit Command execution flow**
+<br>**Diagram 4.1.2: Activity diagram showcasing the Edit Command execution flow**
 
-#### 5.3 Design Considerations
+#### 4.2 Design Considerations
 
 ##### Aspect: How the `edit` command executes
 
