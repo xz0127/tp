@@ -53,6 +53,10 @@ public class ChangeCommand extends Command {
     public static final String APPOINTMENT_OVERLAP = "Hmm it seems this time slot is occupied. Please choose another "
             + "time-slot to schedule your appointment :)";
 
+    public static final String APPOINTMENT_DONE = "Hmm, it appears the appointment you've selected is already marked"
+            + " as done.\nDone appointments cannot be rescheduled.\nPlease select another appointment or create a new"
+            + "appointment with a new time-slot :)";
+
     private final Index index;
     private final EditAppointmentDescriptor editAppointmentDescriptor;
 
@@ -79,6 +83,11 @@ public class ChangeCommand extends Command {
         }
 
         Appointment appointmentToEdit = lastShownList.get(index.getZeroBased());
+
+        if (appointmentToEdit.getIsDoneStatus()) {
+            throw new CommandException(APPOINTMENT_DONE);
+        }
+
         Appointment editedAppointment = createEditedAppointment(appointmentToEdit, editAppointmentDescriptor);
 
         if (appointmentToEdit.equals(editedAppointment)) {
