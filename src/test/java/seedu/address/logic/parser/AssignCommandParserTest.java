@@ -8,8 +8,11 @@ import static seedu.address.logic.commands.CommandTestUtil.ASSIGN_DURATION;
 import static seedu.address.logic.commands.CommandTestUtil.ASSIGN_TIME;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_DATE_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_DATE_DESC_EXPIRED;
+import static seedu.address.logic.commands.CommandTestUtil.INVALID_DURATION_EMPTY_DESC;
+import static seedu.address.logic.commands.CommandTestUtil.INVALID_DURATION_EXCEED_CLOSING_TIME_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_DURATION_NEGATIVE_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_DURATION_NON_INTEGER_DESC;
+import static seedu.address.logic.commands.CommandTestUtil.INVALID_DURATION_WHITESPACE_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_TIME_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_TIME_DESC_CLOSED;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_DATE;
@@ -84,6 +87,12 @@ public class AssignCommandParserTest {
                 ParserUtil.MESSAGE_INVALID_DURATION);
         assertParseFailure(parser, "1" + ASSIGN_DATE + ASSIGN_DATE_TIME + INVALID_DURATION_NON_INTEGER_DESC,
                 ParserUtil.MESSAGE_INVALID_DURATION);
+        assertParseFailure(parser, "1" + ASSIGN_DATE + ASSIGN_TIME + INVALID_DURATION_EXCEED_CLOSING_TIME_DESC,
+                Time.MESSAGE_CONSTRAINTS);
+        assertParseFailure(parser, "1" + ASSIGN_DATE + ASSIGN_TIME + INVALID_DURATION_EMPTY_DESC,
+                ParserUtil.MESSAGE_EMPTY_DURATION);
+        assertParseFailure(parser, "1" + ASSIGN_DATE + ASSIGN_TIME + INVALID_DURATION_WHITESPACE_DESC,
+                ParserUtil.MESSAGE_EMPTY_DURATION);
     }
 
     @Test

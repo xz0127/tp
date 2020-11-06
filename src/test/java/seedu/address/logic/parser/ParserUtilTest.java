@@ -1,11 +1,13 @@
 package seedu.address.logic.parser;
 
+import static java.time.temporal.ChronoUnit.MINUTES;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.logic.parser.ParserUtil.MESSAGE_INVALID_INDEX;
 import static seedu.address.testutil.Assert.assertThrows;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PATIENT;
 
+import java.time.Duration;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
@@ -31,6 +33,10 @@ public class ParserUtilTest {
     private static final String INVALID_DATE_FORMAT = "1-1-1";
     private static final String INVALID_TIME_CLOSED = "midnight";
     private static final String INVALID_TIME_FORMAT = "2359am";
+    private static final String INVALID_DURATION_EMPTY = "";
+    private static final String INVALID_DURATION_WHITESPACE = "    ";
+    private static final String INVALID_DURATION_TOO_SHORT = "1";
+    private static final String INVALID_DURATION_EXCESS_MAX_DURATION = "1770";
 
     private static final String VALID_NAME = "Rachel Walker";
     private static final String VALID_PHONE = "123456";
@@ -40,6 +46,9 @@ public class ParserUtilTest {
     private static final String VALID_TAG_2 = "neighbour";
     private static final String VALID_DATE = "20-AUG-2050";
     private static final String VALID_TIME = "noon";
+
+    // given the start time is more than 30 minutes before the CLOSING_TIME.
+    private static final String VALID_DURATION = "30";
 
     private static final String WHITESPACE = " \t\r\n";
 
@@ -176,6 +185,40 @@ public class ParserUtilTest {
         String tagWithWhitespace = WHITESPACE + VALID_TAG_1 + WHITESPACE;
         Tag expectedTag = new Tag(VALID_TAG_1);
         assertEquals(expectedTag, ParserUtil.parseTag(tagWithWhitespace));
+    }
+
+    @Test
+    public void parseDuration_emptyValue_throwsParseException() {
+        assertThrows(ParseException.class, () -> ParserUtil.parseDuration(INVALID_DURATION_EMPTY));
+    }
+
+    @Test
+    public void parseDuration_whitespace_throwsParseException() {
+        assertThrows(ParseException.class, () -> ParserUtil.parseDuration(INVALID_DURATION_WHITESPACE));
+    }
+
+    @Test
+    public void parseDuration_tooShort_throwsParseException() {
+        assertThrows(ParseException.class, () -> ParserUtil.parseDuration(INVALID_DURATION_TOO_SHORT));
+    }
+
+    @Test
+    public void parseDuration_excessMaxDuration_throwsParseException() {
+        assertThrows(ParseException.class, () -> ParserUtil.parseDuration(INVALID_DURATION_EXCESS_MAX_DURATION));
+    }
+
+    @Test
+    public void parseDuration_validValueWithoutWhitespace_returnsTrimmedDuration() throws Exception {
+        String durationWithoutWhitespace = VALID_DURATION;
+        Duration expectedDuration = Duration.of(30, MINUTES);
+        assertEquals(expectedDuration, ParserUtil.parseDuration(durationWithoutWhitespace));
+    }
+
+    @Test
+    public void parseDuration_validValueWithWhitespace_returnsTrimmedDuration() throws Exception {
+        String durationWithWhitespace = WHITESPACE + VALID_DURATION + WHITESPACE;
+        Duration expectedDuration = Duration.of(30, MINUTES);
+        assertEquals(expectedDuration, ParserUtil.parseDuration(durationWithWhitespace));
     }
 
     @Test
