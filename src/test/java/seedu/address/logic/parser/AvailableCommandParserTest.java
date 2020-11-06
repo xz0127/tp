@@ -1,8 +1,11 @@
 package seedu.address.logic.parser;
 
+import static seedu.address.commons.core.Messages.MESSAGE_EXPIRED_TIME_SLOTS;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.commands.CommandTestUtil.ASSIGN_DATE;
+import static seedu.address.logic.commands.CommandTestUtil.EMPTY_DATE_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_DATE_DESC;
+import static seedu.address.logic.commands.CommandTestUtil.INVALID_DATE_DESC_EXPIRED;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_DATE;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
@@ -51,5 +54,15 @@ public class AvailableCommandParserTest {
     @Test
     public void parse_invalidArgs_failure() {
         assertParseFailure(parser, INVALID_DATE_DESC, DateParserUtil.MESSAGE_CONSTRAINTS);
+    }
+
+    @Test
+    public void parse_expiredDate_failure() {
+        assertParseFailure(parser, INVALID_DATE_DESC_EXPIRED, MESSAGE_EXPIRED_TIME_SLOTS);
+    }
+
+    @Test
+    public void parse_emptyDate_failure() {
+        assertParseFailure(parser, EMPTY_DATE_DESC, DateParserUtil.MESSAGE_EMPTY_DATE);
     }
 }
