@@ -12,7 +12,7 @@ public class Messages {
     public static final String MESSAGE_APPOINTMENTS_LISTED_OVERVIEW = "%1$d appointments" + " listed!";
     public static final String MESSAGE_EXPIRED_DATE = "Cannot view appointments from the past.\n"
             + "Past appointments are archived and can be accessed from the archive folder.";
-
+    public static final String MESSAGE_EXPIRED_DATE_TIME = "The appointment date and time should be an upcoming one.";
     public static final String MESSAGE_INVALID_APPOINTMENT_DISPLAYED_INDEX = "The appointment index provided is "
             + "invalid";
     public static final String MESSAGE_AVAILABLE_TIME_SLOTS = "Listing all available time slots: \n";
