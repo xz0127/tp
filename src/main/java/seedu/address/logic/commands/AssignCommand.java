@@ -107,6 +107,9 @@ public class AssignCommand extends Command {
                 && durationSupporter.equals(((AssignCommand) other).durationSupporter)); // state check
     }
 
+    /**
+     * An assistant class to help parse the parameters of an {@code AssignCommand}.
+     */
     public static class DurationSupporter extends DateTimeLoader {
         private Duration duration = Appointment.DEFAULT_DURATION;
 

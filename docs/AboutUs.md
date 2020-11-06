@@ -16,13 +16,14 @@ You can reach us at the following emails:
 
 ### Lim Jin Hao
 
-<img src="images/jinhao-l.png" width="200">
+<img src="images/jinhao-l.png" width="200px">
 
 [[github](http://github.com/jinhao-l)]
 [[portfolio](team/jinhao-l.md)]
 
 * Role: Team Lead
-* Responsibilities: Storage
+* Responsibilities: Deliverables and deadlines
+* In-charge of: Storage
 
 ### Low Ming Lim
 
@@ -31,8 +32,8 @@ You can reach us at the following emails:
 [[github](https://github.com/Avalionnet)]
 [[portfolio](team/avalionnet.md)]
 
-* Role: Software Engineer
-* Responsibilities: Testing + Scheduling and Tracking
+* Role: Developer
+* Responsibilities: Testing, Scheduling and Tracking
 * In-charge of: Logic and Parsers
 
 
@@ -43,8 +44,9 @@ You can reach us at the following emails:
 [[github](https://github.com/YangYue128-helen)]
 [[portfolio](team/yangyue128-helen.md)]
 
-* Role: Developer & Code quality
-* Responsibilities: Model - appointment
+* Role: Software Engineer
+* Responsibilities: Code Quality
+* In-charge of: Appointment Model
 
 ### Xin Zhe
 
@@ -54,8 +56,8 @@ You can reach us at the following emails:
 [[portfolio](team/xz0127.md)]
 
 * Role: Software Engineer
-* Responsibilities: Documentation + Integration
-* In-charge of: Patient Models
+* Responsibilities: Documentation, Integration
+* In-charge of: Patient Model
 
 ### Zhang Wanlin
 
@@ -64,5 +66,6 @@ You can reach us at the following emails:
 [[github](http://github.com/ZhangWanlin98)]
 [[portfolio](team/zhangwanlin98.md)]
 
-* Role: Developer + Testing
-* Responsibilities: UI
+* Role: Software Engineer
+* Responsibilities: Testing
+* In-charge of: User Interface

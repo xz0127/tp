@@ -81,6 +81,7 @@ public class CommandTestUtil {
     public static final String INVALID_PHONE_DESC = " " + PREFIX_PHONE + "911a"; // 'a' not allowed in phones
     public static final String INVALID_ADDRESS_DESC = " " + PREFIX_ADDRESS; // empty string not allowed for addresses
     public static final String INVALID_TAG_DESC = " " + PREFIX_TAG + "hubby*"; // '*' not allowed in tags
+    public static final String EMPTY_DATE_DESC = " " + PREFIX_DATE + " "; // date is in the past
     public static final String INVALID_DATE_DESC = " " + PREFIX_DATE + "20201202"; // not a recognised date format
     public static final String INVALID_DATE_DESC_LETTERS = " " + PREFIX_DATE + "abcd"; // not a recognised date format
     public static final String INVALID_DATE_DESC_EXPIRED = " " + PREFIX_DATE + "20/12/2010"; // date is in the past
@@ -90,6 +91,10 @@ public class CommandTestUtil {
     public static final String INVALID_REMARK_INDEX = " 0 " + PREFIX_REMARK + WORDS_ONE_NINETY_NINE;
     public static final String INVALID_DURATION_NEGATIVE_DESC = " " + PREFIX_DURATION + "-40";
     public static final String INVALID_DURATION_NON_INTEGER_DESC = " " + PREFIX_DURATION + "CS";
+    public static final String INVALID_DURATION_EXCEED_CLOSING_TIME_DESC = " " + PREFIX_DURATION + "720";
+    public static final String INVALID_DURATION_EXCEED_MAX_DESC = " " + PREFIX_DURATION + "1800";
+    public static final String INVALID_DURATION_EMPTY_DESC = " " + PREFIX_DURATION + "";
+    public static final String INVALID_DURATION_WHITESPACE_DESC = " " + PREFIX_DURATION + "       ";
 
     public static final String PREAMBLE_WHITESPACE = "\t  \r  \n";
     public static final String PREAMBLE_NON_EMPTY = "NonEmptyPreamble";

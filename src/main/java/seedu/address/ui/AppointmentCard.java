@@ -1,9 +1,13 @@
 package seedu.address.ui;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
+
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import javafx.scene.paint.Color;
@@ -50,15 +54,42 @@ public class AppointmentCard extends UiPart<Region> {
         id.setText(displayedIndex + ". ");
         date.setText(appointment.getDate().toString());
         time.setText(appointment.getStartTime() + " - " + appointment.getEndTime());
-        String statusText = appointment.getIsDoneStatus() ? "Done!" : "Upcoming";
-        status.setText("Status: " + statusText);
-        if (appointment.getIsDoneStatus()) {
-            status.setBackground(new Background(new BackgroundFill(Color.FIREBRICK, null, null)));
-        } else {
-            status.setBackground(new Background(new BackgroundFill(Color.GREEN, null, null)));
-        }
         name.setText("Name: " + appointment.getPatient().getName());
         contactNumber.setText("Contact: " + appointment.getPatient().getPhone());
+        updateStatus();
+    }
+
+    private void setStatus(String text, Color bgColor) {
+        status.setText("Status: " + text);
+        status.setBackground(new Background(new BackgroundFill(bgColor, new CornerRadii(5), null)));
+
+    }
+
+    private void updateStatus() {
+        if (appointment.getIsDoneStatus()) {
+            setStatus("Done", Color.DARKSLATEBLUE);
+            ;
+            return;
+        }
+
+        LocalTime currTime = LocalTime.now();
+        LocalDate currDate = LocalDate.now();
+
+        LocalTime startTime = appointment.getStartTime().getTime();
+        LocalTime endTime = appointment.getEndTime().getTime();
+        LocalDate date = appointment.getDate().getDate();
+
+        if (date.isBefore(currDate)) {
+            setStatus("Expired", Color.FIREBRICK);
+        } else if (date.isAfter(currDate)) {
+            setStatus("Upcoming", Color.GREEN);
+        } else if (startTime.isAfter(currTime)) {
+            setStatus("Upcoming", Color.GREEN);
+        } else if (endTime.isBefore(currTime)) {
+            setStatus("Expired", Color.FIREBRICK);
+        } else {
+            setStatus("Ongoing", Color.DARKORANGE);
+        }
     }
 
     @Override
