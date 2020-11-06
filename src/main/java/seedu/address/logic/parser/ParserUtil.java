@@ -3,6 +3,7 @@ package seedu.address.logic.parser;
 import static java.time.temporal.ChronoUnit.MINUTES;
 import static java.util.Objects.requireNonNull;
 
+import java.security.PublicKey;
 import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -26,9 +27,12 @@ import seedu.address.model.tag.Tag;
  * Contains utility methods used for parsing strings in the various *Parser classes.
  */
 public class ParserUtil {
+    public static final int MIN_DURATION = 10;
+    public static final int MAX_DURATION = 840;
     public static final String MESSAGE_INVALID_INDEX = "Index must be a positive integer that is more than 0.";
     public static final String MESSAGE_INVALID_DURATION = "Duration must be a positive integer that is more than or "
-            + "equals to 10 mins.";
+            + "equals to 10 mins.\nDuration provided must also result in an appointment end time that falls within the"
+            + " operational hours of the clinic on the same day.";
 
 
     /**
@@ -160,7 +164,7 @@ public class ParserUtil {
 
         LocalTime parsedTime = TimeParserUtil.parse(trimmedTime);
 
-        if (!Time.isValidStartTime(parsedTime)) {
+        if (!Time.isValidTime(parsedTime)) {
             throw new ParseException(Time.MESSAGE_CONSTRAINTS);
         }
 
@@ -190,7 +194,8 @@ public class ParserUtil {
         // null duration will use the default one hour duration.
         String trimmedDuration = durationString.trim();
         Duration duration;
-        Duration minDuration = Duration.of(10, MINUTES);
+        Duration minDuration = Duration.of(MIN_DURATION, MINUTES);
+        Duration maxDuration = Duration.of(MAX_DURATION, MINUTES);
         try {
             duration = Duration.of(Integer.parseInt(trimmedDuration), MINUTES);
         } catch (NumberFormatException e) {
@@ -202,6 +207,10 @@ public class ParserUtil {
         }
 
         if (duration.compareTo(minDuration) < 0) {
+            throw new ParseException(MESSAGE_INVALID_DURATION);
+        }
+
+        if (duration.compareTo(maxDuration) > 0) {
             throw new ParseException(MESSAGE_INVALID_DURATION);
         }
 

@@ -257,7 +257,7 @@ Example:
 
 Reschedules or modifies an existing appointment with a new date, time or duration.
 
-Do note that the duration used here is **measured in minutes**!
+Do note that the duration used here is **measured in minutes** and must be **at least 10 minutes**!
 
 Format: `change APPT_INDEX [d/DATE] [t/TIME] [dur/DURATION]`
 
