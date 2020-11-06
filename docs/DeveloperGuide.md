@@ -212,9 +212,8 @@ The data archived will be minimal and only contains the following columns: `date
 
 The archive mechanism is facilitated by `CsvAppointmentArchive` which implements the `AppointmentArchive` interface.
 It is stored internally within the `JsonAppointmentBookStorage` which in turn implements the `AppointmentBookStorage` interface.
-<br>
-[`CsvAppointmentArchive`](https://github.com/AY2021S1-CS2103T-T12-4/tp/blob/master/src/main/java/seedu/address/storage/archive/CsvAppointmentArchive.java) implements the following operations:
 
+[`CsvAppointmentArchive`](https://github.com/AY2021S1-CS2103T-T12-4/tp/blob/master/src/main/java/seedu/address/storage/archive/CsvAppointmentArchive.java) implements the following operations:
 * `archivePastAppointments(..)` — Removes all past appointments from the `ReadOnlyAppointmentBook` and archive them as a CSV file.
 * `saveAppointments(..)` — Saves the list of `CsvAdaptedAppointment` as a CSV file in the archive directory with the given filename.
 * `readAppointments(..)` — Reads the CSV file with the given filename and returns the data as a `List<CsvAdaptedAppointment>`
