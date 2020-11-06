@@ -3,9 +3,6 @@ package seedu.address.model.patient;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.AppUtil.checkArgument;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 /**
  * Represents a Patient's remark in the patient book.
  * Guarantees: immutable; is valid.
