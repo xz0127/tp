@@ -37,15 +37,15 @@ public class ConfigTest {
         // null -> returns false
         assertFalse(defaultConfig.equals(null));
 
-        // different types -> returns false
+        // different type -> returns false
         assertFalse(defaultConfig.equals(5));
 
-        // different level -> returns false
+        // different content: level -> returns false
         Config editedConfig = new Config();
         editedConfig.setLogLevel(Level.ALL);
         assertFalse(defaultConfig.equals(editedConfig));
 
-        // different path -> returns false
+        // different content: path -> returns false
         editedConfig = new Config();
         editedConfig.setUserPrefsFilePath(Path.of("temp"));
         assertFalse(defaultConfig.equals(editedConfig));
