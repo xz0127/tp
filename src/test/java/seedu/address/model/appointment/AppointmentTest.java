@@ -1,5 +1,6 @@
 package seedu.address.model.appointment;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_ADDRESS_BOB;
@@ -303,6 +304,7 @@ public class AppointmentTest {
                 .build();
         assertTrue(ALICE_APPOINTMENT.isInSameWeek(editedOne.getDate()));
     }
+
     @Test
     public void equals() {
         // same values -> returns true
@@ -335,5 +337,63 @@ public class AppointmentTest {
         editedOne = new AppointmentBuilder(ALICE_APPOINTMENT)
                 .withPatient(BOB).build();
         assertFalse(ALICE_APPOINTMENT.equals(editedOne));
+    }
+
+    @Test
+    public void compareTo_appointmentIsBefore_returnNegative() {
+        // different appointment date
+        Appointment appointmentBefore = new AppointmentBuilder()
+                .withDate(LocalDate.of(2020, 2, 2)).build();
+        Appointment appointmentAfter = new AppointmentBuilder()
+                .withDate(LocalDate.of(2020, 2, 3)).build();
+        assertTrue(appointmentBefore.compareTo(appointmentAfter) < 0);
+
+        // different appointment time, same date (not overlapping)
+        appointmentBefore = new AppointmentBuilder()
+                .withTime(LocalTime.of(9, 0), LocalTime.of(10, 0)).build();
+        appointmentAfter = new AppointmentBuilder()
+                .withTime(LocalTime.of(10, 30), LocalTime.of(11, 0)).build();
+        assertTrue(appointmentBefore.compareTo(appointmentAfter) < 0);
+    }
+
+    @Test
+    public void compare_appointmentIsAfter_returnPositive() {
+        // different appointment date
+        Appointment appointmentAfter = new AppointmentBuilder()
+                .withDate(LocalDate.of(2020, 2, 3)).build();
+        Appointment appointmentBefore = new AppointmentBuilder()
+                .withDate(LocalDate.of(2020, 2, 2)).build();
+        assertEquals(1, appointmentAfter.compareTo(appointmentBefore));
+
+        // different appointment time, same date (not overlapping)
+        appointmentAfter = new AppointmentBuilder()
+                .withTime(LocalTime.of(10, 0), LocalTime.of(11, 0)).build();
+        appointmentBefore = new AppointmentBuilder()
+                .withTime(LocalTime.of(9, 0), LocalTime.of(10, 0)).build();
+        assertEquals(1, appointmentAfter.compareTo(appointmentBefore));
+    }
+
+    @Test
+    public void compare_appointmentIsOverlapping_returnZero() {
+        // different appointment time, but overlapping
+        Appointment appointmentBefore = new AppointmentBuilder()
+                .withTime(LocalTime.of(17, 0), LocalTime.of(18, 0)).build();
+        Appointment appointmentAfter = new AppointmentBuilder()
+                .withTime(LocalTime.of(17, 30), LocalTime.of(18, 40)).build();
+        assertEquals(0, appointmentAfter.compareTo(appointmentAfter));
+
+        // different appointment time, but overlapping
+        appointmentBefore = new AppointmentBuilder()
+                .withTime(LocalTime.of(17, 0), LocalTime.of(19, 0)).build();
+        appointmentAfter = new AppointmentBuilder()
+                .withTime(LocalTime.of(17, 30), LocalTime.of(18, 30)).build();
+        assertEquals(0, appointmentBefore.compareTo(appointmentAfter));
+
+        // different appointment time, but overlapping
+        assertEquals(0, appointmentAfter.compareTo(appointmentBefore));
+
+        // same appointment time
+        assertEquals(0, appointmentAfter.compareTo(appointmentAfter));
+        assertEquals(0, appointmentBefore.compareTo(appointmentBefore));
     }
 }

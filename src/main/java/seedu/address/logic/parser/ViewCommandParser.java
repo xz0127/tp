@@ -1,9 +1,11 @@
 package seedu.address.logic.parser;
 
+import static seedu.address.commons.core.Messages.MESSAGE_EXPIRED_DATE;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DATE;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_APPOINTMENTS;
 
+import seedu.address.commons.util.DateTimeUtil;
 import seedu.address.logic.commands.ViewCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.appointment.Date;
@@ -36,6 +38,11 @@ public class ViewCommandParser implements Parser<ViewCommand> {
         }
 
         Date date = ParserUtil.parseDate(argMultimap.getValue(PREFIX_DATE).get());
+
+        if (DateTimeUtil.isExpiredByDay(date.getDate())) {
+            throw new ParseException(MESSAGE_EXPIRED_DATE);
+        }
+
         DateMatchesPredicate predicate = new DateMatchesPredicate(date);
 
         return new ViewCommand(predicate);

@@ -87,6 +87,7 @@ class RemarkCommandTest {
 
         Model expectedModel = new ModelManager(new PatientBook(model.getPatientBook()),
                 new AppointmentBook(model.getAppointmentBook()), new UserPrefs());
+        showPatientAtIndex(expectedModel, INDEX_FIRST_PATIENT);
         expectedModel.setPatient(firstPatient, editedPatient);
         expectedModel.commitPatientBook();
         expectedModel.commitAppointmentBook();

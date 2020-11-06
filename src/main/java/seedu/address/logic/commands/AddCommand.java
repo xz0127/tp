@@ -55,6 +55,7 @@ public class AddCommand extends Command {
         }
 
         model.addPatient(toAdd);
+        model.updateFilteredPatientList(Model.PREDICATE_SHOW_ALL_PATIENTS);
         model.updateFilteredAppointmentList(Model.PREDICATE_SHOW_ALL_APPOINTMENTS);
         model.commitPatientBook();
         model.commitAppointmentBook();
