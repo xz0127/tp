@@ -28,8 +28,7 @@ import seedu.address.model.tag.Tag;
  * Contains utility methods used for parsing strings in the various *Parser classes.
  */
 public class ParserUtil {
-    public static final int MIN_DURATION = 10;
-    public static final int MAX_DURATION = 840;
+    public static final int MIN_DURATION = 10; // Appointments cannot have a duration that is lesser than 10 mins.
     public static final String MESSAGE_INVALID_INDEX = "Index must be a positive integer that is more than 0.";
     public static final String MESSAGE_INVALID_DURATION = "Duration must be a positive integer that is more than or "
             + "equals to 10 mins.\nDuration provided must also result in an appointment end time that falls within the"
