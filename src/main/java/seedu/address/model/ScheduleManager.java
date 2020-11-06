@@ -61,9 +61,9 @@ public class ScheduleManager {
     }
 
     /**
-     * Checks whether the current time is within operation hours.
+     * Checks whether {@code time} is within operation hours.
      *
-     * @return true if current time is within operation hours, false otherwise.
+     * @return true if {@code time} is within operation hours, false otherwise.
      */
     public boolean isWithinOperationHour(LocalTime time) {
         return !isBeforeOperationHour(time) && !isAfterOperationHour(time);
