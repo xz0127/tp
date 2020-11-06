@@ -13,7 +13,6 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TIME;
 import static seedu.address.testutil.Assert.assertThrows;
 import static seedu.address.testutil.RemarkUtil.WORDS_ONE_NINETY_NINE;
-import static seedu.address.testutil.RemarkUtil.WORDS_TWO_FIVE_ZERO;
 
 import java.util.ArrayList;
 import java.util.Arrays;
