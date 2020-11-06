@@ -342,7 +342,8 @@ Format: `clear`
 ### Undoing previous command : `undo`
 
 Restores the patient and appointment book to the state before the previous *undoable* command was executed.
-
+`undo`  command cannot reverse a command execution from the previous Nuudle session.
+ 
 Format: `undo`
 
 <div markdown="span" class="alert alert-primary">:information_source: **Tip:**
@@ -350,7 +351,7 @@ Undoable commands refers to commands that modifies the patient or appointment li
 </div>
 
 * There must be at least one previously executed undoable command.
-* Multiple calls to `redo` will reverse multiple undoable command execution, starting from the most recent command.
+* Multiple calls to `undo` will reverse multiple undoable command execution, starting from the most recent command.
 
 Examples:
 * `delete 1`<br>
@@ -366,10 +367,23 @@ Examples:
   `clear`<br>
   `undo` (reverses the `clear` command)<br>
   `undo` (reverses the `cancel 1` command)
+  
+Step by step illustration:
+1. Initial state:
+![UndoCommandInitialState](images/UndoRedoInitialState_UG.png)
+
+2. Input `delete 1`:
+![UndoCommandStep2](images/UndoStep2_UG.png)
+The first patient `Alex Yeoh` is deleted.
+
+3. Input `Undo`:
+![UndoCommandStep3](images/UndoStep3_UG.png)
+The `undo` command cancels the last undoable command `delete 1`, so that 
+the patient `Alex Yeoh` comes back to the list again.
 
 ### Redoing the previously undone command : `redo`
 
-Reverses the most recent `undo` command.
+Reverses the most recent `undo` command. `redo` command cannot reverse an `undo` execution from the previous Nuudle session.
 
 Format: `redo`
 
@@ -394,7 +408,22 @@ Examples:
   `undo` (reverses the `clear` command)<br>
   `undo` (reverses the `cancel 1` command)<br>
   `redo` (reapplies the `cancel 1` command)<br>
-  `undo` (reapplies the `clear` command)<br>
+  `redo` (reapplies the `clear` command)
+
+Step by step illustration:
+1. Initial state:
+![RedoCommandInitialState](images/UndoRedoInitialState_UG.png)
+
+2. Input `clear`:
+![RedoCommandStep2](images/RedoStep2_UG.png)
+
+3. Input `Undo`:
+![RedoCommandStep3](images/RedoStep3_UG.png)
+All the data comes back.
+
+4. Input `Redo`:
+![RedoCommandStep4](images/RedoStep4_UG.png)
+Redo the `clear` command, which removes all the data again.
 
 ### Exiting the program : `exit`
 
