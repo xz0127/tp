@@ -55,6 +55,9 @@ public class TimeIntervalList {
     @Override
     public String toString() {
         StringBuilder message = new StringBuilder();
+        if (timeIntervals.size() == 0) {
+            message.append("Sorry no time intervals!");
+        }
         for (TimeInterval freeTimeInterval : timeIntervals) {
             message.append(freeTimeInterval.toString()).append("\n");
         }
