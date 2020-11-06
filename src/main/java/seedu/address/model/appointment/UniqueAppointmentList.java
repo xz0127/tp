@@ -30,7 +30,7 @@ public class UniqueAppointmentList implements Iterable<Appointment> {
     // todo: UniqueAppointmentListTest
     private final ObservableList<Appointment> internalList = FXCollections.observableArrayList();
     private final ObservableList<Appointment> internalUnmodifiableList =
-            FXCollections.unmodifiableObservableList(internalList.sorted(new AppointmentComparator()));
+            FXCollections.unmodifiableObservableList(internalList.sorted());
 
     /**
      * Returns true if the list contains an appointment that has an overlap with the given argument.

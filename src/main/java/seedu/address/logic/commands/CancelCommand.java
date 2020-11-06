@@ -2,7 +2,6 @@ package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
-import static seedu.address.model.Model.PREDICATE_SHOW_ALL_APPOINTMENTS;
 
 import java.util.List;
 
@@ -48,7 +47,7 @@ public class CancelCommand extends Command {
         Appointment toCancel = lastShownAppointmentList.get(targetIndex.getZeroBased());
 
         model.deleteAppointment(toCancel);
-        model.updateFilteredAppointmentList(PREDICATE_SHOW_ALL_APPOINTMENTS);
+        // model.updateFilteredAppointmentList(PREDICATE_SHOW_ALL_APPOINTMENTS);
         model.commitPatientBook();
         model.commitAppointmentBook();
         return new CommandResult(String.format(MESSAGE_MARK_CANCEL_SUCCESS, toCancel));

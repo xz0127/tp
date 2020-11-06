@@ -13,7 +13,7 @@ import seedu.address.model.tag.Tag;
  * Represents a Patient in the patient book.
  * Guarantees: details are present and not null, field values are validated, immutable.
  */
-public class Patient {
+public class Patient implements Comparable<Patient> {
 
     // Identity fields
     private final Name name;
@@ -123,5 +123,10 @@ public class Patient {
                 .append("; Tags: ");
         getTags().forEach(builder::append);
         return builder.append(";").toString();
+    }
+
+    @Override
+    public int compareTo(Patient other) {
+        return getName().compareTo(other.getName());
     }
 }

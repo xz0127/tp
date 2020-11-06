@@ -5,7 +5,6 @@ import static seedu.address.commons.core.Messages.MESSAGE_EXPIRED_DATE_TIME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DATE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DURATION;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TIME;
-import static seedu.address.model.Model.PREDICATE_SHOW_ALL_APPOINTMENTS;
 import static seedu.address.model.appointment.Appointment.CREATION_OFFSET_MINUTES;
 
 import java.time.Duration;
@@ -96,7 +95,7 @@ public class ChangeCommand extends Command {
         } catch (OverlappingAppointmentException e) {
             throw new CommandException(APPOINTMENT_OVERLAP);
         }
-        model.updateFilteredAppointmentList(PREDICATE_SHOW_ALL_APPOINTMENTS);
+        // model.updateFilteredAppointmentList(PREDICATE_SHOW_ALL_APPOINTMENTS);
         model.commitPatientBook();
         model.commitAppointmentBook();
         return new CommandResult(String.format(MESSAGE_EDIT_APPOINTMENT_SUCCESS, editedAppointment));
