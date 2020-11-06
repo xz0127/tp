@@ -5,7 +5,6 @@ import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DATE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DURATION;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TIME;
-import static seedu.address.model.Model.PREDICATE_SHOW_ALL_APPOINTMENTS;
 
 import java.time.Duration;
 import java.util.List;
@@ -77,7 +76,6 @@ public class AssignCommand extends Command {
         }
 
         model.addAppointment(appointment);
-        model.updateFilteredAppointmentList(PREDICATE_SHOW_ALL_APPOINTMENTS);
         model.commitAppointmentBook();
         model.commitPatientBook();
         return new CommandResult(String.format(MESSAGE_SUCCESS, appointment));
@@ -109,6 +107,9 @@ public class AssignCommand extends Command {
                 && durationSupporter.equals(((AssignCommand) other).durationSupporter)); // state check
     }
 
+    /**
+     * An assistant class to help parse the parameters of an {@code AssignCommand}.
+     */
     public static class DurationSupporter extends DateTimeLoader {
         private Duration duration = Appointment.DEFAULT_DURATION;
 

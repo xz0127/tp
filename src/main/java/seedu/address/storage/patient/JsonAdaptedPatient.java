@@ -23,7 +23,7 @@ import seedu.address.model.tag.Tag;
  */
 public class JsonAdaptedPatient {
 
-    public static final String MISSING_FIELD_MESSAGE_FORMAT = "Patient's %s field is missing!";
+    public static final String MISSING_FIELD_MESSAGE_FORMAT = "Patient's %s field is missing or corrupted!";
 
     private final String name;
     private final String phone;

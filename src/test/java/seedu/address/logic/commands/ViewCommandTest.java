@@ -3,7 +3,7 @@ package seedu.address.logic.commands;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static seedu.address.commons.core.Messages.MESSAGE_APPOINTMENTS_OVERVIEW;
+import static seedu.address.commons.core.Messages.MESSAGE_APPOINTMENTS_LISTED_OVERVIEW;
 import static seedu.address.logic.commands.CommandTestUtil.DIFF_DATE;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_DATE;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
@@ -78,7 +78,7 @@ public class ViewCommandTest {
 
     @Test
     public void execute_multipleAppointmentsFound_viewSuccessful() {
-        String expectedMessage = String.format(MESSAGE_APPOINTMENTS_OVERVIEW, 2);
+        String expectedMessage = String.format(MESSAGE_APPOINTMENTS_LISTED_OVERVIEW, 2);
         DateMatchesPredicate predicate = new DateMatchesPredicate(new Date(
                 2050, 1, 1)
         );
@@ -90,7 +90,7 @@ public class ViewCommandTest {
 
     @Test
     public void execute_noAppointmentFound_viewSuccessful() {
-        String expectedMessage = String.format(MESSAGE_APPOINTMENTS_OVERVIEW, 0);
+        String expectedMessage = String.format(MESSAGE_APPOINTMENTS_LISTED_OVERVIEW, 0);
         DateMatchesPredicate predicate = preparePredicate(LocalDate.of(2088, 3, 3));
         ViewCommand command = new ViewCommand(predicate);
         expectedModel.updateFilteredAppointmentList(predicate);

@@ -1,7 +1,7 @@
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
-import static seedu.address.commons.core.Messages.MESSAGE_APPOINTMENTS_OVERVIEW;
+import static seedu.address.commons.core.Messages.MESSAGE_APPOINTMENTS_LISTED_OVERVIEW;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DATE;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_APPOINTMENTS;
 
@@ -50,7 +50,7 @@ public class ViewCommand extends Command {
 
         return new CommandResult(
                 String.format(
-                        MESSAGE_APPOINTMENTS_OVERVIEW, model.getFilteredAppointmentList().size())
+                        MESSAGE_APPOINTMENTS_LISTED_OVERVIEW, model.getFilteredAppointmentList().size())
         );
     }
 

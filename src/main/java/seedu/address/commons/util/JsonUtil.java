@@ -5,6 +5,9 @@ import static java.util.Objects.requireNonNull;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.format.DateTimeParseException;
 import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -17,6 +20,7 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.deser.std.FromStringDeserializer;
+import com.fasterxml.jackson.databind.ext.NioPathDeserializer;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 
@@ -35,10 +39,35 @@ public class JsonUtil {
             .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
             .setVisibility(PropertyAccessor.ALL, JsonAutoDetect.Visibility.NONE)
             .setVisibility(PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY)
-            .registerModule(new SimpleModule("SimpleModule")
+            .registerModule(new SimpleModule("LevelModule")
                     .addSerializer(Level.class, new ToStringSerializer())
+                    .addDeserializer(Level.class, new LevelDeserializer(Level.class)))
+            .registerModule(new SimpleModule("PathModule")
                     .addSerializer(Path.class, new ToStringSerializer())
-                    .addDeserializer(Level.class, new LevelDeserializer(Level.class)));
+                    .addDeserializer(Path.class, new NioPathDeserializer()))
+            .registerModule(new SimpleModule("DateTimeModule")
+            .addSerializer(LocalDate.class, new ToStringSerializer())
+            .addDeserializer(LocalDate.class, new FromStringDeserializer<>(LocalDate.class) {
+                @Override
+                protected LocalDate _deserialize(String value, DeserializationContext ctxt) throws IOException {
+                    try {
+                        return LocalDate.parse(value);
+                    } catch (DateTimeParseException pe) {
+                        return null;
+                    }
+                }
+            })
+            .addSerializer(LocalTime.class, new ToStringSerializer())
+            .addDeserializer(LocalTime.class, new FromStringDeserializer<>(LocalTime.class) {
+                @Override
+                protected LocalTime _deserialize(String value, DeserializationContext ctxt) throws IOException {
+                    try {
+                        return LocalTime.parse(value);
+                    } catch (DateTimeParseException pe) {
+                        return null;
+                    }
+                }
+            }));
 
     static <T> void serializeObjectToJsonFile(Path jsonFile, T objectToSerialize) throws IOException {
         FileUtil.writeToFile(jsonFile, toJsonString(objectToSerialize));
