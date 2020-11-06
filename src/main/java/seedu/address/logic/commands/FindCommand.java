@@ -48,8 +48,14 @@ public class FindCommand extends Command {
         Predicate<Patient> allPredicates = descriptor.getOrPredicate();
         model.updateFilteredPatientList(allPredicates);
         model.updateFilteredAppointmentList(appointment -> allPredicates.test(appointment.getPatient()));
-        return new CommandResult(
-                String.format(Messages.MESSAGE_PATIENTS_LISTED_OVERVIEW, model.getFilteredPatientList().size()));
+
+        String messageResult = String.format(Messages.MESSAGE_PATIENTS_LISTED_OVERVIEW,
+                model.getFilteredPatientList().size())
+                + "\n"
+                + String.format(Messages.MESSAGE_APPOINTMENTS_LISTED_OVERVIEW,
+                model.getFilteredAppointmentList().size());
+
+        return new CommandResult(messageResult);
     }
 
     @Override

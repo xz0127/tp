@@ -7,6 +7,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_DATE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DURATION;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TIME;
 import static seedu.address.model.appointment.Appointment.CREATION_OFFSET_MINUTES;
+import static seedu.address.model.appointment.Time.CLOSING_TIME;
 
 import java.time.Duration;
 import java.time.LocalTime;
@@ -64,10 +65,16 @@ public class AssignCommandParser implements Parser<AssignCommand> {
         Date date = ParserUtil.parseDate(argMultimap.getValue(PREFIX_DATE).get());
         Time time = ParserUtil.parseTime(argMultimap.getValue(PREFIX_TIME).get());
 
-        // Expired date time can only be confirmed when date and time are put together.
+        // expired date time can only be confirmed when date and time are put together.
         LocalTime timeWithLeeway = time.getTime().plusMinutes(CREATION_OFFSET_MINUTES);
         if (DateTimeUtil.isExpired(date.getDate(), timeWithLeeway)) {
             throw new ParseException(MESSAGE_EXPIRED_DATE_TIME);
+        }
+
+        // check if the duration exceeds the CLOSING_TIME
+        Duration usableDuration = Duration.between(time.getTime(), CLOSING_TIME);
+        if (duration.compareTo(usableDuration) > 0) {
+            throw new ParseException(Time.MESSAGE_CONSTRAINTS);
         }
 
         loader.setAppointmentDate(date);

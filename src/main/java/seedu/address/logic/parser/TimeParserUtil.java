@@ -27,6 +27,11 @@ public class TimeParserUtil {
             + " for more date/time variants."
             + "\nType help in the input box for the link!";
 
+    public static final String MESSAGE_EMPTY_TIME = "The Time input should not be empty.\n"
+            + "You can try entering a time with the format such as:\n"
+            + "1pm\n"
+            + "See more time format on our User Guide";
+
     /**
      * List of known time formats that parser accepts.
      **/
@@ -64,6 +69,10 @@ public class TimeParserUtil {
      */
     public static LocalTime parse(String timeString) throws ParseException {
         requireNonNull(timeString);
+
+        if (timeString.isBlank()) {
+            throw new ParseException(MESSAGE_EMPTY_TIME);
+        }
 
         LocalTime formattedTime = parseByTimeFormat(timeString);
         if (formattedTime != null) {

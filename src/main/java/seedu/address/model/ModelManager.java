@@ -131,7 +131,6 @@ public class ModelManager implements Model {
     @Override
     public void addPatient(Patient patient) {
         versionedPatientBook.addPatient(patient);
-        updateFilteredPatientList(PREDICATE_SHOW_ALL_PATIENTS);
     }
 
     @Override
@@ -155,7 +154,6 @@ public class ModelManager implements Model {
     @Override
     public void addAppointment(Appointment appointment) {
         versionedAppointmentBook.addAppointment(appointment);
-        updateFilteredAppointmentList(PREDICATE_SHOW_ALL_APPOINTMENTS);
     }
 
     @Override
