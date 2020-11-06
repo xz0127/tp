@@ -18,7 +18,7 @@ public class DateParserUtilTest {
 
     @Test
     void parse_invalidDateString_throwsParseException() {
-        assertThrows(ParseException.class, DateParserUtil.MESSAGE_CONSTRAINTS, ()
+        assertThrows(ParseException.class, DateParserUtil.MESSAGE_EMPTY_DATE, ()
             -> DateParserUtil.parse(""));
     }
 
@@ -150,5 +150,6 @@ public class DateParserUtilTest {
 
         // return null
         assertNull(DateParserUtil.parseByNaturalDay("", currDate));
+        assertNull(DateParserUtil.parseByNaturalDay("abcde", currDate));
     }
 }

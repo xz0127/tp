@@ -14,8 +14,8 @@ public class TimeParserUtilTest {
 
     @Test
     void parse_invalidTimeString_throwsParseException() {
-        assertThrows(ParseException.class, TimeParserUtil.MESSAGE_CONSTRAINTS, ()
-            -> TimeParserUtil.parse(""));
+        assertThrows(ParseException.class, TimeParserUtil.MESSAGE_EMPTY_TIME, ()
+            -> TimeParserUtil.parse("  "));
     }
 
     @Test
@@ -92,5 +92,6 @@ public class TimeParserUtilTest {
 
         // return null
         assertNull(TimeParserUtil.parseByNaturalTime(""));
+        assertNull(TimeParserUtil.parseByNaturalTime("abcde"));
     }
 }

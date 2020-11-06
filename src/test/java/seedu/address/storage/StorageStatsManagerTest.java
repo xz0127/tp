@@ -12,7 +12,7 @@ public class StorageStatsManagerTest {
         assertEquals("", statsManager.getArchiveStatusMessage());
 
         statsManager.setArchiveStats(1, 0);
-        assertEquals("1 appointment archived", statsManager.getArchiveStatusMessage());
+        assertEquals("1 appointment archived.", statsManager.getArchiveStatusMessage());
 
         statsManager.setArchiveStats(1, 1);
         assertEquals("1 appointment archived, of which 1 is not done.", statsManager.getArchiveStatusMessage());
@@ -68,7 +68,7 @@ public class StorageStatsManagerTest {
         statsManager.setRemovedPatientCount(0);
         statsManager.setRemovedAppointmentCount(1);
         statsManager.setArchiveStats(1, 0);
-        assertEquals("Failed to load 1 appointment.\n1 appointment archived", statsManager.getMessage());
+        assertEquals("Failed to load 1 appointment.\n1 appointment archived.", statsManager.getMessage());
 
         statsManager.setRemovedPatientCount(10);
         statsManager.setRemovedAppointmentCount(10);

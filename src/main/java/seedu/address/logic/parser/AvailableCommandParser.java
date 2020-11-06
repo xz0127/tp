@@ -1,10 +1,12 @@
 package seedu.address.logic.parser;
 
+import static seedu.address.commons.core.Messages.MESSAGE_EXPIRED_TIME_SLOTS;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DATE;
 
 import java.time.LocalDate;
 
+import seedu.address.commons.util.DateTimeUtil;
 import seedu.address.logic.commands.AvailableCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.appointment.Date;
@@ -34,6 +36,11 @@ public class AvailableCommandParser implements Parser<AvailableCommand> {
         }
 
         Date date = ParserUtil.parseDate(argMultimap.getValue(PREFIX_DATE).get());
+
+        if (DateTimeUtil.isExpiredByDay(date.getDate())) {
+            throw new ParseException(MESSAGE_EXPIRED_TIME_SLOTS);
+        }
+
         LocalDate today = LocalDate.now();
         boolean isToday = date.getDate().equals(today);
         DateMatchesPredicate predicate = new DateMatchesPredicate(date);

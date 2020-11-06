@@ -3,6 +3,7 @@ package seedu.address.logic.commands;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static seedu.address.commons.core.Messages.MESSAGE_APPOINTMENTS_LISTED_OVERVIEW;
 import static seedu.address.commons.core.Messages.MESSAGE_PATIENTS_LISTED_OVERVIEW;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.testutil.TypicalAppointments.getTypicalAppointmentBook;
@@ -76,7 +77,9 @@ public class FindCommandTest {
         descriptor.setNricPredicate(new String[]{CARL.getNric().toString()});
         descriptor.setPhonePredicate(new String[]{CARL.getPhone().toString()});
 
-        String expectedMessage = String.format(MESSAGE_PATIENTS_LISTED_OVERVIEW, 1);
+        String expectedMessage = String.format(MESSAGE_PATIENTS_LISTED_OVERVIEW, 1)
+                + "\n"
+                + String.format(MESSAGE_APPOINTMENTS_LISTED_OVERVIEW, 2);
         FindCommand command = new FindCommand(descriptor);
 
         Predicate<Patient> predicate = descriptor.getOrPredicate();
@@ -93,7 +96,9 @@ public class FindCommandTest {
         descriptor.setNricPredicate(new String[]{CARL.getNric().toString(), ELLE.getNric().toString()});
         descriptor.setPhonePredicate(new String[]{CARL.getPhone().toString(), FIONA.getPhone().toString()});
 
-        String expectedMessage = String.format(MESSAGE_PATIENTS_LISTED_OVERVIEW, 3);
+        String expectedMessage = String.format(MESSAGE_PATIENTS_LISTED_OVERVIEW, 3)
+                + "\n"
+                + String.format(MESSAGE_APPOINTMENTS_LISTED_OVERVIEW, 2);
         FindCommand command = new FindCommand(descriptor);
 
         Predicate<Patient> predicate = descriptor.getOrPredicate();

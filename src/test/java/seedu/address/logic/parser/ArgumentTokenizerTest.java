@@ -42,6 +42,7 @@ public class ArgumentTokenizerTest {
 
         // Verify the number of values returned is as expected
         assertEquals(expectedValues.length, argMultimap.getAllValues(prefix).size());
+        assertEquals(expectedValues.length == 1, argMultimap.isSingleValue(prefix));
 
         // Verify all values returned are as expected and in order
         for (int i = 0; i < expectedValues.length; i++) {
