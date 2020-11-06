@@ -183,7 +183,6 @@ Examples:
 ### Adding a remark for a patient : `remark`
 
 Adds a remark to an existing patient in the patient book for nurses to store additional data unique to the patient.
-<br>Each remark has a limit of **200 words**.
 
 Format: `remark PATIENT_INDEX [r/REMARK]`
 
