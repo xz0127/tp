@@ -2,11 +2,14 @@ package seedu.address.ui;
 
 import java.util.logging.Logger;
 
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.Region;
+import javafx.util.Duration;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.model.appointment.Appointment;
 
@@ -27,6 +30,13 @@ public class AppointmentListPanel extends UiPart<Region> {
         super(FXML);
         appointmentListView.setItems(appointmentList);
         appointmentListView.setCellFactory(listView -> new AppointmentListViewCell());
+        setAutoRefresh();
+    }
+
+    private void setAutoRefresh() {
+        Timeline refresher = new Timeline(new KeyFrame(Duration.seconds(30), event -> appointmentListView.refresh()));
+        refresher.setCycleCount(Timeline.INDEFINITE);
+        refresher.play();
     }
 
     /**

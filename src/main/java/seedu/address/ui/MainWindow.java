@@ -4,7 +4,6 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.logging.Logger;
 
-import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
@@ -173,7 +172,7 @@ public class MainWindow extends UiPart<Stage> {
         Timeline clock = new Timeline(new KeyFrame(Duration.ZERO, event -> {
             dateTime.setText(LocalDateTime.now().format(formatter));
         }), new KeyFrame(Duration.seconds(15)));
-        clock.setCycleCount(Animation.INDEFINITE);
+        clock.setCycleCount(Timeline.INDEFINITE);
         clock.play();
     }
     // @@author
