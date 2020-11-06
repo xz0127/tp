@@ -154,7 +154,7 @@ Format: `find [n/NAME [MORE_NAMES]] [i/NRIC [MORE_NRICS]] [p/PHONE_NUMBER [MORE_
 * Only full words will be matched e.g. `Han` will not match `Hans`
 * Patients matching at least one keyword will be returned (i.e. `OR` search).
   e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
-* The respective appointments of patients matching at least one keyword will also be returned. 
+* The respective appointments of patients matching at least one keyword will also be returned.
 * The search requirements cannot be left empty, at least one search requirement (by name, NRIC, or phone number) has to be provided
 
 Examples:
@@ -188,12 +188,12 @@ Adds a remark to an existing patient in the patient book for nurses to store add
 Format: `remark PATIENT_INDEX [r/REMARK]`
 
 <div markdown="span" class="alert alert-primary">:bulb: **Tip:**
-We implemented our remarks feature to empower you with the ability to add extra information to a patient's bio data! 
+We implemented our remarks feature to empower you with the ability to add extra information to a patient's bio data!
 So don't be shy and feel free to add anything under the sun that is applicable for the patient.
 </div>
 
-* **Adds a remark** for the patient at the specified `PATIENT_INDEX`. 
-* `PATIENT_INDEX` here refers to the number shown on the left side of the displayed patient book. 
+* **Adds a remark** for the patient at the specified `PATIENT_INDEX`.
+* `PATIENT_INDEX` here refers to the number shown on the left side of the displayed patient book.
 * Please note that the index used **must be a positive integer** 1, 2, 3, …​
 * A remark is an **optional field** and can be left blank if it is not applicable.
 * A patient will have `NIL` displayed as his/her remark status if it was left empty.
@@ -202,7 +202,7 @@ So don't be shy and feel free to add anything under the sun that is applicable f
 * If you wish to **delete** a patient's remark, simply use either of the following commands:
     * `remark PATIENT_INDEX`
     * `remark PATIENT_INDEX r/`
-    
+
 Examples to add remarks:
 *  `remark 2 r/Has been visiting Dr John` Adds a remark `Has been visiting Dr John` to the patient currently displayed second from the top in the patient list.
 *  `remark 1 r/Can only converse in mandarin` Adds a remark `Can only converse in mandarin` to the patient currently displayed at the top of the patient list.
@@ -214,7 +214,7 @@ Examples to delete the remark for a patient at index 1:
 * `remark 1 r/`
 * `remark 1`
 
-![result for 'Empty remark'](images/nullRemark.png) 
+![result for 'Empty remark'](images/nullRemark.png)
 <br>
 
 ### Adding an appointment : `assign`
@@ -262,13 +262,13 @@ Do note that the duration used here is **measured in minutes**!
 Format: `change APPT_INDEX [d/DATE] [t/TIME] [dur/DURATION]`
 
 <div markdown="span" class="alert alert-primary">:bulb: **Tip:**
-If you would only like to change the duration of an appointment while keeping it's original date and time, simply 
-enter the new `DURATION` with it's corresponding `APPT_INDEX`! There is no need to retype it's date and time. The same 
+If you would only like to change the duration of an appointment while keeping it's original date and time, simply
+enter the new `DURATION` with it's corresponding `APPT_INDEX`! There is no need to retype it's date and time. The same
 applies for the other fields.
 </div>
 
-* **Reschedules an appointment** at the specified `APPT_INDEX` for the patient it is tagged to. 
-* The `APPT_INDEX` refers to the number shown in the displayed appointment book located on the right side of the UI. 
+* **Reschedules an appointment** at the specified `APPT_INDEX` for the patient it is tagged to.
+* The `APPT_INDEX` refers to the number shown in the displayed appointment book located on the right side of the UI.
 * Please note that the index used **must be a positive integer** 1, 2, 3, …
 * Please note that the `DATE` and `TIME` used for rescheduling must be set in the future.
 * **At least one** of the optional fields must be present for a successful execution of the change command.
@@ -353,15 +353,15 @@ Undoable commands refers to commands that modifies the patient or appointment li
 * Multiple calls to `redo` will reverse multiple undoable command execution, starting from the most recent command.
 
 Examples:
-* `delete 1`<br> 
+* `delete 1`<br>
   `list`<br>
   `undo` (reverses the `delete 1` command)
-  
+
 * `view d/today`<br>
   `list`<br>
   `undo`<br>
    The `undo` command fails as there is no previous undoable command to reverse.
-   
+
 * `cancel 1`<br>
   `clear`<br>
   `undo` (reverses the `clear` command)<br>
@@ -375,20 +375,20 @@ Format: `redo`
 
 * There must be at least one previously executed `undo` command.
 * The previously executed `undo` command should be the most recent command that modifies the lists' data.
-* Multiple call to `redo` will reverse multiple `undo` command, starting from the most recent `undo` command. 
+* Multiple call to `redo` will reverse multiple `undo` command, starting from the most recent `undo` command.
 
 Examples:
 * `cancel 1` <br>
   `undo` (reverses the `cancel 1` command)<br>
   `list`<br>
   `redo` (reapplies the `cancel 1` command)
-  
+
 * `cancel 1`<br>
   `undo` (reverses the `cancel 1` command)<br>
   `cancel 2`<br>
   `redo`<br>
    The `redo` command fails as there are no `undo` commands executed previously.
-   
+
 * `cancel 1`<br>
   `clear`<br>
   `undo` (reverses the `clear` command)<br>
@@ -444,7 +444,7 @@ Date Formats | Time Formats | Natural Date | Natural Time
 02-December-2020 |
 
 **Q**: My data was accidentally deleted and I can't undo it. How do I restore my data?<br>
-**A**: Look for the `data` folder in the home directory of Nuudle and then look for a `backup` folder. Copy the 2 data files in the `backup` folder and paste them into the previous folder (`data`). 
+**A**: Look for the `data` folder in the home directory of Nuudle and then look for a `backup` folder. Copy the 2 data files in the `backup` folder and paste them into the previous folder (`data`).
 The previous session's data will then be restored by overwriting the current data files with the backup data files.
 
 --------------------------------------------------------------------------------------------------------------------
