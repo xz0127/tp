@@ -10,6 +10,7 @@ end box
 box Model MODEL_COLOR_T1
 participant ":Model" as Model MODEL_COLOR
 participant ":VersionedPatientBook" as VersionedPatientBook MODEL_COLOR
+participant ":VersionedAppointmentBook" as VersionedAppointmentBook MODEL_COLOR
 end box
 [-> LogicManager : execute(undo)
 activate LogicManager
@@ -39,6 +40,19 @@ activate VersionedPatientBook
 VersionedPatientBook -> VersionedPatientBook :resetData(ReadOnlyPatientBook)
 VersionedPatientBook --> Model :
 deactivate VersionedPatientBook
+
+Model --> UndoCommand
+deactivate Model
+
+UndoCommand -> Model : undoAppointmentBook()
+activate Model
+
+Model -> VersionedAppointmentBook : undo()
+activate VersionedAppointmentBook
+
+VersionedAppointmentBook -> VersionedAppointmentBook :resetData(ReadOnlyAppointmentBook)
+VersionedAppointmentBook --> Model :
+deactivate VersionedAppointmentBook
 
 Model --> UndoCommand
 deactivate Model
