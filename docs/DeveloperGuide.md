@@ -166,11 +166,10 @@ Example Usage:
 
 The mark appointments as Done feature is facilitated by the `DoneCommand`, which extends the abstract class `Command`, and
 the `DoneCommandParser`, which implements the `Parser` interface. Both of these classes are part of the `Logic` component.
-Additionally, the command takes in a `DateTimeLoader`, which contains the date and time information of the appointment to mark.
 
 The following is an example usage scenario on how the mark as done mechanism works in each step:
 
-1. User types `done d/DATE t/TIME` into the app.
+1. User types `done INDEX` into the app.
 
 2. The request is handled by `LogicManager#execute(String)`, which then calls and passes the input to the `NuudleParser#parseCommand(String)` method.
 
