@@ -136,10 +136,10 @@ An alternative (arguably, a more OOP) Patient model is given below. It has a `Ta
 
 The `Storage` component,
 * can save `UserPref` objects in json format and read it back.
-* can save the patient book data in json format and read it back.
-* can save the appointment data in json format and read it back.
-* can save the appointment data in csv format for archiving.
-* can handle files with invalid data by removing only corrupted/invalid data.
+* can save the patient book data in JSON format and read it back.
+* can save the appointment data in JSON format and read it back.
+* can save the appointment data in CSV format for archiving.
+* can handle files with invalid data by removing only the corrupted/invalid data.
 
 ### Common classes
 
@@ -204,7 +204,7 @@ The following activity diagram summarizes what happens when a user executes a ne
 `[written by: Lim Jin Hao]`
 
 The data archiving feature will archive all past appointments into an archive directory on starting the app.
-The appointment data will be archived according to their months and saved as a csv file.
+The appointment data will be archived according to their months and saved as a CSV file.
 
 The data archived will be minimal and only contains the following columns: `date`, `startTime`, `endTime`, `isDone`, `name`, `phone`, `address` and `remark`.
 
@@ -215,11 +215,11 @@ It is stored internally within the `JsonAppointmentBookStorage` which in turn im
 <br>
 [`CsvAppointmentArchive`](https://github.com/AY2021S1-CS2103T-T12-4/tp/blob/master/src/main/java/seedu/address/storage/archive/CsvAppointmentArchive.java) implements the following operations:
 
-* `archivePastAppointments(..)` — Removes all past appointments from the `ReadOnlyAppointmentBook` and archive them as a csv file.
-* `saveAppointments(..)` — Saves the list of `CsvAdaptedAppointment` as a csv file in the archive directory with the given filename.
-* `readAppointments(..)` — Reads the csv file with the given filename and returns the data as a `List<CsvAdaptedAppointment>`
+* `archivePastAppointments(..)` — Removes all past appointments from the `ReadOnlyAppointmentBook` and archive them as a CSV file.
+* `saveAppointments(..)` — Saves the list of `CsvAdaptedAppointment` as a CSV file in the archive directory with the given filename.
+* `readAppointments(..)` — Reads the CSV file with the given filename and returns the data as a `List<CsvAdaptedAppointment>`
 
-`CsvAdaptedAppointment` and `CsvAdaptedPatient` are used to represent the csv-adapted `Appointment` and `Patient` respectively.
+`CsvAdaptedAppointment` and `CsvAdaptedPatient` are used to represent the CSV-adapted `Appointment` and `Patient` respectively.
 <br>
 
 Given below is an example archive run scenario and how the archive mechanism behaves at each step.
@@ -250,17 +250,17 @@ The following sequence diagram shows how the archive status message is obtained 
 
 #### 2.2 Design consideration:
 
-##### Aspect: Type of data to save as csv format
+##### Aspect: Type of data to save in CSV format
 
-As the data is to be saved in a csv format, the data attributes of the Java Object cannot have complex data type such as a `set`, `list` or `map`.
-`CsvAdaptedAppointment` and `CsvAdaptedPatient` classes are used to represent the archivable appointments and patient, so the consideration is to decide how and what data should be archived in the csv file.
+As the data is to be saved in a CSV format, the data attributes of the Java Object cannot have complex data type such as a `set`, `list` or `map`.
+`CsvAdaptedAppointment` and `CsvAdaptedPatient` classes are used to represent the archivable appointments and patient, so the consideration is to decide how and what data should be archived in the CSV file.
 
 * **Alternative 1 (current choice):** Only archive the necessary data and ignore certain data such as `Set<Tags>` and sensitive data such as the patient's `Nric`.
   * Pros: Straightforward to implement. Easy to add and remove fields to be archived.
   * Cons: Does not have the full appointment data and therefore `CsvAdaptedAppointment` cannot be used to recreate `Appointment`.
 
 * **Alternative 2:** Archive all appointment-related data. For complex data, convert them to their string equivalent and have methods to convert them back to the original state.
-  * Pros: Full data is saved and therefore the actual `Appointment` can be recreated from the csv data file.
+  * Pros: Full data is saved and therefore the actual `Appointment` can be recreated from the CSV data file.
   * Cons: We must ensure that the implementation of the conversion is correct and that the content of the data does not affect the conversion.
 
 ### 3. Assign Feature
@@ -895,8 +895,8 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 ### Glossary
 
 * **Mainstream OS**: Windows, Linux, Unix, OS-X
-* **csv file**: A [Comma-Separated Values](https://en.wikipedia.org/wiki/Comma-separated_values) file that uses a comma to separate values. It can be opened using Microsoft Excel.
-* **json file**: A file that stores object data in [JavaScript object notation](https://www.json.org/json-en.html)) format
+* **CSV file**: A file that stores data in [Comma-Separated Values](https://en.wikipedia.org/wiki/Comma-separated_values) format (Using commas to separate values). It can be opened using Microsoft Excel.
+* **JSON file**: A file that stores object data in [JavaScript object notation](https://www.json.org/json-en.html) format
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -939,13 +939,33 @@ testers are expected to do more *exploratory* testing.
    1. Other incorrect delete commands to try: `delete`, `delete x`, `...` (where x is larger than the list size)<br>
       Expected: Similar to previous.
 
-### Saving data
+### Creating an appointment
+
+1. Checking the appointment status after an appointment creation
+
+   1. Prerequisites: List all patients using the `list` command. At least one patient in the list. No appointments for today.
+
+   1. Create an appointment by using the `assign 1 d/today t/FUTURE_TIME`, where `FUTURE_TIME` is a time that is in the near future but still lies within the operating hours.
+      Expected: An appointment is created for the first patient with the indicated details. The status is shown as `Upcoming`.
+
+   1. With the Nuudle app still running, go to your system settings and look for the `Date & Time` settings.
+
+   1. Manually change the System Time to a time that lies within the appointment timeslot of the previously created appointment. You may have to temporarily turn off the `Set time automatically` features of your system.<br>
+      Expected: The appointment status changes from `Upcoming` to `Ongoing`. It may take up to 30s for Nuudle to auto update. Alternatively, you can use the `list` command or click on the `appointment card to initiate a manual refresh.
+
+   1. Now change the System Time to a time that is after the appointment timeslot of the previously created appointment.<br>
+      Expected: The appointment status changes from `Ongoing` to `Expired`.
+
+   1. Mark the previously created appointment as done, using the `done 1` command.
+      Expected: The appointment's status changed from `Ongoing` to `Done`.
+
+### Loading save data on launch
 
 1. Dealing with missing/corrupted data files
 
    1. Prerequisites: Data save location not modified. The `preference.json` file is not edited. Multiple patients in the list.
 
-   1. Look for the patient json file at the default location: `.\data\patientbook.json`
+   1. Look for the patient JSON file at the default location: `.\data\patientbook.json`
 
    1. Remove the `Nric` field of the first patient in the file. Note the patient name.
 
@@ -958,7 +978,7 @@ testers are expected to do more *exploratory* testing.
 
    1. Prerequisites: Have at least one upcoming appointments and no expired appointments.
 
-   1. Locate the appointment json file at the default location: `.\data\appointmentbook.json`
+   1. Locate the appointment JSON file at the default location: `.\data\appointmentbook.json`
 
    1. Change the `Date` field of an appointment to a past date, with month `may` and year `2019` Note the details of the appointment.
 
@@ -966,5 +986,5 @@ testers are expected to do more *exploratory* testing.
       The app safely launches. The previously edited appointment is not in the appointment list.
       The Command Result display indicates that 1 appointment is archived.
 
-   1. Locate the appointment csv archive file at `.\data\archives\2019_MAY.csv`.
+   1. Locate the appointment CSV archive file at `.\data\archives\2019_MAY.csv`.
       The previously edited appointment should be reflected as an archived appointment.
