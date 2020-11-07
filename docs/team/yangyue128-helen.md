@@ -25,21 +25,20 @@ Given below are my contributions to the project.
   * **What it does**: Allows the user to undo all previous commands one at a time. Preceding undo commands can be reversed by using the redo command.
   * **Justification**: This feature improves the product significantly since it will be troublesome if users accidentally execute commands like `delete 1` and `cancel 1` and all the information is unrecoverable. Now a user can make mistakes in commands and the app should provide a convenient way to rectify them.
   * **Highlights**: This enhancement affects existing commands and commands to be added in future. It required an in-depth analysis of design alternatives. The implementation too was challenging as it required changes to existing commands.
-  * **Credits**: Undo/redo implementation in ab4.
-  
+  * **Credits**: Undo/redo implementation in ab4. ([\#ab4](https://github.com/se-edu/addressbook-level4))
 * **Enhancements to existing features**:
   * Updated the GUI to support viewing the overview statistic for current day and current week. Provided a realtime update of the statics if some related commands are excecuted.([\#103](https://github.com/AY2021S1-CS2103T-T12-4/tp/pull/103))
   * Added relevant tests for the new implementation and untested model. ([\#173](https://github.com/AY2021S1-CS2103T-T12-4/tp/pull/173))
 
 * **Documentation**:
   * User Guide:
-    * Added documentation for the features `view` and `done` [\#53](https://github.com/AY2021S1-CS2103T-T12-4/tp/pull/53)
-    * Added documentation for the features `undo` and `redo` [\#140](https://github.com/AY2021S1-CS2103T-T12-4/tp/pull/140)
+    * Added documentation for the features `view` and `done` ([\#53](https://github.com/AY2021S1-CS2103T-T12-4/tp/pull/53))
+    * Added documentation for the features `undo` and `redo` ([\#140](https://github.com/AY2021S1-CS2103T-T12-4/tp/pull/140))
   * Developer Guide:
-    * Added user stories segment.[\#56](https://github.com/AY2021S1-CS2103T-T12-4/tp/pull/56)
-    * Updated and maintained the UI design section, and the corresponding UI UML class diagram. [\#113](https://github.com/AY2021S1-CS2103T-T12-4/tp/pull/113)
-    * Added implementation details on the mark as done feature, with the appropriate UML diagrams. [\#113](https://github.com/AY2021S1-CS2103T-T12-4/tp/pull/113)
-    * Updated the implementation details on the undo and redo feature, with feasible UML diagrams. [\#184](https://github.com/AY2021S1-CS2103T-T12-4/tp/pull/184)
+    * Added user stories segment. ([\#56](https://github.com/AY2021S1-CS2103T-T12-4/tp/pull/56))
+    * Updated and maintained the UI design section, and the corresponding UI UML class diagram. ([\#113](https://github.com/AY2021S1-CS2103T-T12-4/tp/pull/113))
+    * Added implementation details on the mark as done feature, with the appropriate UML diagrams. ([\#113](https://github.com/AY2021S1-CS2103T-T12-4/tp/pull/113))
+    * Updated the implementation details on the undo and redo feature, with feasible UML diagrams. ([\#184](https://github.com/AY2021S1-CS2103T-T12-4/tp/pull/184))
 
 * **Community**:
   * PRs reviewed : ([\#91](https://github.com/AY2021S1-CS2103T-T12-4/tp/pull/91), [\#114](https://github.com/AY2021S1-CS2103T-T12-4/tp/pull/114))
