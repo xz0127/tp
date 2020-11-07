@@ -107,15 +107,6 @@ public class UserPrefs implements ReadOnlyUserPrefs {
         this.archiveDirectoryPath = archiveDirectoryPath;
     }
 
-    /**
-     * Checks if all paths in userPrefs are valid (non-null).
-     */
-    public boolean hasAllValidPaths() {
-        return patientBookFilePath != null
-                && appointmentBookFilePath != null
-                && archiveDirectoryPath != null;
-    }
-
     @Override
     public boolean equals(Object other) {
         if (other == this) {
