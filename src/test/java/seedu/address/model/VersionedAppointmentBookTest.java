@@ -241,15 +241,22 @@ public class VersionedAppointmentBookTest {
         // different types -> returns false
         assertFalse(versionedAppointmentBook.equals(1));
 
+        // different current state -> returns false
+        VersionedAppointmentBook differentCurrentState = prepareAppointmentBookList(
+                appointmentBookWithAliceAppointment, appointmentBookWithHoonAppointment);
+        assertFalse(versionedAppointmentBook.equals(differentCurrentState));
+
         // different state list -> returns false
         VersionedAppointmentBook differentAppointmentBookList = prepareAppointmentBookList(
-                appointmentBookWithBensonAppointment, appointmentBookWithHoonAppointment);
+                appointmentBookWithBensonAppointment, appointmentBookWithBensonAppointment);
         assertFalse(versionedAppointmentBook.equals(differentAppointmentBookList));
 
         // different current pointer index -> returns false
+        versionedAppointmentBook = prepareAppointmentBookList(
+                appointmentBookWithBensonAppointment, appointmentBookWithBensonAppointment);
         VersionedAppointmentBook differentCurrentStatePointer = prepareAppointmentBookList(
-                appointmentBookWithAliceAppointment, appointmentBookWithBensonAppointment);
-        shiftCurrentStatePointerLeftwards(versionedAppointmentBook, 1);
+                appointmentBookWithBensonAppointment, appointmentBookWithBensonAppointment);
+        shiftCurrentStatePointerLeftwards(differentCurrentStatePointer, 1);
         assertFalse(versionedAppointmentBook.equals(differentCurrentStatePointer));
     }
 

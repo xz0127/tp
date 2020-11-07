@@ -3,6 +3,7 @@ package seedu.address.model;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static seedu.address.model.Model.PREDICATE_SHOW_ALL_APPOINTMENTS;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PATIENTS;
 import static seedu.address.testutil.Assert.assertThrows;
 import static seedu.address.testutil.TypicalAppointments.ALICE_APPOINTMENT;
@@ -270,13 +271,20 @@ public class ModelManagerTest {
         // different appointmentBook -> returns false
         assertFalse(modelManager.equals(new ModelManager(patientBook, differentAppointmentBook, userPrefs)));
 
-        // different filteredList -> returns false
+        // different filteredPatientList -> returns false
         String[] keywords = ALICE.getName().fullName.split("\\s+");
         modelManager.updateFilteredPatientList(new NameContainsKeywordsPredicate(Arrays.asList(keywords)));
         assertFalse(modelManager.equals(new ModelManager(patientBook, appointmentBook, userPrefs)));
 
         // resets modelManager to initial state for upcoming tests
         modelManager.updateFilteredPatientList(PREDICATE_SHOW_ALL_PATIENTS);
+
+        // different filteredAppointmentList -> returns false
+        modelManager.updateFilteredAppointmentList(appointment -> appointment.hasPatient(ALICE));
+        assertFalse(modelManager.equals(new ModelManager(patientBook, appointmentBook, userPrefs)));
+
+        // resets modelManager to initial state for upcoming tests
+        modelManager.updateFilteredAppointmentList(PREDICATE_SHOW_ALL_APPOINTMENTS);
 
         // different userPrefs -> returns false
         UserPrefs differentUserPrefs = new UserPrefs();
