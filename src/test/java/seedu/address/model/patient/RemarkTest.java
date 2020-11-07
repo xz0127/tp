@@ -20,10 +20,7 @@ import static seedu.address.testutil.RemarkUtil.STRING_REMARK_6;
 import static seedu.address.testutil.RemarkUtil.STRING_REMARK_7;
 import static seedu.address.testutil.RemarkUtil.STRING_REMARK_8;
 import static seedu.address.testutil.RemarkUtil.WORDS_ONE_NINETY_NINE;
-import static seedu.address.testutil.RemarkUtil.WORDS_THREE_HUNDRED;
-import static seedu.address.testutil.RemarkUtil.WORDS_TWO_FIVE_ZERO;
 import static seedu.address.testutil.RemarkUtil.WORDS_TWO_HUNDRED;
-import static seedu.address.testutil.RemarkUtil.WORDS_TWO_HUNDRED_ONE;
 
 import org.junit.jupiter.api.Test;
 
@@ -32,13 +29,6 @@ public class RemarkTest {
     @Test
     public void constructor_null_throwsNullPointerException() {
         assertThrows(NullPointerException.class, () -> new Remark(null));
-    }
-
-    @Test
-    public void constructor_invalidRemark_throwsIllegalArgumentException() {
-        assertThrows(IllegalArgumentException.class, () -> new Remark(WORDS_TWO_FIVE_ZERO));
-        assertThrows(IllegalArgumentException.class, () -> new Remark(WORDS_THREE_HUNDRED));
-        assertThrows(IllegalArgumentException.class, () -> new Remark(WORDS_TWO_HUNDRED_ONE));
     }
 
     @Test
@@ -56,21 +46,13 @@ public class RemarkTest {
         assertTrue(Remark.isValidRemark("David Roger Jackson Ray Jr 2nd")); // long names
 
         assertTrue(Remark.isValidRemark(WORDS_ONE_NINETY_NINE)); // large input
-        assertTrue(Remark.isValidRemark(WORDS_TWO_HUNDRED)); // maximum input
+        assertTrue(Remark.isValidRemark(WORDS_TWO_HUNDRED));
     }
 
     @Test
     public void isValidRemark_null_failure() {
         // null remark
         assertThrows(NullPointerException.class, () -> Remark.isValidRemark(null));
-    }
-
-    @Test
-    public void isValidRemark_input_failure() {
-        assertFalse(Remark.isValidRemark(WORDS_TWO_FIVE_ZERO));
-        assertFalse(Remark.isValidRemark(WORDS_THREE_HUNDRED));
-        assertFalse(Remark.isValidRemark(WORDS_THREE_HUNDRED + WORDS_TWO_FIVE_ZERO));
-        assertFalse(Remark.isValidRemark(WORDS_TWO_HUNDRED_ONE)); // boundary range input
     }
 
     @Test

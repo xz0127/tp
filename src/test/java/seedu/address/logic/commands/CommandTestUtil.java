@@ -13,7 +13,6 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TIME;
 import static seedu.address.testutil.Assert.assertThrows;
 import static seedu.address.testutil.RemarkUtil.WORDS_ONE_NINETY_NINE;
-import static seedu.address.testutil.RemarkUtil.WORDS_TWO_FIVE_ZERO;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -52,10 +51,12 @@ public class CommandTestUtil {
     public static final String VALID_TAG_FRIEND = "friend";
     public static final String VALID_DATE = "20 Nov 2050";
     public static final String DIFF_DATE = "03 August 2050";
+    public static final String ANOTHER_DATE = "12 May 2050";
     public static final String VALID_TIME = "12pm";
     public static final String SAME_TIME = "Afternoon";
     public static final String OVERLAP_TIME = "12:01 pm";
     public static final String VALID_DURATION = "90";
+    public static final long VALID_DURATION_LONG = 90;
     public static final String DIFF_DURATION = "91";
 
     public static final String NAME_DESC_AMY = " " + PREFIX_NAME + VALID_NAME_AMY;
@@ -75,6 +76,12 @@ public class CommandTestUtil {
     public static final String REMARK_DESC_AMY = PREFIX_REMARK + VALID_REMARK_AMY;
     public static final String REMARK_DESC_BOB = PREFIX_REMARK + VALID_REMARK_BOB;
     public static final String REMARK_DESC_EMPTY = PREFIX_REMARK + " ";
+    public static final String CHANGE_DATE_TIME_DURATION =
+            " " + PREFIX_DATE + VALID_DATE + " " + PREFIX_TIME + VALID_TIME + " "
+            + PREFIX_DURATION + VALID_DURATION;
+    public static final String CHANGE_TIME = " " + PREFIX_TIME + VALID_TIME;
+    public static final String CHANGE_DATE = " " + PREFIX_DATE + VALID_DATE;
+    public static final String CHANGE_DURATION = " " + PREFIX_DURATION + VALID_DURATION;
 
     public static final String INVALID_NAME_DESC = " " + PREFIX_NAME + "James&"; // '&' not allowed in names
     public static final String INVALID_NRIC_DESC = " " + PREFIX_NRIC + "q1234567k"; // lower caps not allowed in Nric
@@ -88,7 +95,6 @@ public class CommandTestUtil {
     public static final String INVALID_TIME_DESC = " " + PREFIX_TIME + "2530"; // not a proper 24h time format
     public static final String INVALID_TIME_DESC_LETTERS = " " + PREFIX_TIME + "abcd"; // not a recognised time format
     public static final String INVALID_TIME_DESC_CLOSED = " " + PREFIX_TIME + "2359"; // not during opening hours
-    public static final String INVALID_REMARK_EXCEED_LIMIT = " 1 " + PREFIX_REMARK + WORDS_TWO_FIVE_ZERO;
     public static final String INVALID_REMARK_INDEX = " 0 " + PREFIX_REMARK + WORDS_ONE_NINETY_NINE;
     public static final String INVALID_DURATION_NEGATIVE_DESC = " " + PREFIX_DURATION + "-40";
     public static final String INVALID_DURATION_NON_INTEGER_DESC = " " + PREFIX_DURATION + "CS";
@@ -104,6 +110,7 @@ public class CommandTestUtil {
     public static final EditCommand.EditPatientDescriptor EDIT_DESC_BOB;
     public static final FindCommand.FindPatientDescriptor FIND_DESC_AMY;
     public static final FindCommand.FindPatientDescriptor FIND_DESC_BOB;
+
     public static final DateTimeLoader LOADER;
     public static final DateTimeLoader LOADER_DIFF_TIME;
     public static final DateTimeLoader LOADER_DIFF_DATE;

@@ -104,7 +104,33 @@ public class JsonAppointmentBookStorageTest {
         jsonAppointmentBookStorage.saveAppointmentBook(original); // file path not specified
         readBack = jsonAppointmentBookStorage.readAppointmentBook().get(); // file path not specified
         assertEquals(original, new AppointmentBook(readBack));
+    }
 
+    @Test
+    public void saveBackupAndReadAppointmentBook_allInOrder_success() throws Exception {
+        String jsonFileName = "TempAppointmentBook.json";
+        String backupFolderName = "backup";
+
+        Path filePath = testFolder.resolve(jsonFileName);
+        Path archivePath = testFolder.resolve("archive");
+        AppointmentBook original = getTypicalAppointmentBook();
+        JsonAppointmentBookStorage jsonAppointmentBookStorage =
+                new JsonAppointmentBookStorage(filePath, archivePath, new StorageStatsManager());
+
+        Path backupFilePath = testFolder.resolve(backupFolderName + "/" + jsonFileName);
+        // save and backup file and read back backup file
+        jsonAppointmentBookStorage.saveAppointmentBook(original, filePath);
+        jsonAppointmentBookStorage.backupData(backupFolderName);
+        ReadOnlyAppointmentBook readBack = jsonAppointmentBookStorage.readAppointmentBook(backupFilePath).get();
+        assertEquals(original, new AppointmentBook(readBack));
+
+        // Modify data, save, backup file, and read back backup file
+        original.addAppointment(HOON_APPOINTMENT);
+        original.removeAppointment(ALICE_APPOINTMENT);
+        jsonAppointmentBookStorage.saveAppointmentBook(original, filePath);
+        jsonAppointmentBookStorage.backupData(backupFolderName);
+        readBack = jsonAppointmentBookStorage.readAppointmentBook(backupFilePath).get();
+        assertEquals(original, new AppointmentBook(readBack));
     }
 
     @Test
@@ -115,6 +141,13 @@ public class JsonAppointmentBookStorageTest {
     @Test
     public void saveAppointmentBook_nullFilePath_throwsNullPointerException() {
         assertThrows(NullPointerException.class, () -> saveAppointmentBook(new AppointmentBook(), null));
+    }
+
+    @Test
+    public void backupAppointmentBook_nullFileName_throwsNullPointerException() {
+        assertThrows(NullPointerException.class, ()
+            -> new JsonAppointmentBookStorage(TEST_DATA_FOLDER, TEST_DATA_FOLDER, new StorageStatsManager())
+                .backupData(null));
     }
 
     private Path addToTestDataPathIfNotNull(String prefsFileInTestDataFolder) {

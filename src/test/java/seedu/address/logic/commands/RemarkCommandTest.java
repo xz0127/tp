@@ -159,6 +159,11 @@ class RemarkCommandTest {
         RemarkCommand anotherRemarkCommand3 = new RemarkCommand(INDEX_SECOND_PATIENT,
                 new Remark(samplePatient.getRemark().value));
         assertFalse(remarkCommand.equals(anotherRemarkCommand3));
+
+        // different index
+        anotherRemarkCommand3 = new RemarkCommand(INDEX_FIRST_PATIENT,
+                new Remark(editedPatient.getRemark().value));
+        assertFalse(remarkCommand.equals(anotherRemarkCommand3));
     }
 
     @Test
