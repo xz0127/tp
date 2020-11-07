@@ -131,6 +131,7 @@ public class CsvAppointmentArchive implements AppointmentArchive {
 
     /**
      * Returns the archived data as a list of {@link CsvAdaptedAppointment}.
+     * If the file does not exist, an empty list will be returned.
      * Similar to {@link #readAppointments(String)}.
      *
      * @param filePath location of the archived data. Cannot be null.

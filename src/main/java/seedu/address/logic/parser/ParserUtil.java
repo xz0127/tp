@@ -164,7 +164,7 @@ public class ParserUtil {
 
         LocalTime parsedTime = TimeParserUtil.parse(trimmedTime);
 
-        if (!Time.isValidStartTime(parsedTime)) {
+        if (!Time.isValidTime(parsedTime)) {
             throw new ParseException(Time.MESSAGE_CONSTRAINTS);
         }
 

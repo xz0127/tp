@@ -226,14 +226,19 @@ public class VersionedPatientBookTest {
         // different types -> returns false
         assertFalse(versionedPatientBook.equals(1));
 
+        // different current state -> returns false
+        VersionedPatientBook differentCurrentState = preparePatientBookList(patientBookWithAmy, patientBookWithCarl);
+        assertFalse(versionedPatientBook.equals(differentCurrentState));
+
         // different state list -> returns false
-        VersionedPatientBook differentPatientBookList = preparePatientBookList(patientBookWithBob, patientBookWithCarl);
+        VersionedPatientBook differentPatientBookList = preparePatientBookList(patientBookWithBob, patientBookWithBob);
         assertFalse(versionedPatientBook.equals(differentPatientBookList));
 
         // different current pointer index -> returns false
+        versionedPatientBook = preparePatientBookList(patientBookWithBob, patientBookWithBob);
         VersionedPatientBook differentCurrentStatePointer = preparePatientBookList(
-                patientBookWithAmy, patientBookWithBob);
-        shiftCurrentStatePointerLeftwards(versionedPatientBook, 1);
+                patientBookWithBob, patientBookWithBob);
+        shiftCurrentStatePointerLeftwards(differentCurrentStatePointer, 1);
         assertFalse(versionedPatientBook.equals(differentCurrentStatePointer));
     }
 

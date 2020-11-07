@@ -65,6 +65,7 @@ public class AppointmentStatistics {
                 || (other instanceof AppointmentStatistics // instanceof handles nulls
                 && numOfDoneApptInToday == ((AppointmentStatistics) other).getNumOfDoneApptInToday()
                 && numOfUpcomingApptInToday == ((AppointmentStatistics) other).getNumOfUpcomingApptInToday()
+                && numOfDoneApptInThisWeek == ((AppointmentStatistics) other).getNumOfDoneApptInThisWeek()
                 && numOfUpcomingApptInThisWeek == ((AppointmentStatistics) other).getNumOfUpcomingApptInThisWeek());
     }
 }
