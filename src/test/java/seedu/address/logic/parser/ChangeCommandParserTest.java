@@ -1,6 +1,5 @@
 package seedu.address.logic.parser;
 
-import static seedu.address.commons.core.Messages.MESSAGE_INVALID_APPOINTMENT_DISPLAYED_INDEX;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.commands.CommandTestUtil.CHANGE_DATE;
 import static seedu.address.logic.commands.CommandTestUtil.CHANGE_DATE_TIME_DURATION;
@@ -42,7 +41,8 @@ public class ChangeCommandParserTest {
     @Test
     public void parse_missingParts_failure() {
         // no index specified
-        assertParseFailure(parser, CHANGE_DATE_TIME_DURATION, MESSAGE_INVALID_APPOINTMENT_DISPLAYED_INDEX);
+        assertParseFailure(parser, CHANGE_DATE_TIME_DURATION, String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                ChangeCommand.MESSAGE_USAGE));
     }
 
     @Test
@@ -63,16 +63,20 @@ public class ChangeCommandParserTest {
     @Test
     public void parse_invalidPreamble_failure() {
         // negative index
-        assertParseFailure(parser, "-5" + CHANGE_DATE_TIME_DURATION, MESSAGE_INVALID_APPOINTMENT_DISPLAYED_INDEX);
+        assertParseFailure(parser, "-5" + CHANGE_DATE_TIME_DURATION, String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                ChangeCommand.MESSAGE_USAGE));
 
         // zero index
-        assertParseFailure(parser, "0" + CHANGE_DATE_TIME_DURATION, MESSAGE_INVALID_APPOINTMENT_DISPLAYED_INDEX);
+        assertParseFailure(parser, "0" + CHANGE_DATE_TIME_DURATION, String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                ChangeCommand.MESSAGE_USAGE));
 
         // invalid arguments being parsed as preamble
-        assertParseFailure(parser, "1 some random string", MESSAGE_INVALID_APPOINTMENT_DISPLAYED_INDEX);
+        assertParseFailure(parser, "1 some random string", String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                ChangeCommand.MESSAGE_USAGE));
 
         // invalid prefix
-        assertParseFailure(parser, "1 o/" + VALID_DATE + CHANGE_TIME, MESSAGE_INVALID_APPOINTMENT_DISPLAYED_INDEX);
+        assertParseFailure(parser, "1 o/" + VALID_DATE + CHANGE_TIME, String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                ChangeCommand.MESSAGE_USAGE));
     }
 
     @Test
