@@ -460,7 +460,13 @@ Format: `done APPT_INDEX`
 Example:
 * `done 3` marks the 3rd appointment in the displayed appointment list as completed.
 * `view d/today` followed by `done 1` marks the 4th appointment happening on today's date as completed.
-![DoneCommand](images/DoneCommand.png)
+
+Step by step illustration:
+1. Enter `done 1` in command box
+![DoneCommand1](images/DoneCommand1.png)
+
+2. The result display box shows the success message and the appointment is marked as down
+![DoneCommand2](images/DoneCommand2.png)
 
 #### Listing upcoming appointments by date : `view`
 
