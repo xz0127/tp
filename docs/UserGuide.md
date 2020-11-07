@@ -27,9 +27,6 @@ This document provides ...
 The guide also uses the following symbols and formatting:
 * Words that looks like [this]() ...
 * Words that looks like `this` are words used in commands.
-<div markdown="block" class="alert alert-info">:bulb: </div>
-<div markdown="block" class="alert alert-primary">:information_source: </div>
-<div markdown="block" class="alert alert-warning">:exclamation: </div>
 
 
 --------------------------------------------------------------------------------------------------------------------
