@@ -1,7 +1,11 @@
 package seedu.address.model;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static seedu.address.testutil.Assert.assertThrows;
+
+import java.time.LocalTime;
 
 import org.junit.jupiter.api.Test;
 
@@ -23,6 +27,65 @@ public class ScheduleManagerTest {
         TypicalAppointments.getThirdTypicalAppointmentBook().getAppointmentList(), false);
 
     private TimeIntervalList intervals = TypicalTimeIntervals.getTypicalTimeIntervalList();
+
+    @Test
+    public void isBeforeOperationHour() {
+
+        // null time check
+        assertThrows(NullPointerException.class, () -> scheduleManager.isBeforeOperationHour(null));
+
+        // input time is before opening time --> true
+        assertTrue(scheduleManager.isBeforeOperationHour(LocalTime.of(7, 0)));
+        assertTrue(scheduleManager.isBeforeOperationHour(LocalTime.of(7, 59)));
+
+        // input time is equal to opening time --> false
+        assertFalse(scheduleManager.isBeforeOperationHour(LocalTime.of(8, 0)));
+
+        // input time is after opening time --> false
+        assertFalse(scheduleManager.isBeforeOperationHour(LocalTime.of(8, 1)));
+        assertFalse(scheduleManager.isBeforeOperationHour(LocalTime.of(12, 0)));
+    }
+
+    @Test
+    public void isAfterOperationHour() {
+
+        // null time check
+        assertThrows(NullPointerException.class, () -> scheduleManager.isAfterOperationHour(null));
+
+        // input time is after closing time --> true
+        assertTrue(scheduleManager.isAfterOperationHour(LocalTime.of(22, 1)));
+        assertTrue(scheduleManager.isAfterOperationHour(LocalTime.of(23, 59)));
+
+        // input time is equal to closing time --> false
+        assertFalse(scheduleManager.isAfterOperationHour(LocalTime.of(22, 0)));
+
+        // input time is before closing time --> false
+        assertFalse(scheduleManager.isAfterOperationHour(LocalTime.of(8, 0)));
+        assertFalse(scheduleManager.isAfterOperationHour(LocalTime.of(12, 0)));
+    }
+
+    @Test
+    public void isWithinOperationHour() {
+
+        // null time check
+        assertThrows(NullPointerException.class, () -> scheduleManager.isWithinOperationHour(null));
+
+        // input time is within operation time --> true
+        assertTrue(scheduleManager.isWithinOperationHour(LocalTime.of(8, 0)));
+        assertTrue(scheduleManager.isWithinOperationHour(LocalTime.of(8, 1)));
+        assertTrue(scheduleManager.isWithinOperationHour(LocalTime.of(12, 0)));
+        assertTrue(scheduleManager.isWithinOperationHour(LocalTime.of(17, 30)));
+        assertTrue(scheduleManager.isWithinOperationHour(LocalTime.of(21, 59)));
+        assertTrue(scheduleManager.isWithinOperationHour(LocalTime.of(22, 0)));
+
+        // input time is after closing time --> false
+        assertFalse(scheduleManager.isWithinOperationHour(LocalTime.of(22, 1)));
+        assertFalse(scheduleManager.isWithinOperationHour(LocalTime.of(23, 59)));
+
+        // input time is before opening time --> false
+        assertFalse(scheduleManager.isWithinOperationHour(LocalTime.of(7, 59)));
+        assertFalse(scheduleManager.isWithinOperationHour(LocalTime.of(0, 0)));
+    }
 
     @Test
     public void constructOperationTimeIntervals_correctValue() {

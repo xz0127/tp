@@ -92,5 +92,6 @@ public class TimeParserUtilTest {
 
         // return null
         assertNull(TimeParserUtil.parseByNaturalTime(""));
+        assertNull(TimeParserUtil.parseByNaturalTime("abcde"));
     }
 }

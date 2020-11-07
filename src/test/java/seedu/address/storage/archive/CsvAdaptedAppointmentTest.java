@@ -1,9 +1,11 @@
 package seedu.address.storage.archive;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.testutil.TypicalAppointments.ALICE_APPOINTMENT;
 import static seedu.address.testutil.TypicalAppointments.BENSON_APPOINTMENT;
+import static seedu.address.testutil.TypicalPatients.ALICE;
 import static seedu.address.testutil.TypicalPatients.BOB;
 
 import java.time.LocalDate;
@@ -15,6 +17,17 @@ import seedu.address.model.appointment.Appointment;
 import seedu.address.testutil.AppointmentBuilder;
 
 public class CsvAdaptedAppointmentTest {
+
+    @Test
+    public void constructor() {
+        CsvAdaptedAppointment appointment = new CsvAdaptedAppointment(ALICE_APPOINTMENT);
+        CsvAdaptedAppointment constructedAppointment = new CsvAdaptedAppointment(ALICE_APPOINTMENT.getDate().getDate(),
+                ALICE_APPOINTMENT.getStartTime().getTime(), ALICE_APPOINTMENT.getEndTime().getTime(),
+                ALICE_APPOINTMENT.getIsDoneStatus(), new CsvAdaptedPatient(ALICE));
+
+        assertEquals(appointment, constructedAppointment);
+    }
+
     @Test
     public void equals() {
         CsvAdaptedAppointment aliceAppointment = new CsvAdaptedAppointment(ALICE_APPOINTMENT);
