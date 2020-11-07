@@ -182,7 +182,7 @@ public class CsvAppointmentArchiveTest {
 
         CsvAdaptedAppointment octCsvAppointment = new CsvAdaptedAppointment(expiredOct2009Appointment);
         // Check Oct csv file
-        Path archiveFile = testFolder.resolve("2009_Oct.csv");
+        Path archiveFile = testFolder.resolve("2009_OCT.csv");
         List<CsvAdaptedAppointment> octCsvData = archive.readAppointments(archiveFile);
         assertEquals(List.of(octCsvAppointment), octCsvData);
 
