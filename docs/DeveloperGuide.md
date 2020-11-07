@@ -194,9 +194,11 @@ The following is an example usage scenario on how the mark as done mechanism wor
 
 The above process is shown in the following sequence diagram:
 ![DoneSequenceDiagram](images/DoneSequenceDiagram.png)
+<br>**Diagram 1.1.1: Sequence diagram showcasing the Done Command process**
 
 The following activity diagram summarizes what happens when a user executes a new command:
 ![DoneCommandActivityDiagram](images/DoneCommandActivityDiagram.png)
+<br>**Diagram 1.1.2: Activity diagram showcasing the Done Command execution flow**
 
 #### 1.2 Design consideration
 
@@ -566,6 +568,7 @@ The following activity diagram summarizes the above steps when a user uses the r
 ### 6. Undo/redo feature
 `[maintained by: Yang Yue]`
 
+#### 6.1 Implementation
 The proposed undo/redo mechanism is facilitated by `VersionedPatientBook` and `VersionedAppointmentBook`. They extend `PatientBook` and `AppointmentBook` respectively with an undo/redo history, stored internally as an `patientBookStateList`, `appointmentBookStateList` and `currentStatePointer`. Additionally, it implements the following operations:
 
 * `VersionedPatientBook#commit()` — Saves the current patient book state in its history.
@@ -582,14 +585,17 @@ Given below is an example usage scenario and how the undo/redo mechanism behaves
 Step 1. The user launches the application for the first time. The `VersionedPatientBook` and `VersionedAppointmentBook` will be initialized with the initial patient book state and initial appointment book state, and the `currentStatePointer` pointing to that single patient book state and appointment book state.
 
 ![UndoRedoState0](images/UndoRedoState0.png)
+<br>**Diagram 6.1.1: Diagram showcasing the initial state**
 
 Step 2. The user executes `delete 5` command to delete the 5th person in the patient book. The `delete` command calls `Model#commitPatientBook()` and `Model#commitAppointmentBook()`, causing the modified states after the `delete 5` command executes to be saved in the `patientBookStateList` and `appointmentBookStateList`, and the `currentStatePointer` is shifted to the newly inserted state.
 
 ![UndoRedoState1](images/UndoRedoState1.png)
+<br>**Diagram 6.1.2: Diagram showcasing the state after executing delete command**
 
 Step 3. The user executes `add n/David …​` to add a new person. The `add` command also calls `Model#commitPatientBook()` and `Model#commitAppointmentBook()`, causing another modified states to be saved into the `patientBookStateList` and `appointmentBookStateList`.
 
 ![UndoRedoState2](images/UndoRedoState2.png)
+<br>**Diagram 6.1.3: Diagram showcasing the state after executing add command**
 
 <div markdown="span" class="alert alert-info">:information_source: **Note:** If a command fails its execution, it will not call `Model#commitPatientBook()` and `Model#commitAppointmentBook()`, so the two book states will not be saved into the `patientBookStateList` and `appointmentBookStateList`.
 
@@ -598,6 +604,7 @@ Step 3. The user executes `add n/David …​` to add a new person. The `add` co
 Step 4. The user now decides that adding the person was a mistake, and decides to undo that action by executing the `undo` command. The `undo` command will call `Model#commitPatientBook()` and `Model#commitAppointmentBook()`, which will shift the `currentStatePointer` once to the left, pointing it to the previous states, and restores the patient book and appointment book to that state.
 
 ![UndoRedoState3](images/UndoRedoState3.png)
+<br>**Diagram 6.1.4: Diagram showcasing the state after executing undo command**
 
 <div markdown="span" class="alert alert-info">:information_source: **Note:** If the `currentStatePointer` is at index 0, pointing to the initial PatientBook state and initial AppointmentBook state, then there are no previous PatientBook and AppointmentBook states to restore. The `undo` command uses `Model#canUndoPatientBook()` and `Model#canUndoAppointmentBook()` to check if this is the case. If so, it will return an error to the user rather
 than attempting to perform the undo.
@@ -607,6 +614,7 @@ than attempting to perform the undo.
 The following sequence diagram shows how the undo operation works:
 
 ![UndoSequenceDiagram](images/UndoSequenceDiagram.png)
+<br>**Diagram 6.1.5: Sequence diagram for undo command process**
 
 <div markdown="span" class="alert alert-info">:information_source: **Note:** The lifeline for `UndoCommand` should end at the destroy marker (X) but due to a limitation of PlantUML, the lifeline reaches the end of diagram.
 
@@ -621,16 +629,19 @@ The `redo` command does the opposite — it calls `Model#redoPatientBook()` 
 Step 5. The user then decides to execute the command `list`. Commands that do not modify the patient book and appointment book, such as `list`, will usually not call `Model#commitPatientBook()`, `Model#commitAppointmentBook()`, `Model#undoPatientBook()` or `Model#redoPatientBook()`. Thus, the `patientBookStateList` and `appointmentBookStateList` remains unchanged.
 
 ![UndoRedoState4](images/UndoRedoState4.png)
+<br>**Diagram 6.1.6: Diagram showcasing the state after executing list command**
 
 Step 6. The user executes `clear`, which calls `Model#commitPatientBook()` and `Model#commitAppointmentBook()`. Since the `currentStatePointer` is not pointing at the end of the `patientBookStateList` and `appointmentBookStateList`, all states after the `currentStatePointer` will be purged. Reason: It no longer makes sense to redo the `add n/David …​` command. This is the behavior that most modern desktop applications follow.
 
 ![UndoRedoState5](images/UndoRedoState5.png)
+<br>**Diagram 6.1.7: Diagram showcasing the state after executing clear command**
 
 The following activity diagram summarizes what happens when a user executes a new command:
 
 ![CommitActivityDiagram](images/CommitActivityDiagram.png)
+<br>**Diagram 6.1.8: Activity diagram showcasing the work flow of executing a new command**
 
-#### Design consideration:
+#### 6.2 Design consideration:
 
 ##### Aspect: How undo & redo executes
 
