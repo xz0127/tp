@@ -81,13 +81,12 @@ This section introduces ...
 
 This section introduces the various commands used in Nuudle.
 
-<Intro to some navigation>
-
 [general commands](#general-commands), [patient management](#patient-management), [command summary](#command-summary)
 
 ### Command format
 
 This section introduces the ...
+
 
 <div markdown="block" class="alert alert-info">
 
@@ -118,6 +117,7 @@ This section introduces the ...
 * `APPT_INDEX` & `PATIENT_INDEX`
 
 </div>
+
 
 ### General
 
@@ -247,6 +247,8 @@ The data files of your previous Nuudle session are automatically saved in a fold
 
 This backup files allow you to completely revert your data to the previous session's data. This is especially useful if your data was unintentionally corrupted and you need to manually restore the data.
 
+
+--------------------------------------------------------------------------------------------------------------------
 ### Patient Management
 
 #### Adding a patient : `add`
@@ -370,6 +372,8 @@ Examples:
 
 ![FindCommand](images/FindCommand.png)
 
+
+--------------------------------------------------------------------------------------------------------------------
 ### Appointment Management
 
 #### Adding an appointment : `assign`
@@ -511,6 +515,8 @@ Action | Format, Examples
 **Redo** | `redo`
 **Help** | `help`
 **Exit** | `exit`
+
+
 --------------------------------------------------------------------------------------------------------------------
 
 ## FAQ
