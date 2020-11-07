@@ -5,8 +5,8 @@ package seedu.address.model;
  */
 public class AppointmentStatistics {
 
-    public static final String STATISTICS_MESSAGE = "Today: %d upcoming | %d done\n"
-            + "This Week: %d upcoming | %d done";
+    public static final String STATISTICS_MESSAGE = "Today: %d done | %d remaining\n"
+            + "This Week: %d done | %d remaining";
 
     private int numOfDoneApptInToday;
     private int numOfUpcomingApptInToday;
@@ -55,8 +55,8 @@ public class AppointmentStatistics {
 
     @Override
     public String toString() {
-        return String.format(STATISTICS_MESSAGE, getNumOfUpcomingApptInToday(), getNumOfDoneApptInToday(),
-                getNumOfUpcomingApptInThisWeek(), getNumOfDoneApptInThisWeek());
+        return String.format(STATISTICS_MESSAGE, getNumOfDoneApptInToday(), getNumOfUpcomingApptInToday(),
+                getNumOfDoneApptInThisWeek(), getNumOfUpcomingApptInThisWeek());
     }
 
     @Override
@@ -65,6 +65,7 @@ public class AppointmentStatistics {
                 || (other instanceof AppointmentStatistics // instanceof handles nulls
                 && numOfDoneApptInToday == ((AppointmentStatistics) other).getNumOfDoneApptInToday()
                 && numOfUpcomingApptInToday == ((AppointmentStatistics) other).getNumOfUpcomingApptInToday()
+                && numOfDoneApptInThisWeek == ((AppointmentStatistics) other).getNumOfDoneApptInThisWeek()
                 && numOfUpcomingApptInThisWeek == ((AppointmentStatistics) other).getNumOfUpcomingApptInThisWeek());
     }
 }

@@ -45,23 +45,6 @@ public class TimeTest {
     }
 
     @Test
-    public void isValidStartTime() {
-        // null time
-        assertThrows(NullPointerException.class, () -> Time.isValidStartTime(null));
-
-        // invalid times
-        assertFalse(Time.isValidStartTime(oneHourBeforeOpening));
-        assertFalse(Time.isValidStartTime(oneHourAfterClosing));
-        assertFalse(Time.isValidStartTime(Time.CLOSING_TIME));
-        assertFalse(Time.isValidStartTime(LocalTime.MIDNIGHT));
-
-        // valid times
-        assertTrue(Time.isValidStartTime(LocalTime.NOON));
-        assertTrue(Time.isValidStartTime(oneHourAfterOpening));
-        assertTrue(Time.isValidStartTime(oneHourBeforeClosing));
-    }
-
-    @Test
     public void isBefore() {
         Time testTime = new Time(LocalTime.NOON);
 

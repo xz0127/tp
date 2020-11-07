@@ -1,15 +1,35 @@
 @startuml
 start
-:System starts archiving;
+:User starts up Nuudle;
+:Nuudle loads
+appointment data;
+:Nuudle starts archiving;
 
 'Since the beta syntax does not support placing the condition outside the
 'diamond we place it as the true branch instead.
 
-if () then ([has appointment])
-    :Add to archive;
-    :Save PatientBook to
-    patientBookStateList;
-else ([else])
-endif
+while () is ([has unprocessed appointment])
+    if () then ([is upcoming appointment])
+        :add to list of
+        upcoming
+        appointments;
+    else ([is past appointment])
+        if () then ([is different month])
+            :save list of
+            past appointments
+            with same month;
+            :add appointment
+            to new list of past
+            appointments;
+        else ([is same month])
+            :add to list of
+            past appointments;
+        endif
+    endif
+endwhile ([else])
+:save list of
+past appointments;
+:use list of upcoming appointments
+as current appointment book;
 stop
 @enduml

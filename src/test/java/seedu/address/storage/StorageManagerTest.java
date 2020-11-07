@@ -76,6 +76,11 @@ public class StorageManagerTest {
     }
 
     @Test
+    public void getUserPrefsFilePath() {
+        assertNotNull(storageManager.getUserPrefsFilePath());
+    }
+
+    @Test
     public void getPatientBookFilePath() {
         assertNotNull(storageManager.getPatientBookFilePath());
     }
@@ -97,6 +102,16 @@ public class StorageManagerTest {
     @Test
     public void getAppointmentBookFilePath() {
         assertNotNull(storageManager.getAppointmentBookFilePath());
+    }
+
+    @Test
+    public void getAppointmentArchiveDirPath() {
+        assertNotNull(storageManager.getAppointmentArchiveDirPath());
+    }
+
+    @Test
+    public void getStatsManager() {
+        assertNotNull(storageManager.getStatsManager());
     }
 
     @Test

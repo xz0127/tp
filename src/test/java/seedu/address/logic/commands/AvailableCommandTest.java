@@ -121,5 +121,9 @@ public class AvailableCommandTest {
 
         // different date -> returns false
         assertFalse(firstAvailableCommand.equals(secondAvailableCommand));
+
+        // different boolean -> returns false
+        firstAvailableCommandCopy = new AvailableCommand(firstPredicateCopy, true);
+        assertFalse(firstAvailableCommand.equals(firstAvailableCommandCopy));
     }
 }
