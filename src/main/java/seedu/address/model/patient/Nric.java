@@ -11,7 +11,9 @@ public class Nric {
 
 
     public static final String MESSAGE_CONSTRAINTS =
-            "Nric should only contain 7 numbers leading and ending with an alphabet in uppercase";
+            "Nric should only contain 7 numbers.\nLeading alphabet must be either S,T,F or G.\n"
+                    + "Ending alphabet can be from A-Z.\n"
+                    + "Leading and ending alphabets must both be in uppercase.";
     public static final String VALIDATION_REGEX = "[STFG]\\d{7}[A-Z]";
     public final String value;
 

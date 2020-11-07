@@ -13,7 +13,6 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TIME;
 import static seedu.address.testutil.Assert.assertThrows;
 import static seedu.address.testutil.RemarkUtil.WORDS_ONE_NINETY_NINE;
-import static seedu.address.testutil.RemarkUtil.WORDS_TWO_FIVE_ZERO;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -88,7 +87,6 @@ public class CommandTestUtil {
     public static final String INVALID_TIME_DESC = " " + PREFIX_TIME + "2530"; // not a proper 24h time format
     public static final String INVALID_TIME_DESC_LETTERS = " " + PREFIX_TIME + "abcd"; // not a recognised time format
     public static final String INVALID_TIME_DESC_CLOSED = " " + PREFIX_TIME + "2359"; // not during opening hours
-    public static final String INVALID_REMARK_EXCEED_LIMIT = " 1 " + PREFIX_REMARK + WORDS_TWO_FIVE_ZERO;
     public static final String INVALID_REMARK_INDEX = " 0 " + PREFIX_REMARK + WORDS_ONE_NINETY_NINE;
     public static final String INVALID_DURATION_NEGATIVE_DESC = " " + PREFIX_DURATION + "-40";
     public static final String INVALID_DURATION_NON_INTEGER_DESC = " " + PREFIX_DURATION + "CS";

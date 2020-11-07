@@ -183,7 +183,6 @@ Examples:
 ### Adding a remark for a patient : `remark`
 
 Adds a remark to an existing patient in the patient book for nurses to store additional data unique to the patient.
-<br>Each remark has a limit of **200 words**.
 
 Format: `remark PATIENT_INDEX [r/REMARK]`
 
@@ -257,7 +256,7 @@ Example:
 
 Reschedules or modifies an existing appointment with a new date, time or duration.
 
-Do note that the duration used here is **measured in minutes**!
+Do note that the duration used here is **measured in minutes** and must be **at least 10 minutes**!
 
 Format: `change APPT_INDEX [d/DATE] [t/TIME] [dur/DURATION]`
 
