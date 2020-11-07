@@ -52,14 +52,6 @@ public class ScheduleManager {
         return annotatedPointList;
     }
 
-    public ObservableList<Appointment> getAppointmentList() {
-        return appointmentList;
-    }
-
-    public TimeIntervalList getAvailableTimeSlots() {
-        return availableTimeSlots;
-    }
-
     /**
      * Checks whether {@code time} is within operation hours.
      *
@@ -95,8 +87,8 @@ public class ScheduleManager {
     public TimeIntervalList constructOperationTimeIntervals() {
         ArrayList<TimeInterval> operationTimeIntervals = new ArrayList<>();
         LocalTime currentTime = LocalTime.now();
-        Time currTime = new Time(currentTime);
         if (isToday && isWithinOperationHour(currentTime)) {
+            Time currTime = new Time(currentTime);
             TimeInterval todayInterval = new TimeInterval(currTime, CLOSE_TIME);
             operationTimeIntervals.add(todayInterval);
         } else if (!(isToday && isAfterOperationHour(currentTime))) {
