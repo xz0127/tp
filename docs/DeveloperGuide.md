@@ -665,7 +665,7 @@ The Find Available Time Slots Feature allows the nurse to obtain the available t
 Finding available time slots is facilitated by the `AvailableCommand`, which extends the abstract class `Command`,
 and the `AvailableCommandParser`, which implements the `Parser` interface. All of these classes are part of the `Logic` component.
 
-This feature is supported by the `UniqueAppointmentList` which stores the `appointment` instances, the `ScheduleManager` which handles the scheduling-related operations, and `TimeIntervalList` which stores the `time interval` instances. These classes are part of the `model` component.
+This feature is supported by the `UniqueAppointmentList` which stores the `Appointment` instances, the `ScheduleManager` which handles the scheduling-related operations, and `TimeIntervalList` which stores the `TimeInterval` instances. These classes are part of the `model` component.
 
 Given below is an example usage scenario and how the edit mechanism behaves at each step.
 
@@ -677,7 +677,7 @@ Given below is an example usage scenario and how the edit mechanism behaves at e
 
 4: Input is parsed using the `AvailableCommandParser#parse(String)` method, which also performs input validation and checks whether the input date is today. A `DateMatchesPredicate` instance is created based on the parsed date.
 
-5: The `AvailCommandParser` creates a new `AvailableCommand` instance with boolean value `isToday` and newly created `DateMatchesPredicate` object and returns it to `NuudleParser`, which in turn returns it to `LogicManager`.
+5: The `AvailableCommandParser` creates a new `AvailableCommand` instance with boolean value `isToday` and newly created `DateMatchesPredicate` object and returns it to `NuudleParser`, which in turn returns it to `LogicManager`.
 
 6: `LogicManager` calls the `AvailableCommand#execute(Model)` method.
 
@@ -701,7 +701,7 @@ The following activity diagram summarises the general workflow for the Available
 
 #### 7.2 Design Considerations
 
-##### Aspect: How the `available` command executes
+##### Aspect: How the `avail` command executes
 
 * **Alternative 1 (current choice):** Separate parsing from code execution
     * Pros: Separate the responsibilities clearly between classes and adhere to the Single Responsibility Principle.
@@ -714,15 +714,15 @@ The following activity diagram summarises the general workflow for the Available
 
 ##### Aspect: How to obtain available `timeInterval` instance
 
-* **Alternative 1 (current choice):** Create `timeInterval` and `timeIntervalList` models to represent the time slots and create `scheduleManager` model to handle operations related to `TimeInterval`
-    * Pros: Draws clear distinction between the responsibilities of `appointmentBook` and `scheduleManager`. Reduces the coupling and adheres to the Single Responsibility Principle by creating multiple `interval` related models. 
+* **Alternative 1 (current choice):** Create `TimeInterval` and `TimeIntervalList` models to represent the time slots and create `scheduleManager` model to handle operations related to `TimeInterval`
+    * Pros: Draws clear distinction between the responsibilities of `appointmentBook` and `scheduleManager`. Reduces the coupling and adheres to the Single Responsibility Principle by creating multiple scheduling related models. 
     * Cons: Increases numbers of lines of code and increases the cost of testing since more tests have to be carried out.
 
 * **Alternative 2:** Let `UniqueAppointmentList` handle the creation and filtering of available time slots
     * Pros: Fewer lines of code. Lower cost of testing.
     * Cons: No separation between classes violates the Single Responsibility Principle. Compromises the readability of the code and
     increases the difficulty of debugging and maintaining the code base. Increases the coupling. 
-    `UniqueAppointmentList` will handle objects from different classes and complicated operations which arr not under its obligations.
+    `UniqueAppointmentList` will handle objects from different classes and complicated operations which are not under its obligations.
 
 --------------------------------------------------------------------------------------------------------------------
 
