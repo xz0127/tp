@@ -26,6 +26,8 @@ Given below are my contributions to the project.
   * **Justification**: This feature improves the product significantly since it will be troublesome if users accidentally execute commands like `delete 1` and `cancel 1` and all the information is unrecoverable. Now a user can make mistakes in commands and the app should provide a convenient way to rectify them.
   * **Highlights**: This enhancement affects existing commands and commands to be added in future. It required an in-depth analysis of design alternatives. The implementation too was challenging as it required changes to existing commands.
   * **Credits**: Undo/redo implementation in ab4. ([\#ab4](https://github.com/se-edu/addressbook-level4))
+<div style="page-break-after: always;"></div>
+
 * **Enhancements to existing features**:
   * Updated the GUI to support viewing the overview statistic for current day and current week. Provided a realtime update of the statics if some related commands are excecuted.([\#103](https://github.com/AY2021S1-CS2103T-T12-4/tp/pull/103))
   * Added relevant tests for the new implementation and untested model. ([\#173](https://github.com/AY2021S1-CS2103T-T12-4/tp/pull/173))

@@ -163,11 +163,11 @@ Step by step illustration:
 ![UndoCommandInitialState](images/UndoRedoInitialState_UG.png)
 
 2. Input `delete 1`: <br>
-![UndoCommandStep2](images/UndoStep2_UG.png)
+![UndoCommandStep2](images/UndoStep2_UG.png) <br>
 The first patient `Alex Yeoh` is deleted.
 
 3. Input `undo`: <br>
-![UndoCommandStep3](images/UndoStep3_UG.png)
+![UndoCommandStep3](images/UndoStep3_UG.png) <br>
 The `undo` command cancels the last undoable command `delete 1`, so that 
 the patient `Alex Yeoh` comes back to the list again.
 
@@ -208,11 +208,11 @@ Step by step illustration:
 ![RedoCommandStep2](images/RedoStep2_UG.png)
 
 3. Input `Undo`: <br>
-![RedoCommandStep3](images/RedoStep3_UG.png)
+![RedoCommandStep3](images/RedoStep3_UG.png) <br>
 All the data comes back.
 
 4. Input `Redo`: <br>
-![RedoCommandStep4](images/RedoStep4_UG.png)
+![RedoCommandStep4](images/RedoStep4_UG.png) <br>
 Redo the `clear` command, which removes all the data again.
 
 #### Clearing all data : `clear`
@@ -509,6 +509,7 @@ Action | Format
 **Exit** | `exit`
 
 #### Patient Management
+
 Action | Format | Examples
 --------|--------|----------
 **Add** | `add n/NAME i/NRIC p/PHONE_NUMBER a/ADDRESS [t/TAG]…​` | `add n/James Ho i/S9712345G p/22224444 a/123, Clementi Rd, 1234665 t/asthma t/`
@@ -519,6 +520,7 @@ Action | Format | Examples
 **Remark** | `remark PATIENT_INDEX [r/REMARK]`| `remark 2 r/Has been visiting Dr John`, `remark 2`
 
 #### Appointment Management
+
 Action | Format | Examples
 --------|---------|---------
 **Assign** | `assign PATIENT_INDEX d/DATE t/TIME`| `assign 3 d/tomorrow t/3pm`
