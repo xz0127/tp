@@ -47,8 +47,8 @@ Follow these steps to get you started on Nuudle:
 1. Copy the file to the folder you want to use as the _home folder_ for Nuddle.
 
 1. Double-click the file to start up Nuudle. An application window similar to the one below should appear in a few seconds.<br>
-   ![Ui](images/Ui.png)
    Notice how Nuudle also comes with some sample data to get you started.<br>
+   ![Ui](images/Ui.png)
 
 ### Using Nuudle
 
@@ -62,10 +62,10 @@ The layout of Nuudle can be divided into 2 main areas:
 
 #### Executing command
 
-The command execution area consists of the **Command Box** and the **Result Display Box**.
+The command execution area consists of the *Command Box* and the *Result Display Box*.
 
-The **Command Box** is the area where you can type in your command and subsequently execute it by pressing <kbd>Enter</kbd>.
-The result from the execution will then be displayed on the **Result Display Box**.
+The *Command Box* is the area where you can type in your command and subsequently execute it by pressing <kbd>Enter</kbd>.
+The result from the execution will then be displayed on the *Result Display Box*.
 
 To get you started, here are some sample commands that you can try out:
 
@@ -90,25 +90,27 @@ Alternatively, you can visit our [Command Summary](#command-summary) section to 
 
 #### Viewing the data
 
-The main viewing area consists of the **Patient Book**, the **Appointment Book** and the **Appointment Overview**.
+The main viewing area consists of the *Patient Book*, the *Appointment Book* and the *Appointment Overview*.
 
-* The **Patient Book** contains information about the patients stored in Nuudle. Here we take a look at an entry in the Patient Book.
+* The *Patient Book* contains information about the patients stored in Nuudle. Here we take a look at an entry in the Patient Book.
   ![PatientCard](images/PatientCard.png)
-  * The **Patient Index** is a numbering system used in the Patient Book, which allows you to easily reference the patient by using the index shown.<br>
+  
+  * The *Patient Index* is a numbering system used in the Patient Book, which allows you to easily reference the patient by using the index shown.<br>
   Throughout the document and the application, we use the term `PATIENT_INDEX` to refer to this Patient Index.
     
-  * The **Medical Condition** here is a tag that help nurses easily identify any identified allergy, illness and more.<br>
+  * The *Medical Condition* here is a tag that help nurses easily identify any identified allergy, illness and more.<br>
   This medical condition can be added as a tag when [adding a new patient](#adding-a-patient--add) or by [editing an existing patient](#editing-a-patient--edit).
     
-  * The **Patient Details** are neatly displayed at the bottom for you to easily check and identify a patient.
+  * The *Patient Details* are neatly displayed at the bottom for you to easily check and identify a patient.
 
 
-* The **Appointment Book** contains details about the appointments created by Nuudle. Here we take a look at a single entry in the Appointment Book 
+* The *Appointment Book* contains details about the appointments created by Nuudle. Here we take a look at a single entry in the Appointment Book 
 ![AppointmentCard](images/AppointmentCard.png)
-  * Similar to the Patient Index, the **Appointment Index** is a numbering system used in the Appointment Book.<br>
+
+  * Similar to the Patient Index, the *Appointment Index* is a numbering system used in the Appointment Book.<br>
   We use the term `APPT_INDEX` to refer to this Appointment Index. 
 
-  * Another noteworthy appointment detail is the **Appointment Status**. There are four status type used in Nuudle and the meaning of each status are shown in the table below
+  * Another noteworthy appointment detail is the *Appointment Status*. There are four status type used in Nuudle and the meaning of each status are shown in the table below
     
   **Appointment Status** | **Meaning**
   :---------------:|:----------------
@@ -117,24 +119,17 @@ The main viewing area consists of the **Patient Book**, the **Appointment Book**
   ![StatusOngoing](images/StatusOngoing.png) | An appointment that is currently ongoing but is still uncompleted.
   ![StatusExpired](images/StatusExpired.png) | An appointment that has already passed but is still uncompleted.
 
-  * The **Patient Details** provides the necessary information about the patient, namely the name and the contact number.<br>
+  * The *Patient Details* provides the necessary information about the patient, namely the name and the contact number.<br>
   This allows you to easily keep track of who will be coming for the appointment and also call up the patient if necessary. 
 
-* The **Appointment Overview** gives a simple overview of the appointments stored in Nuudle.<br>
+* The *Appointment Overview* gives a simple overview of the appointments stored in Nuudle.
+
   ![AppointmentOverview](images/AppointmentOverview.png)
-  With it, you can:
+  
+  With it, you can: 
   * keep track of the total number of expected appointment for the day.
   * stay updated on the remaining number of appointments to be completed for the day.
   * get an estimate on how busy the clinic will be for the week
-
-
-1. Type the command in the command box and press Enter to execute it. e.g. typing **`help`** and pressing Enter will open the help window.<br>
-   Some example commands you can try :
-
-1. Refer to the [Features](#commands) below for details of each command.
-
---------------------------------------------------------------------------------------------------------------------
-
 
 --------------------------------------------------------------------------------------------------------------------
 
