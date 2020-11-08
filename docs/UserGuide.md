@@ -162,7 +162,7 @@ Examples:
   `undo` (reverses the `clear` command)<br>
   `undo` (reverses the `cancel 1` command)
 
-Step by step illustration:
+Step-by-step illustration:
 1. Initial state:
 ![UndoCommandInitialState](images/UndoRedoInitialState_UG.png)
 
@@ -204,7 +204,7 @@ Examples:
   `redo` (reapplies the `cancel 1` command)<br>
   `redo` (reapplies the `clear` command)
 
-Step by step illustration:
+Step-by-step illustration:
 1. Initial state:
 ![RedoCommandInitialState](images/UndoRedoInitialState_UG.png)
 
@@ -225,7 +225,7 @@ Clears all appointment and patients entries.
 
 Format: `clear`
 
-:framed_picture: Step by step illustration:<br>
+Step-by-step illustration:<br>
 1. Suppose you would like to clear the sample data to officially start using Nuudle from scratch, you can simply type in the command `clear` and press <kbd>Enter</kbd>.<br>
 ![ClearBefore](images/ClearCommand1.png)
 
@@ -244,8 +244,11 @@ By pressing the <kbd>↑</kbd> and <kbd>↓</kbd> arrow keys in the command box,
 
 <div markdown="span" class="alert alert-primary">:bulb: **Tip:**
 If you accidentally mistype and executed a wrong command, you can first use the `undo` command to reverse the previous command execution.
+
 Following which, simply use the <kbd>↑</kbd> arrow key in the command box to retrieve the original command.
+
 You can then do the necessary edit and execute the edited command using <kbd>Enter</kbd>>.
+
 With this feature, there is no need to retype the entire command again!
 </div>
 
@@ -255,13 +258,13 @@ Nuudle automatically saves the patient and appointment data to your home folder 
 
 #### Archiving past appointments
 
-Nuudle automatically removes past appointments and archives them into an `archive` folder for your future reference. This is done automatically everytime you start up the Nuudle app.
+Nuudle automatically removes past appointments and saves them into an archive folder for your future reference. This is done automatically everytime you start up the Nuudle app.
 
-The appointments are grouped by their appointment months and are saved in Comma-Separated Values (CSV) files. These files can be opened and viewed using Excel.
+The appointments are grouped by their appointment months and saved in respective Comma-Separated Values (CSV) files. These files can be opened and viewed using Excel.
 
 #### Backing up the data
 
-Nuudle also keeps a backup of your data files from the previous Nuudle session in a `backup` folder. The backup data will be updated everytime you start up the Nuudle app.
+Nuudle also keeps a backup of your data files from the previous Nuudle session in a backup folder. The backup data will be updated everytime you start up the Nuudle app.
 
 This backup allows you to completely revert your data to the previous session's data. This is especially useful if your data was unintentionally corrupted and you need to manually restore the data.
 
@@ -304,12 +307,12 @@ Examples:
 *  `edit 1 p/91234567 a/College Avenue 8` Edits the phone number and email address of the 1st patient to be `91234567` and `College Avenue 8` respectively.
 *  `edit 2 n/Betsy Crower t/` Edits the name of the 2nd patient to be `Betsy Crower` and deletes all existing tags.
 
-:framed_picture: Step by step illustration:<br>
-1. Suppose Charlotte changed her phone number from `84812305` to `91234567`, simply type `edit 3 p/91234567` in the command box and press <kbd>Enter</kbd>.<br>
+Step-by-step illustration:<br>
+1. Suppose a patient, Charlotte, changed her phone number from `84812305` to `91234567`, simply type `edit 3 p/91234567` in the command box and press <kbd>Enter</kbd>.<br>
 ![EditCommand1](images/EditCommand1.png)
 
-2. The information of the edited patient is displayed in the result box.
-Charlotte's edited phone number is reflected in the relevant patient and appointment card.<br>
+2. Charlotte's phone number is updated and the change is reflected in the relevant patient and appointment cards.
+The particulars of the edited patient is also displayed in the result display box.<br>
 ![EditCommand2](images/EditCommand2.png)
 
 #### Deleting a patient : `delete`
@@ -463,15 +466,16 @@ Example:
 * `view` followed by `cancel 2` deletes the 2nd appointment in the displayed appointment list.
 * `view d/today` followed by `cancel 1` deletes the 1st appointment happening on today's date (if it exists).
 
-:framed_picture: Step by step illustration:<br>
-1. Suppose a patient calls to cancel his 10.30am appointment tomorrow, first get all the appointments from tomorrow by using the `view t/tomorrow` command.<br>
+Step-by-step illustration:<br>
+1. Suppose a patient calls to cancel his 10.30am appointment tomorrow, first get all the appointments for tomorrow by using the `view t/tomorrow` command.<br>
 ![CancelCommand1](images/CancelCommand1.png)
 
-1. Then look for the 10.30am appointment and cancel it using the `cancel` command. In this case, we use `cancel 1` as the appointment is the first appointment in the book.<br>
+2. Next, look for the 10.30am appointment and cancel it using the `cancel` command.
+Here, we use `cancel 1` as the appointment to cancel is the first appointment in the book.<br>
 ![CancelCommand2](images/CancelCommand2.png)
 
-2.The 10.30am appointment is cancelled and removed from the appointment book.
-The cancelled appointment details is also displayed in the result box.<br>
+3. The 10.30am appointment is cancelled and removed from the appointment book.
+The cancelled appointment details is also displayed in the result display box.<br>
 ![CancelCommand3](images/CancelCommand3.png)
 
 
@@ -520,6 +524,8 @@ Example:
 * `avail d/4-Aug-2020` shows the list of all available (free) time slots within the operation time of the clinic on 04/08/2020.
 ![AvailableCommand](images/AvailableCommand.png)
 
+
+--------------------------------------------------------------------------------------------------------------------
 ### Command summary
 
 TODO: SPLIT TO 3
@@ -550,7 +556,7 @@ Action | Format, Examples
 ## FAQ
 
 **Q**: How do I transfer my data to another Computer?<br>
-**A**: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Nuudle home folder.
+**A**: Install the app in the other computer and overwrite the empty data folder it creates with the data folder from your previous Nuudle's home folder.
 
 **Q**: What are the acceptable date time format?<br>
 **A**: Nuudle supports multiple date time formats as well as natural date time language :
@@ -567,5 +573,6 @@ Date Formats | Time Formats | Natural Date | Natural Time
 02-December-2020 |
 
 **Q**: My data was accidentally deleted and I can't undo it. How do I restore my data?<br>
-**A**: Look for the `data` folder in the home directory of Nuudle and then look for a `backup` folder. Copy the 2 data files in the `backup` folder and paste them into the previous folder (`data`).
-The previous session's data will then be restored by overwriting the current data files with the backup data files.
+**A**: Look for a backup file in the data folder of your Nuudle's home folder. Open the backup file and copy the 2 backup data files inside.
+Navigate to your main data folder in your Nuudle's home folder. Overwrite the current data files with the backup data files by pasting the previously copied files.
+The previous session's data will then be restored when you start up Nuudle again.
