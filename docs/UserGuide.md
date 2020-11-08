@@ -38,7 +38,7 @@ This section introduces ...
 
 ### Installing Nuudle
 
-Follow these steps to get you started on Nuudle:
+Follow these steps to get started with Nuudle:
 
 1. Ensure you have **Java 11** or above installed in your Computer.
 
@@ -52,13 +52,14 @@ Follow these steps to get you started on Nuudle:
 
 ### Using Nuudle
 
-Having downloaded the Nuudle application, allow us to walk you through the layout of Nuudle.
+This section will walk you through the layout of Nuudle. 
+
 
 ![UiMarkUp](images/UiMarkup.png)
 
 The layout of Nuudle can be divided into 2 main areas:
-1. A command execution area
-2. A main viewing area
+1. The command execution area
+2. The main viewing area
 
 #### Executing command
 
@@ -86,6 +87,8 @@ To get you started, here are some sample commands that you can try out:
 1. **`exit`** : Exits the app.
 
 To learn more about the various commands used in Nuudle, head down to our [Commands](#commands) section.
+
+
 Alternatively, you can visit our [Command Summary](#command-summary) section to get a quick overview of Nuudle's commands.
 
 #### Viewing the data
@@ -95,23 +98,23 @@ The main viewing area consists of the *Patient Book*, the *Appointment Book* and
 * The *Patient Book* contains information about the patients stored in Nuudle. Here we take a look at an entry in the Patient Book.
   ![PatientCard](images/PatientCard.png)
   
-  * The *Patient Index* is a numbering system used in the Patient Book, which allows you to easily reference the patient by using the index shown.<br>
+  * The *Patient Index* is a numbering system used in the Patient Book, which allows you to easily reference the patient by using the index shown.
   Throughout the document and the application, we use the term `PATIENT_INDEX` to refer to this Patient Index.
-    
-  * The *Medical Condition* here is a tag that help nurses easily identify any identified allergy, illness and more.<br>
+
+  * The *Medical Condition* here is a tag that help nurses easily identify any identified allergy, illness and more.
   This medical condition can be added as a tag when [adding a new patient](#adding-a-patient--add) or by [editing an existing patient](#editing-a-patient--edit).
-    
+
   * The *Patient Details* are neatly displayed at the bottom for you to easily check and identify a patient.
 
 
 * The *Appointment Book* contains details about the appointments created by Nuudle. Here we take a look at a single entry in the Appointment Book 
 ![AppointmentCard](images/AppointmentCard.png)
 
-  * Similar to the Patient Index, the *Appointment Index* is a numbering system used in the Appointment Book.<br>
-  We use the term `APPT_INDEX` to refer to this Appointment Index. 
+  * Similar to the Patient Index, the *Appointment Index* is a numbering system used in the Appointment Book.
+  We use the term `APPT_INDEX` to refer to this Appointment Index.
 
-  * Another noteworthy appointment detail is the *Appointment Status*. There are four status type used in Nuudle and the meaning of each status are shown in the table below
-    
+  * Another important part of an appointment is the *Appointment Status*. There are four status types used in Nuudle and the meaning of each status is shown in the table below:
+
   **Appointment Status** | **Meaning**
   :---------------:|:----------------
   ![StatusDone](images/StatusDone.png) | A completed appointment that is marked as done using the `done` command
@@ -119,10 +122,11 @@ The main viewing area consists of the *Patient Book*, the *Appointment Book* and
   ![StatusOngoing](images/StatusOngoing.png) | An appointment that is currently ongoing but is still uncompleted.
   ![StatusExpired](images/StatusExpired.png) | An appointment that has already passed but is still uncompleted.
 
-  * The *Patient Details* provides the necessary information about the patient, namely the name and the contact number.<br>
-  This allows you to easily keep track of who will be coming for the appointment and also call up the patient if necessary. 
+  * The *Patient Details* in the appointment entry provides the basic information of the patient, namely the name and the contact number.
+  This allows you to easily keep track of who will be coming for the appointment and also call up the patient, if necessary.
 
-* The *Appointment Overview* gives a simple overview of the appointments stored in Nuudle.
+<br>
+* Lastly, the *Appointment Overview* provides simple statistics about the appointments stored in Nuudle.
 
   ![AppointmentOverview](images/AppointmentOverview.png)
   
@@ -364,7 +368,7 @@ Examples:
 *  `edit 2 n/Betsy Crower t/` Edits the name of the 2nd patient to be `Betsy Crower` and deletes all existing tags.
 
 Step-by-step illustration:<br>
-1. Suppose a patient, Charlotte, changed her phone number from `84812305` to `91234567`, simply type `edit 3 p/91234567` in the command box and press <kbd>Enter<kbd>.<br>
+1. Suppose a patient, Charlotte, changes her phone number from `84812305` to `91234567`, simply type `edit 3 p/91234567` in the command box and press <kbd>Enter</kbd>.<br>
 ![EditCommand1](images/EditCommand1.png)
 
 2. Charlotte's phone number is now updated and the change is also reflected in the relevant appointments.
