@@ -14,7 +14,7 @@ Welcome to Nuudle’s User Guide! :smiley:
 
 Nuudle is a **desktop app that helps nurses manage patient records and schedule appointments** in an accurate and efficient manner.
 
-We hope that this document will help you in your journey in exploring the wonders of Nuudle app and redefine the way you schedule appointments for your patients.
+We hope that this document will help you in your journey in exploring the wonders of Nuudle app and enhance the way you schedule appointments for your patients.
 
 To begin your journey, head down to our [Quick Start](#quick-start) or explore the various [Features](#features) that we offer. The document will provide you with all the necessary information you need to start your journey.
 
@@ -27,6 +27,7 @@ This document provides ...
 The guide also uses the following symbols and formatting:
 * Words that looks like [this]() ...
 * Words that looks like `this` are words used in commands.
+* Words that looks like <kbd>this<kbd> are keys that you can press using your keyboard
 
 
 --------------------------------------------------------------------------------------------------------------------
@@ -37,14 +38,17 @@ This section introduces ...
 
 ### Installing Nuudle
 
-1. Ensure you have Java `11` or above installed in your Computer.
+Follow these steps to get you started on Nuudle:
 
-1. Download the latest `nuudle.jar` from [here](https://github.com/ay2021s1-cs2103t-t12-4/tp/releases).
+1. Ensure you have **Java 11** or above installed in your Computer.
+
+1. Download the latest version of Nuudle from [here](https://github.com/ay2021s1-cs2103t-t12-4/tp/releases).
 
 1. Copy the file to the folder you want to use as the _home folder_ for Nuddle.
 
-1. Double-click the file to start the app. The GUI similar to the below should appear in a few seconds. Note how the app contains some sample data.<br>
+1. Double-click the file to start up Nuudle. An application window similar to the one below should appear in a few seconds.<br>
    ![Ui](images/Ui.png)
+   Notice how Nuudle also comes with some sample data to get you started.<br>
 
 ### Using Nuudle
 
@@ -123,9 +127,9 @@ This section introduces the ...
 
 #### Viewing help : `help`
 
-Shows a message with the commonly used commands, and the link to access the help page.
+Shows a message with the commonly used commands, and the link to access the User Guide.
 
-![help message](images/helpMessage.png)
+![Help Message](images/helpMessage.png)
 
 Format: `help`
 
@@ -217,9 +221,16 @@ Redo the `clear` command, which removes all the data again.
 
 #### Clearing all data : `clear`
 
-Clears all appointment and patients data.
+Clears all appointment and patients entries.
 
 Format: `clear`
+
+:framed_picture: Step by step illustration:<br>
+1. Suppose you would like to clear the sample data to officially start using Nuudle from scratch, you can simply type in the command `clear` and press <kbd>Enter</kbd>.<br>
+![ClearBefore](images/ClearCommand1.png)
+
+2. All patient and appointment entries are cleared. You can now officially start adding your clinic's patient and appointment entries.<br>
+![ClearAfter](images/ClearCommand2.png)
 
 #### Exiting the program : `exit`
 
@@ -227,25 +238,32 @@ Exits Nuudle.
 
 Format: `exit`
 
-#### Searching through entered commands
+#### Retrieving previously entered commands
 
-Pressing the :arrow_up: and :arrow_down: arrows in the command box will display the previous and next input respectively.
+By pressing the <kbd>↑</kbd> and <kbd>↓</kbd> arrow keys in the command box, you can cycle through the previously executed commands.
+
+<div markdown="span" class="alert alert-primary">:bulb: **Tip:**
+If you accidentally mistype and executed a wrong command, you can first use the `undo` command to reverse the previous command execution.
+Following which, simply use the <kbd>↑</kbd> arrow key in the command box to retrieve the original command.
+You can then do the necessary edit and execute the edited command using <kbd>Enter</kbd>>.
+With this feature, there is no need to retype the entire command again!
+</div>
 
 #### Saving the data
 
-Patients and appointments data are saved in the hard disk automatically after any command that changes the data. There is no need to save manually.
+Nuudle automatically saves the patient and appointment data to your home folder after any changes are made to the data. There is no need for you to save manually.
 
 #### Archiving past appointments
 
-Past appointments are automatically archived and neatly organised into an archive folder for future reference. This is done automatically everytime you start up the Nuudle app.
+Nuudle automatically removes past appointments and archives them into an `archive` folder for your future reference. This is done automatically everytime you start up the Nuudle app.
 
-The appointments are organised by their appointment months and are saved in Comma-Separated Values (CSV) format. CSV files can be opened and viewed as a typical Excel file.
+The appointments are grouped by their appointment months and are saved in Comma-Separated Values (CSV) files. These files can be opened and viewed using Excel.
 
-#### Backing up files
+#### Backing up the data
 
-The data files of your previous Nuudle session are automatically saved in a folder called `backup`. The backup data will be updated everytime you start up the Nuudle app.
+Nuudle also keeps a backup of your data files from the previous Nuudle session in a `backup` folder. The backup data will be updated everytime you start up the Nuudle app.
 
-This backup files allow you to completely revert your data to the previous session's data. This is especially useful if your data was unintentionally corrupted and you need to manually restore the data.
+This backup allows you to completely revert your data to the previous session's data. This is especially useful if your data was unintentionally corrupted and you need to manually restore the data.
 
 
 --------------------------------------------------------------------------------------------------------------------
@@ -272,22 +290,27 @@ Examples:
 
 #### Editing a patient : `edit`
 
-Edits an existing patient in the patient book. Existing appointments which include the edited patient will be updated accordingly.
+Edits a patient's particulars. Existing appointments involving the edited patient will be updated accordingly.
 
 Format: `edit PATIENT_INDEX [n/NAME] [i/NRIC] [p/PHONE_NUMBER] [a/ADDRESS] [r/REMARK] [t/TAG]…​`
 
-* Edits the patient at the specified `PATIENT_INDEX`. The index refers to the index number shown in the displayed patient list. The index **must be a positive integer** 1, 2, 3, …​
-* At least one of the optional fields must be provided.
-* Existing values will be updated to the input values.
+* Edits the patient at the specified `PATIENT_INDEX`.
+* At least one of the optional fields must be provided to execute the `edit` command.
+* The patient's existing particulars will be updated according to the input values.
 * When editing tags, the existing tags of the patient will be removed i.e adding of tags is not cumulative.
 * You can remove all the patients' tags by typing `t/` without specifying any tags after it.
-* Existing appointments which include the edited patient will be updated accordingly.
 
 Examples:
 *  `edit 1 p/91234567 a/College Avenue 8` Edits the phone number and email address of the 1st patient to be `91234567` and `College Avenue 8` respectively.
-*  `edit 2 n/Betsy Crower t/` Edits the name of the 2nd patient to be `Betsy Crower` and clears all existing tags.
+*  `edit 2 n/Betsy Crower t/` Edits the name of the 2nd patient to be `Betsy Crower` and deletes all existing tags.
 
-![EditCommand](images/EditCommand.png)
+:framed_picture: Step by step illustration:<br>
+1. Suppose Charlotte changed her phone number from `84812305` to `91234567`, simply type `edit 3 p/91234567` in the command box and press <kbd>Enter</kbd>.<br>
+![EditCommand1](images/EditCommand1.png)
+
+2. The information of the edited patient is displayed in the result box.
+Charlotte's edited phone number is reflected in the relevant patient and appointment card.<br>
+![EditCommand2](images/EditCommand2.png)
 
 #### Deleting a patient : `delete`
 
@@ -432,19 +455,25 @@ Examples to reschedule appointments:
 
 #### Canceling an appointment : `cancel`
 
-Deletes the specified appointment from the appointment book.
+Cancels the specified appointment and removes it from the appointment book.
 
 Format `cancel APPT_INDEX`
-
-* Deletes the appointment at the specified `APPT_INDEX`.
-* The `APPT_INDEX` refers to the index number indicated in the displayed appointment list.
-* The `APPT_INDEX` **must be a positive integer** 1, 2, 3, …​
 
 Example:
 * `view` followed by `cancel 2` deletes the 2nd appointment in the displayed appointment list.
 * `view d/today` followed by `cancel 1` deletes the 1st appointment happening on today's date (if it exists).
 
-![AssignCommand](images/CancelCommand.png)
+:framed_picture: Step by step illustration:<br>
+1. Suppose a patient calls to cancel his 10.30am appointment tomorrow, first get all the appointments from tomorrow by using the `view t/tomorrow` command.<br>
+![CancelCommand1](images/CancelCommand1.png)
+
+1. Then look for the 10.30am appointment and cancel it using the `cancel` command. In this case, we use `cancel 1` as the appointment is the first appointment in the book.<br>
+![CancelCommand2](images/CancelCommand2.png)
+
+2.The 10.30am appointment is cancelled and removed from the appointment book.
+The cancelled appointment details is also displayed in the result box.<br>
+![CancelCommand3](images/CancelCommand3.png)
+
 
 #### Marking an appointment as done : `done`
 
