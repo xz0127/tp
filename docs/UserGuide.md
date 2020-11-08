@@ -27,7 +27,7 @@ This document provides ...
 The guide also uses the following symbols and formatting:
 * Words that looks like [this]() ...
 * Words that looks like `this` are words used in commands.
-* Words that looks like <kbd>this<kbd> are keys that you can press using your keyboard
+* Words that looks like <kbd>this</kbd> are keys that you can press using your keyboard
 
 
 --------------------------------------------------------------------------------------------------------------------
@@ -242,14 +242,18 @@ Format: `exit`
 
 By pressing the <kbd>↑</kbd> and <kbd>↓</kbd> arrow keys in the command box, you can cycle through the previously executed commands.
 
-<div markdown="span" class="alert alert-primary">:bulb: **Tip:**
-If you accidentally mistype and executed a wrong command, you can first use the `undo` command to reverse the previous command execution.
+<div markdown="span" class="alert alert-primary">
 
-Following which, simply use the <kbd>↑</kbd> arrow key in the command box to retrieve the original command.
+:bulb: **Tip:** If you accidentally mistyped a command and executed it, you can follow the 3 simple steps below:<br>
 
-You can then do the necessary edit and execute the edited command using <kbd>Enter</kbd>>.
+1. Use the `undo` command to first reverse the previous command execution.<br>
 
-With this feature, there is no need to retype the entire command again!
+2. Next, use the <kbd>↑</kbd> arrow key in the command box to retrieve the original command.<br>
+
+3. You can then correct the original command and execute it by pressing the <kbd>Enter</kbd> key.<br>
+
+<br>
+With this feature, it saves you the hassle of having to retype the whole command again!
 </div>
 
 #### Saving the data
@@ -308,7 +312,7 @@ Examples:
 *  `edit 2 n/Betsy Crower t/` Edits the name of the 2nd patient to be `Betsy Crower` and deletes all existing tags.
 
 Step-by-step illustration:<br>
-1. Suppose a patient, Charlotte, changed her phone number from `84812305` to `91234567`, simply type `edit 3 p/91234567` in the command box and press <kbd>Enter</kbd>.<br>
+1. Suppose a patient, Charlotte, changed her phone number from `84812305` to `91234567`, simply type `edit 3 p/91234567` in the command box and press <kbd>Enter<kbd>.<br>
 ![EditCommand1](images/EditCommand1.png)
 
 2. Charlotte's phone number is updated and the change is reflected in the relevant patient and appointment cards.
@@ -574,5 +578,5 @@ Date Formats | Time Formats | Natural Date | Natural Time
 
 **Q**: My data was accidentally deleted and I can't undo it. How do I restore my data?<br>
 **A**: Look for a backup file in the data folder of your Nuudle's home folder. Open the backup file and copy the 2 backup data files inside.
-Navigate to your main data folder in your Nuudle's home folder. Overwrite the current data files with the backup data files by pasting the previously copied files.
+Override the current data files in the data folder by pasting the previously copied files.<br>
 The previous session's data will then be restored when you start up Nuudle again.
