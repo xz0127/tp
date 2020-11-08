@@ -106,7 +106,7 @@ The main viewing area consists of the *Patient Book*, the *Appointment Book* and
 
   * The *Patient Details* are neatly displayed at the bottom for you to easily check and identify a patient.
 
-
+<br>
 * The *Appointment Book* contains details about the appointments created by Nuudle. Here we take a look at a single entry in the Appointment Book 
 ![AppointmentCard](images/AppointmentCard.png)
 
