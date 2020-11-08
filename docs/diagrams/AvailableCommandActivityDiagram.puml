@@ -1,0 +1,14 @@
+@startuml
+start
+:User executes command;
+:Check input;
+if() then ([user input is valid])
+    :Create Available command;
+    :Filter appointment list by date input;
+    :Find available time slots on the specified date;
+    :Display available time slots and earliest available slot;
+else([user input is invalid, date input is empty or expired])
+    :Show error message to user;
+endif
+stop
+@enduml

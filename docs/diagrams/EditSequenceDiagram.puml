@@ -48,7 +48,7 @@ destroy EditCommandParser
 NuudleParser --> LogicManager: Command
 deactivate NuudleParser
 
-LogicManager -> EditCommand : execute(model)
+LogicManager -> EditCommand : execute(Model)
 activate EditCommand
 
 EditCommand -> Model : getFilteredPatientList()

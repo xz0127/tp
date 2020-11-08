@@ -1,0 +1,82 @@
+@startuml
+!include style.puml
+
+box Logic LOGIC_COLOR_T1
+participant ":LogicManager" as LogicManager LOGIC_COLOR
+participant ":NuudleParser" as NuudleParser LOGIC_COLOR
+participant ":AvailableCommandParser" as AvailableCommandParser LOGIC_COLOR
+participant ":AvailableCommand" as AvailableCommand LOGIC_COLOR
+participant ":CommandResult" as CommandResult LOGIC_COLOR
+end box
+
+box Model MODEL_COLOR_T1
+participant ":Model" as Model MODEL_COLOR
+end box
+
+[-> LogicManager : execute(String)
+activate LogicManager
+
+LogicManager -> NuudleParser : parseCommand(String)
+activate NuudleParser
+
+create AvailableCommandParser
+NuudleParser -> AvailableCommandParser: new
+activate AvailableCommandParser
+
+AvailableCommandParser --> NuudleParser
+deactivate AvailableCommandParser
+
+NuudleParser -> AvailableCommandParser : parse(String)
+activate AvailableCommandParser
+
+create AvailableCommand
+AvailableCommandParser -> AvailableCommand: new
+note left: Input Validation \n \n AvailableCommand() needs predicate object
+activate AvailableCommand
+
+AvailableCommand --> AvailableCommandParser: Command
+deactivate AvailableCommand
+
+AvailableCommandParser --> NuudleParser: Command
+deactivate AvailableCommandParser
+'Hidden arrow to position the destroy marker below the end of the activation bar.
+AvailableCommandParser -[hidden]-> NuudleParser
+destroy AvailableCommandParser
+
+NuudleParser --> LogicManager: Command
+deactivate NuudleParser
+
+LogicManager -> AvailableCommand : execute(Model)
+activate AvailableCommand
+
+AvailableCommand -> Model : updateFilteredAppointmentList()
+activate Model
+
+Model --> AvailableCommand
+deactivate Model
+
+AvailableCommand -> Model : getFilteredAppointmentList()
+activate Model
+
+Model --> AvailableCommand : lastShownAppointmentList
+deactivate Model
+
+AvailableCommand -> Model : findAvailableTimeSlots(List<Appointment>, Boolean)
+activate Model
+
+Model --> AvailableCommand : timeSlotsMessage
+deactivate Model
+
+create CommandResult
+AvailableCommand -> CommandResult : new
+activate CommandResult
+
+CommandResult --> AvailableCommand
+deactivate CommandResult
+
+AvailableCommand --> LogicManager : Result
+deactivate AvailableCommand
+
+[<--LogicManager
+deactivate LogicManager
+@enduml
