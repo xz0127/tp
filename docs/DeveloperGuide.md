@@ -386,7 +386,7 @@ Given below is an example usage scenario and how the edit mechanism behaves at e
 
 3: `NuudleParser` detects the command word `edit` in the input string and creates a new `EditCommandParser` to parse inputs according to the format specified for `EditCommand`.
 
-4: Input is parsed using the ·EditCommandParser#parse(String)· method, which also performs input validation. The method creates a `EditPatientDescriptor` using the parsed inputs by calling the static constructor inside `EditCommand`.
+4: Input is parsed using the `EditCommandParser#parse(String)` method, which also performs input validation. The method creates a `EditPatientDescriptor` using the parsed inputs by calling the static constructor inside `EditCommand`.
 
 5: The `EditCommandParser` creates a new `EditCommand` instance with the given index and newly created `EditPatientDescriptor` object and returns it to `NuudleParser`, which in turn returns it to `LogicManager`.
 
@@ -653,6 +653,76 @@ The following activity diagram summarizes what happens when a user executes a ne
   itself.
   * Pros: Will use less memory (e.g. for `delete`, just save the person being deleted).
   * Cons: We must ensure that the implementation of each individual command are correct.
+  
+### 7. Find Available Time Slots
+
+`[written by: Xin Zhe]`
+
+The Find Available Time Slots Feature allows the nurse to obtain the available time slots on a specified date along with the earliest available slot.
+
+#### 7.1 Implementation
+
+Finding available time slots is facilitated by the `AvailableCommand`, which extends the abstract class `Command`,
+and the `AvailableCommandParser`, which implements the `Parser` interface. All of these classes are part of the `Logic` component.
+
+This feature is supported by the `UniqueAppointmentList` which stores the `Appointment` instances, the `ScheduleManager` which handles the scheduling-related operations, and `TimeIntervalList` which stores the `TimeInterval` instances. These classes are part of the `model` component.
+
+Given below is an example usage scenario and how the edit mechanism behaves at each step.
+
+1: The user types `avail d/12-Apr-2021` into Nuudle.
+
+2: The request is handled by `LogicManager#execute(String)`, which then calls and passes the input to the `NuudleParser#parseCommand(String)` method.
+
+3: `NuudleParser` detects the command word `avail` in the input string and creates a new `AvailableCommandParser` to parse inputs according to the format specified for `AvailableCommand`.
+
+4: Input is parsed using the `AvailableCommandParser#parse(String)` method, which also performs input validation and checks whether the input date is today. A `DateMatchesPredicate` instance is created based on the parsed date.
+
+5: The `AvailableCommandParser` creates a new `AvailableCommand` instance with boolean value `isToday` and newly created `DateMatchesPredicate` object and returns it to `NuudleParser`, which in turn returns it to `LogicManager`.
+
+6: `LogicManager` calls the `AvailableCommand#execute(Model)` method.
+
+7: `AvailableCommand` updates the filtered list by calling `Model#updateFilteredAppointmentList(Predicate)` method.
+
+8: `AvailableCommand` obtains a copy of the `FilteredAppointmentList` by calling the `Model#getFilteredAppointmentList()` method.
+
+9: `AvailableCommand` creates a `timeSlotsMessage` by calling the  `Model#findAvailableTimeSlots(List<Appointment>, Boolean)` method.
+
+10: Lastly, `AvailableCommand` creates a `CommandResult` with `SuccessMessage` and `timeSlotsMessage` and returns it to `LogicManager`.
+
+The above process is shown in the following sequence diagram:
+
+![AvailableSequenceDiagram](images/AvailableSequenceDiagram.png)
+<br>**Diagram 7.1.1: Sequence diagram showcasing the Available Command process**
+
+The following activity diagram summarises the general workflow for the Available Command:
+
+![AvailableCommandActivityDiagram](images/AvailableCommandActivityDiagram.png)
+<br>**Diagram 7.1.2: Activity diagram showcasing the Available Command execution flow**
+
+#### 7.2 Design Considerations
+
+##### Aspect: How the `avail` command executes
+
+* **Alternative 1 (current choice):** Separate parsing from code execution
+    * Pros: Separate the responsibilities clearly between classes and adhere to the Single Responsibility Principle.
+    * Cons: Increases numbers of lines of code and may increase coupling as objects are passed around between the classes.
+
+* **Alternative 2:** Parse and Execute in the same class
+    * Pros: Fewer lines of code, less fields/objects are passed between classes which reduces the coupling.
+    * Cons: No separation between classes violates the Single Responsibility Principle. Compromises the readability of the code and
+    increases the difficulty of debugging and maintaining the code base.
+
+##### Aspect: How to obtain available `timeInterval` instance
+
+* **Alternative 1 (current choice):** Create `TimeInterval` and `TimeIntervalList` models to represent the time slots and create `scheduleManager` model to handle operations related to `TimeInterval`
+    * Pros: Draws clear distinction between the responsibilities of `appointmentBook` and `scheduleManager`. Reduces the coupling and adheres to the Single Responsibility Principle by creating multiple scheduling related models. 
+    * Cons: Increases numbers of lines of code and increases the cost of testing since more tests have to be carried out.
+
+* **Alternative 2:** Let `UniqueAppointmentList` handle the creation and filtering of available time slots
+    * Pros: Fewer lines of code. Lower cost of testing.
+    * Cons: No separation between classes violates the Single Responsibility Principle. Compromises the readability of the code and
+    increases the difficulty of debugging and maintaining the code base. Increases the coupling. 
+    `UniqueAppointmentList` will handle objects from different classes and complicated operations which are not under its obligations.
 
 --------------------------------------------------------------------------------------------------------------------
 

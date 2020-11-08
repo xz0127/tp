@@ -12,29 +12,53 @@ title: User Guide
 
 Welcome to Nuudle’s User Guide! :smiley:
 
+Looking for a wonderful solution to simplify the complicated process of clinic management? Look no further!
+
 Nuudle is a **desktop app that helps nurses manage patient records and schedule appointments** in an accurate and efficient manner.
 
 We hope that this document will help you in your journey in exploring the wonders of Nuudle app and enhance the way you schedule appointments for your patients.
 
-To begin your journey, head down to our [Quick Start](#quick-start) or explore the various [Features](#features) that we offer. The document will provide you with all the necessary information you need to start your journey.
+To begin your journey, head down to our [Quick Start](#quick-start) or explore the various [Features](#features) that we offer. The document will provide you with all the necessary information you need to start your journey!
 
 --------------------------------------------------------------------------------------------------------------------
 
 ## About
 
-This document provides ...
+This document provides you with all necessary information on the installation and complete usage of Nuudle. You can find comprehensive descriptions of all available features in our [Commands](#Commands) section and [Quick Start](#Quick-Start) section will help you with setting up.
 
 The guide also uses the following symbols and formatting:
-* Words that looks like [this]() ...
-* Words that looks like `this` are words used in commands.
+* Words that looks like [this]() can be clicked to navigate you to the related section of this user guide.
+* Words that looks like `this` are words used in commands of Nuudle.
 * Words that looks like <kbd>this</kbd> are keys that you can press using your keyboard
+
+<div markdown="block" class="alert alert-info">
+
+*:information_source: This icon is used to indicate additional useful notes and information.*<br>
+
+</div>
+
+<div markdown="block" class="alert alert-warning">
+
+*:exclamation: This icon is used to indicate important information.*<br>
+
+</div>
+
+<div markdown="span" class="alert alert-primary">
+
+*:bulb: This icon is used to indicate useful tips of Nuudle.*<br>
+
+</div>
+
+
 
 
 --------------------------------------------------------------------------------------------------------------------
 
-## Quick start
+## Quick Start
 
-This section introduces ...
+This section provides a step-to-step guide on how to install Nuudle and get it to run on your computer. It also shows the different sections that make up Nuudle's user interface and various sample commands.
+
+Let's get started! :smiley:
 
 ### Installing Nuudle
 
@@ -223,11 +247,11 @@ Step-by-step illustration:
 ![UndoCommandInitialState](images/UndoRedoInitialState_UG.png)
 
 2. Input `delete 1`: <br>
-![UndoCommandStep2](images/UndoStep2_UG.png)
+![UndoCommandStep2](images/UndoStep2_UG.png) <br>
 The first patient `Alex Yeoh` is deleted.
 
 3. Input `undo`: <br>
-![UndoCommandStep3](images/UndoStep3_UG.png)
+![UndoCommandStep3](images/UndoStep3_UG.png) <br>
 The `undo` command cancels the last undoable command `delete 1`, so that 
 the patient `Alex Yeoh` comes back to the list again.
 
@@ -268,11 +292,11 @@ Step-by-step illustration:
 ![RedoCommandStep2](images/RedoStep2_UG.png)
 
 3. Input `Undo`: <br>
-![RedoCommandStep3](images/RedoStep3_UG.png)
+![RedoCommandStep3](images/RedoStep3_UG.png) <br>
 All the data comes back.
 
 4. Input `Redo`: <br>
-![RedoCommandStep4](images/RedoStep4_UG.png)
+![RedoCommandStep4](images/RedoStep4_UG.png) <br>
 Redo the `clear` command, which removes all the data again.
 
 #### Clearing all data : `clear`
@@ -349,7 +373,13 @@ Examples:
 * `add n/John Doe i/S9730284G p/98765432 a/John street, block 123, #01-01`
 * `add n/Betsy Crowe i/S9123456G t/friend a/NUS Utown p/1234567 t/asthma`
 
-![AddCommand](images/AddCommand.png)
+Step by step illustration:
+1. Enter `add n/Nuudle Numberone i/S7564832U p/84729741 a/UTown r/first visit` in command box.<br>
+![AddCommand1](images/AddCommand1.png)
+
+2. The information of the added patient is displayed in the result box.
+The patient is now added to the patient book.<br>
+![AddCommand2](images/AddCommand2.png)
 
 #### Editing a patient : `edit`
 
@@ -579,16 +609,27 @@ Example:
 
 #### Listing available time slots by date : `avail`
 
-Shows a list of all available (free) time slots within the operation time of the clinic on a specified date.
+Shows a list of all available (free) time slots within the operation time of the clinic on a specified date. 
+The earliest available time slot on the specified date is also provided.
 
 Format: `avail d/DATE`
 
 * Outputs the list of all available time slots within the operation time of the clinic on a specified date in chronological order.
+* The earliest available time slot within the operation time of the clinic on a specified date will also be displayed.
 * `DATE` must be today or in the future.
+* Do note that the earliest available time slot will not be provided when `avail d/today` is executed after clinic's operation hour.
 
 Example:
 * `avail d/4-Aug-2020` shows the list of all available (free) time slots within the operation time of the clinic on 04/08/2020.
-![AvailableCommand](images/AvailableCommand.png)
+* `avail d/today` shows the list of all available (free) time slots within the operation time of the clinic today.
+
+Step by step illustration:
+1. Enter `avail d/05-Nov-2021` in command box.<br>
+![AvailCommand1](images/AvailCommand1.png)
+
+2. The available time slots of the day and the earliest available time slot is displayed in the result box.
+The list of appointments on the specified date is also displayed.<br>
+![AvailCommand2](images/AvailCommand2.png)
 
 
 --------------------------------------------------------------------------------------------------------------------
@@ -604,6 +645,7 @@ Action | Format
 **Exit** | `exit`
 
 #### Patient Management
+
 Action | Format | Examples
 --------|--------|----------
 **Add** | `add n/NAME i/NRIC p/PHONE_NUMBER a/ADDRESS [t/TAG]…​` | `add n/James Ho i/S9712345G p/22224444 a/123, Clementi Rd, 1234665 t/asthma t/`
@@ -614,6 +656,7 @@ Action | Format | Examples
 **Remark** | `remark PATIENT_INDEX [r/REMARK]`| `remark 2 r/Has been visiting Dr John`, `remark 2`
 
 #### Appointment Management
+
 Action | Format | Examples
 --------|---------|---------
 **Assign** | `assign PATIENT_INDEX d/DATE t/TIME`| `assign 3 d/tomorrow t/3pm`
