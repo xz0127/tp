@@ -159,14 +159,14 @@ Examples:
   `undo` (reverses the `cancel 1` command)
 
 Step by step illustration:
-1. Initial state:
+1. Initial state: <br>
 ![UndoCommandInitialState](images/UndoRedoInitialState_UG.png)
 
-2. Input `delete 1`:
+2. Input `delete 1`: <br>
 ![UndoCommandStep2](images/UndoStep2_UG.png)
 The first patient `Alex Yeoh` is deleted.
 
-3. Input `Undo`:
+3. Input `undo`: <br>
 ![UndoCommandStep3](images/UndoStep3_UG.png)
 The `undo` command cancels the last undoable command `delete 1`, so that 
 the patient `Alex Yeoh` comes back to the list again.
@@ -201,17 +201,17 @@ Examples:
   `redo` (reapplies the `clear` command)
 
 Step by step illustration:
-1. Initial state:
+1. Initial state: <br>
 ![RedoCommandInitialState](images/UndoRedoInitialState_UG.png)
 
-2. Input `clear`:
+2. Input `clear`: <br>
 ![RedoCommandStep2](images/RedoStep2_UG.png)
 
-3. Input `Undo`:
+3. Input `Undo`: <br>
 ![RedoCommandStep3](images/RedoStep3_UG.png)
 All the data comes back.
 
-4. Input `Redo`:
+4. Input `Redo`: <br>
 ![RedoCommandStep4](images/RedoStep4_UG.png)
 Redo the `clear` command, which removes all the data again.
 
@@ -460,7 +460,13 @@ Format: `done APPT_INDEX`
 Example:
 * `done 3` marks the 3rd appointment in the displayed appointment list as completed.
 * `view d/today` followed by `done 1` marks the 4th appointment happening on today's date as completed.
-![DoneCommand](images/DoneCommand.png)
+
+Step by step illustration:
+1. Enter `done 1` in command box <br>
+![DoneCommand1](images/DoneCommand1.png)
+
+2. The result display box shows the success message and the appointment is marked as down <br>
+![DoneCommand2](images/DoneCommand2.png)
 
 #### Listing upcoming appointments by date : `view`
 
@@ -492,28 +498,36 @@ Example:
 ![AvailableCommand](images/AvailableCommand.png)
 
 ### Command summary
+#### General command
 
-TODO: SPLIT TO 3
-
-Action | Format, Examples
---------|------------------
-**Add** | `add n/NAME i/NRIC p/PHONE_NUMBER a/ADDRESS [t/TAG]…​` <br> e.g., `add n/James Ho i/S9712345G p/22224444 a/123, Clementi Rd, 1234665 t/asthma t/`
-**Delete** | `delete PATIENT_INDEX`<br> e.g., `delete 3`
-**Edit** | `edit PATIENT_INDEX [n/NAME] [p/PHONE_NUMBER] [i/NRIC] [a/ADDRESS] [t/TAG]…`<br> e.g.,`edit 2 n/James Lee a/College Avenue 8`
-**Find** | `find KEYWORD [MORE_KEYWORDS]`<br> e.g., `find James Jake`
-**List** | `list`
-**Remark** | `remark PATIENT_INDEX [r/REMARK]`<br> e.g., `remark 2 r/Has been visiting Dr John`, `remark 2`
-**Assign** | `assign PATIENT_INDEX d/DATE t/TIME`<br> e.g., `assign 3 d/tomorrow t/3pm`
-**Cancel** | `cancel APPT_INDEX`<br> e.g., `cancel 1`
-**Change** | `change APPT_INDEX d/DATE t/TIME dur/DURATION` <br> e.g., `change 3 d/02-03-2021 t/1130 dur/30`
-**View** | `view [d/DATE]`<br> e.g., `view d/today`
-**Done** | `done APPT_INDEX`<br> e.g., `done 2`
-**Available** | `avail d/DATE`<br> e.g., `avail d/12-Apr-2021`
-**Clear** | `clear`
+Action | Format
+-------|----------
+**Help** | `help`
 **Undo** | `undo`
 **Redo** | `redo`
-**Help** | `help`
+**Clear** | `clear`
 **Exit** | `exit`
+
+#### Patient Management
+Action | Format | Examples
+--------|--------|----------
+**Add** | `add n/NAME i/NRIC p/PHONE_NUMBER a/ADDRESS [t/TAG]…​` | `add n/James Ho i/S9712345G p/22224444 a/123, Clementi Rd, 1234665 t/asthma t/`
+**Delete** | `delete PATIENT_INDEX`| `delete 3`
+**Edit** | `edit PATIENT_INDEX [n/NAME] [p/PHONE_NUMBER] [i/NRIC] [a/ADDRESS] [t/TAG]…`|`edit 2 n/James Lee a/College Avenue 8`
+**Find** | `find KEYWORD [MORE_KEYWORDS]`| `find James Jake`
+**List** | `list` | `list`
+**Remark** | `remark PATIENT_INDEX [r/REMARK]`| `remark 2 r/Has been visiting Dr John`, `remark 2`
+
+#### Appointment Management
+Action | Format | Examples
+--------|---------|---------
+**Assign** | `assign PATIENT_INDEX d/DATE t/TIME`| `assign 3 d/tomorrow t/3pm`
+**Cancel** | `cancel APPT_INDEX`| `cancel 1`
+**Change** | `change APPT_INDEX d/DATE t/TIME dur/DURATION` | `change 3 d/02-03-2021 t/1130 dur/30`
+**View** | `view [d/DATE]`| `view d/today`
+**Done** | `done APPT_INDEX`| `done 2`
+**Available** | `avail d/DATE`| `avail d/12-Apr-2021`
+`
 
 
 --------------------------------------------------------------------------------------------------------------------
