@@ -560,7 +560,7 @@ Action | Format, Examples
 ## FAQ
 
 **Q**: How do I transfer my data to another Computer?<br>
-**A**: Install the app in the other computer and overwrite the empty data folder it creates with the data folder from your previous Nuudle's home folder.
+**A**: Install the application in the other computer and overwrite the empty data folder it creates with the data folder from your previous Nuudle's home folder.
 
 **Q**: What are the acceptable date time format?<br>
 **A**: Nuudle supports multiple date time formats as well as natural date time language :
@@ -577,6 +577,13 @@ Date Formats | Time Formats | Natural Date | Natural Time
 02-December-2020 |
 
 **Q**: My data was accidentally deleted and I can't undo it. How do I restore my data?<br>
-**A**: Look for a backup file in the data folder of your Nuudle's home folder. Open the backup file and copy the 2 backup data files inside.
-Override the current data files in the data folder by pasting the previously copied files.<br>
-The previous session's data will then be restored when you start up Nuudle again.
+**A**: You can restore the data from your previous session by following the steps below:
+1. Look for a backup file in the data folder of your Nuudle's home folder. 
+
+2. Open the backup file and copy the 2 data files inside.
+
+3. Navigate back to the main data folder in your Nuudle's home folder.
+
+4. Override the current data files in the main data folder by pasting the previously copied files.
+
+5. The previous session's data is now restored and you can access it by starting up the Nuudle application.
