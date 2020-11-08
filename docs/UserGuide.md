@@ -527,7 +527,6 @@ Action | Format | Examples
 **View** | `view [d/DATE]`| `view d/today`
 **Done** | `done APPT_INDEX`| `done 2`
 **Available** | `avail d/DATE`| `avail d/12-Apr-2021`
-`
 
 
 --------------------------------------------------------------------------------------------------------------------
