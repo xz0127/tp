@@ -150,5 +150,6 @@ public class DateParserUtilTest {
 
         // return null
         assertNull(DateParserUtil.parseByNaturalDay("", currDate));
+        assertNull(DateParserUtil.parseByNaturalDay("abcde", currDate));
     }
 }

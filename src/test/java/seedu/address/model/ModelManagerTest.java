@@ -3,8 +3,8 @@ package seedu.address.model;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static seedu.address.model.Model.PREDICATE_SHOW_ALL_APPOINTMENTS;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PATIENTS;
-import static seedu.address.model.ModelManager.isValidModel;
 import static seedu.address.testutil.Assert.assertThrows;
 import static seedu.address.testutil.TypicalAppointments.ALICE_APPOINTMENT;
 import static seedu.address.testutil.TypicalAppointments.ALICE_APPOINTMENT_2;
@@ -22,6 +22,8 @@ import java.util.Arrays;
 import org.junit.jupiter.api.Test;
 
 import seedu.address.commons.core.GuiSettings;
+import seedu.address.model.exceptions.NoRedoableStateException;
+import seedu.address.model.exceptions.NoUndoableStateException;
 import seedu.address.model.patient.NameContainsKeywordsPredicate;
 import seedu.address.testutil.AppointmentBookBuilder;
 import seedu.address.testutil.PatientBookBuilder;
@@ -124,8 +126,81 @@ public class ModelManagerTest {
     }
 
     @Test
+    public void hasAppointment_nullAppointment_throwsNullPointerException() {
+        assertThrows(NullPointerException.class, () -> modelManager.hasAppointment(null));
+    }
+
+    @Test
+    public void hasAppointment_appointmentNotInAppointmentBook_returnsFalse() {
+        assertFalse(modelManager.hasAppointment(ALICE_APPOINTMENT));
+    }
+
+    @Test
+    public void hasAppointment_appointmentInAppointmentBook_returnsTrue() {
+        modelManager.addAppointment(ALICE_APPOINTMENT);
+        assertTrue(modelManager.hasAppointment(ALICE_APPOINTMENT));
+    }
+
+    @Test
     public void getFilteredPatientList_modifyList_throwsUnsupportedOperationException() {
         assertThrows(UnsupportedOperationException.class, () -> modelManager.getFilteredPatientList().remove(0));
+    }
+
+    @Test
+    public void getFilteredAppointmentList_modifyList_throwsUnsupportedOperationException() {
+        assertThrows(UnsupportedOperationException.class, () -> modelManager.getFilteredAppointmentList().remove(0));
+    }
+
+    @Test
+     public void undoAndRedoPatientBook_undoRedoSuccessful() {
+        ModelManager modelManager = new ModelManager();
+        assertFalse(modelManager.canUndoPatientBook());
+        assertFalse(modelManager.canRedoPatientBook());
+        modelManager.commitPatientBook();
+
+        modelManager.setPatientBook(getTypicalPatientBook());
+        assertTrue(modelManager.canUndoPatientBook());
+        assertFalse(modelManager.canRedoPatientBook());
+        modelManager.undoPatientBook();
+
+        assertFalse(modelManager.canUndoPatientBook());
+        assertTrue(modelManager.canRedoPatientBook());
+        modelManager.redoPatientBook();
+    }
+
+    @Test
+    public void undoAndRedoPatientBook_initialState_throwsNoUndoableStateException() {
+        ModelManager modelManager = new ModelManager();
+        assertFalse(modelManager.canUndoPatientBook());
+        assertThrows(NoUndoableStateException.class, () -> modelManager.undoPatientBook());
+        assertFalse(modelManager.canRedoPatientBook());
+        assertThrows(NoRedoableStateException.class, () -> modelManager.redoPatientBook());
+    }
+
+    @Test
+    public void undoAndRedoAppointmentBook_canUndo_undoSuccessful() {
+        ModelManager modelManager = new ModelManager();
+        assertFalse(modelManager.canUndoAppointmentBook());
+        assertFalse(modelManager.canRedoAppointmentBook());
+        modelManager.commitAppointmentBook();
+
+        modelManager.setAppointmentBook(getTypicalAppointmentBook());
+        assertTrue(modelManager.canUndoAppointmentBook());
+        assertFalse(modelManager.canRedoAppointmentBook());
+        modelManager.undoAppointmentBook();
+
+        assertFalse(modelManager.canUndoAppointmentBook());
+        assertTrue(modelManager.canRedoAppointmentBook());
+        modelManager.redoAppointmentBook();
+    }
+
+    @Test
+    public void undoAndRedoAppointmentBook_initialState_throwsNoUndoableStateException() {
+        ModelManager modelManager = new ModelManager();
+        assertFalse(modelManager.canUndoAppointmentBook());
+        assertThrows(NoUndoableStateException.class, () -> modelManager.undoAppointmentBook());
+        assertFalse(modelManager.canRedoAppointmentBook());
+        assertThrows(NoRedoableStateException.class, () -> modelManager.redoAppointmentBook());
     }
 
     @Test
@@ -134,7 +209,7 @@ public class ModelManagerTest {
         AppointmentBook appointmentBook = new AppointmentBookBuilder()
                 .withAppointment(ALICE_APPOINTMENT).withAppointment(CARL_APPOINTMENT).build();
 
-        assertFalse(isValidModel(patientBook, appointmentBook));
+        assertFalse(ModelManager.isValidModel(patientBook, appointmentBook));
     }
 
     @Test
@@ -143,12 +218,28 @@ public class ModelManagerTest {
         AppointmentBook appointmentBook = new AppointmentBookBuilder().withAppointment(ALICE_APPOINTMENT)
                 .withAppointment(ALICE_APPOINTMENT_2).withAppointment(BENSON_APPOINTMENT).build();
 
-        assertTrue(isValidModel(patientBook, appointmentBook));
+        assertTrue(ModelManager.isValidModel(patientBook, appointmentBook));
 
         patientBook = getTypicalPatientBook();
         appointmentBook = getTypicalAppointmentBook();
 
-        assertTrue(isValidModel(patientBook, appointmentBook));
+        assertTrue(ModelManager.isValidModel(patientBook, appointmentBook));
+    }
+
+    @Test
+    public void getSyncedAppointmentBook_inconsistentModel_successful() {
+        PatientBook patientBook = new PatientBookBuilder().withPatient(ALICE).build();
+        AppointmentBook appointmentBook = getTypicalAppointmentBook();
+
+        AppointmentBook expectedBook = new AppointmentBook();
+        expectedBook.setAppointments(appointmentBook.getAppointmentList()
+                .filtered(appointment -> appointment.hasPatient(ALICE)));
+
+        assertFalse(ModelManager.isValidModel(patientBook, appointmentBook));
+        ReadOnlyAppointmentBook actualBook = ModelManager.getSyncedAppointmentBook(patientBook, appointmentBook);
+
+        assertTrue(ModelManager.isValidModel(patientBook, actualBook));
+        assertEquals(actualBook, expectedBook);
     }
 
     @Test
@@ -180,13 +271,20 @@ public class ModelManagerTest {
         // different appointmentBook -> returns false
         assertFalse(modelManager.equals(new ModelManager(patientBook, differentAppointmentBook, userPrefs)));
 
-        // different filteredList -> returns false
+        // different filteredPatientList -> returns false
         String[] keywords = ALICE.getName().fullName.split("\\s+");
         modelManager.updateFilteredPatientList(new NameContainsKeywordsPredicate(Arrays.asList(keywords)));
         assertFalse(modelManager.equals(new ModelManager(patientBook, appointmentBook, userPrefs)));
 
         // resets modelManager to initial state for upcoming tests
         modelManager.updateFilteredPatientList(PREDICATE_SHOW_ALL_PATIENTS);
+
+        // different filteredAppointmentList -> returns false
+        modelManager.updateFilteredAppointmentList(appointment -> appointment.hasPatient(ALICE));
+        assertFalse(modelManager.equals(new ModelManager(patientBook, appointmentBook, userPrefs)));
+
+        // resets modelManager to initial state for upcoming tests
+        modelManager.updateFilteredAppointmentList(PREDICATE_SHOW_ALL_APPOINTMENTS);
 
         // different userPrefs -> returns false
         UserPrefs differentUserPrefs = new UserPrefs();

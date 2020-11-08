@@ -132,20 +132,39 @@ public class AppointmentBookTest {
     }
 
     @Test
-    public void getAppointmentBookStatistics_patientInAppointmentBook_returnsTrue() {
-        List<Appointment> newAppointments = Arrays.asList(ALICE_APPOINTMENT);
-        AppointmentBookStub newData = new AppointmentBookStub(newAppointments);
-        assertTrue(appointmentBook.getAppointmentBookStatistics().equals(newData.getAppointmentBookStatistics()));
+    public void getAppointmentBookStatistics_correctStatistics() {
+        AppointmentBook newData = new AppointmentBook(appointmentBook);
+        assertEquals(newData.getAppointmentBookStatistics(), appointmentBook.getAppointmentBookStatistics());
     }
 
     @Test
-    public void getAppointmentBookStatistics_patientInAppointmentBook_returnsFalse() {
-        Appointment editedAppointmentOne = new AppointmentBuilder(ALICE_APPOINTMENT)
+    public void getAppointmentBookStatistics_noAppointmentInCurrWeek_correctStatistics() {
+        Appointment futureAppointment = new AppointmentBuilder(ALICE_APPOINTMENT)
+                .withDate(LocalDate.now().plusMonths(1)).build();
+        AppointmentBook appointmentBook = new AppointmentBook();
+        appointmentBook.addAppointment(futureAppointment);
+        AppointmentStatistics stats = appointmentBook.getAppointmentBookStatistics();
+        assertEquals(stats, new AppointmentStatistics(0, 0, 0, 0));
+    }
+
+    @Test
+    public void getAppointmentBookStatistics_undoneAppointmentOnCurrDay_correctStatistics() {
+        Appointment undoneAppointment = new AppointmentBuilder(ALICE_APPOINTMENT)
                 .withDate(LocalDate.now()).build();
-        appointmentBook.addAppointment(editedAppointmentOne);
-        List<Appointment> newAppointments = Arrays.asList(ALICE_APPOINTMENT, editedAppointmentOne);
-        AppointmentBookStub newData = new AppointmentBookStub(newAppointments);
-        assertFalse(appointmentBook.getAppointmentBookStatistics().equals(newData.getAppointmentBookStatistics()));
+        AppointmentBook appointmentBook = new AppointmentBook();
+        appointmentBook.addAppointment(undoneAppointment);
+        AppointmentStatistics stats = appointmentBook.getAppointmentBookStatistics();
+        assertEquals(stats, new AppointmentStatistics(0, 1, 0, 1));
+    }
+
+    @Test
+    public void getAppointmentBookStatistics_doneAppointmentOnCurrDay_correctMessage() {
+        Appointment doneAppointment = new AppointmentBuilder(ALICE_APPOINTMENT)
+                .withDate(LocalDate.now()).build().markAsDone();
+        AppointmentBook appointmentBook = new AppointmentBook();
+        appointmentBook.addAppointment(doneAppointment);
+        AppointmentStatistics stats = appointmentBook.getAppointmentBookStatistics();
+        assertEquals(stats, new AppointmentStatistics(1, 0, 1, 0));
     }
 
     /**

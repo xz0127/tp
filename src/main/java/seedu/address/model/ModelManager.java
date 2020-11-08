@@ -310,7 +310,7 @@ public class ModelManager implements Model {
     /**
      * Checks if the {@code readOnlyPatientBook} is consistent with the {@code readOnlyAppointmentBook} data.
      *
-     * @param readOnlyPatientBook     the patients data.
+     * @param readOnlyPatientBook the patients data.
      * @param readOnlyAppointmentBook the appointments data.
      * @return true if the two books are valid, false otherwise.
      */

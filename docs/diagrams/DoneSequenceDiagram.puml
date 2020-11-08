@@ -5,7 +5,6 @@ box Logic LOGIC_COLOR_T1
 participant ":LogicManager" as LogicManager LOGIC_COLOR
 participant ":NuudleParser" as NuudleParser LOGIC_COLOR
 participant ":DoneCommandParser" as DoneCommandParser LOGIC_COLOR
-participant "loader:DateTimeLoader" as DateTimeLoader LOGIC_COLOR
 participant "d:DoneCommand" as DoneCommand LOGIC_COLOR
 end box
 
@@ -13,10 +12,10 @@ box Model MODEL_COLOR_T1
 participant ":Model" as Model MODEL_COLOR
 participant "toMark:Appointment" as ToMarkAppointment MODEL_COLOR
 end box
-[-> LogicManager : execute("done d/.. t/..")
+[-> LogicManager : execute("done 1")
 activate LogicManager
 
-LogicManager -> NuudleParser : parse("done d/.. t/..")
+LogicManager -> NuudleParser : parse("done 1")
 activate NuudleParser
 
 create DoneCommandParser
@@ -26,15 +25,8 @@ activate DoneCommandParser
 DoneCommandParser --> NuudleParser
 deactivate DoneCommandParser
 
-NuudleParser -> DoneCommandParser : parse("d/.. t/..")
+NuudleParser -> DoneCommandParser : parse()
 activate DoneCommandParser
-
-create DateTimeLoader
-DoneCommandParser -> DateTimeLoader : new
-activate DateTimeLoader
-
-DateTimeLoader --> DoneCommandParser : loader
-deactivate DateTimeLoader
 
 create DoneCommand
 DoneCommandParser -> DoneCommand : new

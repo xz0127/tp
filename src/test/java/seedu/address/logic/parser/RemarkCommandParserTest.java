@@ -1,7 +1,6 @@
 package seedu.address.logic.parser;
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static seedu.address.logic.commands.CommandTestUtil.INVALID_REMARK_EXCEED_LIMIT;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_REMARK_INDEX;
 import static seedu.address.logic.commands.CommandTestUtil.REMARK_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.REMARK_DESC_BOB;
@@ -40,11 +39,6 @@ public class RemarkCommandParserTest {
         // invalid index
         assertParseFailure(parser, INVALID_REMARK_INDEX,
                 MESSAGE_INVALID_FORMAT);
-    }
-
-    @Test
-    public void parse_invalidValue_failure() {
-        assertParseFailure(parser, INVALID_REMARK_EXCEED_LIMIT, Remark.MESSAGE_CONSTRAINTS);
     }
 
     @Test

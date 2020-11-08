@@ -6,17 +6,27 @@ skinparam ClassBorderColor #000000
 title After command "delete 5"
 
 package States <<rectangle>> {
-    class State1 as "__ab0:PatientBook__"
-    class State2 as "__ab1:PatientBook__"
-    class State3 as "__ab2:PatientBook__"
-}
+    package State3 {
+            class State3.1 as "__pb2:PatientBook__"
+            class State3.2 as "__ab2:AppointmentBook__"
+    }
 
-State1 -[hidden]right-> State2
-State2 -[hidden]right-> State3
+    package State2 {
+            class State2.1 as "__pb1:PatientBook__"
+            class State2.2 as "__ab1:AppointmentBook__"
+    }
+
+    package State1 {
+        class State1.1 as "__pb0:PatientBook__"
+        class State1.2 as "__ab0:AppointmentBook__"
+    }
+}
+State1.2 -[hidden]right-> State2.1
+State2.2 -[hidden]right-> State3.1
 
 hide State3
 
 class Pointer as "Current State" #FFFFF
-
+Pointer -[hidden]up-> State2
 Pointer -up-> State2
 @end

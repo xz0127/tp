@@ -5,6 +5,7 @@ import static seedu.address.commons.core.Messages.MESSAGE_EXPIRED_DATE_TIME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DATE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DURATION;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TIME;
+import static seedu.address.logic.parser.ParserUtil.MESSAGE_INVALID_DURATION;
 import static seedu.address.model.appointment.Appointment.CREATION_OFFSET_MINUTES;
 
 import java.time.Duration;
@@ -53,6 +54,10 @@ public class ChangeCommand extends Command {
     public static final String APPOINTMENT_OVERLAP = "Hmm it seems this time slot is occupied. Please choose another "
             + "time-slot to schedule your appointment :)";
 
+    public static final String APPOINTMENT_DONE = "Hmm, it appears the appointment you've selected is already marked"
+            + " as done.\nDone appointments cannot be rescheduled.\nPlease select another appointment or create a new"
+            + "appointment with a new time-slot :)";
+
     private final Index index;
     private final EditAppointmentDescriptor editAppointmentDescriptor;
 
@@ -79,6 +84,11 @@ public class ChangeCommand extends Command {
         }
 
         Appointment appointmentToEdit = lastShownList.get(index.getZeroBased());
+
+        if (appointmentToEdit.getIsDoneStatus()) {
+            throw new CommandException(APPOINTMENT_DONE);
+        }
+
         Appointment editedAppointment = createEditedAppointment(appointmentToEdit, editAppointmentDescriptor);
 
         if (appointmentToEdit.equals(editedAppointment)) {
@@ -133,7 +143,12 @@ public class ChangeCommand extends Command {
         } else {
             duration = appointmentToEdit.getDuration();
         }
-        endTime = new Time(startTime.getTime().plus(duration));
+
+        try {
+            endTime = new Time(startTime.getTime().plus(duration));
+        } catch (IllegalArgumentException e) {
+            throw new CommandException(e.getMessage());
+        }
         Patient patient = appointmentToEdit.getPatient();
 
         assert date != null;
@@ -145,8 +160,11 @@ public class ChangeCommand extends Command {
         if (DateTimeUtil.isExpired(date.getDate(), timeWithLeeway)) {
             throw new CommandException(MESSAGE_EXPIRED_DATE_TIME);
         }
-
-        return new Appointment(date, startTime, endTime, patient);
+        try {
+            return new Appointment(date, startTime, endTime, patient);
+        } catch (IllegalArgumentException e) {
+            throw new CommandException(MESSAGE_INVALID_DURATION);
+        }
     }
 
     @Override

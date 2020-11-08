@@ -18,10 +18,10 @@ public class StorageStatsManager {
                     numArchivedAppointments > 1 ? "appointments" : "appointment");
         }
         if (numExpiredAppointments > 0) {
-            message += String.format(", of which %d %s not done.", numExpiredAppointments,
+            message += String.format(", of which %d %s not done", numExpiredAppointments,
                     numExpiredAppointments > 1 ? "are" : "is");
         }
-        return message;
+        return message.isBlank() ? message : message + ".";
     }
 
     public String getLoadStatusMessage() {
