@@ -373,7 +373,7 @@ Examples:
 * `add n/John Doe i/S9730284G p/98765432 a/John street, block 123, #01-01`
 * `add n/Betsy Crowe i/S9123456G t/friend a/NUS Utown p/1234567 t/asthma`
 
-Step by step illustration:
+Step-by-step illustration:
 1. Enter `add n/Nuudle Numberone i/S7564832U p/84729741 a/UTown r/first visit` in command box.<br>
 ![AddCommand1](images/AddCommand1.png)
 
@@ -584,7 +584,7 @@ Example:
 * `done 3` marks the 3rd appointment in the displayed appointment list as completed.
 * `view d/today` followed by `done 1` marks the 4th appointment happening on today's date as completed.
 
-Step by step illustration:
+Step-by-step illustration:
 1. Enter `done 1` in command box <br>
 ![DoneCommand1](images/DoneCommand1.png)
 
@@ -623,7 +623,7 @@ Example:
 * `avail d/4-Aug-2020` shows the list of all available (free) time slots within the operation time of the clinic on 04/08/2020.
 * `avail d/today` shows the list of all available (free) time slots within the operation time of the clinic today.
 
-Step by step illustration:
+Step-by-step illustration:
 1. Enter `avail d/05-Nov-2021` in command box.<br>
 ![AvailCommand1](images/AvailCommand1.png)
 
