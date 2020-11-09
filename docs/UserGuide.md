@@ -52,32 +52,89 @@ Follow these steps to get you started on Nuudle:
 
 ### Using Nuudle
 
- `interface`
+Having downloaded the Nuudle application, allow us to walk you through the layout of Nuudle.
+
+![UiMarkUp](images/UiMarkup.png)
+
+The layout of Nuudle can be divided into 2 main areas:
+1. A command execution area
+2. A main viewing area
+
+#### Executing command
+
+The command execution area consists of the **Command Box** and the **Result Display Box**.
+
+The **Command Box** is the area where you can type in your command and subsequently execute it by pressing <kbd>Enter</kbd>.
+The result from the execution will then be displayed on the **Result Display Box**.
+
+To get you started, here are some sample commands that you can try out:
+
+1. **`help`** : Shows the help window. 
+
+1. **`list`** : Lists all patients.
+
+1. **`add`**` n/John Doe i/S9730284G p/98765432 a/John street, block 123, #01-01` : Adds a patient named `John Doe` to the Patient Book.
+
+1. **`assign`**` 1 d/Tomorrow t/8.30am dur/30` : Creates an appointment for the 1st patient in the patient list for tomorrow 8.30am to 9am, assuming that the time slot is free.
+
+1. **`view`**` d/Tomorrow` : Displays all appointment happening tomorrow.
+
+1. **`cancel`**` 1` : Cancels the first appointment in the displayed appointment list.
+
+1. **`clear`** : Deletes all patients and appointments.
+
+1. **`exit`** : Exits the app.
+
+To learn more about the various commands used in Nuudle, head down to our [Commands](#commands) section.
+Alternatively, you can visit our [Command Summary](#command-summary) section to get a quick overview of Nuudle's commands.
+
+#### Viewing the data
+
+The main viewing area consists of the **Patient Book**, the **Appointment Book** and the **Appointment Overview**.
+
+* The **Patient Book** contains information about the patients stored in Nuudle. Here we take a look at an entry in the Patient Book.
+  ![PatientCard](images/PatientCard.png)
+  * The **Patient Index** is a numbering system used in the Patient Book, which allows you to easily reference the patient by using the index shown.<br>
+  Throughout the document and the application, we use the term `PATIENT_INDEX` to refer to this Patient Index.
+    
+  * The **Medical Condition** here is a tag that help nurses easily identify any identified allergy, illness and more.<br>
+  This medical condition can be added as a tag when [adding a new patient](#adding-a-patient--add) or by [editing an existing patient](#editing-a-patient--edit).
+    
+  * The **Patient Details** are neatly displayed at the bottom for you to easily check and identify a patient.
+
+
+* The **Appointment Book** contains details about the appointments created by Nuudle. Here we take a look at a single entry in the Appointment Book 
+![AppointmentCard](images/AppointmentCard.png)
+  * Similar to the Patient Index, the **Appointment Index** is a numbering system used in the Appointment Book.<br>
+  We use the term `APPT_INDEX` to refer to this Appointment Index. 
+
+  * Another noteworthy appointment detail is the **Appointment Status**. There are four status type used in Nuudle and the meaning of each status are shown in the table below
+    
+  **Appointment Status** | **Meaning**
+  :---------------:|:----------------
+  ![StatusDone](images/StatusDone.png) | A completed appointment that is marked as done using the `done` command
+  ![StatusUpcoming](images/StatusUpcoming.png) | An uncompleted appointment that will be happening in the future.
+  ![StatusOngoing](images/StatusOngoing.png) | An appointment that is currently ongoing but is still uncompleted.
+  ![StatusExpired](images/StatusExpired.png) | An appointment that has already passed but is still uncompleted.
+
+  * The **Patient Details** provides the necessary information about the patient, namely the name and the contact number.<br>
+  This allows you to easily keep track of who will be coming for the appointment and also call up the patient if necessary. 
+
+* The **Appointment Overview** gives a simple overview of the appointments stored in Nuudle.<br>
+  ![AppointmentOverview](images/AppointmentOverview.png)
+  With it, you can:
+  * keep track of the total number of expected appointment for the day.
+  * stay updated on the remaining number of appointments to be completed for the day.
+  * get an estimate on how busy the clinic will be for the week
+
 
 1. Type the command in the command box and press Enter to execute it. e.g. typing **`help`** and pressing Enter will open the help window.<br>
    Some example commands you can try :
 
-   1. **`list`** : Lists all patients.
-
-   1. **`add`**` n/John Doe i/S9730284G p/98765432 a/John street, block 123, #01-01` : Adds a patient named `John Doe` to the Patient Book.
-
-   1. **`edit`**` 1 n/Betsy Crower p/91234567 a/College Avenue 8` : Edits the name, phone number, and address of the 1st patient in the list to be `Betsy`, `91234567`, and `College Avenue 8` respectively.
-
-   1. **`find`**` n/John p/91238765 i/S9234567Q` : Finds the patients whose name contains `John`, or whose phone number is `912348765`, or whose NRIC number is `S9234567Q`.
-
-   1. **`avail`**` d/Tomorrow` : Gets all available time slots for tomorrow.
-
-   1. **`assign`**` 1 d/Tomorrow t/8.30am dur/30` : Creates an appointment for the 1st patient in the patient list for tomorrow 8.30am to 9am, assuming that the time slot is free.
-
-   1. **`view`**` d/Tomorrow` : Displays all appointment happening tomorrow.
-
-   1. **`cancel`**` 1` : Cancels the first appointment in the displayed appointment list, which is also the first appointment happening tomorrow.
-
-   1. **`clear`** : Deletes all patients and appointments.
-
-   1. **`exit`** : Exits the app.
-
 1. Refer to the [Features](#commands) below for details of each command.
+
+--------------------------------------------------------------------------------------------------------------------
+
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -127,7 +184,7 @@ This section introduces the ...
 
 #### Viewing help : `help`
 
-Shows a message with the commonly used commands, and the link to access the User Guide.
+Opens a new window which shows the commonly used commands, and a link to access the User Guide.
 
 ![Help Message](images/helpMessage.png)
 
@@ -244,13 +301,13 @@ By pressing the <kbd>↑</kbd> and <kbd>↓</kbd> arrow keys in the command box,
 
 <div markdown="span" class="alert alert-primary">
 
-:bulb: **Tip:** If you accidentally mistyped a command and executed it, you can follow the 3 simple steps below:<br>
+:bulb: **Tip:** You can use this feature together with `undo` command to correct a wrongly executed command. The steps below illustrate how this correction can be done:<br>
 
 1. Use the `undo` command to first reverse the previous command execution.<br>
 
 2. Next, use the <kbd>↑</kbd> arrow key in the command box to retrieve the original command.<br>
 
-3. You can then correct the original command and execute it by pressing the <kbd>Enter</kbd> key.<br>
+3. You can then edit the original command and execute it by pressing the <kbd>Enter</kbd> key.<br>
 
 <br>
 With this feature, it saves you the hassle of having to retype the whole command again!
@@ -315,8 +372,8 @@ Step-by-step illustration:<br>
 1. Suppose a patient, Charlotte, changed her phone number from `84812305` to `91234567`, simply type `edit 3 p/91234567` in the command box and press <kbd>Enter<kbd>.<br>
 ![EditCommand1](images/EditCommand1.png)
 
-2. Charlotte's phone number is updated and the change is reflected in the relevant patient and appointment cards.
-The particulars of the edited patient is also displayed in the result display box.<br>
+2. Charlotte's phone number is now updated and the change is also reflected in the relevant appointments.
+The particulars of the edited patient is displayed in the result display box.<br>
 ![EditCommand2](images/EditCommand2.png)
 
 #### Deleting a patient : `delete`
@@ -553,7 +610,6 @@ Action | Format, Examples
 **Redo** | `redo`
 **Help** | `help`
 **Exit** | `exit`
-
 
 --------------------------------------------------------------------------------------------------------------------
 
